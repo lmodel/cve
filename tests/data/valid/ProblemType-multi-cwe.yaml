@@ -1,0 +1,13 @@
+# ProblemType with multiple CWE entries
+problem_type_descriptions:
+  - lang: en
+    problem_description: Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')
+    cwe_id: CWE-89
+    problem_source_type: CWE
+  - lang: en
+    problem_description: Improper Input Validation
+    cwe_id: CWE-20
+    problem_source_type: CWE
+  - lang: en
+    problem_description: A SQL injection vulnerability exists in the login form.
+    problem_source_type: text

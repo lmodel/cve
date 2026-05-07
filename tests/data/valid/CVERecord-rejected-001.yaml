@@ -1,0 +1,24 @@
+# Rejected CVE Record - duplicate of another CVE
+cve_id: CVE-2024-00001
+description: Rejected CVE ID - this CVE was rejected because it is a duplicate.
+cve_metadata:
+  record_cve_id: CVE-2024-00001
+  assigner_org_id: a7b8c9d0-e1f2-4a3b-4c5d-6e7f8a9b0c1d
+  assigner_short_name: example_cna
+  serial: 3
+  date_reserved: "2024-01-02T00:00:00Z"
+  date_published: "2024-01-15T00:00:00Z"
+  date_updated: "2024-02-01T00:00:00Z"
+  date_rejected: "2024-02-01T00:00:00Z"
+  rejected_state: REJECTED
+containers:
+  cna:
+    provider_metadata:
+      org_id: a7b8c9d0-e1f2-4a3b-4c5d-6e7f8a9b0c1d
+      short_name: example_cna
+    rejected_reasons:
+      - lang: en
+        description_value: This CVE ID was rejected because it is a duplicate of
+          CVE-2024-00002, which describes the same vulnerability.
+    replaced_by:
+      - CVE-2024-00002

@@ -1,0 +1,70 @@
+# Published CVE with multiple affected products (hardware + software + package)
+# Tests the breadth of the AffectedProduct model
+cve_id: CVE-2024-66666
+description: Authentication bypass in GammaRouter firmware allows a local attacker
+  to gain administrative access without credentials.
+cve_metadata:
+  record_cve_id: CVE-2024-66666
+  assigner_org_id: a8b9c0d1-e2f3-4a4b-5c6d-7e8f9a0b1c2d
+  published_state: PUBLISHED
+containers:
+  cna:
+    provider_metadata:
+      org_id: a8b9c0d1-e2f3-4a4b-5c6d-7e8f9a0b1c2d
+    descriptions:
+      - lang: en
+        description_value: An authentication bypass vulnerability in the web management
+          interface of GammaRouter firmware versions 2.1 through 3.4 allows a local
+          network attacker to gain administrative access without valid credentials by
+          sending a specially crafted HTTP request.
+    affected:
+      # Hardware: Router firmware
+      - vendor: GammaCorp
+        name: GammaRouter
+        default_status: unaffected
+        versions:
+          - version_value: "2.1"
+            version_status: affected
+            version_type: custom
+            less_than_or_equal: "3.4"
+        platforms:
+          - Embedded Linux
+        cpes:
+          - "cpe:2.3:o:gammacorp:gammarouter_firmware:*:*:*:*:*:*:*:*"
+      # Software: Management SDK
+      - vendor: GammaCorp
+        name: GammaRouter Management SDK
+        collection_url: https://pypi.org
+        package_name: gammarouter-sdk
+        package_url: https://pypi.org/project/gammarouter-sdk
+        default_status: unaffected
+        versions:
+          - version_value: "0.1.0"
+            version_status: affected
+            version_type: semver
+            less_than: "1.0.0"
+        modules:
+          - authentication
+          - session_management
+        program_files:
+          - src/gammarouter/auth.py
+          - src/gammarouter/session.py
+    problem_types:
+      - problem_type_descriptions:
+          - lang: en
+            problem_description: Improper Authentication
+            cwe_id: CWE-287
+            problem_source_type: CWE
+    cve_references:
+      - url: https://gammacorp.example.com/security/2024-002
+        name: GammaCorp Security Bulletin 2024-002
+        reference_tags:
+          - vendor-advisory
+          - patch
+    credits:
+      - lang: en
+        credit_value: Red Team Security
+        credit_type: finder
+      - lang: en
+        credit_value: GammaCorp Security Response Team
+        credit_type: coordinator

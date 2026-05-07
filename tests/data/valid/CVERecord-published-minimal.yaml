@@ -1,0 +1,29 @@
+# Minimal published CVE Record - only required fields
+# CVE-2024-12345: Stack-based buffer overflow in ExampleLib
+cve_id: CVE-2024-12345
+description: Stack-based buffer overflow in ExampleLib before 3.1.2 allows remote
+  attackers to execute arbitrary code via a crafted packet.
+cve_metadata:
+  record_cve_id: CVE-2024-12345
+  assigner_org_id: 9188fead-5bde-4f93-8f9b-364792624e40
+  published_state: PUBLISHED
+containers:
+  cna:
+    provider_metadata:
+      org_id: 9188fead-5bde-4f93-8f9b-364792624e40
+    descriptions:
+      - lang: en
+        description_value: Stack-based buffer overflow in ExampleLib before 3.1.2 allows
+          remote attackers to execute arbitrary code via a crafted packet.
+    affected:
+      - vendor: ExampleCorp
+        name: ExampleLib
+        default_status: unaffected
+        versions:
+          - version_value: "0"
+            version_status: affected
+            version_type: semver
+            less_than: "3.1.2"
+    cve_references:
+      - url: https://example.com/advisory/2024-001
+        name: ExampleCorp Security Advisory 2024-001

@@ -1,0 +1,14 @@
+{
+  "cnaContainer": {
+    "providerMetadata": {
+      "orgId": "00000000-0000-4000-9000-000000000000",
+      "shortName": "example"
+    },
+    "rejectedReasons": [
+      {
+        "lang": "en",
+        "value": "This CVE Record has been rejected because it is a duplicate of CVE-1900-12345."
+      }
+    ]
+  }
+}

@@ -1,0 +1,59 @@
+# Published CVE with all CVSS generations (v4.0, v3.1, v3.0, v2.0) in a single metrics list
+# This tests multi-format scoring support in a single record
+cve_id: CVE-2024-88888
+description: Remote code execution vulnerability in MultiScore Server allows unauthenticated
+  attackers to execute arbitrary commands via the admin API endpoint.
+cve_metadata:
+  record_cve_id: CVE-2024-88888
+  assigner_org_id: f7a8b9c0-d1e2-4f3a-4b5c-6d7e8f9a0b1c
+  published_state: PUBLISHED
+containers:
+  cna:
+    provider_metadata:
+      org_id: f7a8b9c0-d1e2-4f3a-4b5c-6d7e8f9a0b1c
+    descriptions:
+      - lang: en
+        description_value: Remote code execution vulnerability in MultiScore Server
+          before 10.0 allows unauthenticated attackers to execute arbitrary OS commands
+          via the /admin/exec API endpoint.
+    affected:
+      - vendor: MultiScore Inc
+        name: MultiScore Server
+        default_status: unaffected
+        versions:
+          - version_value: "5.0"
+            version_status: affected
+            version_type: custom
+            less_than: "10.0"
+    cve_references:
+      - url: https://multiscore.example.com/security/rce-2024
+        reference_tags:
+          - vendor-advisory
+    metrics:
+      - metric_format: cvssV4_0
+        cvss_v4_0:
+          cvss4_version: "4.0"
+          cvss4_vector_string: "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H"
+          cvss4_base_score: 10.0
+          cvss4_base_severity: CRITICAL
+      - metric_format: cvssV3_1
+        cvss_v3_1:
+          cvss3_version: "3.1"
+          cvss3_vector_string: "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H"
+          cvss3_base_score: 10.0
+          cvss3_base_severity: CRITICAL
+      - metric_format: cvssV3_0
+        cvss_v3_0:
+          cvss3_version: "3.0"
+          cvss3_vector_string: "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H"
+          cvss3_base_score: 10.0
+          cvss3_base_severity: CRITICAL
+      - metric_format: cvssV2_0
+        cvss_v2_0:
+          cvss2_version: "2.0"
+          cvss2_vector_string: "AV:N/AC:L/Au:N/C:C/I:C/A:C"
+          cvss2_base_score: 10.0
+      - metric_format: other
+        other_metric:
+          other_metric_type: SSVC
+          other_metric_content: '{"exploitation": "active", "automatable": "yes", "technical_impact": "total"}'

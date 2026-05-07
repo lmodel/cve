@@ -1,0 +1,11 @@
+# INVALID: CnaPublishedContainer missing required descriptions
+# All three required fields (descriptions, affected, cve_references) must be present
+provider_metadata:
+  org_id: d1e2f3a4-b5c6-4d7e-8f9a-0b1c2d3e4f5a
+# descriptions intentionally omitted
+affected:
+  - vendor: TestVendor
+    name: TestProduct
+    default_status: unaffected
+cve_references:
+  - url: https://example.com/advisory

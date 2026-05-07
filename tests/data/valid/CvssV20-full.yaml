@@ -1,0 +1,22 @@
+# CvssV20 - full CVSS 2.0 with temporal and environmental metrics
+cvss2_version: "2.0"
+cvss2_vector_string: "AV:N/AC:L/Au:N/C:C/I:C/A:C"
+cvss2_access_vector: NETWORK
+cvss2_access_complexity: LOW
+cvss2_authentication: NONE
+cvss2_confidentiality_impact: COMPLETE
+cvss2_integrity_impact: COMPLETE
+cvss2_availability_impact: COMPLETE
+cvss2_base_score: 10.0
+# Temporal metrics
+cvss2_exploitability: FUNCTIONAL
+cvss2_remediation_level: UNAVAILABLE
+cvss2_report_confidence: CONFIRMED
+cvss2_temporal_score: 8.3
+# Environmental metrics
+cvss2_collateral_damage_potential: HIGH
+cvss2_target_distribution: HIGH
+cvss2_confidentiality_requirement: HIGH
+cvss2_integrity_requirement: HIGH
+cvss2_availability_requirement: MEDIUM
+cvss2_environmental_score: 9.5

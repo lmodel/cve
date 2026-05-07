@@ -1,0 +1,18 @@
+# Rejected CVE Record - originally reserved but no vulnerability found
+cve_id: CVE-2023-00099
+description: Rejected CVE ID - no vulnerability was found.
+cve_metadata:
+  record_cve_id: CVE-2023-00099
+  assigner_org_id: b8c9d0e1-f2a3-4b4c-5d6e-7f8a9b0c1d2e
+  serial: 1
+  date_reserved: "2023-03-15T00:00:00Z"
+  date_rejected: "2023-09-10T14:00:00Z"
+  rejected_state: REJECTED
+containers:
+  cna:
+    provider_metadata:
+      org_id: b8c9d0e1-f2a3-4b4c-5d6e-7f8a9b0c1d2e
+    rejected_reasons:
+      - lang: en
+        description_value: After further investigation, the reported behavior was
+          determined to be an intended design feature and not a security vulnerability.

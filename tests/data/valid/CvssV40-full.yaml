@@ -1,0 +1,25 @@
+# CvssV40 - full scoring with threat and environmental metrics
+cvss4_version: "4.0"
+cvss4_vector_string: "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:ATTACKED"
+cvss4_base_score: 9.3
+cvss4_base_severity: CRITICAL
+cvss4_attack_vector: NETWORK
+cvss4_attack_complexity: LOW
+cvss4_attack_requirements: NONE
+cvss4_privileges_required: NONE
+cvss4_user_interaction: NONE
+cvss4_vuln_confidentiality_impact: HIGH
+cvss4_vuln_integrity_impact: HIGH
+cvss4_vuln_availability_impact: HIGH
+cvss4_sub_confidentiality_impact: NONE
+cvss4_sub_integrity_impact: NONE
+cvss4_sub_availability_impact: NONE
+cvss4_exploit_maturity: ATTACKED
+cvss4_confidentiality_requirement: HIGH
+cvss4_integrity_requirement: HIGH
+cvss4_availability_requirement: LOW
+cvss4_automatable: "NO"
+cvss4_recovery: IRRECOVERABLE
+cvss4_value_density: CONCENTRATED
+cvss4_vulnerability_response_effort: HIGH
+cvss4_provider_urgency: RED

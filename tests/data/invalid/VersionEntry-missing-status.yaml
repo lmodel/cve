@@ -1,0 +1,5 @@
+# INVALID: VersionEntry missing required version_status
+# Both version_value and version_status are required
+version_value: "3.2.1"
+# version_status intentionally omitted
+version_type: semver

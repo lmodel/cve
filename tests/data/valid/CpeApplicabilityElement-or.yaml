@@ -1,0 +1,13 @@
+# CpeApplicabilityElement - OR logic with two CPE match criteria
+cpe_operator: OR
+cpe_nodes:
+  - cpe_operator: OR
+    cpe_match_criteria:
+      - cpe_vulnerable: true
+        cpe_criteria: "cpe:2.3:a:example:webserver:4.0.0:*:*:*:*:*:*:*"
+        match_criteria_id: a1b2c3d4-e5f6-4789-abcd-ef0123456789
+        version_start_including: "4.0.0"
+        version_end_excluding: "4.8.1"
+      - cpe_vulnerable: true
+        cpe_criteria: "cpe:2.3:a:example:webserver:3.5.0:*:*:*:*:*:*:*"
+        match_criteria_id: b2c3d4e5-f6a7-4890-bcde-f01234567890

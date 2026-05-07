@@ -1,0 +1,6 @@
+# CveReference - vendor advisory with multiple tags
+url: https://example-vendor.com/security/advisory-2024-007
+name: ExampleVendor Security Advisory 2024-007
+reference_tags:
+  - vendor-advisory
+  - patch

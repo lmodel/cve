@@ -1,0 +1,5 @@
+# CvssV40 - base metrics only (minimum required fields)
+cvss4_version: "4.0"
+cvss4_vector_string: "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N"
+cvss4_base_score: 9.3
+cvss4_base_severity: CRITICAL

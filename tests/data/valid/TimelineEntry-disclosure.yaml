@@ -1,0 +1,4 @@
+# TimelineEntry - disclosure timeline event
+event_time: "2024-01-15T09:30:00Z"
+lang: en
+event_value: Vulnerability disclosed to vendor via coordinated disclosure program.

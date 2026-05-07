@@ -1,0 +1,55 @@
+# Published CVE Record with CVSS 2.0 metrics (legacy scoring)
+cve_id: CVE-2011-44444
+description: SQL injection vulnerability in LegacyApp 1.x allows remote attackers
+  to execute arbitrary SQL commands via the 'id' parameter in the search module.
+cve_metadata:
+  record_cve_id: CVE-2011-44444
+  assigner_org_id: c3d4e5f6-a7b8-4c9d-0e1f-2a3b4c5d6e7f
+  published_state: PUBLISHED
+  date_published: "2011-09-12T00:00:00Z"
+containers:
+  cna:
+    provider_metadata:
+      org_id: c3d4e5f6-a7b8-4c9d-0e1f-2a3b4c5d6e7f
+    descriptions:
+      - lang: en
+        description_value: SQL injection vulnerability in the search module in LegacyApp
+          1.x before 1.9.3 allows remote attackers to execute arbitrary SQL commands via
+          the 'id' parameter to search.php.
+    affected:
+      - vendor: Legacy Software Inc
+        name: LegacyApp
+        default_status: unaffected
+        versions:
+          - version_value: "1.0"
+            version_status: affected
+            version_type: custom
+            less_than: "1.9.3"
+    cve_references:
+      - url: https://securityfocus.example.com/bid/49876
+        name: SecurityFocus BID 49876
+        reference_tags:
+          - vdb-entry
+      - url: https://legacy.example.com/patches/1.9.3
+        reference_tags:
+          - patch
+          - vendor-advisory
+    metrics:
+      - metric_format: cvssV2_0
+        cvss_v2_0:
+          cvss2_version: "2.0"
+          cvss2_vector_string: "AV:N/AC:L/Au:N/C:P/I:P/A:P"
+          cvss2_access_vector: NETWORK
+          cvss2_access_complexity: LOW
+          cvss2_authentication: NONE
+          cvss2_confidentiality_impact: PARTIAL
+          cvss2_integrity_impact: PARTIAL
+          cvss2_availability_impact: PARTIAL
+          cvss2_base_score: 7.5
+          cvss2_exploitability: PROOF_OF_CONCEPT
+          cvss2_remediation_level: OFFICIAL_FIX
+          cvss2_report_confidence: CONFIRMED
+          cvss2_temporal_score: 6.2
+          cvss2_confidentiality_requirement: MEDIUM
+          cvss2_integrity_requirement: MEDIUM
+          cvss2_availability_requirement: LOW

@@ -1,0 +1,10 @@
+# Standalone CveMetadataPublished - all fields populated
+record_cve_id: CVE-2024-10002
+assigner_org_id: d0e1f2a3-b4c5-4d6e-7f8a-9b0c1d2e3f4a
+assigner_short_name: example_org
+requester_user_id: e1f2a3b4-c5d6-4e7f-8a9b-0c1d2e3f4a5b
+serial: 5
+date_reserved: "2024-01-20T09:00:00Z"
+date_published: "2024-04-10T14:30:00Z"
+date_updated: "2024-05-01T08:00:00Z"
+published_state: PUBLISHED

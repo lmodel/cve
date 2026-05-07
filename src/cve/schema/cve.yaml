@@ -1,0 +1,2675 @@
+---
+id: https://w3id.org/lmodel/cve
+name: cve
+title: cve
+description: |-
+  MITRE Common Vulnerabilities and Exposures (CVE™) LinkML Schema.
+  Provides complete semantic coverage of the CVE Record Format v5 JSON Schema,
+  including published and rejected records, all container types, CVSS 4.0/3.1/3.0/2.0
+  scoring, CPE applicability, taxonomy mappings, credits, and timeline entries.
+license: https://creativecommons.org/publicdomain/zero/1.0/
+
+source: https://github.com/CVEProject/cve-schema/blob/main/schema/CVE_Record_Format.json
+version: "5.2.0"
+annotations: {}
+
+see_also:
+  - https://lmodel.github.io/cve
+  - https://www.cve.org/
+  - https://cveproject.github.io/cve-schema/schema/CVE_Record_Format.json
+
+prefixes:
+  cve: https://w3id.org/lmodel/cve/
+  linkml: https://w3id.org/linkml/
+  schema: http://schema.org/
+  dct: http://purl.org/dc/terms/
+  xsd: "http://www.w3.org/2001/XMLSchema#"
+  rdfs: "http://www.w3.org/2000/01/rdf-schema#"
+  skos: "http://www.w3.org/2004/02/skos/core#"
+  WIKIDATA: https://www.wikidata.org/wiki/
+
+default_prefix: cve
+default_range: string
+
+imports:
+  - ./vulnerability_core
+
+
+# Subsets
+
+subsets:
+  cve_record:
+    description: Required CVE Record Format fields
+
+  cna_metadata:
+    description: CNA and program governance metadata
+
+  cvss_metrics:
+    description: CVSS scoring metric fields
+
+
+# Types
+
+types:
+  UuidType:
+    uri: xsd:string
+    base: str
+    description: >-
+      A version 4 (random) universally unique identifier (UUID) as defined by
+      RFC 4122 section 4.1.3.
+    pattern: "^[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-4[0-9A-Fa-f]{3}-[89ABab][0-9A-Fa-f]{3}-[0-9A-Fa-f]{12}$"
+
+  Timestamp:
+    uri: xsd:string
+    base: str
+    description: >-
+      Date/time format based on RFC3339 and ISO ISO8601, with an optional
+      timezone in the format 'yyyy-MM-ddTHH:mm:ss[+-]ZH:ZM'. If timezone
+      offset is not given, GMT (+00:00) is assumed.
+    pattern: "^(((2000|2400|2800|(19|2[0-9](0[48]|[2468][048]|[13579][26])))-02-29)|(((19|2[0-9])[0-9]{2})-02-(0[1-9]|1[0-9]|2[0-8]))|(((19|2[0-9])[0-9]{2})-(0[13578]|10|12)-(0[1-9]|[12][0-9]|3[01]))|(((19|2[0-9])[0-9]{2})-(0[469]|11)-(0[1-9]|[12][0-9]|30)))T(2[0-3]|[01][0-9]):([0-5][0-9]):([0-5][0-9])(\\.[0-9]+)?(Z|[+-][0-9]{2}:[0-9]{2})?$"
+
+  Datestamp:
+    uri: xsd:date
+    base: str
+    description: Date format based on RFC3339 and ISO ISO8601 (date only, no time component).
+    pattern: "^((2000|2400|2800|(19|2[0-9](0[48]|[2468][048]|[13579][26])))-02-29)|(((19|2[0-9])[0-9]{2})-02-(0[1-9]|1[0-9]|2[0-8]))|(((19|2[0-9])[0-9]{2})-(0[13578]|10|12)-(0[1-9]|[12][0-9]|3[01]))|(((19|2[0-9])[0-9]{2})-(0[469]|11)-(0[1-9]|[12][0-9]|30))$"
+
+  VersionString:
+    uri: xsd:string
+    base: str
+    description: >-
+      A single version of a product, as expressed in its own version numbering scheme.
+      May include wildcards such as '*' and version range notation.
+
+  LanguageTag:
+    uri: xsd:string
+    base: str
+    description: >-
+      BCP 47 language code, language-region. The default value is 'en' (English).
+    pattern: "^[A-Za-z]{2,4}([_-][A-Za-z]{4})?([_-]([A-Za-z]{2}|[0-9]{3}))?$"
+
+  CpeNameType:
+    uri: xsd:string
+    base: str
+    description: Common Platform Enumeration (CPE) Name in either 2.2 or 2.3 format.
+    pattern: "([c][pP][eE]:/[AHOaho]?(:[A-Za-z0-9._\\-~%]*){0,6})|(cpe:2\\.3:[aho*\\-](:(((\\?*|\\*?)([a-zA-Z0-9\\-._]|(\\\\[\\\\*?!\"#$%&'()+,/:;<=>@\\[\\]\\^`{|}~]))+(\\?*|\\*?))|[*\\-])){5}(:(([a-zA-Z]{2,3}(-([a-zA-Z]{2}|[0-9]{3}))?)|[*\\-]))(:(((\\?*|\\*?)([a-zA-Z0-9\\-._]|(\\\\[\\\\*?!\"#$%&'()+,/:;<=>@\\[\\]\\^`{|}~]))+(\\?*|\\*?))|[*\\-])){4})"
+
+  CpeName23Type:
+    uri: xsd:string
+    base: str
+    description: Common Platform Enumeration (CPE) Name in 2.3 format only.
+    pattern: "(cpe:2\\.3:[aho*\\-](:(((\\?*|\\*?)([a-zA-Z0-9\\-._]|(\\\\[\\\\*?!\"#$%&'()+,/:;<=>@\\[\\]\\^`{|}~]))+(\\?*|\\*?))|[*\\-])){5}(:(([a-zA-Z]{2,3}(-([a-zA-Z]{2}|[0-9]{3}))?)|[*\\-]))(:(((\\?*|\\*?)([a-zA-Z0-9\\-._]|(\\\\[\\\\*?!\"#$%&'()+,/:;<=>@\\[\\]\\^`{|}~]))+(\\?*|\\*?))|[*\\-])){4})"
+
+
+# Enums
+
+enums:
+
+  # --- Record-level ---
+
+  DataType:
+    description: Indicates the type of information represented in a CVE JSON instance.
+    permissible_values:
+      CVE_RECORD:
+        description: The instance is a CVE Record.
+
+  RecordState:
+    description: Lifecycle state of a CVE Record (PUBLISHED or REJECTED).
+    permissible_values:
+      PUBLISHED:
+        description: The CVE ID has associated vulnerability data published in the CVE List.
+      REJECTED:
+        description: The CVE ID has been rejected and should not be used.
+
+  # --- Product / version ---
+
+  VersionStatus:
+    description: >-
+      The vulnerability status of a given version or range of versions of a product.
+    permissible_values:
+      affected:
+        description: The version is affected by the vulnerability.
+      unaffected:
+        description: The version is not affected by the vulnerability.
+      unknown:
+        description: It is unknown or unspecified whether the version is affected.
+
+  # --- Reference tags ---
+
+  ReferenceTag:
+    description: A tag describing the type or nature of the resource referenced by a URL.
+    permissible_values:
+      broken-link:
+        description: The reference link is returning a 404 error, or the site is no longer online.
+      customer-entitlement:
+        description: >-
+          Similar to Privileges Required, but specific to references that require
+          non-public or paid access for customers of the particular vendor.
+      exploit:
+        description: >-
+          Reference contains an in-depth description of steps to exploit a vulnerability
+          OR contains legitimate Proof of Concept (PoC) code or an exploit kit.
+      government-resource:
+        description: All reference links that are from a government agency or organization.
+      issue-tracking:
+        description: >-
+          The reference is a post from a bug tracking tool such as MantisBT, Bugzilla,
+          JIRA, GitHub Issues, etc.
+      mailing-list:
+        description: The reference is from a mailing list -- often specific to a product or vendor.
+      mitigation:
+        description: >-
+          The reference contains information on steps to mitigate against the vulnerability
+          when a patch cannot be applied or is unavailable, or for EOL product situations.
+      not-applicable:
+        description: >-
+          The reference link is not applicable to the vulnerability and was likely
+          associated by MITRE accidentally (should be used sparingly).
+      patch:
+        description: The reference contains an update to the software that fixes the vulnerability.
+      permissions-required:
+        description: The reference link provided is blocked by a logon page.
+      media-coverage:
+        description: >-
+          The reference is from a media outlet such as a newspaper, magazine, social media,
+          or weblog. Not intended for individual personal social media accounts.
+      product:
+        description: A reference appropriate for describing a product for the purpose of CPE or SWID.
+      related:
+        description: A reference that is for a related (but not the same) vulnerability.
+      release-notes:
+        description: >-
+          The reference is in the format of a vendor or open source project's release notes
+          or change log.
+      signature:
+        description: >-
+          The reference contains a method to detect or prevent the presence or
+          exploitation of the vulnerability.
+      technical-description:
+        description: >-
+          The reference contains in-depth technical information about a vulnerability
+          and its exploitation process, typically in the form of a presentation or whitepaper.
+      third-party-advisory:
+        description: >-
+          Advisory is from an organization that is not the vulnerable product's
+          vendor, publisher, or maintainer.
+      vendor-advisory:
+        description: >-
+          Advisory is from the vendor, publisher, or maintainer of the product or
+          the parent organization.
+      vdb-entry:
+        description: >-
+          VDBs are loosely defined as sites that provide information about this
+          vulnerability, such as advisories, with identifiers.
+
+  # --- CNA / ADP tags ---
+
+  CNATag:
+    description: Tags provided by a CNA describing the CVE Record.
+    permissible_values:
+      unsupported-when-assigned:
+        description: >-
+          When a request for a CVE assignment was received, the product was already
+          end-of-life (EOL) or a product or specific version was deemed not to be
+          supported by the vendor.
+      exclusively-hosted-service:
+        description: >-
+          All known software and/or hardware affected by this CVE Record is known
+          to exist only in the affected hosted service.
+      disputed:
+        description: >-
+          One party disagrees with another party's assertion that a particular issue
+          in software is a vulnerability.
+
+  ADPTag:
+    description: Tags provided by an ADP describing the CVE Record.
+    permissible_values:
+      disputed:
+        description: >-
+          One party disagrees with another party's assertion that a particular issue
+          in software is a vulnerability.
+
+  # --- Credit types ---
+
+  CreditType:
+    description: Type or role of the entity being credited.
+    permissible_values:
+      finder:
+        description: Identifies the vulnerability.
+      reporter:
+        description: Notifies the vendor of the vulnerability to a CNA.
+      analyst:
+        description: Validates the vulnerability to ensure accuracy or severity.
+      coordinator:
+        description: Facilitates the coordinated response process.
+      remediation developer:
+        description: Prepares a code change or other remediation plans.
+      remediation reviewer:
+        description: Reviews vulnerability remediation plans or code changes for effectiveness and completeness.
+      remediation verifier:
+        description: Tests and verifies the vulnerability or its remediation.
+      tool:
+        description: Names of tools used in vulnerability discovery or identification.
+      sponsor:
+        description: Supports the vulnerability identification or remediation activities.
+      other:
+        description: Other credit type not covered by the above categories.
+
+  # --- CPE operator ---
+
+  CpeOperator:
+    description: Logical operator used in CPE applicability nodes.
+    permissible_values:
+      AND:
+        description: All CPE match criteria must be satisfied.
+      OR:
+        description: Any one CPE match criterion must be satisfied.
+
+  # --- CVSS 4.0 enums ---
+
+  Cvss4AttackVector:
+    description: CVSS 4.0 attack vector base metric.
+    in_subset: [cvss_metrics]
+    permissible_values:
+      NETWORK:
+      ADJACENT:
+      LOCAL:
+      PHYSICAL:
+
+  Cvss4AttackComplexity:
+    description: CVSS 4.0 attack complexity base metric.
+    in_subset: [cvss_metrics]
+    permissible_values:
+      HIGH:
+      LOW:
+
+  Cvss4AttackRequirements:
+    description: CVSS 4.0 attack requirements base metric.
+    in_subset: [cvss_metrics]
+    permissible_values:
+      NONE:
+      PRESENT:
+
+  Cvss4PrivilegesRequired:
+    description: CVSS 4.0 privileges required base metric.
+    in_subset: [cvss_metrics]
+    permissible_values:
+      HIGH:
+      LOW:
+      NONE:
+
+  Cvss4UserInteraction:
+    description: CVSS 4.0 user interaction base metric.
+    in_subset: [cvss_metrics]
+    permissible_values:
+      NONE:
+      PASSIVE:
+      ACTIVE:
+
+  Cvss4VulnCia:
+    description: CVSS 4.0 vulnerable system confidentiality/integrity/availability impact base metric.
+    in_subset: [cvss_metrics]
+    permissible_values:
+      NONE:
+      LOW:
+      HIGH:
+
+  Cvss4SubCia:
+    description: CVSS 4.0 subsequent system confidentiality/integrity/availability impact base metric.
+    in_subset: [cvss_metrics]
+    permissible_values:
+      NONE:
+      LOW:
+      HIGH:
+
+  Cvss4ExploitMaturity:
+    description: CVSS 4.0 exploit maturity supplemental metric.
+    in_subset: [cvss_metrics]
+    permissible_values:
+      UNREPORTED:
+      PROOF_OF_CONCEPT:
+      ATTACKED:
+      NOT_DEFINED:
+
+  Cvss4CiaRequirement:
+    description: CVSS 4.0 confidentiality/integrity/availability requirement environmental metric.
+    in_subset: [cvss_metrics]
+    permissible_values:
+      LOW:
+      MEDIUM:
+      HIGH:
+      NOT_DEFINED:
+
+  Cvss4Safety:
+    description: CVSS 4.0 safety supplemental metric.
+    in_subset: [cvss_metrics]
+    permissible_values:
+      NEGLIGIBLE:
+      PRESENT:
+      NOT_DEFINED:
+
+  Cvss4Automatable:
+    description: CVSS 4.0 automatable supplemental metric.
+    in_subset: [cvss_metrics]
+    permissible_values:
+      "NO":
+        description: The attack cannot be automated.
+      "YES":
+        description: The attack can be automated.
+      NOT_DEFINED:
+        description: Automatable status is not defined.
+
+  Cvss4Recovery:
+    description: CVSS 4.0 recovery supplemental metric.
+    in_subset: [cvss_metrics]
+    permissible_values:
+      AUTOMATIC:
+      USER:
+      IRRECOVERABLE:
+      NOT_DEFINED:
+
+  Cvss4ValueDensity:
+    description: CVSS 4.0 value density supplemental metric.
+    in_subset: [cvss_metrics]
+    permissible_values:
+      DIFFUSE:
+      CONCENTRATED:
+      NOT_DEFINED:
+
+  Cvss4VulnerabilityResponseEffort:
+    description: CVSS 4.0 vulnerability response effort supplemental metric.
+    in_subset: [cvss_metrics]
+    permissible_values:
+      LOW:
+      MODERATE:
+      HIGH:
+      NOT_DEFINED:
+
+  Cvss4ProviderUrgency:
+    description: CVSS 4.0 provider urgency supplemental metric.
+    in_subset: [cvss_metrics]
+    permissible_values:
+      CLEAR:
+      GREEN:
+      AMBER:
+      RED:
+      NOT_DEFINED:
+
+  Cvss4Severity:
+    description: CVSS 4.0 qualitative severity rating.
+    in_subset: [cvss_metrics]
+    permissible_values:
+      NONE:
+      LOW:
+      MEDIUM:
+      HIGH:
+      CRITICAL:
+
+  Cvss4ModifiedAttackVector:
+    description: CVSS 4.0 modified attack vector environmental metric.
+    in_subset: [cvss_metrics]
+    permissible_values:
+      NETWORK:
+      ADJACENT:
+      LOCAL:
+      PHYSICAL:
+      NOT_DEFINED:
+
+  Cvss4ModifiedAttackComplexity:
+    description: CVSS 4.0 modified attack complexity environmental metric.
+    in_subset: [cvss_metrics]
+    permissible_values:
+      HIGH:
+      LOW:
+      NOT_DEFINED:
+
+  Cvss4ModifiedAttackRequirements:
+    description: CVSS 4.0 modified attack requirements environmental metric.
+    in_subset: [cvss_metrics]
+    permissible_values:
+      NONE:
+      PRESENT:
+      NOT_DEFINED:
+
+  Cvss4ModifiedPrivilegesRequired:
+    description: CVSS 4.0 modified privileges required environmental metric.
+    in_subset: [cvss_metrics]
+    permissible_values:
+      HIGH:
+      LOW:
+      NONE:
+      NOT_DEFINED:
+
+  Cvss4ModifiedUserInteraction:
+    description: CVSS 4.0 modified user interaction environmental metric.
+    in_subset: [cvss_metrics]
+    permissible_values:
+      NONE:
+      PASSIVE:
+      ACTIVE:
+      NOT_DEFINED:
+
+  Cvss4ModifiedVulnCia:
+    description: CVSS 4.0 modified vulnerable system CIA environmental metric.
+    in_subset: [cvss_metrics]
+    permissible_values:
+      NONE:
+      LOW:
+      HIGH:
+      NOT_DEFINED:
+
+  Cvss4ModifiedSubC:
+    description: CVSS 4.0 modified subsequent system confidentiality environmental metric.
+    in_subset: [cvss_metrics]
+    permissible_values:
+      NONE:
+      LOW:
+      HIGH:
+      NOT_DEFINED:
+
+  Cvss4ModifiedSubIa:
+    description: >-
+      CVSS 4.0 modified subsequent system integrity/availability environmental metric
+      (includes SAFETY value).
+    in_subset: [cvss_metrics]
+    permissible_values:
+      NONE:
+      LOW:
+      HIGH:
+      SAFETY:
+      NOT_DEFINED:
+
+  # --- CVSS 3.x shared enums ---
+
+  Cvss3AttackVector:
+    description: CVSS 3.x attack vector base metric.
+    in_subset: [cvss_metrics]
+    permissible_values:
+      NETWORK:
+      ADJACENT_NETWORK:
+      LOCAL:
+      PHYSICAL:
+
+  Cvss3AttackComplexity:
+    description: CVSS 3.x attack complexity base metric.
+    in_subset: [cvss_metrics]
+    permissible_values:
+      HIGH:
+      LOW:
+
+  Cvss3PrivilegesRequired:
+    description: CVSS 3.x privileges required base metric.
+    in_subset: [cvss_metrics]
+    permissible_values:
+      HIGH:
+      LOW:
+      NONE:
+
+  Cvss3UserInteraction:
+    description: CVSS 3.x user interaction base metric.
+    in_subset: [cvss_metrics]
+    permissible_values:
+      NONE:
+      REQUIRED:
+
+  Cvss3Scope:
+    description: CVSS 3.x scope base metric.
+    in_subset: [cvss_metrics]
+    permissible_values:
+      UNCHANGED:
+      CHANGED:
+
+  Cvss3Cia:
+    description: CVSS 3.x confidentiality/integrity/availability impact base metric.
+    in_subset: [cvss_metrics]
+    permissible_values:
+      NONE:
+      LOW:
+      HIGH:
+
+  Cvss3Severity:
+    description: CVSS 3.x qualitative severity rating.
+    in_subset: [cvss_metrics]
+    permissible_values:
+      NONE:
+      LOW:
+      MEDIUM:
+      HIGH:
+      CRITICAL:
+
+  Cvss3ExploitCodeMaturity:
+    description: CVSS 3.x exploit code maturity temporal metric.
+    in_subset: [cvss_metrics]
+    permissible_values:
+      UNPROVEN:
+      PROOF_OF_CONCEPT:
+      FUNCTIONAL:
+      HIGH:
+      NOT_DEFINED:
+
+  Cvss3RemediationLevel:
+    description: CVSS 3.x remediation level temporal metric.
+    in_subset: [cvss_metrics]
+    permissible_values:
+      OFFICIAL_FIX:
+      TEMPORARY_FIX:
+      WORKAROUND:
+      UNAVAILABLE:
+      NOT_DEFINED:
+
+  Cvss3Confidence:
+    description: CVSS 3.x report confidence temporal metric.
+    in_subset: [cvss_metrics]
+    permissible_values:
+      UNKNOWN:
+      REASONABLE:
+      CONFIRMED:
+      NOT_DEFINED:
+
+  Cvss3CiaRequirement:
+    description: CVSS 3.x CIA requirement environmental metric.
+    in_subset: [cvss_metrics]
+    permissible_values:
+      LOW:
+      MEDIUM:
+      HIGH:
+      NOT_DEFINED:
+
+  Cvss3ModifiedAttackVector:
+    description: CVSS 3.x modified attack vector environmental metric.
+    in_subset: [cvss_metrics]
+    permissible_values:
+      NETWORK:
+      ADJACENT_NETWORK:
+      LOCAL:
+      PHYSICAL:
+      NOT_DEFINED:
+
+  Cvss3ModifiedAttackComplexity:
+    description: CVSS 3.x modified attack complexity environmental metric.
+    in_subset: [cvss_metrics]
+    permissible_values:
+      HIGH:
+      LOW:
+      NOT_DEFINED:
+
+  Cvss3ModifiedPrivilegesRequired:
+    description: CVSS 3.x modified privileges required environmental metric.
+    in_subset: [cvss_metrics]
+    permissible_values:
+      HIGH:
+      LOW:
+      NONE:
+      NOT_DEFINED:
+
+  Cvss3ModifiedUserInteraction:
+    description: CVSS 3.x modified user interaction environmental metric.
+    in_subset: [cvss_metrics]
+    permissible_values:
+      NONE:
+      REQUIRED:
+      NOT_DEFINED:
+
+  Cvss3ModifiedScope:
+    description: CVSS 3.x modified scope environmental metric.
+    in_subset: [cvss_metrics]
+    permissible_values:
+      UNCHANGED:
+      CHANGED:
+      NOT_DEFINED:
+
+  Cvss3ModifiedCia:
+    description: CVSS 3.x modified CIA environmental metric.
+    in_subset: [cvss_metrics]
+    permissible_values:
+      NONE:
+      LOW:
+      HIGH:
+      NOT_DEFINED:
+
+  # --- CVSS 2.0 enums ---
+
+  Cvss2AccessVector:
+    description: CVSS 2.0 access vector base metric.
+    in_subset: [cvss_metrics]
+    permissible_values:
+      NETWORK:
+      ADJACENT_NETWORK:
+      LOCAL:
+
+  Cvss2AccessComplexity:
+    description: CVSS 2.0 access complexity base metric.
+    in_subset: [cvss_metrics]
+    permissible_values:
+      HIGH:
+      MEDIUM:
+      LOW:
+
+  Cvss2Authentication:
+    description: CVSS 2.0 authentication base metric.
+    in_subset: [cvss_metrics]
+    permissible_values:
+      MULTIPLE:
+      SINGLE:
+      NONE:
+
+  Cvss2Cia:
+    description: CVSS 2.0 confidentiality/integrity/availability impact base metric.
+    in_subset: [cvss_metrics]
+    permissible_values:
+      NONE:
+      PARTIAL:
+      COMPLETE:
+
+  Cvss2Exploitability:
+    description: CVSS 2.0 exploitability temporal metric.
+    in_subset: [cvss_metrics]
+    permissible_values:
+      UNPROVEN:
+      PROOF_OF_CONCEPT:
+      FUNCTIONAL:
+      HIGH:
+      NOT_DEFINED:
+
+  Cvss2RemediationLevel:
+    description: CVSS 2.0 remediation level temporal metric.
+    in_subset: [cvss_metrics]
+    permissible_values:
+      OFFICIAL_FIX:
+      TEMPORARY_FIX:
+      WORKAROUND:
+      UNAVAILABLE:
+      NOT_DEFINED:
+
+  Cvss2ReportConfidence:
+    description: CVSS 2.0 report confidence temporal metric.
+    in_subset: [cvss_metrics]
+    permissible_values:
+      UNCONFIRMED:
+      UNCORROBORATED:
+      CONFIRMED:
+      NOT_DEFINED:
+
+  Cvss2CollateralDamagePotential:
+    description: CVSS 2.0 collateral damage potential environmental metric.
+    in_subset: [cvss_metrics]
+    permissible_values:
+      NONE:
+      LOW:
+      LOW_MEDIUM:
+      MEDIUM_HIGH:
+      HIGH:
+      NOT_DEFINED:
+
+  Cvss2TargetDistribution:
+    description: CVSS 2.0 target distribution environmental metric.
+    in_subset: [cvss_metrics]
+    permissible_values:
+      NONE:
+      LOW:
+      MEDIUM:
+      HIGH:
+      NOT_DEFINED:
+
+  Cvss2CiaRequirement:
+    description: CVSS 2.0 CIA requirement environmental metric.
+    in_subset: [cvss_metrics]
+    permissible_values:
+      LOW:
+      MEDIUM:
+      HIGH:
+      NOT_DEFINED:
+
+
+# Classes
+
+classes:
+
+  # --- Top-level record ---
+
+  CVERecord:
+    is_a: Vulnerability
+    tree_root: true
+    description: >-
+      Official CVE Record corresponding to a CVE ID. Represents either a
+      Published or Rejected record in the MITRE CVE program. The dataType
+      field is always CVE_RECORD. Use cveMetadata.state to distinguish
+      Published from Rejected records.
+    slots:
+      - data_type
+      - data_version
+      - cve_metadata
+      - containers
+    slot_usage:
+      cve_id:
+        required: false
+        identifier: false
+      cve_metadata:
+        required: true
+      containers:
+        required: true
+    exact_mappings:
+      - WIKIDATA:Q631425
+    in_subset:
+      - cve_record
+
+  # --- Metadata ---
+
+  CveMetadata:
+    abstract: true
+    description: >-
+      Abstract base for CVE Record metadata. Represents either a Published
+      or Rejected record's metadata. All fields are controlled by CVE Services.
+    union_of:
+      - CveMetadataPublished
+      - CveMetadataRejected
+
+  CveMetadataPublished:
+    is_a: CveMetadata
+    description: Metadata for a CVE Record in the PUBLISHED state.
+    slots:
+      - record_cve_id
+      - assigner_org_id
+      - assigner_short_name
+      - serial
+      - date_updated
+      - date_reserved
+      - requester_user_id
+      - date_published
+      - published_state
+    slot_usage:
+      record_cve_id:
+        required: true
+      assigner_org_id:
+        required: true
+      published_state:
+        required: true
+
+  CveMetadataRejected:
+    is_a: CveMetadata
+    description: Metadata for a CVE Record in the REJECTED state.
+    slots:
+      - record_cve_id
+      - assigner_org_id
+      - assigner_short_name
+      - serial
+      - date_updated
+      - date_reserved
+      - date_published
+      - date_rejected
+      - rejected_state
+    slot_usage:
+      record_cve_id:
+        required: true
+      assigner_org_id:
+        required: true
+      rejected_state:
+        required: true
+
+  # --- Containers ---
+
+  Containers:
+    description: >-
+      A set of structures (called containers) used to store vulnerability
+      information related to a specific CVE ID. At minimum a 'cna' container
+      is required.
+    slots:
+      - cna
+      - adp
+    slot_usage:
+      cna:
+        required: true
+
+  ProviderMetadata:
+    description: Details related to the information container provider (CNA or ADP).
+    slots:
+      - org_id
+      - short_name
+      - date_updated
+    slot_usage:
+      org_id:
+        required: true
+
+  # --- CNA containers ---
+
+  CnaContainer:
+    abstract: true
+    description: Abstract base for CNA containers (published and rejected).
+    union_of:
+      - CnaPublishedContainer
+      - CnaRejectedContainer
+
+  CnaPublishedContainer:
+    is_a: CnaContainer
+    description: >-
+      An object containing vulnerability information provided by a CVE Numbering
+      Authority (CNA) for a published CVE ID. There can only be one CNA container
+      per CVE record since there can only be one assigning CNA.
+    slots:
+      - provider_metadata
+      - date_assigned
+      - date_public
+      - title
+      - descriptions
+      - affected
+      - cpe_applicability
+      - problem_types
+      - cve_references
+      - impacts
+      - metrics
+      - configurations_text
+      - workarounds
+      - solutions
+      - exploits
+      - timeline
+      - credits
+      - cna_source
+      - cna_tags
+      - taxonomy_mappings
+    slot_usage:
+      provider_metadata:
+        required: true
+      descriptions:
+        required: true
+      affected:
+        required: true
+      cve_references:
+        required: true
+
+  CnaRejectedContainer:
+    is_a: CnaContainer
+    description: >-
+      An object containing vulnerability information provided by a CVE Numbering
+      Authority (CNA) for a rejected CVE ID. There can only be one CNA container
+      per CVE record.
+    slots:
+      - provider_metadata
+      - rejected_reasons
+      - replaced_by
+    slot_usage:
+      provider_metadata:
+        required: true
+      rejected_reasons:
+        required: true
+
+  AdpContainer:
+    description: >-
+      An object containing vulnerability information provided by an Authorized
+      Data Publisher (ADP). Multiple ADPs can provide containers for a single CVE ID.
+    slots:
+      - provider_metadata
+      - date_public
+      - title
+      - descriptions
+      - affected
+      - cpe_applicability
+      - problem_types
+      - cve_references
+      - impacts
+      - metrics
+      - configurations_text
+      - workarounds
+      - solutions
+      - exploits
+      - timeline
+      - credits
+      - cna_source
+      - adp_tags
+      - taxonomy_mappings
+    slot_usage:
+      provider_metadata:
+        required: true
+
+  # --- Affected products ---
+
+  AffectedProduct:
+    is_a: Product
+    description: >-
+      Information about the set of products and services affected by a vulnerability.
+      At least one of (vendor + product) or (collectionURL + packageName) is required,
+      and at least one of versions or defaultStatus is required.
+    slots:
+      - collection_url
+      - package_name
+      - cpes
+      - modules
+      - program_files
+      - program_routines
+      - repo
+      - default_status
+      - versions
+      - package_url
+
+  ProgramRoutine:
+    description: An affected source code function, method, subroutine, or procedure.
+    slots:
+      - routine_name
+    slot_usage:
+      routine_name:
+        required: true
+
+  VersionEntry:
+    description: >-
+      A single version or a range of versions of a product with associated
+      vulnerability status. An entry with only version and status is a point
+      version; an entry with versionType and a less-than limit describes a range.
+    slots:
+      - version_value
+      - version_status
+      - version_type
+      - less_than
+      - less_than_or_equal
+      - version_changes
+    slot_usage:
+      version_value:
+        required: true
+      version_status:
+        required: true
+
+  VersionChange:
+    description: A status change that takes place at a specific point within a version range.
+    slots:
+      - change_at
+      - change_status
+    slot_usage:
+      change_at:
+        required: true
+      change_status:
+        required: true
+
+  # --- Descriptions ---
+
+  MultiLangDescription:
+    description: >-
+      Text in a particular language with optional alternate markup or formatted
+      representation (e.g., Markdown) or embedded media. Used for vulnerability
+      descriptions, rejected reasons, configurations, workarounds, solutions, and exploits.
+    slots:
+      - lang
+      - description_value
+      - supporting_media
+    slot_usage:
+      lang:
+        required: true
+      description_value:
+        required: true
+
+  SupportingMedia:
+    description: >-
+      Supporting media data for a description such as markdown, diagrams, etc.
+      Similar to RFC 2397, each media object has a media type, data value,
+      and an optional base64 flag.
+    slots:
+      - media_type
+      - base64_encoded
+      - media_value
+    slot_usage:
+      media_type:
+        required: true
+      media_value:
+        required: true
+
+  # --- Problem types ---
+
+  ProblemType:
+    description: >-
+      Problem type information (e.g., CWE identifier). Wraps one or more
+      problem type descriptions. The CNA requirement is [PROBLEMTYPE].
+    slots:
+      - problem_type_descriptions
+    slot_usage:
+      problem_type_descriptions:
+        required: true
+
+  ProblemTypeDescription:
+    description: Individual problem type description entry.
+    slots:
+      - lang
+      - problem_description
+      - cwe_id
+      - problem_source_type
+      - problem_references
+    slot_usage:
+      lang:
+        required: true
+      problem_description:
+        required: true
+
+  # --- References ---
+
+  CveReference:
+    is_a: Reference
+    description: >-
+      An external reference associated with a CVE Record. Extends the core
+      Reference with optional descriptive tags characterizing the resource.
+    slots:
+      - reference_tags
+    slot_usage:
+      url:
+        required: true
+
+  # --- Impacts ---
+
+  ImpactEntry:
+    description: >-
+      An impact entry linking an optional CAPEC attack pattern ID to
+      one or more prose descriptions of the impact scenario.
+    slots:
+      - capec_id
+      - impact_descriptions
+    slot_usage:
+      impact_descriptions:
+        required: true
+
+  # --- Metrics ---
+
+  MetricEntry:
+    description: >-
+      A metric entry containing scoring data in one of the CVSS formats (v4.0,
+      v3.1, v3.0, v2.0) or a custom format, with optional applicability scenarios.
+      At least one of cvssV4_0, cvssV3_1, cvssV3_0, cvssV2_0, or other is required.
+    slots:
+      - metric_format
+      - metric_scenarios
+      - cvss_v4_0
+      - cvss_v3_1
+      - cvss_v3_0
+      - cvss_v2_0
+      - other_metric
+
+  MetricScenario:
+    description: >-
+      A scenario description indicating the context in which a metric applies.
+      If no specific scenario is given, GENERAL is used as the default.
+    slots:
+      - lang
+      - scenario_value
+    slot_usage:
+      lang:
+        required: true
+      scenario_value:
+        required: true
+
+  # --- CVSS 4.0 ---
+
+  CvssV4_0:
+    description: >-
+      CVSS version 4.0 scoring object. Requires version, vectorString, baseScore,
+      and baseSeverity. All other fields are optional.
+    slots:
+      - cvss4_version
+      - cvss4_vector_string
+      - cvss4_base_score
+      - cvss4_base_severity
+      - cvss4_attack_vector
+      - cvss4_attack_complexity
+      - cvss4_attack_requirements
+      - cvss4_privileges_required
+      - cvss4_user_interaction
+      - cvss4_vuln_confidentiality_impact
+      - cvss4_vuln_integrity_impact
+      - cvss4_vuln_availability_impact
+      - cvss4_sub_confidentiality_impact
+      - cvss4_sub_integrity_impact
+      - cvss4_sub_availability_impact
+      - cvss4_exploit_maturity
+      - cvss4_confidentiality_requirement
+      - cvss4_integrity_requirement
+      - cvss4_availability_requirement
+      - cvss4_modified_attack_vector
+      - cvss4_modified_attack_complexity
+      - cvss4_modified_attack_requirements
+      - cvss4_modified_privileges_required
+      - cvss4_modified_user_interaction
+      - cvss4_modified_vuln_confidentiality_impact
+      - cvss4_modified_vuln_integrity_impact
+      - cvss4_modified_vuln_availability_impact
+      - cvss4_modified_sub_confidentiality_impact
+      - cvss4_modified_sub_integrity_impact
+      - cvss4_modified_sub_availability_impact
+      - cvss4_safety
+      - cvss4_automatable
+      - cvss4_recovery
+      - cvss4_value_density
+      - cvss4_vulnerability_response_effort
+      - cvss4_provider_urgency
+    slot_usage:
+      cvss4_version:
+        required: true
+      cvss4_vector_string:
+        required: true
+      cvss4_base_score:
+        required: true
+      cvss4_base_severity:
+        required: true
+    in_subset:
+      - cvss_metrics
+
+  # --- CVSS 3.1 ---
+
+  CvssV3_1:
+    description: >-
+      CVSS version 3.1 scoring object. Requires version ('3.1'), vectorString,
+      baseScore, and baseSeverity.
+    slots:
+      - cvss3_version
+      - cvss3_vector_string
+      - cvss3_attack_vector
+      - cvss3_attack_complexity
+      - cvss3_privileges_required
+      - cvss3_user_interaction
+      - cvss3_scope
+      - cvss3_confidentiality_impact
+      - cvss3_integrity_impact
+      - cvss3_availability_impact
+      - cvss3_base_score
+      - cvss3_base_severity
+      - cvss3_exploit_code_maturity
+      - cvss3_remediation_level
+      - cvss3_report_confidence
+      - cvss3_temporal_score
+      - cvss3_temporal_severity
+      - cvss3_confidentiality_requirement
+      - cvss3_integrity_requirement
+      - cvss3_availability_requirement
+      - cvss3_modified_attack_vector
+      - cvss3_modified_attack_complexity
+      - cvss3_modified_privileges_required
+      - cvss3_modified_user_interaction
+      - cvss3_modified_scope
+      - cvss3_modified_confidentiality_impact
+      - cvss3_modified_integrity_impact
+      - cvss3_modified_availability_impact
+      - cvss3_environmental_score
+      - cvss3_environmental_severity
+    slot_usage:
+      cvss3_version:
+        required: true
+        ifabsent: string(3.1)
+      cvss3_vector_string:
+        required: true
+      cvss3_base_score:
+        required: true
+      cvss3_base_severity:
+        required: true
+    in_subset:
+      - cvss_metrics
+
+  # --- CVSS 3.0 ---
+
+  CvssV3_0:
+    description: >-
+      CVSS version 3.0 scoring object. Requires version ('3.0'), vectorString,
+      baseScore, and baseSeverity. Shares metric slots with CvssV3_1.
+    slots:
+      - cvss3_version
+      - cvss3_vector_string
+      - cvss3_attack_vector
+      - cvss3_attack_complexity
+      - cvss3_privileges_required
+      - cvss3_user_interaction
+      - cvss3_scope
+      - cvss3_confidentiality_impact
+      - cvss3_integrity_impact
+      - cvss3_availability_impact
+      - cvss3_base_score
+      - cvss3_base_severity
+      - cvss3_exploit_code_maturity
+      - cvss3_remediation_level
+      - cvss3_report_confidence
+      - cvss3_temporal_score
+      - cvss3_temporal_severity
+      - cvss3_confidentiality_requirement
+      - cvss3_integrity_requirement
+      - cvss3_availability_requirement
+      - cvss3_modified_attack_vector
+      - cvss3_modified_attack_complexity
+      - cvss3_modified_privileges_required
+      - cvss3_modified_user_interaction
+      - cvss3_modified_scope
+      - cvss3_modified_confidentiality_impact
+      - cvss3_modified_integrity_impact
+      - cvss3_modified_availability_impact
+      - cvss3_environmental_score
+      - cvss3_environmental_severity
+    slot_usage:
+      cvss3_version:
+        required: true
+        ifabsent: string(3.0)
+      cvss3_vector_string:
+        required: true
+      cvss3_base_score:
+        required: true
+      cvss3_base_severity:
+        required: true
+    in_subset:
+      - cvss_metrics
+
+  # --- CVSS 2.0 ---
+
+  CvssV2_0:
+    description: >-
+      CVSS version 2.0 scoring object. Requires version ('2.0'), vectorString,
+      and baseScore.
+    slots:
+      - cvss2_version
+      - cvss2_vector_string
+      - cvss2_access_vector
+      - cvss2_access_complexity
+      - cvss2_authentication
+      - cvss2_confidentiality_impact
+      - cvss2_integrity_impact
+      - cvss2_availability_impact
+      - cvss2_base_score
+      - cvss2_exploitability
+      - cvss2_remediation_level
+      - cvss2_report_confidence
+      - cvss2_temporal_score
+      - cvss2_collateral_damage_potential
+      - cvss2_target_distribution
+      - cvss2_confidentiality_requirement
+      - cvss2_integrity_requirement
+      - cvss2_availability_requirement
+      - cvss2_environmental_score
+    slot_usage:
+      cvss2_version:
+        required: true
+        ifabsent: string(2.0)
+      cvss2_vector_string:
+        required: true
+      cvss2_base_score:
+        required: true
+    in_subset:
+      - cvss_metrics
+
+  OtherMetric:
+    description: >-
+      A non-standard impact description in a custom format. May be a prose
+      description or an arbitrary JSON-compatible object.
+    slots:
+      - other_metric_type
+      - other_metric_content
+    slot_usage:
+      other_metric_type:
+        required: true
+      other_metric_content:
+        required: true
+
+  # --- Timeline ---
+
+  TimelineEntry:
+    description: >-
+      A timeline event recording a significant event about the vulnerability or
+      changes to the CVE Record. Requires time, lang, and value.
+    slots:
+      - event_time
+      - lang
+      - event_value
+    slot_usage:
+      event_time:
+        required: true
+      lang:
+        required: true
+      event_value:
+        required: true
+
+  # --- Credits ---
+
+  CreditEntry:
+    description: >-
+      A credit acknowledging a specific person, organization, or tool for work
+      related to the research, discovery, remediation, or coordination of the
+      vulnerability.
+    slots:
+      - lang
+      - credit_value
+      - credit_user
+      - credit_type
+    slot_usage:
+      lang:
+        required: true
+      credit_value:
+        required: true
+
+  # --- Source ---
+
+  SourceInformation:
+    description: >-
+      Source information (who discovered it, who researched it, etc.) and
+      optionally a chain of CNA information. This is an open object — at least
+      one property must be present.
+    slots:
+      - source_defects
+      - source_advisory
+      - source_discovery
+
+  # --- Taxonomy ---
+
+  TaxonomyMapping:
+    description: >-
+      A taxonomy mapping identifying the taxonomy by name and version, along
+      with a list of relations relevant to the CVE (e.g., ATT&CK, D3FEND, CWE).
+    slots:
+      - taxonomy_name
+      - taxonomy_version
+      - taxonomy_relations
+    slot_usage:
+      taxonomy_name:
+        required: true
+      taxonomy_relations:
+        required: true
+
+  TaxonomyRelation:
+    description: >-
+      A relationship between a taxonomy item and a CVE or another taxonomy item.
+      Provides subject (taxonomyId), predicate (relationshipName), and object
+      (relationshipValue).
+    slots:
+      - taxonomy_id
+      - relationship_name
+      - relationship_value
+    slot_usage:
+      taxonomy_id:
+        required: true
+      relationship_name:
+        required: true
+      relationship_value:
+        required: true
+
+  # --- CPE Applicability ---
+
+  CpeApplicabilityElement:
+    description: >-
+      Affected products defined using an implementation of the CPE Applicability
+      Language. An operator property allows AND or OR logic between CPEs or
+      combinations of CPEs.
+    slots:
+      - cpe_operator
+      - cpe_negate
+      - cpe_nodes
+    slot_usage:
+      cpe_nodes:
+        required: true
+
+  CpeNode:
+    description: Defines a CPE configuration node in an applicability statement.
+    slots:
+      - cpe_operator
+      - cpe_negate
+      - cpe_match_criteria
+    slot_usage:
+      cpe_operator:
+        required: true
+      cpe_match_criteria:
+        required: true
+
+  CpeMatch:
+    description: CPE match string or range within a CPE applicability node.
+    slots:
+      - cpe_vulnerable
+      - cpe_criteria
+      - match_criteria_id
+      - version_start_excluding
+      - version_start_including
+      - version_end_excluding
+      - version_end_including
+    slot_usage:
+      cpe_vulnerable:
+        required: true
+      cpe_criteria:
+        required: true
+
+
+# Slots
+
+slots:
+
+  # -- Record-level --
+
+  data_type:
+    range: DataType
+    description: Indicates the type of information represented in the JSON instance.
+    ifabsent: "DataType(CVE_RECORD)"
+    aliases:
+      - dataType
+    in_subset:
+      - cve_record
+
+  data_version:
+    range: string
+    description: >-
+      The version of the CVE schema used for validating this record.
+      Supports multiple versions of the format (e.g., '5.2.0').
+    pattern: "^5\\.(0|[1-9][0-9]*)(\\.(0|[1-9][0-9]*))?$"
+    ifabsent: string(5.2.0)
+    aliases:
+      - dataVersion
+    in_subset:
+      - cve_record
+
+  cve_metadata:
+    range: CveMetadata
+    description: >-
+      Metadata about the CVE ID. A Published record uses CveMetadataPublished;
+      a Rejected record uses CveMetadataRejected.
+    any_of:
+      - range: CveMetadataPublished
+      - range: CveMetadataRejected
+    inlined: true
+    aliases:
+      - cveMetadata
+    in_subset:
+      - cve_record
+
+  containers:
+    range: Containers
+    description: >-
+      A set of containers (CNA and optionally ADP) holding vulnerability
+      information related to the CVE ID.
+    inlined: true
+    in_subset:
+      - cve_record
+
+  # -- Metadata --
+
+  record_cve_id:
+    range: CveId
+    description: The CVE identifier that this record pertains to.
+    pattern: "^CVE-[0-9]{4}-[0-9]{4,19}$"
+    aliases:
+      - cveId
+    in_subset:
+      - cna_metadata
+
+  assigner_org_id:
+    range: UuidType
+    description: >-
+      The UUID for the organization to which the CVE ID was originally assigned.
+      This UUID can be used to lookup the organization record in the user registry service.
+    aliases:
+      - assignerOrgId
+    in_subset:
+      - cna_metadata
+
+  assigner_short_name:
+    range: string
+    description: The short name for the organization to which the CVE ID was originally assigned.
+    aliases:
+      - assignerShortName
+    in_subset:
+      - cna_metadata
+
+  requester_user_id:
+    range: UuidType
+    description: The user that requested the CVE identifier.
+    aliases:
+      - requesterUserId
+    in_subset:
+      - cna_metadata
+
+  serial:
+    range: integer
+    description: >-
+      Monotonically increasing integer, starting at 1, incremented each time a
+      submission from a data provider changes this CVE Record.
+    minimum_value: 1
+    in_subset:
+      - cna_metadata
+
+  date_reserved:
+    range: Timestamp
+    description: >-
+      The date/time this CVE ID was reserved in the CVE automation workgroup
+      services system. This date does not necessarily indicate when the vulnerability
+      was discovered, shared with the vendor, or publicly disclosed.
+    aliases:
+      - dateReserved
+    in_subset:
+      - cna_metadata
+
+  date_published:
+    range: Timestamp
+    description: The date/time the CVE Record was first published in the CVE List.
+    aliases:
+      - datePublished
+    in_subset:
+      - cna_metadata
+
+  date_updated:
+    range: Timestamp
+    description: The date/time the record was last updated.
+    aliases:
+      - dateUpdated
+    in_subset:
+      - cna_metadata
+
+  date_rejected:
+    range: Timestamp
+    description: The date/time the CVE ID was rejected.
+    aliases:
+      - dateRejected
+    in_subset:
+      - cna_metadata
+
+  published_state:
+    range: RecordState
+    description: State of the CVE Record. For published records, this is always PUBLISHED.
+    aliases:
+      - state
+    in_subset:
+      - cna_metadata
+
+  rejected_state:
+    range: RecordState
+    description: State of the CVE Record. For rejected records, this is always REJECTED.
+    aliases:
+      - state
+    in_subset:
+      - cna_metadata
+
+  # -- Containers --
+
+  cna:
+    range: CnaContainer
+    description: >-
+      The CNA container holding vulnerability information for this CVE ID.
+      For published records, this is a CnaPublishedContainer.
+      For rejected records, this is a CnaRejectedContainer.
+    any_of:
+      - range: CnaPublishedContainer
+      - range: CnaRejectedContainer
+    inlined: true
+
+  adp:
+    range: AdpContainer
+    description: >-
+      One or more ADP containers providing additional vulnerability information.
+      Multiple ADPs may contribute containers for the same CVE ID.
+    multivalued: true
+    inlined_as_list: true
+
+  # -- Provider metadata --
+
+  org_id:
+    range: UuidType
+    description: The container provider's organizational UUID.
+    aliases:
+      - orgId
+
+  short_name:
+    range: string
+    description: The container provider's organizational short name (2-32 characters).
+    aliases:
+      - shortName
+
+  provider_metadata:
+    range: ProviderMetadata
+    description: Details related to the information container provider (CNA or ADP).
+    aliases:
+      - providerMetadata
+    inlined: true
+
+  # -- Container-level timestamps --
+
+  date_assigned:
+    range: Timestamp
+    description: The date/time this CVE ID was associated with a vulnerability by a CNA.
+    aliases:
+      - dateAssigned
+
+  date_public:
+    range: Timestamp
+    description: If known, the date/time the vulnerability was disclosed publicly.
+    aliases:
+      - datePublic
+
+  # -- Container content --
+
+  descriptions:
+    range: MultiLangDescription
+    description: >-
+      A list of multi-lingual descriptions of the vulnerability. Must contain at
+      least one English language entry. E.g., [PROBLEMTYPE] in [COMPONENT] in
+      [VENDOR] [PRODUCT] [VERSION] on [PLATFORMS] allows [ATTACKER] to [IMPACT]
+      via [VECTOR].
+    multivalued: true
+    inlined_as_list: true
+
+  affected:
+    range: AffectedProduct
+    description: List of affected products and services.
+    multivalued: true
+    inlined_as_list: true
+
+  cpe_applicability:
+    range: CpeApplicabilityElement
+    description: >-
+      Affected products defined using the CPE Applicability Language. When defined,
+      this block should align with the data in the affected block.
+    multivalued: true
+    inlined_as_list: true
+    aliases:
+      - cpeApplicability
+
+  problem_types:
+    range: ProblemType
+    description: >-
+      Problem type information such as CWE identifiers. Must contain at least
+      one entry. Entries can be text, OWASP, or CWE identifiers.
+    multivalued: true
+    inlined_as_list: true
+    aliases:
+      - problemTypes
+
+  cve_references:
+    range: CveReference
+    description: >-
+      Reference data in the form of URLs describing the vulnerability, such as
+      advisories, patches, and exploit details. Required by CNA rules.
+    multivalued: true
+    inlined_as_list: true
+    aliases:
+      - references
+
+  impacts:
+    range: ImpactEntry
+    description: Collection of impacts of this vulnerability, optionally linked to CAPEC IDs.
+    multivalued: true
+    inlined_as_list: true
+
+  metrics:
+    range: MetricEntry
+    description: >-
+      Collection of impact scores with attribution (CVSSv2, CVSSv3.0, CVSSv3.1,
+      CVSSv4.0, or custom format).
+    multivalued: true
+    inlined_as_list: true
+
+  configurations_text:
+    range: MultiLangDescription
+    description: Configurations required for exploiting this vulnerability.
+    multivalued: true
+    inlined_as_list: true
+    aliases:
+      - configurations
+
+  workarounds:
+    range: MultiLangDescription
+    description: Workarounds and mitigations for this vulnerability.
+    multivalued: true
+    inlined_as_list: true
+
+  solutions:
+    range: MultiLangDescription
+    description: Information about solutions or remediations available for this vulnerability.
+    multivalued: true
+    inlined_as_list: true
+
+  exploits:
+    range: MultiLangDescription
+    description: Information about known exploits of this vulnerability.
+    multivalued: true
+    inlined_as_list: true
+
+  timeline:
+    range: TimelineEntry
+    description: >-
+      Timeline information for significant events about the vulnerability or
+      changes to the CVE Record.
+    multivalued: true
+    inlined_as_list: true
+
+  credits:
+    range: CreditEntry
+    description: >-
+      Statements acknowledging specific people, organizations, or tools for
+      work related to research, discovery, remediation, or coordination of
+      this CVE.
+    multivalued: true
+    inlined_as_list: true
+
+  cna_source:
+    range: SourceInformation
+    description: >-
+      Source information (who discovered it, who researched it, etc.) and
+      optionally a chain of CNA information.
+    inlined: true
+    aliases:
+      - source
+
+  source_defects:
+    range: string
+    description: Bug tracking system IDs (e.g., JIRA ticket IDs) related to the vulnerability.
+    multivalued: true
+    aliases:
+      - defects
+
+  source_advisory:
+    range: string
+    description: Advisory identifier associated with the vulnerability discovery.
+    aliases:
+      - advisory
+
+  source_discovery:
+    range: string
+    description: >-
+      How the vulnerability was discovered (e.g., INTERNAL, EXTERNAL, USER).
+    aliases:
+      - discovery
+
+  cna_tags:
+    range: CNATag
+    description: Tags provided by a CNA describing the CVE Record.
+    multivalued: true
+    aliases:
+      - tags
+
+  adp_tags:
+    range: ADPTag
+    description: Tags provided by an ADP describing the CVE Record.
+    multivalued: true
+    aliases:
+      - tags
+
+  taxonomy_mappings:
+    range: TaxonomyMapping
+    description: List of taxonomy items (e.g., ATT&CK, CWE) related to the vulnerability.
+    multivalued: true
+    inlined_as_list: true
+    aliases:
+      - taxonomyMappings
+
+  rejected_reasons:
+    range: MultiLangDescription
+    description: Reasons for rejecting this CVE Record.
+    multivalued: true
+    inlined_as_list: true
+    aliases:
+      - rejectedReasons
+
+  replaced_by:
+    range: CveId
+    description: >-
+      CVE IDs that this CVE ID was rejected in favor of because this CVE ID
+      was incorrectly assigned to the same vulnerabilities.
+    multivalued: true
+    aliases:
+      - replacedBy
+
+  # -- Affected product slots --
+
+  collection_url:
+    range: uri
+    description: URL identifying a package collection (determines the meaning of packageName).
+    aliases:
+      - collectionURL
+
+  package_name:
+    range: string
+    description: >-
+      Name or identifier of the affected software package as used in the
+      package collection.
+    aliases:
+      - packageName
+
+  cpes:
+    range: CpeNameType
+    description: >-
+      Affected products defined by CPE (Common Platform Enumeration) names in
+      either 2.2 or 2.3 format.
+    multivalued: true
+
+  modules:
+    range: string
+    description: >-
+      A list of the affected components, features, modules, sub-components,
+      sub-products, APIs, commands, utilities, programs, or functionalities.
+    multivalued: true
+
+  program_files:
+    range: string
+    description: A list of the affected source code files.
+    multivalued: true
+    aliases:
+      - programFiles
+
+  program_routines:
+    range: ProgramRoutine
+    description: >-
+      A list of the affected source code functions, methods, subroutines,
+      or procedures.
+    multivalued: true
+    inlined_as_list: true
+    aliases:
+      - programRoutines
+
+  repo:
+    range: uri
+    description: >-
+      The URL of the source code repository, for informational purposes and/or
+      to resolve git hash version ranges.
+
+  default_status:
+    range: VersionStatus
+    description: >-
+      The default status for versions not otherwise listed in the versions list.
+      Defaults to 'unknown' if not specified. Versions or defaultStatus may be
+      omitted, but not both.
+    aliases:
+      - defaultStatus
+
+  versions:
+    range: VersionEntry
+    description: >-
+      Set of product versions or version ranges related to the vulnerability.
+      Versions or defaultStatus may be omitted, but not both.
+    multivalued: true
+    inlined_as_list: true
+
+  package_url:
+    range: uri
+    description: >-
+      A Package URL (PURL), a unified URL specification for identifying packages
+      hosted by known package hosts. The Package URL MUST NOT include a version.
+    aliases:
+      - packageURL
+
+  # -- Version entry slots --
+
+  version_value:
+    range: VersionString
+    description: >-
+      The single version being described, or the version at the start of the
+      range. By convention, '0' denotes the earliest possible version.
+    aliases:
+      - version
+
+  version_status:
+    range: VersionStatus
+    description: >-
+      The vulnerability status for the version or range of versions. For a
+      range, the status may be refined by the 'changes' list.
+    aliases:
+      - status
+
+  version_type:
+    range: string
+    description: >-
+      The version numbering system used for specifying the range (e.g., semver,
+      git, maven, rpm, python, custom). Defines the semantics of comparison.
+    aliases:
+      - versionType
+
+  less_than:
+    range: VersionString
+    description: >-
+      The non-inclusive upper limit of the range. This is the least version
+      NOT in the range. Supports wildcard '*' suffix.
+    aliases:
+      - lessThan
+
+  less_than_or_equal:
+    range: VersionString
+    description: >-
+      The inclusive upper limit of the range. This is the greatest version
+      contained in the range. Only one of lessThan and lessThanOrEqual
+      should be specified.
+    aliases:
+      - lessThanOrEqual
+
+  version_changes:
+    range: VersionChange
+    description: >-
+      A list of status changes that take place during the version range. The
+      array should be sorted by 'at' field according to versionType, but
+      clients must re-sort rather than assume ordering.
+    multivalued: true
+    inlined_as_list: true
+    aliases:
+      - changes
+
+  # -- Version change slots --
+
+  change_at:
+    range: VersionString
+    description: The version at which a status change occurs within a range.
+    aliases:
+      - at
+
+  change_status:
+    range: VersionStatus
+    description: The new status in the range starting at the given version.
+    aliases:
+      - status
+
+  # -- Program routine slots --
+
+  routine_name:
+    range: string
+    description: >-
+      Name of the affected source code function, method, subroutine, or
+      procedure.
+    aliases:
+      - name
+
+  # -- Description slots --
+
+  lang:
+    range: LanguageTag
+    description: BCP 47 language code indicating the language of accompanying text.
+    ifabsent: string(en)
+
+  description_value:
+    range: string
+    description: Plain text description (up to 4096 characters).
+    aliases:
+      - value
+
+  supporting_media:
+    range: SupportingMedia
+    description: >-
+      Supporting media data for the description such as markdown, diagrams, etc.
+      Similar to RFC 2397, each object has a media type, data value, and optional
+      base64 flag.
+    multivalued: true
+    inlined_as_list: true
+    aliases:
+      - supportingMedia
+
+  # -- Supporting media slots --
+
+  media_type:
+    range: string
+    description: >-
+      RFC2046 compliant IANA Media type (e.g., text/markdown, text/html,
+      image/png, image/svg, audio/mp3).
+    aliases:
+      - type
+
+  base64_encoded:
+    range: boolean
+    description: >-
+      If true, the media_value field contains the media data encoded in base64.
+      If false, the media_value field contains UTF-8 media content.
+    ifabsent: "False"
+    aliases:
+      - base64
+
+  media_value:
+    range: string
+    description: >-
+      Supporting media content, up to 16K characters. If base64_encoded is true,
+      this stores base64 encoded data.
+    aliases:
+      - value
+
+  # -- Problem type slots --
+
+  problem_type_descriptions:
+    range: ProblemTypeDescription
+    description: One or more problem type descriptions (e.g., CWE IDs or OWASP categories).
+    multivalued: true
+    inlined_as_list: true
+    aliases:
+      - descriptions
+
+  problem_description:
+    range: string
+    description: Text description of the problem type, or title from CWE or OWASP.
+    aliases:
+      - description
+
+  problem_source_type:
+    range: string
+    description: Problem type source format (e.g., text, OWASP, CWE).
+    aliases:
+      - type
+
+  problem_references:
+    range: CveReference
+    description: References supporting this specific problem type.
+    multivalued: true
+    inlined_as_list: true
+    aliases:
+      - references
+
+  # -- Reference slots --
+
+  reference_tags:
+    range: ReferenceTag
+    description: An array of tags describing the resource referenced by the URL.
+    multivalued: true
+    aliases:
+      - tags
+
+  # -- Impact slots --
+
+  capec_id:
+    range: string
+    description: CAPEC ID that best relates to this impact (e.g., CAPEC-123).
+    pattern: "^CAPEC-[1-9][0-9]{0,4}$"
+    aliases:
+      - capecId
+
+  impact_descriptions:
+    range: MultiLangDescription
+    description: >-
+      Prose description of the impact scenario. At a minimum, provide the
+      description given by CAPEC.
+    multivalued: true
+    inlined_as_list: true
+    aliases:
+      - descriptions
+
+  # -- Metric slots --
+
+  metric_format:
+    range: string
+    description: >-
+      Name of the scoring format (e.g., cvssV4_0, cvssV3_1). Provides
+      future-proofing and supports proprietary format inclusion.
+    aliases:
+      - format
+
+  metric_scenarios:
+    range: MetricScenario
+    description: >-
+      Scenarios this metrics object applies to. If no specific scenario is
+      given, GENERAL applies when no more specific metric matches.
+    multivalued: true
+    inlined_as_list: true
+    aliases:
+      - scenarios
+
+  scenario_value:
+    range: string
+    description: Description of the scenario this metrics object applies to.
+    ifabsent: string(GENERAL)
+    aliases:
+      - value
+
+  cvss_v4_0:
+    range: CvssV4_0
+    description: CVSS version 4.0 scoring data.
+    inlined: true
+    aliases:
+      - cvssV4_0
+
+  cvss_v3_1:
+    range: CvssV3_1
+    description: CVSS version 3.1 scoring data.
+    inlined: true
+    aliases:
+      - cvssV3_1
+
+  cvss_v3_0:
+    range: CvssV3_0
+    description: CVSS version 3.0 scoring data.
+    inlined: true
+    aliases:
+      - cvssV3_0
+
+  cvss_v2_0:
+    range: CvssV2_0
+    description: CVSS version 2.0 scoring data.
+    inlined: true
+    aliases:
+      - cvssV2_0
+
+  other_metric:
+    range: OtherMetric
+    description: A non-standard impact description or score.
+    inlined: true
+    aliases:
+      - other
+
+  other_metric_type:
+    range: string
+    description: Name of the non-standard impact metrics format used.
+    aliases:
+      - type
+
+  other_metric_content:
+    range: string
+    description: >-
+      JSON object or prose content not covered by another metrics format.
+      May be arbitrary key-value data.
+    aliases:
+      - content
+
+  # -- CVSS 4.0 metric slots --
+
+  cvss4_version:
+    range: string
+    description: CVSS version identifier. Must be '4.0' for CVSS v4.0 objects.
+    aliases:
+      - version
+
+  cvss4_vector_string:
+    range: string
+    description: CVSS 4.0 vector string encoding all base, threat, and environmental metrics.
+    pattern: "^CVSS:4[.]0/AV:[NALP]/AC:[LH]/AT:[NP]/PR:[NLH]/UI:[NPA]/VC:[HLN]/VI:[HLN]/VA:[HLN]/SC:[HLN]/SI:[HLN]/SA:[HLN](/E:[XAPU])?(/CR:[XHML])?(/IR:[XHML])?(/AR:[XHML])?(/MAV:[XNALP])?(/MAC:[XLH])?(/MAT:[XNP])?(/MPR:[XNLH])?(/MUI:[XNPA])?(/MVC:[XNLH])?(/MVI:[XNLH])?(/MVA:[XNLH])?(/MSC:[XNLH])?(/MSI:[XNLHS])?(/MSA:[XNLHS])?(/S:[XNP])?(/AU:[XNY])?(/R:[XAUI])?(/V:[XDC])?(/RE:[XLMH])?(/U:(X|Clear|Green|Amber|Red))?$"
+    aliases:
+      - vectorString
+
+  cvss4_base_score:
+    range: float
+    description: CVSS 4.0 base score (0.0 – 10.0 in 0.1 increments).
+    minimum_value: 0
+    maximum_value: 10
+    aliases:
+      - baseScore
+
+  cvss4_base_severity:
+    range: Cvss4Severity
+    description: CVSS 4.0 qualitative base severity rating.
+    aliases:
+      - baseSeverity
+
+  cvss4_attack_vector:
+    range: Cvss4AttackVector
+    aliases: [attackVector]
+
+  cvss4_attack_complexity:
+    range: Cvss4AttackComplexity
+    aliases: [attackComplexity]
+
+  cvss4_attack_requirements:
+    range: Cvss4AttackRequirements
+    aliases: [attackRequirements]
+
+  cvss4_privileges_required:
+    range: Cvss4PrivilegesRequired
+    aliases: [privilegesRequired]
+
+  cvss4_user_interaction:
+    range: Cvss4UserInteraction
+    aliases: [userInteraction]
+
+  cvss4_vuln_confidentiality_impact:
+    range: Cvss4VulnCia
+    aliases: [vulnConfidentialityImpact]
+
+  cvss4_vuln_integrity_impact:
+    range: Cvss4VulnCia
+    aliases: [vulnIntegrityImpact]
+
+  cvss4_vuln_availability_impact:
+    range: Cvss4VulnCia
+    aliases: [vulnAvailabilityImpact]
+
+  cvss4_sub_confidentiality_impact:
+    range: Cvss4SubCia
+    aliases: [subConfidentialityImpact]
+
+  cvss4_sub_integrity_impact:
+    range: Cvss4SubCia
+    aliases: [subIntegrityImpact]
+
+  cvss4_sub_availability_impact:
+    range: Cvss4SubCia
+    aliases: [subAvailabilityImpact]
+
+  cvss4_exploit_maturity:
+    range: Cvss4ExploitMaturity
+    aliases: [exploitMaturity]
+
+  cvss4_confidentiality_requirement:
+    range: Cvss4CiaRequirement
+    aliases: [confidentialityRequirement]
+
+  cvss4_integrity_requirement:
+    range: Cvss4CiaRequirement
+    aliases: [integrityRequirement]
+
+  cvss4_availability_requirement:
+    range: Cvss4CiaRequirement
+    aliases: [availabilityRequirement]
+
+  cvss4_modified_attack_vector:
+    range: Cvss4ModifiedAttackVector
+    aliases: [modifiedAttackVector]
+
+  cvss4_modified_attack_complexity:
+    range: Cvss4ModifiedAttackComplexity
+    aliases: [modifiedAttackComplexity]
+
+  cvss4_modified_attack_requirements:
+    range: Cvss4ModifiedAttackRequirements
+    aliases: [modifiedAttackRequirements]
+
+  cvss4_modified_privileges_required:
+    range: Cvss4ModifiedPrivilegesRequired
+    aliases: [modifiedPrivilegesRequired]
+
+  cvss4_modified_user_interaction:
+    range: Cvss4ModifiedUserInteraction
+    aliases: [modifiedUserInteraction]
+
+  cvss4_modified_vuln_confidentiality_impact:
+    range: Cvss4ModifiedVulnCia
+    aliases: [modifiedVulnConfidentialityImpact]
+
+  cvss4_modified_vuln_integrity_impact:
+    range: Cvss4ModifiedVulnCia
+    aliases: [modifiedVulnIntegrityImpact]
+
+  cvss4_modified_vuln_availability_impact:
+    range: Cvss4ModifiedVulnCia
+    aliases: [modifiedVulnAvailabilityImpact]
+
+  cvss4_modified_sub_confidentiality_impact:
+    range: Cvss4ModifiedSubC
+    aliases: [modifiedSubConfidentialityImpact]
+
+  cvss4_modified_sub_integrity_impact:
+    range: Cvss4ModifiedSubIa
+    aliases: [modifiedSubIntegrityImpact]
+
+  cvss4_modified_sub_availability_impact:
+    range: Cvss4ModifiedSubIa
+    aliases: [modifiedSubAvailabilityImpact]
+
+  cvss4_safety:
+    range: Cvss4Safety
+    aliases: [Safety]
+
+  cvss4_automatable:
+    range: Cvss4Automatable
+    aliases: [Automatable]
+
+  cvss4_recovery:
+    range: Cvss4Recovery
+    aliases: [Recovery]
+
+  cvss4_value_density:
+    range: Cvss4ValueDensity
+    aliases: [valueDensity]
+
+  cvss4_vulnerability_response_effort:
+    range: Cvss4VulnerabilityResponseEffort
+    aliases: [vulnerabilityResponseEffort]
+
+  cvss4_provider_urgency:
+    range: Cvss4ProviderUrgency
+    aliases: [providerUrgency]
+
+  # -- CVSS 3.x shared metric slots --
+
+  cvss3_version:
+    range: string
+    description: CVSS version identifier. '3.1' for CvssV3_1 objects; '3.0' for CvssV3_0 objects.
+    aliases: [version]
+
+  cvss3_vector_string:
+    range: string
+    description: >-
+      CVSS 3.x vector string encoding all metric values. CVSS 3.1 strings begin with
+      'CVSS:3.1/'; CVSS 3.0 strings begin with 'CVSS:3.0/'.
+    aliases: [vectorString]
+
+  cvss3_attack_vector:
+    range: Cvss3AttackVector
+    aliases: [attackVector]
+
+  cvss3_attack_complexity:
+    range: Cvss3AttackComplexity
+    aliases: [attackComplexity]
+
+  cvss3_privileges_required:
+    range: Cvss3PrivilegesRequired
+    aliases: [privilegesRequired]
+
+  cvss3_user_interaction:
+    range: Cvss3UserInteraction
+    aliases: [userInteraction]
+
+  cvss3_scope:
+    range: Cvss3Scope
+    aliases: [scope]
+
+  cvss3_confidentiality_impact:
+    range: Cvss3Cia
+    aliases: [confidentialityImpact]
+
+  cvss3_integrity_impact:
+    range: Cvss3Cia
+    aliases: [integrityImpact]
+
+  cvss3_availability_impact:
+    range: Cvss3Cia
+    aliases: [availabilityImpact]
+
+  cvss3_base_score:
+    range: float
+    description: CVSS 3.x base score (0.0 – 10.0 in 0.1 increments).
+    minimum_value: 0
+    maximum_value: 10
+    aliases: [baseScore]
+
+  cvss3_base_severity:
+    range: Cvss3Severity
+    aliases: [baseSeverity]
+
+  cvss3_exploit_code_maturity:
+    range: Cvss3ExploitCodeMaturity
+    aliases: [exploitCodeMaturity]
+
+  cvss3_remediation_level:
+    range: Cvss3RemediationLevel
+    aliases: [remediationLevel]
+
+  cvss3_report_confidence:
+    range: Cvss3Confidence
+    aliases: [reportConfidence]
+
+  cvss3_temporal_score:
+    range: float
+    description: CVSS 3.x temporal score.
+    minimum_value: 0
+    maximum_value: 10
+    aliases: [temporalScore]
+
+  cvss3_temporal_severity:
+    range: Cvss3Severity
+    aliases: [temporalSeverity]
+
+  cvss3_confidentiality_requirement:
+    range: Cvss3CiaRequirement
+    aliases: [confidentialityRequirement]
+
+  cvss3_integrity_requirement:
+    range: Cvss3CiaRequirement
+    aliases: [integrityRequirement]
+
+  cvss3_availability_requirement:
+    range: Cvss3CiaRequirement
+    aliases: [availabilityRequirement]
+
+  cvss3_modified_attack_vector:
+    range: Cvss3ModifiedAttackVector
+    aliases: [modifiedAttackVector]
+
+  cvss3_modified_attack_complexity:
+    range: Cvss3ModifiedAttackComplexity
+    aliases: [modifiedAttackComplexity]
+
+  cvss3_modified_privileges_required:
+    range: Cvss3ModifiedPrivilegesRequired
+    aliases: [modifiedPrivilegesRequired]
+
+  cvss3_modified_user_interaction:
+    range: Cvss3ModifiedUserInteraction
+    aliases: [modifiedUserInteraction]
+
+  cvss3_modified_scope:
+    range: Cvss3ModifiedScope
+    aliases: [modifiedScope]
+
+  cvss3_modified_confidentiality_impact:
+    range: Cvss3ModifiedCia
+    aliases: [modifiedConfidentialityImpact]
+
+  cvss3_modified_integrity_impact:
+    range: Cvss3ModifiedCia
+    aliases: [modifiedIntegrityImpact]
+
+  cvss3_modified_availability_impact:
+    range: Cvss3ModifiedCia
+    aliases: [modifiedAvailabilityImpact]
+
+  cvss3_environmental_score:
+    range: float
+    description: CVSS 3.x environmental score.
+    minimum_value: 0
+    maximum_value: 10
+    aliases: [environmentalScore]
+
+  cvss3_environmental_severity:
+    range: Cvss3Severity
+    aliases: [environmentalSeverity]
+
+  # -- CVSS 2.0 metric slots --
+
+  cvss2_version:
+    range: string
+    description: CVSS version identifier. Must be '2.0' for CVSS v2.0 objects.
+    aliases: [version]
+
+  cvss2_vector_string:
+    range: string
+    description: CVSS 2.0 vector string encoding all base, temporal, and environmental metrics.
+    pattern: "^((AV:[NAL]|AC:[LMH]|Au:[MSN]|[CIA]:[NPC]|E:(U|POC|F|H|ND)|RL:(OF|TF|W|U|ND)|RC:(UC|UR|C|ND)|CDP:(N|L|LM|MH|H|ND)|TD:(N|L|M|H|ND)|[CIA]R:(L|M|H|ND))/)*(AV:[NAL]|AC:[LMH]|Au:[MSN]|[CIA]:[NPC]|E:(U|POC|F|H|ND)|RL:(OF|TF|W|U|ND)|RC:(UC|UR|C|ND)|CDP:(N|L|LM|MH|H|ND)|TD:(N|L|M|H|ND)|[CIA]R:(L|M|H|ND))$"
+    aliases: [vectorString]
+
+  cvss2_access_vector:
+    range: Cvss2AccessVector
+    aliases: [accessVector]
+
+  cvss2_access_complexity:
+    range: Cvss2AccessComplexity
+    aliases: [accessComplexity]
+
+  cvss2_authentication:
+    range: Cvss2Authentication
+    aliases: [authentication]
+
+  cvss2_confidentiality_impact:
+    range: Cvss2Cia
+    aliases: [confidentialityImpact]
+
+  cvss2_integrity_impact:
+    range: Cvss2Cia
+    aliases: [integrityImpact]
+
+  cvss2_availability_impact:
+    range: Cvss2Cia
+    aliases: [availabilityImpact]
+
+  cvss2_base_score:
+    range: float
+    description: CVSS 2.0 base score (0.0 – 10.0).
+    minimum_value: 0
+    maximum_value: 10
+    aliases: [baseScore]
+
+  cvss2_exploitability:
+    range: Cvss2Exploitability
+    aliases: [exploitability]
+
+  cvss2_remediation_level:
+    range: Cvss2RemediationLevel
+    aliases: [remediationLevel]
+
+  cvss2_report_confidence:
+    range: Cvss2ReportConfidence
+    aliases: [reportConfidence]
+
+  cvss2_temporal_score:
+    range: float
+    description: CVSS 2.0 temporal score.
+    minimum_value: 0
+    maximum_value: 10
+    aliases: [temporalScore]
+
+  cvss2_collateral_damage_potential:
+    range: Cvss2CollateralDamagePotential
+    aliases: [collateralDamagePotential]
+
+  cvss2_target_distribution:
+    range: Cvss2TargetDistribution
+    aliases: [targetDistribution]
+
+  cvss2_confidentiality_requirement:
+    range: Cvss2CiaRequirement
+    aliases: [confidentialityRequirement]
+
+  cvss2_integrity_requirement:
+    range: Cvss2CiaRequirement
+    aliases: [integrityRequirement]
+
+  cvss2_availability_requirement:
+    range: Cvss2CiaRequirement
+    aliases: [availabilityRequirement]
+
+  cvss2_environmental_score:
+    range: float
+    description: CVSS 2.0 environmental score.
+    minimum_value: 0
+    maximum_value: 10
+    aliases: [environmentalScore]
+
+  # -- Timeline slots --
+
+  event_time:
+    range: Timestamp
+    description: >-
+      Timestamp representing when the event in the timeline occurred. Format
+      is RFC3339 / ISO8601 with optional timezone.
+    aliases:
+      - time
+
+  event_value:
+    range: string
+    description: A summary of the timeline event (up to 4096 characters).
+    aliases:
+      - value
+
+  # -- Credit slots --
+
+  credit_value:
+    range: string
+    description: The name or description of the credited party (up to 4096 characters).
+    aliases:
+      - value
+
+  credit_user:
+    range: UuidType
+    description: >-
+      UUID of the user being credited, if present in the CVE User Registry.
+      This UUID can be used to lookup the user record in the user registry service.
+    aliases:
+      - user
+
+  credit_type:
+    range: CreditType
+    description: Type or role of the entity being credited.
+    ifabsent: "CreditType(finder)"
+    aliases:
+      - type
+
+  # -- Taxonomy slots --
+
+  taxonomy_name:
+    range: string
+    description: The name of the taxonomy (e.g., ATT&CK, D3FEND, CWE, CVSS).
+    aliases:
+      - taxonomyName
+
+  taxonomy_version:
+    range: string
+    description: The version of the taxonomy the identifiers come from.
+    aliases:
+      - taxonomyVersion
+
+  taxonomy_relations:
+    range: TaxonomyRelation
+    description: List of relationships to the taxonomy for this vulnerability.
+    multivalued: true
+    inlined_as_list: true
+    aliases:
+      - taxonomyRelations
+
+  taxonomy_id:
+    range: string
+    description: >-
+      Identifier of the item in the taxonomy. Used as the subject of the
+      relationship.
+    aliases:
+      - taxonomyId
+
+  relationship_name:
+    range: string
+    description: A description of the relationship between the taxonomy item and the CVE.
+    aliases:
+      - relationshipName
+
+  relationship_value:
+    range: string
+    description: >-
+      The target of the relationship. Can be the CVE ID or another taxonomy
+      identifier.
+    aliases:
+      - relationshipValue
+
+  # -- CPE applicability slots --
+
+  cpe_operator:
+    range: CpeOperator
+    description: Logical operator (AND/OR) used between CPE criteria in this node.
+    aliases:
+      - operator
+
+  cpe_negate:
+    range: boolean
+    description: If true, negates the applicability of this element.
+    aliases:
+      - negate
+
+  cpe_nodes:
+    range: CpeNode
+    description: Array of CPE configuration nodes.
+    multivalued: true
+    inlined_as_list: true
+    aliases:
+      - nodes
+
+  cpe_match_criteria:
+    range: CpeMatch
+    description: Array of CPE match criteria within this node.
+    multivalued: true
+    inlined_as_list: true
+    aliases:
+      - cpeMatch
+
+  cpe_vulnerable:
+    range: boolean
+    description: Whether this CPE match describes a vulnerable configuration.
+    aliases:
+      - vulnerable
+
+  cpe_criteria:
+    range: CpeName23Type
+    description: CPE 2.3 formatted name match string or match criteria.
+    aliases:
+      - criteria
+
+  match_criteria_id:
+    range: UuidType
+    description: UUID identifying the CPE match criteria set.
+    aliases:
+      - matchCriteriaId
+
+  version_start_excluding:
+    range: VersionString
+    description: The start of a version range, exclusive (versions strictly greater than this).
+    aliases:
+      - versionStartExcluding
+
+  version_start_including:
+    range: VersionString
+    description: The start of a version range, inclusive (versions greater than or equal to this).
+    aliases:
+      - versionStartIncluding
+
+  version_end_excluding:
+    range: VersionString
+    description: The end of a version range, exclusive (versions strictly less than this).
+    aliases:
+      - versionEndExcluding
+
+  version_end_including:
+    range: VersionString
+    description: The end of a version range, inclusive (versions less than or equal to this).
+    aliases:
+      - versionEndIncluding

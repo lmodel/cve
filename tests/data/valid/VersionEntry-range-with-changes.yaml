@@ -1,0 +1,10 @@
+# VersionEntry - semver range with status changes
+version_value: "2.0.0"
+version_status: affected
+version_type: semver
+less_than: "3.0.0"
+version_changes:
+  - change_at: "2.5.0"
+    change_status: unaffected
+  - change_at: "2.8.0"
+    change_status: affected

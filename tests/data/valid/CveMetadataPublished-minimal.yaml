@@ -1,0 +1,4 @@
+# Standalone CveMetadataPublished - required fields only
+record_cve_id: CVE-2024-10001
+assigner_org_id: c9d0e1f2-a3b4-4c5d-6e7f-8a9b0c1d2e3f
+published_state: PUBLISHED

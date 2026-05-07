@@ -1,0 +1,4 @@
+# INVALID: TaxonomyMapping missing required taxonomy_relations
+taxonomy_name: MITRE ATT&CK
+taxonomy_version: "14.0"
+# taxonomy_relations intentionally omitted (required field)

@@ -1,0 +1,5 @@
+# INVALID: CvssV40 missing required base_score
+cvss4_version: "4.0"
+cvss4_vector_string: "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N"
+# cvss4_base_score intentionally omitted (required)
+cvss4_base_severity: CRITICAL

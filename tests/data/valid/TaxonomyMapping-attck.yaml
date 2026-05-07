@@ -1,0 +1,10 @@
+# TaxonomyMapping - MITRE ATT&CK technique mapping
+taxonomy_name: MITRE ATT&CK
+taxonomy_version: "14.1"
+taxonomy_relations:
+  - taxonomy_id: T1190
+    relationship_name: exploits
+    relationship_value: CVE-2024-12345
+  - taxonomy_id: T1203
+    relationship_name: related
+    relationship_value: CVE-2024-12345

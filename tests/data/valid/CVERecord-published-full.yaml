@@ -1,0 +1,147 @@
+# Full published CVE Record exercising all optional fields:
+# CVSS 3.1 metrics, CPE applicability, taxonomy mapping, credits, timeline,
+# problem types, impacts, configurations, workarounds, solutions, exploits
+cve_id: CVE-2023-99999
+description: Use-after-free vulnerability in FooBar Web Server 4.x before 4.8.1 allows
+  a remote unauthenticated attacker to execute arbitrary code via a specially crafted
+  HTTP/2 request.
+title: FooBar Web Server Use-After-Free (CVE-2023-99999)
+cve_metadata:
+  record_cve_id: CVE-2023-99999
+  assigner_org_id: a341c0d1-ebf7-537e-a5a2-c53f8ced78f3
+  assigner_short_name: foobar_cna
+  requester_user_id: 4b5f6c7d-8e9f-4a1b-b2c3-d4e5f6a7b8c9
+  serial: 2
+  date_reserved: "2023-01-10T00:00:00Z"
+  date_published: "2023-06-15T12:00:00Z"
+  date_updated: "2023-07-01T08:30:00Z"
+  published_state: PUBLISHED
+containers:
+  cna:
+    provider_metadata:
+      org_id: a341c0d1-ebf7-537e-a5a2-c53f8ced78f3
+      short_name: foobar_cna
+      date_updated: "2023-07-01T08:30:00Z"
+    date_assigned: "2023-01-10T00:00:00Z"
+    date_public: "2023-06-14T00:00:00Z"
+    title: FooBar Web Server Use-After-Free Remote Code Execution
+    descriptions:
+      - lang: en
+        description_value: Use-after-free vulnerability in FooBar Web Server 4.x before
+          4.8.1 allows a remote unauthenticated attacker to execute arbitrary code via
+          a specially crafted HTTP/2 request. The CVSS score is 9.8 CRITICAL.
+      - lang: es
+        description_value: Vulnerabilidad de uso después de liberar en FooBar Web Server
+          4.x antes de 4.8.1 permite a un atacante remoto no autenticado ejecutar código
+          arbitrario.
+    affected:
+      - vendor: FooBar Technologies
+        name: FooBar Web Server
+        versions:
+          - version_value: "4.0.0"
+            version_status: affected
+            version_type: semver
+            less_than: "4.8.1"
+        platforms:
+          - Linux
+          - Windows
+          - macOS
+        default_status: unaffected
+        cpes:
+          - "cpe:2.3:a:foobar:web_server:*:*:*:*:*:*:*:*"
+    cpe_applicability:
+      - cpe_operator: OR
+        cpe_nodes:
+          - cpe_operator: OR
+            cpe_match_criteria:
+              - cpe_vulnerable: true
+                cpe_criteria: "cpe:2.3:a:foobar:web_server:4.0.0:*:*:*:*:*:*:*"
+                match_criteria_id: a1b2c3d4-e5f6-4789-abcd-ef0123456789
+                version_start_including: "4.0.0"
+                version_end_excluding: "4.8.1"
+    problem_types:
+      - problem_type_descriptions:
+          - lang: en
+            problem_description: Use After Free
+            cwe_id: CWE-416
+            problem_source_type: CWE
+    cve_references:
+      - url: https://www.foobar.example.com/security/SA-2023-001
+        name: FooBar Security Advisory SA-2023-001
+        reference_tags:
+          - vendor-advisory
+          - patch
+      - url: https://nvd.nist.gov/vuln/detail/CVE-2023-99999
+        name: NVD Entry
+        reference_tags:
+          - vdb-entry
+      - url: https://github.com/example/foobar/issues/4567
+        name: GitHub Issue #4567
+        reference_tags:
+          - issue-tracking
+    impacts:
+      - capec_id: CAPEC-100
+        impact_descriptions:
+          - lang: en
+            description_value: Remote code execution with the privileges of the web server process.
+    metrics:
+      - metric_format: cvssV3_1
+        cvss_v3_1:
+          cvss3_version: "3.1"
+          cvss3_vector_string: "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H"
+          cvss3_attack_vector: NETWORK
+          cvss3_attack_complexity: LOW
+          cvss3_privileges_required: NONE
+          cvss3_user_interaction: NONE
+          cvss3_scope: UNCHANGED
+          cvss3_confidentiality_impact: HIGH
+          cvss3_integrity_impact: HIGH
+          cvss3_availability_impact: HIGH
+          cvss3_base_score: 9.8
+          cvss3_base_severity: CRITICAL
+    configurations_text:
+      - lang: en
+        description_value: The vulnerability affects FooBar Web Server running with
+          HTTP/2 enabled (the default configuration).
+    workarounds:
+      - lang: en
+        description_value: Disable HTTP/2 in the server configuration by setting
+          'http2.enabled = false' in foobar.conf.
+    solutions:
+      - lang: en
+        description_value: Upgrade to FooBar Web Server 4.8.1 or later.
+    exploits:
+      - lang: en
+        description_value: Public proof-of-concept exploit code is available. No
+          in-the-wild exploitation has been observed.
+    timeline:
+      - event_time: "2023-01-05T00:00:00Z"
+        lang: en
+        event_value: Vulnerability reported to FooBar Technologies by security researcher.
+      - event_time: "2023-06-14T00:00:00Z"
+        lang: en
+        event_value: FooBar Technologies released version 4.8.1 with fix.
+      - event_time: "2023-06-15T12:00:00Z"
+        lang: en
+        event_value: CVE Record published.
+    credits:
+      - lang: en
+        credit_value: Jane Researcher
+        credit_type: finder
+      - lang: en
+        credit_value: FooBar Technologies Product Security Team
+        credit_type: remediation developer
+    cna_tags:
+      - disputed
+    taxonomy_mappings:
+      - taxonomy_name: MITRE ATT&CK
+        taxonomy_version: "14.0"
+        taxonomy_relations:
+          - taxonomy_id: T1203
+            relationship_name: exploits
+            relationship_value: CVE-2023-99999
+      - taxonomy_name: CWE
+        taxonomy_relations:
+          - taxonomy_id: CWE-416
+            relationship_name: characterized-by
+            relationship_value: CVE-2023-99999

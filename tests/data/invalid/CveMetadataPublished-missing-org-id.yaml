@@ -1,0 +1,4 @@
+# INVALID: CveMetadataPublished missing required assigner_org_id
+record_cve_id: CVE-2024-99003
+# assigner_org_id intentionally omitted (required field)
+published_state: PUBLISHED

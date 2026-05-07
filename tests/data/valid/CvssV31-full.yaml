@@ -1,0 +1,33 @@
+# CvssV31 - base metrics required, plus temporal and environmental
+cvss3_version: "3.1"
+cvss3_vector_string: "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:C/C:H/I:H/A:H"
+cvss3_attack_vector: NETWORK
+cvss3_attack_complexity: HIGH
+cvss3_privileges_required: NONE
+cvss3_user_interaction: NONE
+cvss3_scope: CHANGED
+cvss3_confidentiality_impact: HIGH
+cvss3_integrity_impact: HIGH
+cvss3_availability_impact: HIGH
+cvss3_base_score: 9.0
+cvss3_base_severity: CRITICAL
+# Temporal metrics
+cvss3_exploit_code_maturity: FUNCTIONAL
+cvss3_remediation_level: UNAVAILABLE
+cvss3_report_confidence: CONFIRMED
+cvss3_temporal_score: 8.3
+cvss3_temporal_severity: HIGH
+# Environmental metrics
+cvss3_confidentiality_requirement: HIGH
+cvss3_integrity_requirement: HIGH
+cvss3_availability_requirement: MEDIUM
+cvss3_modified_attack_vector: NETWORK
+cvss3_modified_attack_complexity: HIGH
+cvss3_modified_privileges_required: NONE
+cvss3_modified_user_interaction: NONE
+cvss3_modified_scope: CHANGED
+cvss3_modified_confidentiality_impact: HIGH
+cvss3_modified_integrity_impact: HIGH
+cvss3_modified_availability_impact: LOW
+cvss3_environmental_score: 8.9
+cvss3_environmental_severity: HIGH

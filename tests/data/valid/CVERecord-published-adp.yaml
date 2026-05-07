@@ -1,0 +1,75 @@
+# Published CVE Record with an ADP container providing additional scoring
+cve_id: CVE-2024-33333
+description: Path traversal vulnerability in BetaFileServer before 5.2 allows authenticated
+  users to read arbitrary files via a crafted file path.
+cve_metadata:
+  record_cve_id: CVE-2024-33333
+  assigner_org_id: e5f6a7b8-c9d0-4e1f-2a3b-4c5d6e7f8a9b
+  published_state: PUBLISHED
+  date_published: "2024-02-20T00:00:00Z"
+containers:
+  cna:
+    provider_metadata:
+      org_id: e5f6a7b8-c9d0-4e1f-2a3b-4c5d6e7f8a9b
+      short_name: beta_cna
+    descriptions:
+      - lang: en
+        description_value: Path traversal vulnerability in BetaFileServer before 5.2
+          allows authenticated users to read arbitrary files outside the document root
+          via '../' sequences in the file path parameter.
+    affected:
+      - vendor: BetaCorp
+        name: BetaFileServer
+        default_status: unaffected
+        versions:
+          - version_value: "3.0"
+            version_status: affected
+            version_type: custom
+            less_than: "5.2"
+    cve_references:
+      - url: https://beta.example.com/advisory/CVE-2024-33333
+        reference_tags:
+          - vendor-advisory
+          - patch
+    metrics:
+      - metric_format: cvssV3_1
+        cvss_v3_1:
+          cvss3_version: "3.1"
+          cvss3_vector_string: "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N"
+          cvss3_attack_vector: NETWORK
+          cvss3_attack_complexity: LOW
+          cvss3_privileges_required: LOW
+          cvss3_user_interaction: NONE
+          cvss3_scope: UNCHANGED
+          cvss3_confidentiality_impact: HIGH
+          cvss3_integrity_impact: NONE
+          cvss3_availability_impact: NONE
+          cvss3_base_score: 6.5
+          cvss3_base_severity: MEDIUM
+  adp:
+    - provider_metadata:
+        org_id: f6a7b8c9-d0e1-4f2a-3b4c-5d6e7f8a9b0c
+        short_name: cisa_adp
+        date_updated: "2024-03-01T00:00:00Z"
+      title: CISA ADP Vulnrichment
+      descriptions:
+        - lang: en
+          description_value: CISA has added this CVE to its Known Exploited Vulnerabilities
+            catalog based on evidence of active exploitation.
+      metrics:
+        - metric_format: cvssV3_1
+          cvss_v3_1:
+            cvss3_version: "3.1"
+            cvss3_vector_string: "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N"
+            cvss3_attack_vector: NETWORK
+            cvss3_attack_complexity: LOW
+            cvss3_privileges_required: LOW
+            cvss3_user_interaction: NONE
+            cvss3_scope: UNCHANGED
+            cvss3_confidentiality_impact: HIGH
+            cvss3_integrity_impact: NONE
+            cvss3_availability_impact: NONE
+            cvss3_base_score: 6.5
+            cvss3_base_severity: MEDIUM
+      adp_tags:
+        - disputed

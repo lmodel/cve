@@ -1,0 +1,27 @@
+# MultiLangDescription with supporting media (markdown)
+lang: en
+description_value: A heap-based buffer overflow exists in the PNG image decoder.
+  An attacker can exploit this by supplying a malformed PNG file to trigger arbitrary
+  code execution.
+supporting_media:
+  - media_type: text/markdown
+    base64_encoded: false
+    media_value: |
+      ## Summary
+
+      A **heap-based buffer overflow** exists in the PNG image decoder.
+
+      ## Affected Code
+
+      ```c
+      // libpng decode_png() in png.c line 423
+      memcpy(dst, src, width * height * channels);  // no bounds check
+      ```
+
+      ## Impact
+
+      An attacker can trigger **arbitrary code execution** by supplying a crafted PNG.
+  - media_type: text/html
+    base64_encoded: false
+    media_value: "<p>A <strong>heap-based buffer overflow</strong> exists in the PNG
+      image decoder allowing arbitrary code execution via a malformed PNG file.</p>"

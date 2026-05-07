@@ -1,0 +1,54 @@
+# Published CVE Record - package-centric (collectionURL + packageName)
+# Covers open-source package vulnerability with PURL, version ranges, and CWE
+cve_id: CVE-2024-77777
+description: Prototype pollution in npm package deep-merger before 2.0.1 allows an
+  attacker to modify Object.prototype properties via a crafted merge payload.
+cve_metadata:
+  record_cve_id: CVE-2024-77777
+  assigner_org_id: d4e5f6a7-b8c9-4d0e-1f2a-3b4c5d6e7f8a
+  published_state: PUBLISHED
+containers:
+  cna:
+    provider_metadata:
+      org_id: d4e5f6a7-b8c9-4d0e-1f2a-3b4c5d6e7f8a
+      short_name: npm_cna
+    descriptions:
+      - lang: en
+        description_value: Prototype pollution vulnerability in the npm package deep-merger
+          before 2.0.1 allows an attacker to modify Object.prototype properties via a
+          crafted merge payload, potentially leading to denial of service or privilege
+          escalation in affected applications.
+        supporting_media:
+          - media_type: text/markdown
+            base64_encoded: false
+            media_value: "## Impact\n\nPrototype pollution allowing `__proto__` modification.\n\n## Patches\n\nUpgrade to `deep-merger@2.0.1`."
+    affected:
+      - collection_url: https://www.npmjs.com
+        package_name: deep-merger
+        package_url: https://www.npmjs.com/package/deep-merger
+        default_status: unaffected
+        versions:
+          - version_value: "0.1.0"
+            version_status: affected
+            version_type: semver
+            less_than: "2.0.1"
+        platforms:
+          - "*"
+    problem_types:
+      - problem_type_descriptions:
+          - lang: en
+            problem_description: Improperly Controlled Modification of Object Prototype Attributes ('Prototype Pollution')
+            cwe_id: CWE-1321
+            problem_source_type: CWE
+    cve_references:
+      - url: https://github.com/example/deep-merger/security/advisories/GHSA-xxxx-xxxx-xxxx
+        name: GitHub Security Advisory
+        reference_tags:
+          - vendor-advisory
+      - url: https://github.com/example/deep-merger/commit/abc123def456
+        name: Fix commit
+        reference_tags:
+          - patch
+      - url: https://www.npmjs.com/advisories/12345
+        reference_tags:
+          - vdb-entry

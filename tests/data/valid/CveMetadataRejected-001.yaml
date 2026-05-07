@@ -1,0 +1,10 @@
+# Standalone CveMetadataRejected
+record_cve_id: CVE-2023-00050
+assigner_org_id: f2a3b4c5-d6e7-4f8a-9b0c-1d2e3f4a5b6c
+assigner_short_name: reject_org
+serial: 2
+date_reserved: "2023-02-01T00:00:00Z"
+date_published: "2023-02-10T00:00:00Z"
+date_updated: "2023-04-01T00:00:00Z"
+date_rejected: "2023-04-01T12:00:00Z"
+rejected_state: REJECTED

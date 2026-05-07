@@ -1,0 +1,4 @@
+# INVALID: VersionEntry with invalid status value
+# Status must be one of: affected, unaffected, unknown
+version_value: "1.0.0"
+version_status: vulnerable

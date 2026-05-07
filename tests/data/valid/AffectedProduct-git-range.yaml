@@ -1,0 +1,17 @@
+# AffectedProduct - open source library with git-based version range
+vendor: Open Source Project
+name: CryptoLib
+collection_url: https://github.com/example/cryptolib
+repo: https://github.com/example/cryptolib.git
+default_status: unaffected
+versions:
+  - version_value: "0"
+    version_status: affected
+    version_type: git
+    less_than: abc123def456789012345678901234567890abcd
+  - version_value: "v2.0.0"
+    version_status: unaffected
+platforms:
+  - Linux
+  - macOS
+  - Windows
