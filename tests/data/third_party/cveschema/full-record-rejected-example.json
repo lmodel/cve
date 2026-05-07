@@ -1,0 +1,24 @@
+{
+  "dataType": "CVE_RECORD",
+  "dataVersion": "5.2",
+  "cveMetadata": {
+    "cveId": "CVE-1900-5555",
+    "assignerOrgId": "00000000-0000-4000-9000-000000000000",
+    "assignerShortName": "example",
+    "state": "REJECTED"
+  },
+  "containers": {
+    "cna": {
+      "providerMetadata": {
+        "orgId": "00000000-0000-4000-9000-000000000000",
+        "shortName": "example"
+      },
+      "rejectedReasons": [
+        {
+          "lang": "en",
+          "value": "This CVE Record has been rejected because it is a duplicate of CVE-1900-1234."
+        }
+      ]
+    }
+  }
+}

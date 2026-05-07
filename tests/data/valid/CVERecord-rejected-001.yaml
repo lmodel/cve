@@ -3,7 +3,7 @@ cve_id: CVE-2024-00001
 description: Rejected CVE ID - this CVE was rejected because it is a duplicate.
 cve_metadata:
   record_cve_id: CVE-2024-00001
-  assigner_org_id: a7b8c9d0-e1f2-4a3b-4c5d-6e7f8a9b0c1d
+  assigner_org_id: a7b8c9d0-e1f2-4a3b-8c5d-6e7f8a9b0c1d
   assigner_short_name: example_cna
   serial: 3
   date_reserved: "2024-01-02T00:00:00Z"
@@ -14,7 +14,7 @@ cve_metadata:
 containers:
   cna:
     provider_metadata:
-      org_id: a7b8c9d0-e1f2-4a3b-4c5d-6e7f8a9b0c1d
+      org_id: a7b8c9d0-e1f2-4a3b-8c5d-6e7f8a9b0c1d
       short_name: example_cna
     rejected_reasons:
       - lang: en

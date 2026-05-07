@@ -1,0 +1,67 @@
+{
+  "dataType": "CVE_RECORD",
+  "dataVersion": "5.2",
+  "cveMetadata": {
+    "cveId": "CVE-1900-1234",
+    "assignerOrgId": "b3476cb9-2e3d-41a6-98d0-0f47421a65b6",
+    "state": "PUBLISHED"
+  },
+  "containers": {
+    "cna": {
+      "providerMetadata": {
+        "orgId": "b3476cb9-2e3d-41a6-98d0-0f47421a65b6"
+      },
+      "affected": [
+        {
+          "vendor": "Example.org",
+          "product": "Example Enterprise",
+          "versions": [
+            {
+              "version": "1.0.0",
+              "status": "affected",
+              "lessThan": "1.0.6",
+              "versionType": "semver"
+            }
+          ],
+          "defaultStatus": "unaffected"
+        }
+      ],
+      "descriptions": [
+        {
+          "lang": "en",
+          "value": "OS Command Injection in Example Enterprise allows remote attackers to execute arbitrary commands."
+        }
+      ],
+      "metrics": [
+        {
+          "format": "CVSS",
+          "scenarios": [
+            {
+              "lang": "en",
+              "value": "GENERAL"
+            }
+          ],
+          "cvssV3_0": {
+            "version": "3.0",
+            "vectorString": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+            "attackVector": "NETWORK",
+            "attackComplexity": "LOW",
+            "privilegesRequired": "NONE",
+            "userInteraction": "NONE",
+            "scope": "UNCHANGED",
+            "confidentialityImpact": "HIGH",
+            "integrityImpact": "HIGH",
+            "availabilityImpact": "HIGH",
+            "baseScore": 9.8,
+            "baseSeverity": "CRITICAL"
+          }
+        }
+      ],
+      "references": [
+        {
+          "url": "https://example.org/ESA-22-11-CVE-1900-1234"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,2886 @@
+{
+    "$defs": {
+        "ADPTag": {
+            "description": "Tags provided by an ADP describing the CVE Record.",
+            "enum": [
+                "disputed"
+            ],
+            "title": "ADPTag",
+            "type": "string"
+        },
+        "AdpContainer": {
+            "additionalProperties": false,
+            "description": "An object containing vulnerability information provided by an Authorized Data Publisher (ADP). Multiple ADPs can provide containers for a single CVE ID.",
+            "properties": {
+                "adp_tags": {
+                    "description": "Tags provided by an ADP describing the CVE Record.",
+                    "items": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/$defs/ADPTag"
+                            },
+                            {
+                                "pattern": "^x_.*$",
+                                "type": "string"
+                            }
+                        ],
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "affected": {
+                    "description": "List of affected products and services.",
+                    "items": {
+                        "$ref": "#/$defs/AffectedProduct"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "cna_source": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/SourceInformation"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "Source information (who discovered it, who researched it, etc.) and optionally a chain of CNA information."
+                },
+                "configurations_text": {
+                    "description": "Configurations required for exploiting this vulnerability.",
+                    "items": {
+                        "$ref": "#/$defs/MultiLangDescription"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "cpe_applicability": {
+                    "description": "Affected products defined using the CPE Applicability Language. When defined, this block should align with the data in the affected block.",
+                    "items": {
+                        "$ref": "#/$defs/CpeApplicabilityElement"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "credits": {
+                    "description": "Statements acknowledging specific people, organizations, or tools for work related to research, discovery, remediation, or coordination of this CVE.",
+                    "items": {
+                        "$ref": "#/$defs/CreditEntry"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "cve_references": {
+                    "description": "Reference data in the form of URLs describing the vulnerability, such as advisories, patches, and exploit details. Required by CNA rules.",
+                    "items": {
+                        "$ref": "#/$defs/CveReference"
+                    },
+                    "maxItems": 512,
+                    "minItems": 1,
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "date_public": {
+                    "description": "If known, the date/time the vulnerability was disclosed publicly.",
+                    "pattern": "^(((2000|2400|2800|(19|2[0-9](0[48]|[2468][048]|[13579][26])))-02-29)|(((19|2[0-9])[0-9]{2})-02-(0[1-9]|1[0-9]|2[0-8]))|(((19|2[0-9])[0-9]{2})-(0[13578]|10|12)-(0[1-9]|[12][0-9]|3[01]))|(((19|2[0-9])[0-9]{2})-(0[469]|11)-(0[1-9]|[12][0-9]|30)))T(2[0-3]|[01][0-9]):([0-5][0-9]):([0-5][0-9])(\\.[0-9]+)?(Z|[+-][0-9]{2}:[0-9]{2})?$",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "descriptions": {
+                    "description": "A list of multi-lingual descriptions of the vulnerability. Must contain at least one English language entry. E.g., [PROBLEMTYPE] in [COMPONENT] in [VENDOR] [PRODUCT] [VERSION] on [PLATFORMS] allows [ATTACKER] to [IMPACT] via [VECTOR].",
+                    "items": {
+                        "$ref": "#/$defs/MultiLangDescription"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "exploits": {
+                    "description": "Information about known exploits of this vulnerability.",
+                    "items": {
+                        "$ref": "#/$defs/MultiLangDescription"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "impacts": {
+                    "description": "Collection of impacts of this vulnerability, optionally linked to CAPEC IDs.",
+                    "items": {
+                        "$ref": "#/$defs/ImpactEntry"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "metrics": {
+                    "description": "Collection of impact scores with attribution (CVSSv2, CVSSv3.0, CVSSv3.1, CVSSv4.0, or custom format).",
+                    "items": {
+                        "$ref": "#/$defs/MetricEntry"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "problem_types": {
+                    "description": "Problem type information such as CWE identifiers. Must contain at least one entry. Entries can be text, OWASP, or CWE identifiers.",
+                    "items": {
+                        "$ref": "#/$defs/ProblemType"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "provider_metadata": {
+                    "$ref": "#/$defs/ProviderMetadata",
+                    "description": "Details related to the information container provider (CNA or ADP)."
+                },
+                "solutions": {
+                    "description": "Information about solutions or remediations available for this vulnerability.",
+                    "items": {
+                        "$ref": "#/$defs/MultiLangDescription"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "taxonomy_mappings": {
+                    "description": "List of taxonomy items (e.g., ATT&CK, CWE) related to the vulnerability.",
+                    "items": {
+                        "$ref": "#/$defs/TaxonomyMapping"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "timeline": {
+                    "description": "Timeline information for significant events about the vulnerability or changes to the CVE Record.",
+                    "items": {
+                        "$ref": "#/$defs/TimelineEntry"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "title": {
+                    "description": "Short human-readable title or name for this entity.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "workarounds": {
+                    "description": "Workarounds and mitigations for this vulnerability.",
+                    "items": {
+                        "$ref": "#/$defs/MultiLangDescription"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "provider_metadata"
+            ],
+            "title": "AdpContainer",
+            "type": "object"
+        },
+        "AffectedProduct": {
+            "additionalProperties": false,
+            "description": "Information about the set of products and services affected by a vulnerability. At least one of (vendor + product) or (collectionURL + packageName) is required, and at least one of versions or defaultStatus is required.",
+            "properties": {
+                "collection_url": {
+                    "description": "URL identifying a package collection (determines the meaning of packageName).",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "cpes": {
+                    "description": "Affected products defined by CPE (Common Platform Enumeration) names in either 2.2 or 2.3 format.",
+                    "items": {
+                        "pattern": "([c][pP][eE]:/[AHOaho]?(:[A-Za-z0-9._\\-~%]*){0,6})|(cpe:2\\.3:[aho*\\-](:(((\\?*|\\*?)([a-zA-Z0-9\\-._]|(\\\\[\\\\*?!\"#$%&'()+,/:;<=>@\\[\\]\\^`{|}~]))+(\\?*|\\*?))|[*\\-])){5}(:(([a-zA-Z]{2,3}(-([a-zA-Z]{2}|[0-9]{3}))?)|[*\\-]))(:(((\\?*|\\*?)([a-zA-Z0-9\\-._]|(\\\\[\\\\*?!\"#$%&'()+,/:;<=>@\\[\\]\\^`{|}~]))+(\\?*|\\*?))|[*\\-])){4})",
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "default_status": {
+                    "$ref": "#/$defs/VersionStatus",
+                    "description": "The default status for versions not otherwise listed in the versions list. Defaults to 'unknown' if not specified. Versions or defaultStatus may be omitted, but not both."
+                },
+                "modules": {
+                    "description": "A list of the affected components, features, modules, sub-components, sub-products, APIs, commands, utilities, programs, or functionalities.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "name": {
+                    "description": "Name of the entity (product, weakness, reference, etc.).",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "package_name": {
+                    "description": "Name or identifier of the affected software package as used in the package collection.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "package_url": {
+                    "description": "A Package URL (PURL), a unified URL specification for identifying packages hosted by known package hosts. The Package URL MUST NOT include a version.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "platforms": {
+                    "description": "Platforms or operating environments affected.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "program_files": {
+                    "description": "A list of the affected source code files.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "program_routines": {
+                    "description": "A list of the affected source code functions, methods, subroutines, or procedures.",
+                    "items": {
+                        "$ref": "#/$defs/ProgramRoutine"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "repo": {
+                    "description": "The URL of the source code repository, for informational purposes and/or to resolve git hash version ranges.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "vendor": {
+                    "description": "Name of the vendor or organization responsible for the product.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "version": {
+                    "description": "Version string of the affected product.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "versions": {
+                    "description": "Set of product versions or version ranges related to the vulnerability. Versions or defaultStatus may be omitted, but not both.",
+                    "items": {
+                        "$ref": "#/$defs/VersionEntry"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                }
+            },
+            "title": "AffectedProduct",
+            "type": "object"
+        },
+        "Any": {
+            "additionalProperties": true,
+            "description": "A linkml placeholder class accepting any JSON-compatible value (string, number, boolean, object, or array). Use for slots that hold arbitrary or schema-less data.",
+            "title": "Any",
+            "type": [
+                "null",
+                "boolean",
+                "object",
+                "number",
+                "string"
+            ]
+        },
+        "CNATag": {
+            "description": "Tags provided by a CNA describing the CVE Record.",
+            "enum": [
+                "unsupported-when-assigned",
+                "exclusively-hosted-service",
+                "disputed"
+            ],
+            "title": "CNATag",
+            "type": "string"
+        },
+        "CVERecord": {
+            "additionalProperties": false,
+            "description": "Official CVE Record corresponding to a CVE ID. Represents either a Published or Rejected record in the CVE\u2122 Program. The dataType field is always CVE_RECORD. Use cveMetadata.state to distinguish Published from Rejected records.",
+            "properties": {
+                "containers": {
+                    "$ref": "#/$defs/Containers",
+                    "description": "A set of containers (CNA and optionally ADP) holding vulnerability information related to the CVE ID."
+                },
+                "cve_id": {
+                    "description": "The CVE identifier assigned by a CVE Numbering Authority (CNA). Format: CVE-YYYY-NNNNN.",
+                    "pattern": "^CVE-[0-9]{4}-[0-9]+$",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "cve_metadata": {
+                    "$ref": "#/$defs/CveMetadata",
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/CveMetadataPublished"
+                        },
+                        {
+                            "$ref": "#/$defs/CveMetadataRejected"
+                        }
+                    ],
+                    "description": "Metadata about the CVE ID. A Published record uses CveMetadataPublished; a Rejected record uses CveMetadataRejected."
+                },
+                "data_type": {
+                    "$ref": "#/$defs/DataType",
+                    "description": "Indicates the type of information represented in the JSON instance."
+                },
+                "data_version": {
+                    "description": "The version of the CVE schema used for validating this record. Supports multiple versions of the format (e.g., '5.2.0').",
+                    "pattern": "^5\\.(0|[1-9][0-9]*)(\\.(0|[1-9][0-9]*))?$",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "description": {
+                    "description": "Narrative description of the vulnerability.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "impact": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/Impact"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "Impact and severity assessment for this vulnerability."
+                },
+                "last_modified_date": {
+                    "description": "Date and time the vulnerability record was last modified.",
+                    "format": "date-time",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "products": {
+                    "description": "Products affected by this vulnerability.",
+                    "items": {
+                        "$ref": "#/$defs/Product"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "published_date": {
+                    "description": "Date and time the vulnerability was first published.",
+                    "format": "date-time",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "references": {
+                    "description": "External references such as advisories and articles.",
+                    "items": {
+                        "$ref": "#/$defs/Reference"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "status": {
+                    "$ref": "#/$defs/VulnerabilityStatus",
+                    "description": "Current lifecycle state of the vulnerability record."
+                },
+                "title": {
+                    "description": "Short human-readable title or name for this entity.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "weaknesses": {
+                    "description": "Weakness classifications (e.g. CWE) associated with this vulnerability.",
+                    "items": {
+                        "$ref": "#/$defs/Weakness"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "cve_metadata",
+                "containers"
+            ],
+            "title": "CVERecord",
+            "type": "object"
+        },
+        "CnaPublishedContainer": {
+            "additionalProperties": false,
+            "description": "An object containing vulnerability information provided by a CVE Numbering Authority (CNA) for a published CVE ID. There can only be one CNA container per CVE record since there can only be one assigning CNA.",
+            "properties": {
+                "affected": {
+                    "description": "List of affected products and services.",
+                    "items": {
+                        "$ref": "#/$defs/AffectedProduct"
+                    },
+                    "type": "array"
+                },
+                "cna_source": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/SourceInformation"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "Source information (who discovered it, who researched it, etc.) and optionally a chain of CNA information."
+                },
+                "cna_tags": {
+                    "description": "Tags provided by a CNA describing the CVE Record.",
+                    "items": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/$defs/CNATag"
+                            },
+                            {
+                                "pattern": "^x_.*$",
+                                "type": "string"
+                            }
+                        ],
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "configurations_text": {
+                    "description": "Configurations required for exploiting this vulnerability.",
+                    "items": {
+                        "$ref": "#/$defs/MultiLangDescription"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "cpe_applicability": {
+                    "description": "Affected products defined using the CPE Applicability Language. When defined, this block should align with the data in the affected block.",
+                    "items": {
+                        "$ref": "#/$defs/CpeApplicabilityElement"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "credits": {
+                    "description": "Statements acknowledging specific people, organizations, or tools for work related to research, discovery, remediation, or coordination of this CVE.",
+                    "items": {
+                        "$ref": "#/$defs/CreditEntry"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "cve_references": {
+                    "description": "Reference data in the form of URLs describing the vulnerability, such as advisories, patches, and exploit details. Required by CNA rules.",
+                    "items": {
+                        "$ref": "#/$defs/CveReference"
+                    },
+                    "maxItems": 512,
+                    "minItems": 1,
+                    "type": "array"
+                },
+                "date_assigned": {
+                    "description": "The date/time this CVE ID was associated with a vulnerability by a CNA.",
+                    "pattern": "^(((2000|2400|2800|(19|2[0-9](0[48]|[2468][048]|[13579][26])))-02-29)|(((19|2[0-9])[0-9]{2})-02-(0[1-9]|1[0-9]|2[0-8]))|(((19|2[0-9])[0-9]{2})-(0[13578]|10|12)-(0[1-9]|[12][0-9]|3[01]))|(((19|2[0-9])[0-9]{2})-(0[469]|11)-(0[1-9]|[12][0-9]|30)))T(2[0-3]|[01][0-9]):([0-5][0-9]):([0-5][0-9])(\\.[0-9]+)?(Z|[+-][0-9]{2}:[0-9]{2})?$",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "date_public": {
+                    "description": "If known, the date/time the vulnerability was disclosed publicly.",
+                    "pattern": "^(((2000|2400|2800|(19|2[0-9](0[48]|[2468][048]|[13579][26])))-02-29)|(((19|2[0-9])[0-9]{2})-02-(0[1-9]|1[0-9]|2[0-8]))|(((19|2[0-9])[0-9]{2})-(0[13578]|10|12)-(0[1-9]|[12][0-9]|3[01]))|(((19|2[0-9])[0-9]{2})-(0[469]|11)-(0[1-9]|[12][0-9]|30)))T(2[0-3]|[01][0-9]):([0-5][0-9]):([0-5][0-9])(\\.[0-9]+)?(Z|[+-][0-9]{2}:[0-9]{2})?$",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "descriptions": {
+                    "description": "A list of multi-lingual descriptions of the vulnerability. Must contain at least one English language entry. E.g., [PROBLEMTYPE] in [COMPONENT] in [VENDOR] [PRODUCT] [VERSION] on [PLATFORMS] allows [ATTACKER] to [IMPACT] via [VECTOR].",
+                    "items": {
+                        "$ref": "#/$defs/MultiLangDescription"
+                    },
+                    "type": "array"
+                },
+                "exploits": {
+                    "description": "Information about known exploits of this vulnerability.",
+                    "items": {
+                        "$ref": "#/$defs/MultiLangDescription"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "impacts": {
+                    "description": "Collection of impacts of this vulnerability, optionally linked to CAPEC IDs.",
+                    "items": {
+                        "$ref": "#/$defs/ImpactEntry"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "metrics": {
+                    "description": "Collection of impact scores with attribution (CVSSv2, CVSSv3.0, CVSSv3.1, CVSSv4.0, or custom format).",
+                    "items": {
+                        "$ref": "#/$defs/MetricEntry"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "problem_types": {
+                    "description": "Problem type information such as CWE identifiers. Must contain at least one entry. Entries can be text, OWASP, or CWE identifiers.",
+                    "items": {
+                        "$ref": "#/$defs/ProblemType"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "provider_metadata": {
+                    "$ref": "#/$defs/ProviderMetadata",
+                    "description": "Details related to the information container provider (CNA or ADP)."
+                },
+                "solutions": {
+                    "description": "Information about solutions or remediations available for this vulnerability.",
+                    "items": {
+                        "$ref": "#/$defs/MultiLangDescription"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "taxonomy_mappings": {
+                    "description": "List of taxonomy items (e.g., ATT&CK, CWE) related to the vulnerability.",
+                    "items": {
+                        "$ref": "#/$defs/TaxonomyMapping"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "timeline": {
+                    "description": "Timeline information for significant events about the vulnerability or changes to the CVE Record.",
+                    "items": {
+                        "$ref": "#/$defs/TimelineEntry"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "title": {
+                    "description": "Short human-readable title or name for this entity.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "workarounds": {
+                    "description": "Workarounds and mitigations for this vulnerability.",
+                    "items": {
+                        "$ref": "#/$defs/MultiLangDescription"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "provider_metadata",
+                "descriptions",
+                "affected",
+                "cve_references"
+            ],
+            "title": "CnaPublishedContainer",
+            "type": "object"
+        },
+        "CnaRejectedContainer": {
+            "additionalProperties": false,
+            "description": "An object containing vulnerability information provided by a CVE Numbering Authority (CNA) for a rejected CVE ID. There can only be one CNA container per CVE record.",
+            "properties": {
+                "provider_metadata": {
+                    "$ref": "#/$defs/ProviderMetadata",
+                    "description": "Details related to the information container provider (CNA or ADP)."
+                },
+                "rejected_reasons": {
+                    "description": "Reasons for rejecting this CVE Record.",
+                    "items": {
+                        "$ref": "#/$defs/MultiLangDescription"
+                    },
+                    "type": "array"
+                },
+                "replaced_by": {
+                    "description": "CVE IDs that this CVE ID was rejected in favor of because this CVE ID was incorrectly assigned to the same vulnerabilities.",
+                    "items": {
+                        "pattern": "^CVE-[0-9]{4}-[0-9]+$",
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "provider_metadata",
+                "rejected_reasons"
+            ],
+            "title": "CnaRejectedContainer",
+            "type": "object"
+        },
+        "Configuration": {
+            "additionalProperties": false,
+            "description": "Logical grouping of CPE match expressions.",
+            "properties": {
+                "cpe_uri": {
+                    "description": "CPE 2.2 URI identifying an affected product configuration.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "operator": {
+                    "description": "Logical operator (AND/OR) used in configuration node groupings.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "title": "Configuration",
+            "type": "object"
+        },
+        "Containers": {
+            "additionalProperties": false,
+            "description": "A set of structures (called containers) used to store vulnerability information related to a specific CVE ID. At minimum a 'cna' container is required.",
+            "properties": {
+                "adp": {
+                    "description": "One or more ADP containers providing additional vulnerability information. Multiple ADPs may contribute containers for the same CVE ID.",
+                    "items": {
+                        "$ref": "#/$defs/AdpContainer"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "cna": {
+                    "$ref": "#/$defs/CnaContainer",
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/CnaPublishedContainer"
+                        },
+                        {
+                            "$ref": "#/$defs/CnaRejectedContainer"
+                        }
+                    ],
+                    "description": "The CNA container holding vulnerability information for this CVE ID. For published records, this is a CnaPublishedContainer. For rejected records, this is a CnaRejectedContainer."
+                }
+            },
+            "required": [
+                "cna"
+            ],
+            "title": "Containers",
+            "type": "object"
+        },
+        "CpeApplicabilityElement": {
+            "additionalProperties": false,
+            "description": "Affected products defined using an implementation of the CPE Applicability Language. An operator property allows AND or OR logic between CPEs or combinations of CPEs.",
+            "properties": {
+                "cpe_negate": {
+                    "description": "If true, negates the applicability of this element.",
+                    "type": [
+                        "boolean",
+                        "null"
+                    ]
+                },
+                "cpe_nodes": {
+                    "description": "Array of CPE configuration nodes.",
+                    "items": {
+                        "$ref": "#/$defs/CpeNode"
+                    },
+                    "type": "array"
+                },
+                "cpe_operator": {
+                    "$ref": "#/$defs/CpeOperator",
+                    "description": "Logical operator (AND/OR) used between CPE criteria in this node."
+                }
+            },
+            "required": [
+                "cpe_nodes"
+            ],
+            "title": "CpeApplicabilityElement",
+            "type": "object"
+        },
+        "CpeMatch": {
+            "additionalProperties": false,
+            "description": "CPE match string or range within a CPE applicability node.",
+            "properties": {
+                "cpe_criteria": {
+                    "description": "CPE 2.3 formatted name match string or match criteria.",
+                    "pattern": "(cpe:2\\.3:[aho*\\-](:(((\\?*|\\*?)([a-zA-Z0-9\\-._]|(\\\\[\\\\*?!\"#$%&'()+,/:;<=>@\\[\\]\\^`{|}~]))+(\\?*|\\*?))|[*\\-])){5}(:(([a-zA-Z]{2,3}(-([a-zA-Z]{2}|[0-9]{3}))?)|[*\\-]))(:(((\\?*|\\*?)([a-zA-Z0-9\\-._]|(\\\\[\\\\*?!\"#$%&'()+,/:;<=>@\\[\\]\\^`{|}~]))+(\\?*|\\*?))|[*\\-])){4})",
+                    "type": "string"
+                },
+                "cpe_vulnerable": {
+                    "description": "Whether this CPE match describes a vulnerable configuration.",
+                    "type": "boolean"
+                },
+                "match_criteria_id": {
+                    "description": "UUID identifying the CPE match criteria set.",
+                    "pattern": "^[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-4[0-9A-Fa-f]{3}-[89ABab][0-9A-Fa-f]{3}-[0-9A-Fa-f]{12}$",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "version_end_excluding": {
+                    "description": "The end of a version range, exclusive (versions strictly less than this).",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "version_end_including": {
+                    "description": "The end of a version range, inclusive (versions less than or equal to this).",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "version_start_excluding": {
+                    "description": "The start of a version range, exclusive (versions strictly greater than this).",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "version_start_including": {
+                    "description": "The start of a version range, inclusive (versions greater than or equal to this).",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "cpe_vulnerable",
+                "cpe_criteria"
+            ],
+            "title": "CpeMatch",
+            "type": "object"
+        },
+        "CpeNode": {
+            "additionalProperties": false,
+            "description": "Defines a CPE configuration node in an applicability statement.",
+            "properties": {
+                "cpe_match_criteria": {
+                    "description": "Array of CPE match criteria within this node.",
+                    "items": {
+                        "$ref": "#/$defs/CpeMatch"
+                    },
+                    "type": "array"
+                },
+                "cpe_negate": {
+                    "description": "If true, negates the applicability of this element.",
+                    "type": [
+                        "boolean",
+                        "null"
+                    ]
+                },
+                "cpe_operator": {
+                    "$ref": "#/$defs/CpeOperator",
+                    "description": "Logical operator (AND/OR) used between CPE criteria in this node."
+                }
+            },
+            "required": [
+                "cpe_operator",
+                "cpe_match_criteria"
+            ],
+            "title": "CpeNode",
+            "type": "object"
+        },
+        "CpeOperator": {
+            "description": "Logical operator used in CPE applicability nodes.",
+            "enum": [
+                "AND",
+                "OR"
+            ],
+            "title": "CpeOperator",
+            "type": "string"
+        },
+        "CreditEntry": {
+            "additionalProperties": false,
+            "description": "A credit acknowledging a specific person, organization, or tool for work related to the research, discovery, remediation, or coordination of the vulnerability.",
+            "properties": {
+                "credit_type": {
+                    "$ref": "#/$defs/CreditType",
+                    "description": "Type or role of the entity being credited."
+                },
+                "credit_user": {
+                    "description": "UUID of the user being credited, if present in the CVE User Registry. This UUID can be used to lookup the user record in the user registry service.",
+                    "pattern": "^[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-4[0-9A-Fa-f]{3}-[89ABab][0-9A-Fa-f]{3}-[0-9A-Fa-f]{12}$",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "credit_value": {
+                    "description": "The name or description of the credited party (up to 4096 characters).",
+                    "type": "string"
+                },
+                "lang": {
+                    "description": "BCP 47 language code indicating the language of accompanying text.",
+                    "pattern": "^[A-Za-z]{2,4}([_-][A-Za-z]{4})?([_-]([A-Za-z]{2}|[0-9]{3}))?$",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "lang",
+                "credit_value"
+            ],
+            "title": "CreditEntry",
+            "type": "object"
+        },
+        "CreditType": {
+            "description": "Type or role of the entity being credited.",
+            "enum": [
+                "finder",
+                "reporter",
+                "analyst",
+                "coordinator",
+                "remediation developer",
+                "remediation reviewer",
+                "remediation verifier",
+                "tool",
+                "sponsor",
+                "other"
+            ],
+            "title": "CreditType",
+            "type": "string"
+        },
+        "CveMetadataPublished": {
+            "additionalProperties": false,
+            "description": "Metadata for a CVE Record in the PUBLISHED state.",
+            "properties": {
+                "assigner_org_id": {
+                    "description": "The UUID for the organization to which the CVE ID was originally assigned. This UUID can be used to lookup the organization record in the user registry service.",
+                    "pattern": "^[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-4[0-9A-Fa-f]{3}-[89ABab][0-9A-Fa-f]{3}-[0-9A-Fa-f]{12}$",
+                    "type": "string"
+                },
+                "assigner_short_name": {
+                    "description": "The short name for the organization to which the CVE ID was originally assigned.",
+                    "pattern": "^.{2,32}$",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "date_published": {
+                    "description": "The date/time the CVE Record was first published in the CVE List.",
+                    "pattern": "^(((2000|2400|2800|(19|2[0-9](0[48]|[2468][048]|[13579][26])))-02-29)|(((19|2[0-9])[0-9]{2})-02-(0[1-9]|1[0-9]|2[0-8]))|(((19|2[0-9])[0-9]{2})-(0[13578]|10|12)-(0[1-9]|[12][0-9]|3[01]))|(((19|2[0-9])[0-9]{2})-(0[469]|11)-(0[1-9]|[12][0-9]|30)))T(2[0-3]|[01][0-9]):([0-5][0-9]):([0-5][0-9])(\\.[0-9]+)?(Z|[+-][0-9]{2}:[0-9]{2})?$",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "date_reserved": {
+                    "description": "The date/time this CVE ID was reserved in the CVE automation workgroup services system. This date does not necessarily indicate when the vulnerability was discovered, shared with the vendor, or publicly disclosed.",
+                    "pattern": "^(((2000|2400|2800|(19|2[0-9](0[48]|[2468][048]|[13579][26])))-02-29)|(((19|2[0-9])[0-9]{2})-02-(0[1-9]|1[0-9]|2[0-8]))|(((19|2[0-9])[0-9]{2})-(0[13578]|10|12)-(0[1-9]|[12][0-9]|3[01]))|(((19|2[0-9])[0-9]{2})-(0[469]|11)-(0[1-9]|[12][0-9]|30)))T(2[0-3]|[01][0-9]):([0-5][0-9]):([0-5][0-9])(\\.[0-9]+)?(Z|[+-][0-9]{2}:[0-9]{2})?$",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "date_updated": {
+                    "description": "The date/time the record was last updated.",
+                    "pattern": "^(((2000|2400|2800|(19|2[0-9](0[48]|[2468][048]|[13579][26])))-02-29)|(((19|2[0-9])[0-9]{2})-02-(0[1-9]|1[0-9]|2[0-8]))|(((19|2[0-9])[0-9]{2})-(0[13578]|10|12)-(0[1-9]|[12][0-9]|3[01]))|(((19|2[0-9])[0-9]{2})-(0[469]|11)-(0[1-9]|[12][0-9]|30)))T(2[0-3]|[01][0-9]):([0-5][0-9]):([0-5][0-9])(\\.[0-9]+)?(Z|[+-][0-9]{2}:[0-9]{2})?$",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "published_state": {
+                    "$ref": "#/$defs/RecordState",
+                    "description": "State of the CVE Record. For published records, this is always PUBLISHED."
+                },
+                "record_cve_id": {
+                    "description": "The CVE identifier that this record pertains to.",
+                    "pattern": "^CVE-[0-9]{4}-[0-9]{4,19}$",
+                    "type": "string"
+                },
+                "requester_user_id": {
+                    "description": "The user that requested the CVE identifier.",
+                    "pattern": "^[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-4[0-9A-Fa-f]{3}-[89ABab][0-9A-Fa-f]{3}-[0-9A-Fa-f]{12}$",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "serial": {
+                    "description": "Monotonically increasing integer, starting at 1, incremented each time a submission from a data provider changes this CVE Record.",
+                    "minimum": 1,
+                    "type": [
+                        "integer",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "record_cve_id",
+                "assigner_org_id",
+                "published_state"
+            ],
+            "title": "CveMetadataPublished",
+            "type": "object"
+        },
+        "CveMetadataRejected": {
+            "additionalProperties": false,
+            "description": "Metadata for a CVE Record in the REJECTED state.",
+            "properties": {
+                "assigner_org_id": {
+                    "description": "The UUID for the organization to which the CVE ID was originally assigned. This UUID can be used to lookup the organization record in the user registry service.",
+                    "pattern": "^[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-4[0-9A-Fa-f]{3}-[89ABab][0-9A-Fa-f]{3}-[0-9A-Fa-f]{12}$",
+                    "type": "string"
+                },
+                "assigner_short_name": {
+                    "description": "The short name for the organization to which the CVE ID was originally assigned.",
+                    "pattern": "^.{2,32}$",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "date_published": {
+                    "description": "The date/time the CVE Record was first published in the CVE List.",
+                    "pattern": "^(((2000|2400|2800|(19|2[0-9](0[48]|[2468][048]|[13579][26])))-02-29)|(((19|2[0-9])[0-9]{2})-02-(0[1-9]|1[0-9]|2[0-8]))|(((19|2[0-9])[0-9]{2})-(0[13578]|10|12)-(0[1-9]|[12][0-9]|3[01]))|(((19|2[0-9])[0-9]{2})-(0[469]|11)-(0[1-9]|[12][0-9]|30)))T(2[0-3]|[01][0-9]):([0-5][0-9]):([0-5][0-9])(\\.[0-9]+)?(Z|[+-][0-9]{2}:[0-9]{2})?$",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "date_rejected": {
+                    "description": "The date/time the CVE ID was rejected.",
+                    "pattern": "^(((2000|2400|2800|(19|2[0-9](0[48]|[2468][048]|[13579][26])))-02-29)|(((19|2[0-9])[0-9]{2})-02-(0[1-9]|1[0-9]|2[0-8]))|(((19|2[0-9])[0-9]{2})-(0[13578]|10|12)-(0[1-9]|[12][0-9]|3[01]))|(((19|2[0-9])[0-9]{2})-(0[469]|11)-(0[1-9]|[12][0-9]|30)))T(2[0-3]|[01][0-9]):([0-5][0-9]):([0-5][0-9])(\\.[0-9]+)?(Z|[+-][0-9]{2}:[0-9]{2})?$",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "date_reserved": {
+                    "description": "The date/time this CVE ID was reserved in the CVE automation workgroup services system. This date does not necessarily indicate when the vulnerability was discovered, shared with the vendor, or publicly disclosed.",
+                    "pattern": "^(((2000|2400|2800|(19|2[0-9](0[48]|[2468][048]|[13579][26])))-02-29)|(((19|2[0-9])[0-9]{2})-02-(0[1-9]|1[0-9]|2[0-8]))|(((19|2[0-9])[0-9]{2})-(0[13578]|10|12)-(0[1-9]|[12][0-9]|3[01]))|(((19|2[0-9])[0-9]{2})-(0[469]|11)-(0[1-9]|[12][0-9]|30)))T(2[0-3]|[01][0-9]):([0-5][0-9]):([0-5][0-9])(\\.[0-9]+)?(Z|[+-][0-9]{2}:[0-9]{2})?$",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "date_updated": {
+                    "description": "The date/time the record was last updated.",
+                    "pattern": "^(((2000|2400|2800|(19|2[0-9](0[48]|[2468][048]|[13579][26])))-02-29)|(((19|2[0-9])[0-9]{2})-02-(0[1-9]|1[0-9]|2[0-8]))|(((19|2[0-9])[0-9]{2})-(0[13578]|10|12)-(0[1-9]|[12][0-9]|3[01]))|(((19|2[0-9])[0-9]{2})-(0[469]|11)-(0[1-9]|[12][0-9]|30)))T(2[0-3]|[01][0-9]):([0-5][0-9]):([0-5][0-9])(\\.[0-9]+)?(Z|[+-][0-9]{2}:[0-9]{2})?$",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "record_cve_id": {
+                    "description": "The CVE identifier that this record pertains to.",
+                    "pattern": "^CVE-[0-9]{4}-[0-9]{4,19}$",
+                    "type": "string"
+                },
+                "rejected_state": {
+                    "$ref": "#/$defs/RecordState",
+                    "description": "State of the CVE Record. For rejected records, this is always REJECTED."
+                },
+                "serial": {
+                    "description": "Monotonically increasing integer, starting at 1, incremented each time a submission from a data provider changes this CVE Record.",
+                    "minimum": 1,
+                    "type": [
+                        "integer",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "record_cve_id",
+                "assigner_org_id",
+                "rejected_state"
+            ],
+            "title": "CveMetadataRejected",
+            "type": "object"
+        },
+        "CveReference": {
+            "additionalProperties": false,
+            "description": "An external reference associated with a CVE Record. Extends the core Reference with optional descriptive tags characterizing the resource.",
+            "properties": {
+                "name": {
+                    "description": "Name of the entity (product, weakness, reference, etc.).",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "reference_tags": {
+                    "description": "An array of tags describing the resource referenced by the URL.",
+                    "items": {
+                        "$ref": "#/$defs/ReferenceTag"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "source": {
+                    "description": "Source or origin of the reference or data.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "url": {
+                    "description": "URL pointing to the reference resource.",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "url"
+            ],
+            "title": "CveReference",
+            "type": "object"
+        },
+        "Cvss2AccessComplexity": {
+            "description": "CVSS 2.0 access complexity base metric.",
+            "enum": [
+                "HIGH",
+                "MEDIUM",
+                "LOW"
+            ],
+            "title": "Cvss2AccessComplexity",
+            "type": "string"
+        },
+        "Cvss2AccessVector": {
+            "description": "CVSS 2.0 access vector base metric.",
+            "enum": [
+                "NETWORK",
+                "ADJACENT_NETWORK",
+                "LOCAL"
+            ],
+            "title": "Cvss2AccessVector",
+            "type": "string"
+        },
+        "Cvss2Authentication": {
+            "description": "CVSS 2.0 authentication base metric.",
+            "enum": [
+                "MULTIPLE",
+                "SINGLE",
+                "NONE"
+            ],
+            "title": "Cvss2Authentication",
+            "type": "string"
+        },
+        "Cvss2Cia": {
+            "description": "CVSS 2.0 confidentiality/integrity/availability impact base metric.",
+            "enum": [
+                "NONE",
+                "PARTIAL",
+                "COMPLETE"
+            ],
+            "title": "Cvss2Cia",
+            "type": "string"
+        },
+        "Cvss2CiaRequirement": {
+            "description": "CVSS 2.0 CIA requirement environmental metric.",
+            "enum": [
+                "LOW",
+                "MEDIUM",
+                "HIGH",
+                "NOT_DEFINED"
+            ],
+            "title": "Cvss2CiaRequirement",
+            "type": "string"
+        },
+        "Cvss2CollateralDamagePotential": {
+            "description": "CVSS 2.0 collateral damage potential environmental metric.",
+            "enum": [
+                "NONE",
+                "LOW",
+                "LOW_MEDIUM",
+                "MEDIUM_HIGH",
+                "HIGH",
+                "NOT_DEFINED"
+            ],
+            "title": "Cvss2CollateralDamagePotential",
+            "type": "string"
+        },
+        "Cvss2Exploitability": {
+            "description": "CVSS 2.0 exploitability temporal metric.",
+            "enum": [
+                "UNPROVEN",
+                "PROOF_OF_CONCEPT",
+                "FUNCTIONAL",
+                "HIGH",
+                "NOT_DEFINED"
+            ],
+            "title": "Cvss2Exploitability",
+            "type": "string"
+        },
+        "Cvss2RemediationLevel": {
+            "description": "CVSS 2.0 remediation level temporal metric.",
+            "enum": [
+                "OFFICIAL_FIX",
+                "TEMPORARY_FIX",
+                "WORKAROUND",
+                "UNAVAILABLE",
+                "NOT_DEFINED"
+            ],
+            "title": "Cvss2RemediationLevel",
+            "type": "string"
+        },
+        "Cvss2ReportConfidence": {
+            "description": "CVSS 2.0 report confidence temporal metric.",
+            "enum": [
+                "UNCONFIRMED",
+                "UNCORROBORATED",
+                "CONFIRMED",
+                "NOT_DEFINED"
+            ],
+            "title": "Cvss2ReportConfidence",
+            "type": "string"
+        },
+        "Cvss2TargetDistribution": {
+            "description": "CVSS 2.0 target distribution environmental metric.",
+            "enum": [
+                "NONE",
+                "LOW",
+                "MEDIUM",
+                "HIGH",
+                "NOT_DEFINED"
+            ],
+            "title": "Cvss2TargetDistribution",
+            "type": "string"
+        },
+        "Cvss3AttackComplexity": {
+            "description": "CVSS 3.x attack complexity base metric.",
+            "enum": [
+                "HIGH",
+                "LOW"
+            ],
+            "title": "Cvss3AttackComplexity",
+            "type": "string"
+        },
+        "Cvss3AttackVector": {
+            "description": "CVSS 3.x attack vector base metric.",
+            "enum": [
+                "NETWORK",
+                "ADJACENT_NETWORK",
+                "LOCAL",
+                "PHYSICAL"
+            ],
+            "title": "Cvss3AttackVector",
+            "type": "string"
+        },
+        "Cvss3Cia": {
+            "description": "CVSS 3.x confidentiality/integrity/availability impact base metric.",
+            "enum": [
+                "NONE",
+                "LOW",
+                "HIGH"
+            ],
+            "title": "Cvss3Cia",
+            "type": "string"
+        },
+        "Cvss3CiaRequirement": {
+            "description": "CVSS 3.x CIA requirement environmental metric.",
+            "enum": [
+                "LOW",
+                "MEDIUM",
+                "HIGH",
+                "NOT_DEFINED"
+            ],
+            "title": "Cvss3CiaRequirement",
+            "type": "string"
+        },
+        "Cvss3Confidence": {
+            "description": "CVSS 3.x report confidence temporal metric.",
+            "enum": [
+                "UNKNOWN",
+                "REASONABLE",
+                "CONFIRMED",
+                "NOT_DEFINED"
+            ],
+            "title": "Cvss3Confidence",
+            "type": "string"
+        },
+        "Cvss3ExploitCodeMaturity": {
+            "description": "CVSS 3.x exploit code maturity temporal metric.",
+            "enum": [
+                "UNPROVEN",
+                "PROOF_OF_CONCEPT",
+                "FUNCTIONAL",
+                "HIGH",
+                "NOT_DEFINED"
+            ],
+            "title": "Cvss3ExploitCodeMaturity",
+            "type": "string"
+        },
+        "Cvss3ModifiedAttackComplexity": {
+            "description": "CVSS 3.x modified attack complexity environmental metric.",
+            "enum": [
+                "HIGH",
+                "LOW",
+                "NOT_DEFINED"
+            ],
+            "title": "Cvss3ModifiedAttackComplexity",
+            "type": "string"
+        },
+        "Cvss3ModifiedAttackVector": {
+            "description": "CVSS 3.x modified attack vector environmental metric.",
+            "enum": [
+                "NETWORK",
+                "ADJACENT_NETWORK",
+                "LOCAL",
+                "PHYSICAL",
+                "NOT_DEFINED"
+            ],
+            "title": "Cvss3ModifiedAttackVector",
+            "type": "string"
+        },
+        "Cvss3ModifiedCia": {
+            "description": "CVSS 3.x modified CIA environmental metric.",
+            "enum": [
+                "NONE",
+                "LOW",
+                "HIGH",
+                "NOT_DEFINED"
+            ],
+            "title": "Cvss3ModifiedCia",
+            "type": "string"
+        },
+        "Cvss3ModifiedPrivilegesRequired": {
+            "description": "CVSS 3.x modified privileges required environmental metric.",
+            "enum": [
+                "HIGH",
+                "LOW",
+                "NONE",
+                "NOT_DEFINED"
+            ],
+            "title": "Cvss3ModifiedPrivilegesRequired",
+            "type": "string"
+        },
+        "Cvss3ModifiedScope": {
+            "description": "CVSS 3.x modified scope environmental metric.",
+            "enum": [
+                "UNCHANGED",
+                "CHANGED",
+                "NOT_DEFINED"
+            ],
+            "title": "Cvss3ModifiedScope",
+            "type": "string"
+        },
+        "Cvss3ModifiedUserInteraction": {
+            "description": "CVSS 3.x modified user interaction environmental metric.",
+            "enum": [
+                "NONE",
+                "REQUIRED",
+                "NOT_DEFINED"
+            ],
+            "title": "Cvss3ModifiedUserInteraction",
+            "type": "string"
+        },
+        "Cvss3PrivilegesRequired": {
+            "description": "CVSS 3.x privileges required base metric.",
+            "enum": [
+                "HIGH",
+                "LOW",
+                "NONE"
+            ],
+            "title": "Cvss3PrivilegesRequired",
+            "type": "string"
+        },
+        "Cvss3RemediationLevel": {
+            "description": "CVSS 3.x remediation level temporal metric.",
+            "enum": [
+                "OFFICIAL_FIX",
+                "TEMPORARY_FIX",
+                "WORKAROUND",
+                "UNAVAILABLE",
+                "NOT_DEFINED"
+            ],
+            "title": "Cvss3RemediationLevel",
+            "type": "string"
+        },
+        "Cvss3Scope": {
+            "description": "CVSS 3.x scope base metric.",
+            "enum": [
+                "UNCHANGED",
+                "CHANGED"
+            ],
+            "title": "Cvss3Scope",
+            "type": "string"
+        },
+        "Cvss3Severity": {
+            "description": "CVSS 3.x qualitative severity rating.",
+            "enum": [
+                "NONE",
+                "LOW",
+                "MEDIUM",
+                "HIGH",
+                "CRITICAL"
+            ],
+            "title": "Cvss3Severity",
+            "type": "string"
+        },
+        "Cvss3UserInteraction": {
+            "description": "CVSS 3.x user interaction base metric.",
+            "enum": [
+                "NONE",
+                "REQUIRED"
+            ],
+            "title": "Cvss3UserInteraction",
+            "type": "string"
+        },
+        "Cvss4AttackComplexity": {
+            "description": "CVSS 4.0 attack complexity base metric.",
+            "enum": [
+                "HIGH",
+                "LOW"
+            ],
+            "title": "Cvss4AttackComplexity",
+            "type": "string"
+        },
+        "Cvss4AttackRequirements": {
+            "description": "CVSS 4.0 attack requirements base metric.",
+            "enum": [
+                "NONE",
+                "PRESENT"
+            ],
+            "title": "Cvss4AttackRequirements",
+            "type": "string"
+        },
+        "Cvss4AttackVector": {
+            "description": "CVSS 4.0 attack vector base metric.",
+            "enum": [
+                "NETWORK",
+                "ADJACENT",
+                "LOCAL",
+                "PHYSICAL"
+            ],
+            "title": "Cvss4AttackVector",
+            "type": "string"
+        },
+        "Cvss4Automatable": {
+            "description": "CVSS 4.0 automatable supplemental metric.",
+            "enum": [
+                "NO",
+                "YES",
+                "NOT_DEFINED"
+            ],
+            "title": "Cvss4Automatable",
+            "type": "string"
+        },
+        "Cvss4CiaRequirement": {
+            "description": "CVSS 4.0 confidentiality/integrity/availability requirement environmental metric.",
+            "enum": [
+                "LOW",
+                "MEDIUM",
+                "HIGH",
+                "NOT_DEFINED"
+            ],
+            "title": "Cvss4CiaRequirement",
+            "type": "string"
+        },
+        "Cvss4ExploitMaturity": {
+            "description": "CVSS 4.0 exploit maturity supplemental metric.",
+            "enum": [
+                "UNREPORTED",
+                "PROOF_OF_CONCEPT",
+                "ATTACKED",
+                "NOT_DEFINED"
+            ],
+            "title": "Cvss4ExploitMaturity",
+            "type": "string"
+        },
+        "Cvss4ModifiedAttackComplexity": {
+            "description": "CVSS 4.0 modified attack complexity environmental metric.",
+            "enum": [
+                "HIGH",
+                "LOW",
+                "NOT_DEFINED"
+            ],
+            "title": "Cvss4ModifiedAttackComplexity",
+            "type": "string"
+        },
+        "Cvss4ModifiedAttackRequirements": {
+            "description": "CVSS 4.0 modified attack requirements environmental metric.",
+            "enum": [
+                "NONE",
+                "PRESENT",
+                "NOT_DEFINED"
+            ],
+            "title": "Cvss4ModifiedAttackRequirements",
+            "type": "string"
+        },
+        "Cvss4ModifiedAttackVector": {
+            "description": "CVSS 4.0 modified attack vector environmental metric.",
+            "enum": [
+                "NETWORK",
+                "ADJACENT",
+                "LOCAL",
+                "PHYSICAL",
+                "NOT_DEFINED"
+            ],
+            "title": "Cvss4ModifiedAttackVector",
+            "type": "string"
+        },
+        "Cvss4ModifiedPrivilegesRequired": {
+            "description": "CVSS 4.0 modified privileges required environmental metric.",
+            "enum": [
+                "HIGH",
+                "LOW",
+                "NONE",
+                "NOT_DEFINED"
+            ],
+            "title": "Cvss4ModifiedPrivilegesRequired",
+            "type": "string"
+        },
+        "Cvss4ModifiedSubC": {
+            "description": "CVSS 4.0 modified subsequent system confidentiality environmental metric.",
+            "enum": [
+                "NONE",
+                "LOW",
+                "HIGH",
+                "NOT_DEFINED"
+            ],
+            "title": "Cvss4ModifiedSubC",
+            "type": "string"
+        },
+        "Cvss4ModifiedSubIa": {
+            "description": "CVSS 4.0 modified subsequent system integrity/availability environmental metric (includes SAFETY value).",
+            "enum": [
+                "NONE",
+                "LOW",
+                "HIGH",
+                "SAFETY",
+                "NOT_DEFINED"
+            ],
+            "title": "Cvss4ModifiedSubIa",
+            "type": "string"
+        },
+        "Cvss4ModifiedUserInteraction": {
+            "description": "CVSS 4.0 modified user interaction environmental metric.",
+            "enum": [
+                "NONE",
+                "PASSIVE",
+                "ACTIVE",
+                "NOT_DEFINED"
+            ],
+            "title": "Cvss4ModifiedUserInteraction",
+            "type": "string"
+        },
+        "Cvss4ModifiedVulnCia": {
+            "description": "CVSS 4.0 modified vulnerable system CIA environmental metric.",
+            "enum": [
+                "NONE",
+                "LOW",
+                "HIGH",
+                "NOT_DEFINED"
+            ],
+            "title": "Cvss4ModifiedVulnCia",
+            "type": "string"
+        },
+        "Cvss4PrivilegesRequired": {
+            "description": "CVSS 4.0 privileges required base metric.",
+            "enum": [
+                "HIGH",
+                "LOW",
+                "NONE"
+            ],
+            "title": "Cvss4PrivilegesRequired",
+            "type": "string"
+        },
+        "Cvss4ProviderUrgency": {
+            "description": "CVSS 4.0 provider urgency supplemental metric.",
+            "enum": [
+                "CLEAR",
+                "GREEN",
+                "AMBER",
+                "RED",
+                "NOT_DEFINED"
+            ],
+            "title": "Cvss4ProviderUrgency",
+            "type": "string"
+        },
+        "Cvss4Recovery": {
+            "description": "CVSS 4.0 recovery supplemental metric.",
+            "enum": [
+                "AUTOMATIC",
+                "USER",
+                "IRRECOVERABLE",
+                "NOT_DEFINED"
+            ],
+            "title": "Cvss4Recovery",
+            "type": "string"
+        },
+        "Cvss4Safety": {
+            "description": "CVSS 4.0 safety supplemental metric.",
+            "enum": [
+                "NEGLIGIBLE",
+                "PRESENT",
+                "NOT_DEFINED"
+            ],
+            "title": "Cvss4Safety",
+            "type": "string"
+        },
+        "Cvss4Severity": {
+            "description": "CVSS 4.0 qualitative severity rating.",
+            "enum": [
+                "NONE",
+                "LOW",
+                "MEDIUM",
+                "HIGH",
+                "CRITICAL"
+            ],
+            "title": "Cvss4Severity",
+            "type": "string"
+        },
+        "Cvss4SubCia": {
+            "description": "CVSS 4.0 subsequent system confidentiality/integrity/availability impact base metric.",
+            "enum": [
+                "NONE",
+                "LOW",
+                "HIGH"
+            ],
+            "title": "Cvss4SubCia",
+            "type": "string"
+        },
+        "Cvss4UserInteraction": {
+            "description": "CVSS 4.0 user interaction base metric.",
+            "enum": [
+                "NONE",
+                "PASSIVE",
+                "ACTIVE"
+            ],
+            "title": "Cvss4UserInteraction",
+            "type": "string"
+        },
+        "Cvss4ValueDensity": {
+            "description": "CVSS 4.0 value density supplemental metric.",
+            "enum": [
+                "DIFFUSE",
+                "CONCENTRATED",
+                "NOT_DEFINED"
+            ],
+            "title": "Cvss4ValueDensity",
+            "type": "string"
+        },
+        "Cvss4VulnCia": {
+            "description": "CVSS 4.0 vulnerable system confidentiality/integrity/availability impact base metric.",
+            "enum": [
+                "NONE",
+                "LOW",
+                "HIGH"
+            ],
+            "title": "Cvss4VulnCia",
+            "type": "string"
+        },
+        "Cvss4VulnerabilityResponseEffort": {
+            "description": "CVSS 4.0 vulnerability response effort supplemental metric.",
+            "enum": [
+                "LOW",
+                "MODERATE",
+                "HIGH",
+                "NOT_DEFINED"
+            ],
+            "title": "Cvss4VulnerabilityResponseEffort",
+            "type": "string"
+        },
+        "CvssV20": {
+            "additionalProperties": false,
+            "description": "CVSS version 2.0 scoring object. Requires version ('2.0'), vectorString, and baseScore.",
+            "properties": {
+                "cvss2_access_complexity": {
+                    "$ref": "#/$defs/Cvss2AccessComplexity"
+                },
+                "cvss2_access_vector": {
+                    "$ref": "#/$defs/Cvss2AccessVector"
+                },
+                "cvss2_authentication": {
+                    "$ref": "#/$defs/Cvss2Authentication"
+                },
+                "cvss2_availability_impact": {
+                    "$ref": "#/$defs/Cvss2Cia"
+                },
+                "cvss2_availability_requirement": {
+                    "$ref": "#/$defs/Cvss2CiaRequirement"
+                },
+                "cvss2_base_score": {
+                    "description": "CVSS 2.0 base score (0.0 \u2013 10.0).",
+                    "maximum": 10,
+                    "minimum": 0,
+                    "type": "number"
+                },
+                "cvss2_collateral_damage_potential": {
+                    "$ref": "#/$defs/Cvss2CollateralDamagePotential"
+                },
+                "cvss2_confidentiality_impact": {
+                    "$ref": "#/$defs/Cvss2Cia"
+                },
+                "cvss2_confidentiality_requirement": {
+                    "$ref": "#/$defs/Cvss2CiaRequirement"
+                },
+                "cvss2_environmental_score": {
+                    "description": "CVSS 2.0 environmental score.",
+                    "maximum": 10,
+                    "minimum": 0,
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "cvss2_exploitability": {
+                    "$ref": "#/$defs/Cvss2Exploitability"
+                },
+                "cvss2_integrity_impact": {
+                    "$ref": "#/$defs/Cvss2Cia"
+                },
+                "cvss2_integrity_requirement": {
+                    "$ref": "#/$defs/Cvss2CiaRequirement"
+                },
+                "cvss2_remediation_level": {
+                    "$ref": "#/$defs/Cvss2RemediationLevel"
+                },
+                "cvss2_report_confidence": {
+                    "$ref": "#/$defs/Cvss2ReportConfidence"
+                },
+                "cvss2_target_distribution": {
+                    "$ref": "#/$defs/Cvss2TargetDistribution"
+                },
+                "cvss2_temporal_score": {
+                    "description": "CVSS 2.0 temporal score.",
+                    "maximum": 10,
+                    "minimum": 0,
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "cvss2_vector_string": {
+                    "description": "CVSS 2.0 vector string encoding all base, temporal, and environmental metrics.",
+                    "pattern": "^((AV:[NAL]|AC:[LMH]|Au:[MSN]|[CIA]:[NPC]|E:(U|POC|F|H|ND)|RL:(OF|TF|W|U|ND)|RC:(UC|UR|C|ND)|CDP:(N|L|LM|MH|H|ND)|TD:(N|L|M|H|ND)|[CIA]R:(L|M|H|ND))/)*(AV:[NAL]|AC:[LMH]|Au:[MSN]|[CIA]:[NPC]|E:(U|POC|F|H|ND)|RL:(OF|TF|W|U|ND)|RC:(UC|UR|C|ND)|CDP:(N|L|LM|MH|H|ND)|TD:(N|L|M|H|ND)|[CIA]R:(L|M|H|ND))$",
+                    "type": "string"
+                },
+                "cvss2_version": {
+                    "description": "CVSS version identifier. Must be '2.0' for CVSS v2.0 objects.",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "cvss2_version",
+                "cvss2_vector_string",
+                "cvss2_base_score"
+            ],
+            "title": "CvssV20",
+            "type": "object"
+        },
+        "CvssV3": {
+            "additionalProperties": false,
+            "description": "CVSS version 3.x scoring object covering both CVSS 3.0 and CVSS 3.1. The two versions share an identical metric model; the 3.1 spec was a clarification, not a structural change. The cvss3_version slot distinguishes between them. Requires version ('3.0' or '3.1'), vectorString, baseScore, and baseSeverity.",
+            "properties": {
+                "cvss3_attack_complexity": {
+                    "$ref": "#/$defs/Cvss3AttackComplexity"
+                },
+                "cvss3_attack_vector": {
+                    "$ref": "#/$defs/Cvss3AttackVector"
+                },
+                "cvss3_availability_impact": {
+                    "$ref": "#/$defs/Cvss3Cia"
+                },
+                "cvss3_availability_requirement": {
+                    "$ref": "#/$defs/Cvss3CiaRequirement"
+                },
+                "cvss3_base_score": {
+                    "description": "CVSS 3.x base score (0.0 \u2013 10.0 in 0.1 increments).",
+                    "maximum": 10,
+                    "minimum": 0,
+                    "type": "number"
+                },
+                "cvss3_base_severity": {
+                    "$ref": "#/$defs/Cvss3Severity"
+                },
+                "cvss3_confidentiality_impact": {
+                    "$ref": "#/$defs/Cvss3Cia"
+                },
+                "cvss3_confidentiality_requirement": {
+                    "$ref": "#/$defs/Cvss3CiaRequirement"
+                },
+                "cvss3_environmental_score": {
+                    "description": "CVSS 3.x environmental score.",
+                    "maximum": 10,
+                    "minimum": 0,
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "cvss3_environmental_severity": {
+                    "$ref": "#/$defs/Cvss3Severity"
+                },
+                "cvss3_exploit_code_maturity": {
+                    "$ref": "#/$defs/Cvss3ExploitCodeMaturity"
+                },
+                "cvss3_integrity_impact": {
+                    "$ref": "#/$defs/Cvss3Cia"
+                },
+                "cvss3_integrity_requirement": {
+                    "$ref": "#/$defs/Cvss3CiaRequirement"
+                },
+                "cvss3_modified_attack_complexity": {
+                    "$ref": "#/$defs/Cvss3ModifiedAttackComplexity"
+                },
+                "cvss3_modified_attack_vector": {
+                    "$ref": "#/$defs/Cvss3ModifiedAttackVector"
+                },
+                "cvss3_modified_availability_impact": {
+                    "$ref": "#/$defs/Cvss3ModifiedCia"
+                },
+                "cvss3_modified_confidentiality_impact": {
+                    "$ref": "#/$defs/Cvss3ModifiedCia"
+                },
+                "cvss3_modified_integrity_impact": {
+                    "$ref": "#/$defs/Cvss3ModifiedCia"
+                },
+                "cvss3_modified_privileges_required": {
+                    "$ref": "#/$defs/Cvss3ModifiedPrivilegesRequired"
+                },
+                "cvss3_modified_scope": {
+                    "$ref": "#/$defs/Cvss3ModifiedScope"
+                },
+                "cvss3_modified_user_interaction": {
+                    "$ref": "#/$defs/Cvss3ModifiedUserInteraction"
+                },
+                "cvss3_privileges_required": {
+                    "$ref": "#/$defs/Cvss3PrivilegesRequired"
+                },
+                "cvss3_remediation_level": {
+                    "$ref": "#/$defs/Cvss3RemediationLevel"
+                },
+                "cvss3_report_confidence": {
+                    "$ref": "#/$defs/Cvss3Confidence"
+                },
+                "cvss3_scope": {
+                    "$ref": "#/$defs/Cvss3Scope"
+                },
+                "cvss3_temporal_score": {
+                    "description": "CVSS 3.x temporal score.",
+                    "maximum": 10,
+                    "minimum": 0,
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "cvss3_temporal_severity": {
+                    "$ref": "#/$defs/Cvss3Severity"
+                },
+                "cvss3_user_interaction": {
+                    "$ref": "#/$defs/Cvss3UserInteraction"
+                },
+                "cvss3_vector_string": {
+                    "description": "CVSS 3.x vector string encoding all metric values. CVSS 3.1 strings begin with 'CVSS:3.1/'; CVSS 3.0 strings begin with 'CVSS:3.0/'.",
+                    "type": "string"
+                },
+                "cvss3_version": {
+                    "$ref": "#/$defs/CvssV3Version",
+                    "description": "CVSS version identifier ('3.0' or '3.1') within a CvssV3 object."
+                }
+            },
+            "required": [
+                "cvss3_version",
+                "cvss3_vector_string",
+                "cvss3_base_score",
+                "cvss3_base_severity"
+            ],
+            "title": "CvssV3",
+            "type": "object"
+        },
+        "CvssV3Version": {
+            "description": "CVSS version 3.x identifier. CVSS 3.0 and 3.1 share an identical metric model; the 3.1 spec was a clarification, not a structural change. The consolidated CvssV3 class accepts either via this enum.",
+            "enum": [
+                "3.0",
+                "3.1"
+            ],
+            "title": "CvssV3Version",
+            "type": "string"
+        },
+        "CvssV40": {
+            "additionalProperties": false,
+            "description": "CVSS version 4.0 scoring object. Requires version, vectorString, baseScore, and baseSeverity. All other fields are optional.",
+            "properties": {
+                "cvss4_attack_complexity": {
+                    "$ref": "#/$defs/Cvss4AttackComplexity"
+                },
+                "cvss4_attack_requirements": {
+                    "$ref": "#/$defs/Cvss4AttackRequirements"
+                },
+                "cvss4_attack_vector": {
+                    "$ref": "#/$defs/Cvss4AttackVector"
+                },
+                "cvss4_automatable": {
+                    "$ref": "#/$defs/Cvss4Automatable"
+                },
+                "cvss4_availability_requirement": {
+                    "$ref": "#/$defs/Cvss4CiaRequirement"
+                },
+                "cvss4_base_score": {
+                    "description": "CVSS 4.0 base score (0.0 \u2013 10.0 in 0.1 increments).",
+                    "maximum": 10,
+                    "minimum": 0,
+                    "type": "number"
+                },
+                "cvss4_base_severity": {
+                    "$ref": "#/$defs/Cvss4Severity",
+                    "description": "CVSS 4.0 qualitative base severity rating."
+                },
+                "cvss4_confidentiality_requirement": {
+                    "$ref": "#/$defs/Cvss4CiaRequirement"
+                },
+                "cvss4_exploit_maturity": {
+                    "$ref": "#/$defs/Cvss4ExploitMaturity"
+                },
+                "cvss4_integrity_requirement": {
+                    "$ref": "#/$defs/Cvss4CiaRequirement"
+                },
+                "cvss4_modified_attack_complexity": {
+                    "$ref": "#/$defs/Cvss4ModifiedAttackComplexity"
+                },
+                "cvss4_modified_attack_requirements": {
+                    "$ref": "#/$defs/Cvss4ModifiedAttackRequirements"
+                },
+                "cvss4_modified_attack_vector": {
+                    "$ref": "#/$defs/Cvss4ModifiedAttackVector"
+                },
+                "cvss4_modified_privileges_required": {
+                    "$ref": "#/$defs/Cvss4ModifiedPrivilegesRequired"
+                },
+                "cvss4_modified_sub_availability_impact": {
+                    "$ref": "#/$defs/Cvss4ModifiedSubIa"
+                },
+                "cvss4_modified_sub_confidentiality_impact": {
+                    "$ref": "#/$defs/Cvss4ModifiedSubC"
+                },
+                "cvss4_modified_sub_integrity_impact": {
+                    "$ref": "#/$defs/Cvss4ModifiedSubIa"
+                },
+                "cvss4_modified_user_interaction": {
+                    "$ref": "#/$defs/Cvss4ModifiedUserInteraction"
+                },
+                "cvss4_modified_vuln_availability_impact": {
+                    "$ref": "#/$defs/Cvss4ModifiedVulnCia"
+                },
+                "cvss4_modified_vuln_confidentiality_impact": {
+                    "$ref": "#/$defs/Cvss4ModifiedVulnCia"
+                },
+                "cvss4_modified_vuln_integrity_impact": {
+                    "$ref": "#/$defs/Cvss4ModifiedVulnCia"
+                },
+                "cvss4_privileges_required": {
+                    "$ref": "#/$defs/Cvss4PrivilegesRequired"
+                },
+                "cvss4_provider_urgency": {
+                    "$ref": "#/$defs/Cvss4ProviderUrgency"
+                },
+                "cvss4_recovery": {
+                    "$ref": "#/$defs/Cvss4Recovery"
+                },
+                "cvss4_safety": {
+                    "$ref": "#/$defs/Cvss4Safety"
+                },
+                "cvss4_sub_availability_impact": {
+                    "$ref": "#/$defs/Cvss4SubCia"
+                },
+                "cvss4_sub_confidentiality_impact": {
+                    "$ref": "#/$defs/Cvss4SubCia"
+                },
+                "cvss4_sub_integrity_impact": {
+                    "$ref": "#/$defs/Cvss4SubCia"
+                },
+                "cvss4_user_interaction": {
+                    "$ref": "#/$defs/Cvss4UserInteraction"
+                },
+                "cvss4_value_density": {
+                    "$ref": "#/$defs/Cvss4ValueDensity"
+                },
+                "cvss4_vector_string": {
+                    "description": "CVSS 4.0 vector string encoding all base, threat, and environmental metrics.",
+                    "pattern": "^CVSS:4[.]0/AV:[NALP]/AC:[LH]/AT:[NP]/PR:[NLH]/UI:[NPA]/VC:[HLN]/VI:[HLN]/VA:[HLN]/SC:[HLN]/SI:[HLN]/SA:[HLN](/E:[XAPU])?(/CR:[XHML])?(/IR:[XHML])?(/AR:[XHML])?(/MAV:[XNALP])?(/MAC:[XLH])?(/MAT:[XNP])?(/MPR:[XNLH])?(/MUI:[XNPA])?(/MVC:[XNLH])?(/MVI:[XNLH])?(/MVA:[XNLH])?(/MSC:[XNLH])?(/MSI:[XNLHS])?(/MSA:[XNLHS])?(/S:[XNP])?(/AU:[XNY])?(/R:[XAUI])?(/V:[XDC])?(/RE:[XLMH])?(/U:(X|Clear|Green|Amber|Red))?$",
+                    "type": "string"
+                },
+                "cvss4_version": {
+                    "description": "CVSS version identifier. Must be '4.0' for CVSS v4.0 objects.",
+                    "type": "string"
+                },
+                "cvss4_vuln_availability_impact": {
+                    "$ref": "#/$defs/Cvss4VulnCia"
+                },
+                "cvss4_vuln_confidentiality_impact": {
+                    "$ref": "#/$defs/Cvss4VulnCia"
+                },
+                "cvss4_vuln_integrity_impact": {
+                    "$ref": "#/$defs/Cvss4VulnCia"
+                },
+                "cvss4_vulnerability_response_effort": {
+                    "$ref": "#/$defs/Cvss4VulnerabilityResponseEffort"
+                }
+            },
+            "required": [
+                "cvss4_version",
+                "cvss4_vector_string",
+                "cvss4_base_score",
+                "cvss4_base_severity"
+            ],
+            "title": "CvssV40",
+            "type": "object"
+        },
+        "DataType": {
+            "description": "Indicates the type of information represented in a CVE JSON instance.",
+            "enum": [
+                "CVE_RECORD"
+            ],
+            "title": "DataType",
+            "type": "string"
+        },
+        "Impact": {
+            "additionalProperties": false,
+            "description": "Assessment of the vulnerability's impact and severity.",
+            "properties": {
+                "score": {
+                    "description": "Numeric vulnerability score (e.g. CVSS base score).",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "severity": {
+                    "$ref": "#/$defs/ImpactSeverity",
+                    "description": "Qualitative severity rating."
+                },
+                "vector": {
+                    "description": "CVSS vector string or equivalent scoring vector expression.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "title": "Impact",
+            "type": "object"
+        },
+        "ImpactEntry": {
+            "additionalProperties": false,
+            "description": "An impact entry linking an optional CAPEC attack pattern ID to one or more prose descriptions of the impact scenario.",
+            "properties": {
+                "capec_id": {
+                    "description": "CAPEC ID that best relates to this impact (e.g., CAPEC-123).",
+                    "pattern": "^CAPEC-[1-9][0-9]{0,4}$",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "impact_descriptions": {
+                    "description": "Prose description of the impact scenario. At a minimum, provide the description given by CAPEC.",
+                    "items": {
+                        "$ref": "#/$defs/MultiLangDescription"
+                    },
+                    "type": "array"
+                }
+            },
+            "required": [
+                "impact_descriptions"
+            ],
+            "title": "ImpactEntry",
+            "type": "object"
+        },
+        "ImpactSeverity": {
+            "description": "CVSS qualitative severity rating.",
+            "enum": [
+                "NONE",
+                "LOW",
+                "MEDIUM",
+                "HIGH",
+                "CRITICAL",
+                "UNKNOWN"
+            ],
+            "title": "ImpactSeverity",
+            "type": "string"
+        },
+        "MetricEntry": {
+            "additionalProperties": false,
+            "description": "A metric entry containing scoring data in one of the CVSS formats (v4.0, v3.x, v2.0) or a custom format, with optional applicability scenarios. At least one of cvss_v4_0, cvss_v3, cvss_v2_0, or other_metric is required. CVSS 3.0 and 3.1 are both represented by CvssV3 (distinguished by the cvss3_version slot).",
+            "properties": {
+                "cvss_v2_0": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/CvssV20"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "CVSS version 2.0 scoring data."
+                },
+                "cvss_v3": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/CvssV3"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "CVSS version 3.x scoring data (covers both 3.0 and 3.1). The version is distinguished by the cvss3_version field within the CvssV3 object."
+                },
+                "cvss_v4_0": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/CvssV40"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "CVSS version 4.0 scoring data."
+                },
+                "metric_format": {
+                    "description": "Name of the scoring format (e.g., cvssV4_0, cvssV3_1). Provides future-proofing and supports proprietary format inclusion.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "metric_scenarios": {
+                    "description": "Scenarios this metrics object applies to. If no specific scenario is given, GENERAL applies when no more specific metric matches.",
+                    "items": {
+                        "$ref": "#/$defs/MetricScenario"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "other_metric": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/OtherMetric"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "A non-standard impact description or score."
+                }
+            },
+            "title": "MetricEntry",
+            "type": "object"
+        },
+        "MetricScenario": {
+            "additionalProperties": false,
+            "description": "A scenario description indicating the context in which a metric applies. If no specific scenario is given, GENERAL is used as the default.",
+            "properties": {
+                "lang": {
+                    "description": "BCP 47 language code indicating the language of accompanying text.",
+                    "pattern": "^[A-Za-z]{2,4}([_-][A-Za-z]{4})?([_-]([A-Za-z]{2}|[0-9]{3}))?$",
+                    "type": "string"
+                },
+                "scenario_value": {
+                    "description": "Description of the scenario this metrics object applies to.",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "lang",
+                "scenario_value"
+            ],
+            "title": "MetricScenario",
+            "type": "object"
+        },
+        "MultiLangDescription": {
+            "additionalProperties": false,
+            "description": "Text in a particular language with optional alternate markup or formatted representation (e.g., Markdown) or embedded media. Used for vulnerability descriptions, rejected reasons, configurations, workarounds, solutions, and exploits.",
+            "properties": {
+                "description_value": {
+                    "description": "Plain text description (up to 4096 characters).",
+                    "type": "string"
+                },
+                "lang": {
+                    "description": "BCP 47 language code indicating the language of accompanying text.",
+                    "pattern": "^[A-Za-z]{2,4}([_-][A-Za-z]{4})?([_-]([A-Za-z]{2}|[0-9]{3}))?$",
+                    "type": "string"
+                },
+                "supporting_media": {
+                    "description": "Supporting media data for the description such as markdown, diagrams, etc. Similar to RFC 2397, each object has a media type, data value, and optional base64 flag.",
+                    "items": {
+                        "$ref": "#/$defs/SupportingMedia"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "lang",
+                "description_value"
+            ],
+            "title": "MultiLangDescription",
+            "type": "object"
+        },
+        "OtherMetric": {
+            "additionalProperties": false,
+            "description": "A non-standard impact description in a custom format. May be a prose description or an arbitrary JSON-compatible object.",
+            "properties": {
+                "other_metric_content": {
+                    "$ref": "#/$defs/Any",
+                    "description": "Arbitrary JSON-compatible object (or prose string) containing non-standard metric data not covered by the CVSS formats. Upstream JSON Schema defines this as 'type: object, minProperties: 1'; range: Any allows any value."
+                },
+                "other_metric_type": {
+                    "description": "Name of the non-standard impact metrics format used.",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "other_metric_type",
+                "other_metric_content"
+            ],
+            "title": "OtherMetric",
+            "type": "object"
+        },
+        "ProblemType": {
+            "additionalProperties": false,
+            "description": "Problem type information (e.g., CWE identifier). Wraps one or more problem type descriptions. The CNA requirement is [PROBLEMTYPE].",
+            "properties": {
+                "problem_type_descriptions": {
+                    "description": "One or more problem type descriptions (e.g., CWE IDs or OWASP categories).",
+                    "items": {
+                        "$ref": "#/$defs/ProblemTypeDescription"
+                    },
+                    "type": "array"
+                }
+            },
+            "required": [
+                "problem_type_descriptions"
+            ],
+            "title": "ProblemType",
+            "type": "object"
+        },
+        "ProblemTypeDescription": {
+            "additionalProperties": false,
+            "description": "Individual problem type description entry.",
+            "properties": {
+                "cwe_id": {
+                    "description": "CWE identifier for the weakness classification (e.g. CWE-79).",
+                    "pattern": "^CWE-[1-9][0-9]*$",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "lang": {
+                    "description": "BCP 47 language code indicating the language of accompanying text.",
+                    "pattern": "^[A-Za-z]{2,4}([_-][A-Za-z]{4})?([_-]([A-Za-z]{2}|[0-9]{3}))?$",
+                    "type": "string"
+                },
+                "problem_description": {
+                    "description": "Text description of the problem type, or title from CWE or OWASP.",
+                    "type": "string"
+                },
+                "problem_references": {
+                    "description": "References supporting this specific problem type.",
+                    "items": {
+                        "$ref": "#/$defs/CveReference"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "problem_source_type": {
+                    "description": "Problem type source format (e.g., text, OWASP, CWE).",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "lang",
+                "problem_description"
+            ],
+            "title": "ProblemTypeDescription",
+            "type": "object"
+        },
+        "Product": {
+            "additionalProperties": false,
+            "description": "Software or hardware entity affected by the vulnerability.",
+            "properties": {
+                "name": {
+                    "description": "Name of the entity (product, weakness, reference, etc.).",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "platforms": {
+                    "description": "Platforms or operating environments affected.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "vendor": {
+                    "description": "Name of the vendor or organization responsible for the product.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "version": {
+                    "description": "Version string of the affected product.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "title": "Product",
+            "type": "object"
+        },
+        "ProgramRoutine": {
+            "additionalProperties": false,
+            "description": "An affected source code function, method, subroutine, or procedure.",
+            "properties": {
+                "routine_name": {
+                    "description": "Name of the affected source code function, method, subroutine, or procedure.",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "routine_name"
+            ],
+            "title": "ProgramRoutine",
+            "type": "object"
+        },
+        "ProviderMetadata": {
+            "additionalProperties": false,
+            "description": "Details related to the information container provider (CNA or ADP).",
+            "properties": {
+                "date_updated": {
+                    "description": "The date/time the record was last updated.",
+                    "pattern": "^(((2000|2400|2800|(19|2[0-9](0[48]|[2468][048]|[13579][26])))-02-29)|(((19|2[0-9])[0-9]{2})-02-(0[1-9]|1[0-9]|2[0-8]))|(((19|2[0-9])[0-9]{2})-(0[13578]|10|12)-(0[1-9]|[12][0-9]|3[01]))|(((19|2[0-9])[0-9]{2})-(0[469]|11)-(0[1-9]|[12][0-9]|30)))T(2[0-3]|[01][0-9]):([0-5][0-9]):([0-5][0-9])(\\.[0-9]+)?(Z|[+-][0-9]{2}:[0-9]{2})?$",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "org_id": {
+                    "description": "The container provider's organizational UUID.",
+                    "pattern": "^[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-4[0-9A-Fa-f]{3}-[89ABab][0-9A-Fa-f]{3}-[0-9A-Fa-f]{12}$",
+                    "type": "string"
+                },
+                "short_name": {
+                    "description": "The container provider's organizational short name (2-32 characters).",
+                    "pattern": "^.{2,32}$",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "org_id"
+            ],
+            "title": "ProviderMetadata",
+            "type": "object"
+        },
+        "RecordState": {
+            "description": "Lifecycle state of a CVE Record (PUBLISHED or REJECTED).",
+            "enum": [
+                "PUBLISHED",
+                "REJECTED"
+            ],
+            "title": "RecordState",
+            "type": "string"
+        },
+        "Reference": {
+            "additionalProperties": false,
+            "description": "External reference such as an advisory or article.",
+            "properties": {
+                "name": {
+                    "description": "Name of the entity (product, weakness, reference, etc.).",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "source": {
+                    "description": "Source or origin of the reference or data.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "url": {
+                    "description": "URL pointing to the reference resource.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "title": "Reference",
+            "type": "object"
+        },
+        "ReferenceTag": {
+            "description": "A tag describing the type or nature of the resource referenced by a URL.",
+            "enum": [
+                "broken-link",
+                "customer-entitlement",
+                "exploit",
+                "government-resource",
+                "issue-tracking",
+                "mailing-list",
+                "mitigation",
+                "not-applicable",
+                "patch",
+                "permissions-required",
+                "media-coverage",
+                "product",
+                "related",
+                "release-notes",
+                "signature",
+                "technical-description",
+                "third-party-advisory",
+                "vendor-advisory",
+                "vdb-entry"
+            ],
+            "title": "ReferenceTag",
+            "type": "string"
+        },
+        "SourceInformation": {
+            "additionalProperties": false,
+            "description": "Source information (who discovered it, who researched it, etc.) and optionally a chain of CNA information. This is an open object \u2014 at least one property must be present.",
+            "properties": {
+                "source_advisory": {
+                    "description": "Advisory identifier associated with the vulnerability discovery.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "source_defects": {
+                    "description": "Bug tracking system IDs (e.g., JIRA ticket IDs) related to the vulnerability.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "source_discovery": {
+                    "description": "How the vulnerability was discovered (e.g., INTERNAL, EXTERNAL, USER).",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "title": "SourceInformation",
+            "type": "object"
+        },
+        "SupportingMedia": {
+            "additionalProperties": false,
+            "description": "Supporting media data for a description such as markdown, diagrams, etc. Similar to RFC 2397, each media object has a media type, data value, and an optional base64 flag.",
+            "properties": {
+                "base64_encoded": {
+                    "description": "If true, the media_value field contains the media data encoded in base64. If false, the media_value field contains UTF-8 media content.",
+                    "type": [
+                        "boolean",
+                        "null"
+                    ]
+                },
+                "media_type": {
+                    "description": "RFC2046 compliant IANA Media type (e.g., text/markdown, text/html, image/png, image/svg, audio/mp3).",
+                    "type": "string"
+                },
+                "media_value": {
+                    "description": "Supporting media content, up to 16K characters. If base64_encoded is true, this stores base64 encoded data.",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "media_type",
+                "media_value"
+            ],
+            "title": "SupportingMedia",
+            "type": "object"
+        },
+        "TaxonomyMapping": {
+            "additionalProperties": false,
+            "description": "A taxonomy mapping identifying the taxonomy by name and version, along with a list of relations relevant to the CVE (e.g., ATT&CK, D3FEND, CWE).",
+            "properties": {
+                "taxonomy_name": {
+                    "description": "The name of the taxonomy (e.g., ATT&CK, D3FEND, CWE, CVSS).",
+                    "type": "string"
+                },
+                "taxonomy_relations": {
+                    "description": "List of relationships to the taxonomy for this vulnerability.",
+                    "items": {
+                        "$ref": "#/$defs/TaxonomyRelation"
+                    },
+                    "type": "array"
+                },
+                "taxonomy_version": {
+                    "description": "The version of the taxonomy the identifiers come from.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "taxonomy_name",
+                "taxonomy_relations"
+            ],
+            "title": "TaxonomyMapping",
+            "type": "object"
+        },
+        "TaxonomyRelation": {
+            "additionalProperties": false,
+            "description": "A relationship between a taxonomy item and a CVE or another taxonomy item. Provides subject (taxonomyId), predicate (relationshipName), and object (relationshipValue).",
+            "properties": {
+                "relationship_name": {
+                    "description": "A description of the relationship between the taxonomy item and the CVE.",
+                    "type": "string"
+                },
+                "relationship_value": {
+                    "description": "The target of the relationship. Can be the CVE ID or another taxonomy identifier.",
+                    "type": "string"
+                },
+                "taxonomy_id": {
+                    "description": "Identifier of the item in the taxonomy. Used as the subject of the relationship.",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "taxonomy_id",
+                "relationship_name",
+                "relationship_value"
+            ],
+            "title": "TaxonomyRelation",
+            "type": "object"
+        },
+        "TimelineEntry": {
+            "additionalProperties": false,
+            "description": "A timeline event recording a significant event about the vulnerability or changes to the CVE Record. Requires time, lang, and value.",
+            "properties": {
+                "event_time": {
+                    "description": "Timestamp representing when the event in the timeline occurred. Format is RFC3339 / ISO8601 with optional timezone.",
+                    "pattern": "^(((2000|2400|2800|(19|2[0-9](0[48]|[2468][048]|[13579][26])))-02-29)|(((19|2[0-9])[0-9]{2})-02-(0[1-9]|1[0-9]|2[0-8]))|(((19|2[0-9])[0-9]{2})-(0[13578]|10|12)-(0[1-9]|[12][0-9]|3[01]))|(((19|2[0-9])[0-9]{2})-(0[469]|11)-(0[1-9]|[12][0-9]|30)))T(2[0-3]|[01][0-9]):([0-5][0-9]):([0-5][0-9])(\\.[0-9]+)?(Z|[+-][0-9]{2}:[0-9]{2})?$",
+                    "type": "string"
+                },
+                "event_value": {
+                    "description": "A summary of the timeline event (up to 4096 characters).",
+                    "type": "string"
+                },
+                "lang": {
+                    "description": "BCP 47 language code indicating the language of accompanying text.",
+                    "pattern": "^[A-Za-z]{2,4}([_-][A-Za-z]{4})?([_-]([A-Za-z]{2}|[0-9]{3}))?$",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "event_time",
+                "lang",
+                "event_value"
+            ],
+            "title": "TimelineEntry",
+            "type": "object"
+        },
+        "VersionChange": {
+            "additionalProperties": false,
+            "description": "A status change that takes place at a specific point within a version range.",
+            "properties": {
+                "change_at": {
+                    "description": "The version at which a status change occurs within a range.",
+                    "type": "string"
+                },
+                "change_status": {
+                    "$ref": "#/$defs/VersionStatus",
+                    "description": "The new status in the range starting at the given version."
+                }
+            },
+            "required": [
+                "change_at",
+                "change_status"
+            ],
+            "title": "VersionChange",
+            "type": "object"
+        },
+        "VersionEntry": {
+            "additionalProperties": false,
+            "allOf": [
+                {
+                    "if": {
+                        "properties": {
+                            "less_than": {}
+                        },
+                        "required": [
+                            "less_than"
+                        ]
+                    },
+                    "then": {
+                        "properties": {
+                            "version_type": {}
+                        },
+                        "required": [
+                            "version_type"
+                        ]
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "less_than_or_equal": {}
+                        },
+                        "required": [
+                            "less_than_or_equal"
+                        ]
+                    },
+                    "then": {
+                        "properties": {
+                            "version_type": {}
+                        },
+                        "required": [
+                            "version_type"
+                        ]
+                    }
+                }
+            ],
+            "description": "A single version or a range of versions of a product with associated vulnerability status. An entry with only version and status is a point version; an entry with versionType and a less-than limit describes a range.",
+            "properties": {
+                "less_than": {
+                    "description": "The non-inclusive upper limit of the range. This is the least version NOT in the range. Supports wildcard '*' suffix.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "less_than_or_equal": {
+                    "description": "The inclusive upper limit of the range. This is the greatest version contained in the range. Only one of lessThan and lessThanOrEqual should be specified.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "version_changes": {
+                    "description": "A list of status changes that take place during the version range. The array should be sorted by 'at' field according to versionType, but clients must re-sort rather than assume ordering.",
+                    "items": {
+                        "$ref": "#/$defs/VersionChange"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "version_status": {
+                    "$ref": "#/$defs/VersionStatus",
+                    "description": "The vulnerability status for the version or range of versions. For a range, the status may be refined by the 'changes' list."
+                },
+                "version_type": {
+                    "description": "The version numbering system used for specifying the range (e.g., semver, git, maven, rpm, python, custom). Defines the semantics of comparison.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "version_value": {
+                    "description": "The single version being described, or the version at the start of the range. By convention, '0' denotes the earliest possible version.",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "version_value",
+                "version_status"
+            ],
+            "title": "VersionEntry",
+            "type": "object"
+        },
+        "VersionStatus": {
+            "description": "The vulnerability status of a given version or range of versions of a product.",
+            "enum": [
+                "affected",
+                "unaffected",
+                "unknown"
+            ],
+            "title": "VersionStatus",
+            "type": "string"
+        },
+        "VulnerabilityStatus": {
+            "description": "Lifecycle state of a vulnerability record.",
+            "enum": [
+                "ACTIVE",
+                "REJECTED",
+                "DISPUTED",
+                "RESERVED",
+                "DEPRECATED"
+            ],
+            "title": "VulnerabilityStatus",
+            "type": "string"
+        },
+        "Weakness": {
+            "additionalProperties": false,
+            "description": "Weakness classification from CWE or a similar taxonomy.",
+            "properties": {
+                "cwe_id": {
+                    "description": "CWE identifier for the weakness classification (e.g. CWE-79).",
+                    "pattern": "^CWE-[1-9][0-9]*$",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "description": {
+                    "description": "Narrative description of the vulnerability.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "name": {
+                    "description": "Name of the entity (product, weakness, reference, etc.).",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "title": "Weakness",
+            "type": "object"
+        }
+    },
+    "$id": "https://w3id.org/lmodel/cve",
+    "$schema": "https://json-schema.org/draft/2019-09/schema",
+    "additionalProperties": true,
+    "description": "Official CVE Record corresponding to a CVE ID. Represents either a Published or Rejected record in the CVE\u2122 Program. The dataType field is always CVE_RECORD. Use cveMetadata.state to distinguish Published from Rejected records.",
+    "metamodel_version": "1.7.0",
+    "properties": {
+        "containers": {
+            "$ref": "#/$defs/Containers",
+            "description": "A set of containers (CNA and optionally ADP) holding vulnerability information related to the CVE ID."
+        },
+        "cve_id": {
+            "description": "The CVE identifier assigned by a CVE Numbering Authority (CNA). Format: CVE-YYYY-NNNNN.",
+            "pattern": "^CVE-[0-9]{4}-[0-9]+$",
+            "type": [
+                "string",
+                "null"
+            ]
+        },
+        "cve_metadata": {
+            "$ref": "#/$defs/CveMetadata",
+            "anyOf": [
+                {
+                    "$ref": "#/$defs/CveMetadataPublished"
+                },
+                {
+                    "$ref": "#/$defs/CveMetadataRejected"
+                }
+            ],
+            "description": "Metadata about the CVE ID. A Published record uses CveMetadataPublished; a Rejected record uses CveMetadataRejected."
+        },
+        "data_type": {
+            "$ref": "#/$defs/DataType",
+            "description": "Indicates the type of information represented in the JSON instance."
+        },
+        "data_version": {
+            "description": "The version of the CVE schema used for validating this record. Supports multiple versions of the format (e.g., '5.2.0').",
+            "pattern": "^5\\.(0|[1-9][0-9]*)(\\.(0|[1-9][0-9]*))?$",
+            "type": [
+                "string",
+                "null"
+            ]
+        },
+        "description": {
+            "description": "Narrative description of the vulnerability.",
+            "type": [
+                "string",
+                "null"
+            ]
+        },
+        "impact": {
+            "anyOf": [
+                {
+                    "$ref": "#/$defs/Impact"
+                },
+                {
+                    "type": "null"
+                }
+            ],
+            "description": "Impact and severity assessment for this vulnerability."
+        },
+        "last_modified_date": {
+            "description": "Date and time the vulnerability record was last modified.",
+            "format": "date-time",
+            "type": [
+                "string",
+                "null"
+            ]
+        },
+        "products": {
+            "description": "Products affected by this vulnerability.",
+            "items": {
+                "$ref": "#/$defs/Product"
+            },
+            "type": [
+                "array",
+                "null"
+            ]
+        },
+        "published_date": {
+            "description": "Date and time the vulnerability was first published.",
+            "format": "date-time",
+            "type": [
+                "string",
+                "null"
+            ]
+        },
+        "references": {
+            "description": "External references such as advisories and articles.",
+            "items": {
+                "$ref": "#/$defs/Reference"
+            },
+            "type": [
+                "array",
+                "null"
+            ]
+        },
+        "status": {
+            "$ref": "#/$defs/VulnerabilityStatus",
+            "description": "Current lifecycle state of the vulnerability record."
+        },
+        "title": {
+            "description": "Short human-readable title or name for this entity.",
+            "type": [
+                "string",
+                "null"
+            ]
+        },
+        "weaknesses": {
+            "description": "Weakness classifications (e.g. CWE) associated with this vulnerability.",
+            "items": {
+                "$ref": "#/$defs/Weakness"
+            },
+            "type": [
+                "array",
+                "null"
+            ]
+        }
+    },
+    "required": [
+        "cve_metadata",
+        "containers"
+    ],
+    "title": "cve",
+    "type": "object",
+    "version": "5.2.0"
+}

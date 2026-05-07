@@ -24,11 +24,23 @@ SCHEMA_PATH = Path(__file__).parent.parent / "src" / "cve" / "schema" / "cve.yam
 # (filepath, target_class_name, json_extract_key_or_None)
 # For cnaContainer-* files the JSON wraps the container under "cnaContainer".
 CASES = [
-    ("full-record-basic-example.json",    "CVERecord",             None),
-    ("full-record-advanced-example.json", "CVERecord",             None),
-    ("cnaContainer-basic-example.json",   "CnaPublishedContainer", "cnaContainer"),
-    ("cnaContainer-advanced-example.json","CnaPublishedContainer", "cnaContainer"),
-    ("cnaContainer-rejected-example.json","CnaRejectedContainer",  "cnaContainer"),
+    ("full-record-basic-example.json",        "CVERecord",             None),
+    ("full-record-advanced-example.json",     "CVERecord",             None),
+    # v5.0 archive examples: dataVersion "5.0", CVSS v3.1 only, no cpeApplicability
+    ("full-record-v50-basic-example.json",    "CVERecord",             None),
+    ("full-record-v50-advanced-example.json", "CVERecord",             None),
+    # authored fixtures: gaps not covered by upstream examples
+    ("full-record-rejected-example.json",     "CVERecord",             None),
+    ("full-record-with-adp-example.json",     "CVERecord",             None),
+    ("full-record-cvss30-example.json",       "CVERecord",             None),
+    ("full-record-cvss20-example.json",       "CVERecord",             None),
+    # authored: other metric type (SSVC) with arbitrary JSON content
+    ("full-record-other-metric-example.json", "CVERecord",             None),
+    # authored: x_* extension tags on cna.tags
+    ("full-record-extension-tags-example.json", "CVERecord",           None),
+    ("cnaContainer-basic-example.json",       "CnaPublishedContainer", "cnaContainer"),
+    ("cnaContainer-advanced-example.json",    "CnaPublishedContainer", "cnaContainer"),
+    ("cnaContainer-rejected-example.json",    "CnaRejectedContainer",  "cnaContainer"),
 ]
 
 

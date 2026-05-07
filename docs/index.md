@@ -1,5 +1,5 @@
 # cve
 
-Mitre CVE™ - LinkML Schema
+CVE™ Program - LinkML Schema
 
 - Auto-generated [schema documentation](elements/index.md)

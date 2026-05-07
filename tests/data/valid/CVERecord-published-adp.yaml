@@ -4,13 +4,13 @@ description: Path traversal vulnerability in BetaFileServer before 5.2 allows au
   users to read arbitrary files via a crafted file path.
 cve_metadata:
   record_cve_id: CVE-2024-33333
-  assigner_org_id: e5f6a7b8-c9d0-4e1f-2a3b-4c5d6e7f8a9b
+  assigner_org_id: e5f6a7b8-c9d0-4e1f-8a3b-4c5d6e7f8a9b
   published_state: PUBLISHED
   date_published: "2024-02-20T00:00:00Z"
 containers:
   cna:
     provider_metadata:
-      org_id: e5f6a7b8-c9d0-4e1f-2a3b-4c5d6e7f8a9b
+      org_id: e5f6a7b8-c9d0-4e1f-8a3b-4c5d6e7f8a9b
       short_name: beta_cna
     descriptions:
       - lang: en
@@ -33,7 +33,7 @@ containers:
           - patch
     metrics:
       - metric_format: cvssV3_1
-        cvss_v3_1:
+        cvss_v3:
           cvss3_version: "3.1"
           cvss3_vector_string: "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N"
           cvss3_attack_vector: NETWORK
@@ -48,7 +48,7 @@ containers:
           cvss3_base_severity: MEDIUM
   adp:
     - provider_metadata:
-        org_id: f6a7b8c9-d0e1-4f2a-3b4c-5d6e7f8a9b0c
+        org_id: f6a7b8c9-d0e1-4f2a-8b4c-5d6e7f8a9b0c
         short_name: cisa_adp
         date_updated: "2024-03-01T00:00:00Z"
       title: CISA ADP Vulnrichment
@@ -58,7 +58,7 @@ containers:
             catalog based on evidence of active exploitation.
       metrics:
         - metric_format: cvssV3_1
-          cvss_v3_1:
+          cvss_v3:
             cvss3_version: "3.1"
             cvss3_vector_string: "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N"
             cvss3_attack_vector: NETWORK

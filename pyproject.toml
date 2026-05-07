@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "cve"
-description = "Mitre CVE™ - LinkML Schema"
+description = "CVE™ Program - LinkML Schema"
 authors = [
   {name = "Noel McLoughlin", email = "noel.mcloughlin@gmail.com"},
 ]

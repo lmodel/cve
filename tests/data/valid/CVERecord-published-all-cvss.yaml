@@ -5,12 +5,12 @@ description: Remote code execution vulnerability in MultiScore Server allows una
   attackers to execute arbitrary commands via the admin API endpoint.
 cve_metadata:
   record_cve_id: CVE-2024-88888
-  assigner_org_id: f7a8b9c0-d1e2-4f3a-4b5c-6d7e8f9a0b1c
+  assigner_org_id: f7a8b9c0-d1e2-4f3a-8b5c-6d7e8f9a0b1c
   published_state: PUBLISHED
 containers:
   cna:
     provider_metadata:
-      org_id: f7a8b9c0-d1e2-4f3a-4b5c-6d7e8f9a0b1c
+      org_id: f7a8b9c0-d1e2-4f3a-8b5c-6d7e8f9a0b1c
     descriptions:
       - lang: en
         description_value: Remote code execution vulnerability in MultiScore Server
@@ -37,13 +37,13 @@ containers:
           cvss4_base_score: 10.0
           cvss4_base_severity: CRITICAL
       - metric_format: cvssV3_1
-        cvss_v3_1:
+        cvss_v3:
           cvss3_version: "3.1"
           cvss3_vector_string: "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H"
           cvss3_base_score: 10.0
           cvss3_base_severity: CRITICAL
       - metric_format: cvssV3_0
-        cvss_v3_0:
+        cvss_v3:
           cvss3_version: "3.0"
           cvss3_vector_string: "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H"
           cvss3_base_score: 10.0

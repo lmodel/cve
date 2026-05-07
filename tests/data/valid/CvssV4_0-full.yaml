@@ -1,6 +1,6 @@
 # CvssV40 - full scoring with threat and environmental metrics
 cvss4_version: "4.0"
-cvss4_vector_string: "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:ATTACKED"
+cvss4_vector_string: "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:A"
 cvss4_base_score: 9.3
 cvss4_base_severity: CRITICAL
 cvss4_attack_vector: NETWORK

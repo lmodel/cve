@@ -2,11 +2,13 @@
 id: https://w3id.org/lmodel/cve
 name: cve
 title: cve
-description: |-
-  MITRE Common Vulnerabilities and Exposures (CVE™) LinkML Schema.
+description: >-
+  Common Vulnerabilities and Exposures (CVE™) Program - LinkML Schema.
+
   Provides complete semantic coverage of the CVE Record Format v5 JSON Schema,
   including published and rejected records, all container types, CVSS 4.0/3.1/3.0/2.0
   scoring, CPE applicability, taxonomy mappings, credits, and timeline entries.
+
 license: https://creativecommons.org/publicdomain/zero/1.0/
 
 source: https://github.com/CVEProject/cve-schema/blob/main/schema/CVE_Record_Format.json
@@ -20,6 +22,9 @@ see_also:
 
 prefixes:
   cve: https://w3id.org/lmodel/cve/
+  cwe: https://w3id.org/lmodel/cwe/
+  nvd: https://w3id.org/lmodel/nist-nvd/
+  kev_catalog: https://w3id.org/lmodel/kev-catalog/
   linkml: https://w3id.org/linkml/
   schema: http://schema.org/
   dct: http://purl.org/dc/terms/
@@ -37,7 +42,9 @@ imports:
 
 # Subsets
 
+
 subsets:
+
   cve_record:
     description: Required CVE Record Format fields
 
@@ -50,7 +57,9 @@ subsets:
 
 # Types
 
+
 types:
+
   UuidType:
     uri: xsd:string
     base: str
@@ -102,6 +111,7 @@ types:
 
 
 # Enums
+
 
 enums:
 
@@ -164,7 +174,7 @@ enums:
       not-applicable:
         description: >-
           The reference link is not applicable to the vulnerability and was likely
-          associated by MITRE accidentally (should be used sparingly).
+          associated accidentally (should be used sparingly).
       patch:
         description: The reference contains an update to the software that fixes the vulnerability.
       permissions-required:
@@ -481,6 +491,18 @@ enums:
 
   # --- CVSS 3.x shared enums ---
 
+  CvssV3Version:
+    description: >-
+      CVSS version 3.x identifier. CVSS 3.0 and 3.1 share an identical metric
+      model; the 3.1 spec was a clarification, not a structural change. The
+      consolidated CvssV3 class accepts either via this enum.
+    in_subset: [cvss_metrics]
+    permissible_values:
+      "3.0":
+        description: CVSS version 3.0 (2015-2019)
+      "3.1":
+        description: CVSS version 3.1 (2019-present)
+
   Cvss3AttackVector:
     description: CVSS 3.x attack vector base metric.
     in_subset: [cvss_metrics]
@@ -723,7 +745,14 @@ enums:
 
 # Classes
 
+
 classes:
+
+  Any:
+    description: >-
+      A linkml placeholder class accepting any JSON-compatible value (string, number,
+      boolean, object, or array). Use for slots that hold arbitrary or schema-less data.
+    class_uri: linkml:Any
 
   # --- Top-level record ---
 
@@ -732,7 +761,7 @@ classes:
     tree_root: true
     description: >-
       Official CVE Record corresponding to a CVE ID. Represents either a
-      Published or Rejected record in the MITRE CVE program. The dataType
+      Published or Rejected record in the CVE™ Program. The dataType
       field is always CVE_RECORD. Use cveMetadata.state to distinguish
       Published from Rejected records.
     slots:
@@ -750,6 +779,10 @@ classes:
         required: true
     exact_mappings:
       - WIKIDATA:Q631425
+    close_mappings:
+      - nvd:NVDEntry
+    related_mappings:
+      - kev_catalog:KevEntry
     in_subset:
       - cve_record
 
@@ -829,6 +862,8 @@ classes:
     slot_usage:
       org_id:
         required: true
+    related_mappings:
+      - nvd:ScoreSource
 
   # --- CNA containers ---
 
@@ -939,6 +974,27 @@ classes:
       - default_status
       - versions
       - package_url
+    all_of:
+      - any_of:
+          - slot_conditions:
+              vendor:
+                required: true
+              name:
+                required: true
+          - slot_conditions:
+              collection_url:
+                required: true
+              package_name:
+                required: true
+      - any_of:
+          - slot_conditions:
+              versions:
+                required: true
+          - slot_conditions:
+              default_status:
+                required: true
+    related_mappings:
+      - kev_catalog:KevEntry
 
   ProgramRoutine:
     description: An affected source code function, method, subroutine, or procedure.
@@ -965,6 +1021,29 @@ classes:
         required: true
       version_status:
         required: true
+    none_of:
+      - slot_conditions:
+          less_than:
+            required: true
+          less_than_or_equal:
+            required: true
+    rules:
+      - preconditions:
+          slot_conditions:
+            less_than:
+              required: true
+        postconditions:
+          slot_conditions:
+            version_type:
+              required: true
+      - preconditions:
+          slot_conditions:
+            less_than_or_equal:
+              required: true
+        postconditions:
+          slot_conditions:
+            version_type:
+              required: true
 
   VersionChange:
     description: A status change that takes place at a specific point within a version range.
@@ -1020,6 +1099,9 @@ classes:
     slot_usage:
       problem_type_descriptions:
         required: true
+    close_mappings:
+      - cwe:Weakness
+      - nvd:NVDWeakness
 
   ProblemTypeDescription:
     description: Individual problem type description entry.
@@ -1034,6 +1116,13 @@ classes:
         required: true
       problem_description:
         required: true
+        close_mappings:
+          - cwe:Weakness
+      cwe_id:
+        related_mappings:
+          - cwe:Weakness
+    close_mappings:
+      - cwe:Weakness
 
   # --- References ---
 
@@ -1047,6 +1136,10 @@ classes:
     slot_usage:
       url:
         required: true
+    close_mappings:
+      - nvd:NVDReference
+    related_mappings:
+      - cwe:ExternalReference
 
   # --- Impacts ---
 
@@ -1066,16 +1159,32 @@ classes:
   MetricEntry:
     description: >-
       A metric entry containing scoring data in one of the CVSS formats (v4.0,
-      v3.1, v3.0, v2.0) or a custom format, with optional applicability scenarios.
-      At least one of cvssV4_0, cvssV3_1, cvssV3_0, cvssV2_0, or other is required.
+      v3.x, v2.0) or a custom format, with optional applicability scenarios.
+      At least one of cvss_v4_0, cvss_v3, cvss_v2_0, or other_metric is required.
+      CVSS 3.0 and 3.1 are both represented by CvssV3 (distinguished by the
+      cvss3_version slot).
     slots:
       - metric_format
       - metric_scenarios
       - cvss_v4_0
-      - cvss_v3_1
-      - cvss_v3_0
+      - cvss_v3
       - cvss_v2_0
       - other_metric
+    any_of:
+      - slot_conditions:
+          cvss_v4_0:
+            required: true
+      - slot_conditions:
+          cvss_v3:
+            required: true
+      - slot_conditions:
+          cvss_v2_0:
+            required: true
+      - slot_conditions:
+          other_metric:
+            required: true
+    close_mappings:
+      - nvd:MetricSet
 
   MetricScenario:
     description: >-
@@ -1142,15 +1251,20 @@ classes:
         required: true
       cvss4_base_severity:
         required: true
+    narrow_mappings:
+      - nvd:CVSSMetric
     in_subset:
       - cvss_metrics
 
-  # --- CVSS 3.1 ---
+  # --- CVSS 3.x (3.0 and 3.1) ---
 
-  CvssV3_1:
+  CvssV3:
     description: >-
-      CVSS version 3.1 scoring object. Requires version ('3.1'), vectorString,
-      baseScore, and baseSeverity.
+      CVSS version 3.x scoring object covering both CVSS 3.0 and CVSS 3.1.
+      The two versions share an identical metric model; the 3.1 spec was a
+      clarification, not a structural change. The cvss3_version slot
+      distinguishes between them. Requires version ('3.0' or '3.1'),
+      vectorString, baseScore, and baseSeverity.
     slots:
       - cvss3_version
       - cvss3_vector_string
@@ -1185,63 +1299,14 @@ classes:
     slot_usage:
       cvss3_version:
         required: true
-        ifabsent: string(3.1)
       cvss3_vector_string:
         required: true
       cvss3_base_score:
         required: true
       cvss3_base_severity:
         required: true
-    in_subset:
-      - cvss_metrics
-
-  # --- CVSS 3.0 ---
-
-  CvssV3_0:
-    description: >-
-      CVSS version 3.0 scoring object. Requires version ('3.0'), vectorString,
-      baseScore, and baseSeverity. Shares metric slots with CvssV3_1.
-    slots:
-      - cvss3_version
-      - cvss3_vector_string
-      - cvss3_attack_vector
-      - cvss3_attack_complexity
-      - cvss3_privileges_required
-      - cvss3_user_interaction
-      - cvss3_scope
-      - cvss3_confidentiality_impact
-      - cvss3_integrity_impact
-      - cvss3_availability_impact
-      - cvss3_base_score
-      - cvss3_base_severity
-      - cvss3_exploit_code_maturity
-      - cvss3_remediation_level
-      - cvss3_report_confidence
-      - cvss3_temporal_score
-      - cvss3_temporal_severity
-      - cvss3_confidentiality_requirement
-      - cvss3_integrity_requirement
-      - cvss3_availability_requirement
-      - cvss3_modified_attack_vector
-      - cvss3_modified_attack_complexity
-      - cvss3_modified_privileges_required
-      - cvss3_modified_user_interaction
-      - cvss3_modified_scope
-      - cvss3_modified_confidentiality_impact
-      - cvss3_modified_integrity_impact
-      - cvss3_modified_availability_impact
-      - cvss3_environmental_score
-      - cvss3_environmental_severity
-    slot_usage:
-      cvss3_version:
-        required: true
-        ifabsent: string(3.0)
-      cvss3_vector_string:
-        required: true
-      cvss3_base_score:
-        required: true
-      cvss3_base_severity:
-        required: true
+    narrow_mappings:
+      - nvd:CVSSMetric
     in_subset:
       - cvss_metrics
 
@@ -1279,6 +1344,8 @@ classes:
         required: true
       cvss2_base_score:
         required: true
+    narrow_mappings:
+      - nvd:CVSSMetric
     in_subset:
       - cvss_metrics
 
@@ -1358,6 +1425,8 @@ classes:
         required: true
       taxonomy_relations:
         required: true
+    exact_mappings:
+      - cwe:TaxonomyMapping
 
   TaxonomyRelation:
     description: >-
@@ -1375,6 +1444,8 @@ classes:
         required: true
       relationship_value:
         required: true
+    close_mappings:
+      - cwe:Relationship
 
   # --- CPE Applicability ---
 
@@ -1390,6 +1461,8 @@ classes:
     slot_usage:
       cpe_nodes:
         required: true
+    close_mappings:
+      - nvd:CPEConfiguration
 
   CpeNode:
     description: Defines a CPE configuration node in an applicability statement.
@@ -1418,9 +1491,12 @@ classes:
         required: true
       cpe_criteria:
         required: true
+    exact_mappings:
+      - nvd:CPEMatch
 
 
 # Slots
+
 
 slots:
 
@@ -1494,6 +1570,7 @@ slots:
   assigner_short_name:
     range: string
     description: The short name for the organization to which the CVE ID was originally assigned.
+    pattern: "^.{2,32}$"
     aliases:
       - assignerShortName
     in_subset:
@@ -1599,6 +1676,7 @@ slots:
   short_name:
     range: string
     description: The container provider's organizational short name (2-32 characters).
+    pattern: "^.{2,32}$"
     aliases:
       - shortName
 
@@ -1668,6 +1746,8 @@ slots:
       advisories, patches, and exploit details. Required by CNA rules.
     multivalued: true
     inlined_as_list: true
+    minimum_cardinality: 1
+    maximum_cardinality: 512
     aliases:
       - references
 
@@ -1758,16 +1838,24 @@ slots:
       - discovery
 
   cna_tags:
-    range: CNATag
+    range: string
     description: Tags provided by a CNA describing the CVE Record.
     multivalued: true
+    any_of:
+      - range: CNATag
+      - range: string
+        pattern: "^x_.*$"
     aliases:
       - tags
 
   adp_tags:
-    range: ADPTag
+    range: string
     description: Tags provided by an ADP describing the CVE Record.
     multivalued: true
+    any_of:
+      - range: ADPTag
+      - range: string
+        pattern: "^x_.*$"
     aliases:
       - tags
 
@@ -2095,19 +2183,16 @@ slots:
     aliases:
       - cvssV4_0
 
-  cvss_v3_1:
-    range: CvssV3_1
-    description: CVSS version 3.1 scoring data.
+  cvss_v3:
+    range: CvssV3
+    description: >-
+      CVSS version 3.x scoring data (covers both 3.0 and 3.1). The version
+      is distinguished by the cvss3_version field within the CvssV3 object.
     inlined: true
     aliases:
-      - cvssV3_1
-
-  cvss_v3_0:
-    range: CvssV3_0
-    description: CVSS version 3.0 scoring data.
-    inlined: true
-    aliases:
+      - cvssV3
       - cvssV3_0
+      - cvssV3_1
 
   cvss_v2_0:
     range: CvssV2_0
@@ -2130,10 +2215,11 @@ slots:
       - type
 
   other_metric_content:
-    range: string
+    range: Any
     description: >-
-      JSON object or prose content not covered by another metrics format.
-      May be arbitrary key-value data.
+      Arbitrary JSON-compatible object (or prose string) containing non-standard metric
+      data not covered by the CVSS formats. Upstream JSON Schema defines this as
+      'type: object, minProperties: 1'; range: Any allows any value.
     aliases:
       - content
 
@@ -2297,8 +2383,8 @@ slots:
   # -- CVSS 3.x shared metric slots --
 
   cvss3_version:
-    range: string
-    description: CVSS version identifier. '3.1' for CvssV3_1 objects; '3.0' for CvssV3_0 objects.
+    range: CvssV3Version
+    description: CVSS version identifier ('3.0' or '3.1') within a CvssV3 object.
     aliases: [version]
 
   cvss3_vector_string:
