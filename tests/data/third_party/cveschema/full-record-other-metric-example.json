@@ -1,0 +1,72 @@
+{
+  "dataType": "CVE_RECORD",
+  "dataVersion": "5.2",
+  "cveMetadata": {
+    "cveId": "CVE-2024-9999",
+    "assignerOrgId": "b3476cb9-2e3d-41a6-98d0-0f47421a65b6",
+    "assignerShortName": "example",
+    "serial": 1,
+    "state": "PUBLISHED",
+    "datePublished": "2024-01-15T10:00:00.000Z",
+    "dateUpdated": "2024-01-15T10:00:00.000Z"
+  },
+  "containers": {
+    "cna": {
+      "providerMetadata": {
+        "orgId": "b3476cb9-2e3d-41a6-98d0-0f47421a65b6",
+        "shortName": "example",
+        "dateUpdated": "2024-01-15T10:00:00.000Z"
+      },
+      "title": "Example vulnerability with SSVC scoring",
+      "descriptions": [
+        {
+          "lang": "en",
+          "value": "A buffer overflow in Example Software allows unauthenticated remote attackers to execute arbitrary code."
+        }
+      ],
+      "affected": [
+        {
+          "vendor": "Example Corp",
+          "product": "Example Software",
+          "versions": [
+            {
+              "version": "1.0.0",
+              "status": "affected",
+              "lessThan": "1.2.0",
+              "versionType": "semver"
+            }
+          ],
+          "defaultStatus": "unaffected"
+        }
+      ],
+      "references": [
+        {
+          "url": "https://example.com/advisories/2024-001",
+          "name": "Advisory ESA-2024-001",
+          "tags": ["vendor-advisory"]
+        }
+      ],
+      "metrics": [
+        {
+          "format": "SSVC",
+          "scenarios": [
+            {
+              "lang": "en",
+              "value": "GENERAL"
+            }
+          ],
+          "other": {
+            "type": "SSVC",
+            "content": {
+              "exploitation": "active",
+              "automatable": "yes",
+              "technical_impact": "total",
+              "role": "Deployer",
+              "decision": "Immediate"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

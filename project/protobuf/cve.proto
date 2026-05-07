@@ -1,0 +1,411 @@
+ syntax="proto3";
+ package
+// metamodel_version: 1.7.0
+// version: 5.2.0
+// An object containing vulnerability information provided by an Authorized Data Publisher (ADP). Multiple ADPs can provide containers for a single CVE ID.
+message AdpContainer
+ {
+  providerMetadata providerMetadata = 0
+  timestamp datePublic = 0
+  string title = 0
+ repeated  multiLangDescription descriptions = 0
+ repeated  affectedProduct affected = 0
+ repeated  cpeApplicabilityElement cpeApplicability = 0
+ repeated  problemType problemTypes = 0
+ repeated  cveReference cveReferences = 0
+ repeated  impactEntry impacts = 0
+ repeated  metricEntry metrics = 0
+ repeated  multiLangDescription configurationsText = 0
+ repeated  multiLangDescription workarounds = 0
+ repeated  multiLangDescription solutions = 0
+ repeated  multiLangDescription exploits = 0
+ repeated  timelineEntry timeline = 0
+ repeated  creditEntry credits = 0
+  sourceInformation cnaSource = 0
+ repeated  string adpTags = 0
+ repeated  taxonomyMapping taxonomyMappings = 0
+ }
+// Information about the set of products and services affected by a vulnerability. At least one of (vendor + product) or (collectionURL + packageName) is required, and at least one of versions or defaultStatus is required.
+message AffectedProduct
+ {
+  string vendor = 0
+  string name = 0
+  string version = 0
+ repeated  string platforms = 0
+  uri collectionUrl = 0
+  string packageName = 0
+ repeated  cpeNameType cpes = 0
+ repeated  string modules = 0
+ repeated  string programFiles = 0
+ repeated  programRoutine programRoutines = 0
+  uri repo = 0
+  versionStatus defaultStatus = 0
+ repeated  versionEntry versions = 0
+  uri packageUrl = 0
+ }
+// An object containing vulnerability information provided by a CVE Numbering Authority (CNA) for a published CVE ID. There can only be one CNA container per CVE record since there can only be one assigning CNA.
+message CnaPublishedContainer
+ {
+  providerMetadata providerMetadata = 0
+  timestamp dateAssigned = 0
+  timestamp datePublic = 0
+  string title = 0
+ repeated  multiLangDescription descriptions = 0
+ repeated  affectedProduct affected = 0
+ repeated  cpeApplicabilityElement cpeApplicability = 0
+ repeated  problemType problemTypes = 0
+ repeated  cveReference cveReferences = 0
+ repeated  impactEntry impacts = 0
+ repeated  metricEntry metrics = 0
+ repeated  multiLangDescription configurationsText = 0
+ repeated  multiLangDescription workarounds = 0
+ repeated  multiLangDescription solutions = 0
+ repeated  multiLangDescription exploits = 0
+ repeated  timelineEntry timeline = 0
+ repeated  creditEntry credits = 0
+  sourceInformation cnaSource = 0
+ repeated  string cnaTags = 0
+ repeated  taxonomyMapping taxonomyMappings = 0
+ }
+// An object containing vulnerability information provided by a CVE Numbering Authority (CNA) for a rejected CVE ID. There can only be one CNA container per CVE record.
+message CnaRejectedContainer
+ {
+  providerMetadata providerMetadata = 0
+ repeated  multiLangDescription rejectedReasons = 0
+ repeated  cveId replacedBy = 0
+ }
+// Logical grouping of CPE match expressions.
+message Configuration
+ {
+  string cpeUri = 0
+  string operator = 0
+ }
+// A set of structures (called containers) used to store vulnerability information related to a specific CVE ID. At minimum a 'cna' container is required.
+message Containers
+ {
+  cnaContainer cna = 0
+ repeated  adpContainer adp = 0
+ }
+// Affected products defined using an implementation of the CPE Applicability Language. An operator property allows AND or OR logic between CPEs or combinations of CPEs.
+message CpeApplicabilityElement
+ {
+  cpeOperator cpeOperator = 0
+  boolean cpeNegate = 0
+ repeated  cpeNode cpeNodes = 0
+ }
+// CPE match string or range within a CPE applicability node.
+message CpeMatch
+ {
+  boolean cpeVulnerable = 0
+  cpeName23Type cpeCriteria = 0
+  uuidType matchCriteriaId = 0
+  versionString versionStartExcluding = 0
+  versionString versionStartIncluding = 0
+  versionString versionEndExcluding = 0
+  versionString versionEndIncluding = 0
+ }
+// Defines a CPE configuration node in an applicability statement.
+message CpeNode
+ {
+  cpeOperator cpeOperator = 0
+  boolean cpeNegate = 0
+ repeated  cpeMatch cpeMatchCriteria = 0
+ }
+// A credit acknowledging a specific person, organization, or tool for work related to the research, discovery, remediation, or coordination of the vulnerability.
+message CreditEntry
+ {
+  languageTag lang = 0
+  string creditValue = 0
+  uuidType creditUser = 0
+  creditType creditType = 0
+ }
+// Metadata for a CVE Record in the PUBLISHED state.
+message CveMetadataPublished
+ {
+  cveId recordCveId = 0
+  uuidType assignerOrgId = 0
+  string assignerShortName = 0
+  integer serial = 0
+  timestamp dateUpdated = 0
+  timestamp dateReserved = 0
+  uuidType requesterUserId = 0
+  timestamp datePublished = 0
+  recordState publishedState = 0
+ }
+// Metadata for a CVE Record in the REJECTED state.
+message CveMetadataRejected
+ {
+  cveId recordCveId = 0
+  uuidType assignerOrgId = 0
+  string assignerShortName = 0
+  integer serial = 0
+  timestamp dateUpdated = 0
+  timestamp dateReserved = 0
+  timestamp datePublished = 0
+  timestamp dateRejected = 0
+  recordState rejectedState = 0
+ }
+// Official CVE Record corresponding to a CVE ID. Represents either a Published or Rejected record in the CVE™ Program. The dataType field is always CVE_RECORD. Use cveMetadata.state to distinguish Published from Rejected records.
+message CVERecord
+ {
+  string title = 0
+  string description = 0
+  datetime publishedDate = 0
+  datetime lastModifiedDate = 0
+ repeated  product products = 0
+ repeated  weakness weaknesses = 0
+ repeated  reference references = 0
+  impact impact = 0
+  vulnerabilityStatus status = 0
+  dataType dataType = 0
+  string dataVersion = 0
+  cveMetadata cveMetadata = 0
+  containers containers = 0
+  cveId cveId = 0
+ }
+// An external reference associated with a CVE Record. Extends the core Reference with optional descriptive tags characterizing the resource.
+message CveReference
+ {
+  string name = 0
+  string source = 0
+ repeated  referenceTag referenceTags = 0
+  uri url = 0
+ }
+// CVSS version 2.0 scoring object. Requires version ('2.0'), vectorString, and baseScore.
+message CvssV20
+ {
+  string cvss2Version = 0
+  string cvss2VectorString = 0
+  cvss2AccessVector cvss2AccessVector = 0
+  cvss2AccessComplexity cvss2AccessComplexity = 0
+  cvss2Authentication cvss2Authentication = 0
+  cvss2Cia cvss2ConfidentialityImpact = 0
+  cvss2Cia cvss2IntegrityImpact = 0
+  cvss2Cia cvss2AvailabilityImpact = 0
+  float cvss2BaseScore = 0
+  cvss2Exploitability cvss2Exploitability = 0
+  cvss2RemediationLevel cvss2RemediationLevel = 0
+  cvss2ReportConfidence cvss2ReportConfidence = 0
+  float cvss2TemporalScore = 0
+  cvss2CollateralDamagePotential cvss2CollateralDamagePotential = 0
+  cvss2TargetDistribution cvss2TargetDistribution = 0
+  cvss2CiaRequirement cvss2ConfidentialityRequirement = 0
+  cvss2CiaRequirement cvss2IntegrityRequirement = 0
+  cvss2CiaRequirement cvss2AvailabilityRequirement = 0
+  float cvss2EnvironmentalScore = 0
+ }
+// CVSS version 3.x scoring object covering both CVSS 3.0 and CVSS 3.1. The two versions share an identical metric model; the 3.1 spec was a clarification, not a structural change. The cvss3_version slot distinguishes between them. Requires version ('3.0' or '3.1'), vectorString, baseScore, and baseSeverity.
+message CvssV3
+ {
+  cvssV3Version cvss3Version = 0
+  string cvss3VectorString = 0
+  cvss3AttackVector cvss3AttackVector = 0
+  cvss3AttackComplexity cvss3AttackComplexity = 0
+  cvss3PrivilegesRequired cvss3PrivilegesRequired = 0
+  cvss3UserInteraction cvss3UserInteraction = 0
+  cvss3Scope cvss3Scope = 0
+  cvss3Cia cvss3ConfidentialityImpact = 0
+  cvss3Cia cvss3IntegrityImpact = 0
+  cvss3Cia cvss3AvailabilityImpact = 0
+  float cvss3BaseScore = 0
+  cvss3Severity cvss3BaseSeverity = 0
+  cvss3ExploitCodeMaturity cvss3ExploitCodeMaturity = 0
+  cvss3RemediationLevel cvss3RemediationLevel = 0
+  cvss3Confidence cvss3ReportConfidence = 0
+  float cvss3TemporalScore = 0
+  cvss3Severity cvss3TemporalSeverity = 0
+  cvss3CiaRequirement cvss3ConfidentialityRequirement = 0
+  cvss3CiaRequirement cvss3IntegrityRequirement = 0
+  cvss3CiaRequirement cvss3AvailabilityRequirement = 0
+  cvss3ModifiedAttackVector cvss3ModifiedAttackVector = 0
+  cvss3ModifiedAttackComplexity cvss3ModifiedAttackComplexity = 0
+  cvss3ModifiedPrivilegesRequired cvss3ModifiedPrivilegesRequired = 0
+  cvss3ModifiedUserInteraction cvss3ModifiedUserInteraction = 0
+  cvss3ModifiedScope cvss3ModifiedScope = 0
+  cvss3ModifiedCia cvss3ModifiedConfidentialityImpact = 0
+  cvss3ModifiedCia cvss3ModifiedIntegrityImpact = 0
+  cvss3ModifiedCia cvss3ModifiedAvailabilityImpact = 0
+  float cvss3EnvironmentalScore = 0
+  cvss3Severity cvss3EnvironmentalSeverity = 0
+ }
+// CVSS version 4.0 scoring object. Requires version, vectorString, baseScore, and baseSeverity. All other fields are optional.
+message CvssV40
+ {
+  string cvss4Version = 0
+  string cvss4VectorString = 0
+  float cvss4BaseScore = 0
+  cvss4Severity cvss4BaseSeverity = 0
+  cvss4AttackVector cvss4AttackVector = 0
+  cvss4AttackComplexity cvss4AttackComplexity = 0
+  cvss4AttackRequirements cvss4AttackRequirements = 0
+  cvss4PrivilegesRequired cvss4PrivilegesRequired = 0
+  cvss4UserInteraction cvss4UserInteraction = 0
+  cvss4VulnCia cvss4VulnConfidentialityImpact = 0
+  cvss4VulnCia cvss4VulnIntegrityImpact = 0
+  cvss4VulnCia cvss4VulnAvailabilityImpact = 0
+  cvss4SubCia cvss4SubConfidentialityImpact = 0
+  cvss4SubCia cvss4SubIntegrityImpact = 0
+  cvss4SubCia cvss4SubAvailabilityImpact = 0
+  cvss4ExploitMaturity cvss4ExploitMaturity = 0
+  cvss4CiaRequirement cvss4ConfidentialityRequirement = 0
+  cvss4CiaRequirement cvss4IntegrityRequirement = 0
+  cvss4CiaRequirement cvss4AvailabilityRequirement = 0
+  cvss4ModifiedAttackVector cvss4ModifiedAttackVector = 0
+  cvss4ModifiedAttackComplexity cvss4ModifiedAttackComplexity = 0
+  cvss4ModifiedAttackRequirements cvss4ModifiedAttackRequirements = 0
+  cvss4ModifiedPrivilegesRequired cvss4ModifiedPrivilegesRequired = 0
+  cvss4ModifiedUserInteraction cvss4ModifiedUserInteraction = 0
+  cvss4ModifiedVulnCia cvss4ModifiedVulnConfidentialityImpact = 0
+  cvss4ModifiedVulnCia cvss4ModifiedVulnIntegrityImpact = 0
+  cvss4ModifiedVulnCia cvss4ModifiedVulnAvailabilityImpact = 0
+  cvss4ModifiedSubC cvss4ModifiedSubConfidentialityImpact = 0
+  cvss4ModifiedSubIa cvss4ModifiedSubIntegrityImpact = 0
+  cvss4ModifiedSubIa cvss4ModifiedSubAvailabilityImpact = 0
+  cvss4Safety cvss4Safety = 0
+  cvss4Automatable cvss4Automatable = 0
+  cvss4Recovery cvss4Recovery = 0
+  cvss4ValueDensity cvss4ValueDensity = 0
+  cvss4VulnerabilityResponseEffort cvss4VulnerabilityResponseEffort = 0
+  cvss4ProviderUrgency cvss4ProviderUrgency = 0
+ }
+// Assessment of the vulnerability's impact and severity.
+message Impact
+ {
+  impactSeverity severity = 0
+  string vector = 0
+  float score = 0
+ }
+// An impact entry linking an optional CAPEC attack pattern ID to one or more prose descriptions of the impact scenario.
+message ImpactEntry
+ {
+  string capecId = 0
+ repeated  multiLangDescription impactDescriptions = 0
+ }
+// A metric entry containing scoring data in one of the CVSS formats (v4.0, v3.x, v2.0) or a custom format, with optional applicability scenarios. At least one of cvss_v4_0, cvss_v3, cvss_v2_0, or other_metric is required. CVSS 3.0 and 3.1 are both represented by CvssV3 (distinguished by the cvss3_version slot).
+message MetricEntry
+ {
+  string metricFormat = 0
+ repeated  metricScenario metricScenarios = 0
+  cvssV40 cvssV40 = 0
+  cvssV3 cvssV3 = 0
+  cvssV20 cvssV20 = 0
+  otherMetric otherMetric = 0
+ }
+// A scenario description indicating the context in which a metric applies. If no specific scenario is given, GENERAL is used as the default.
+message MetricScenario
+ {
+  languageTag lang = 0
+  string scenarioValue = 0
+ }
+// Text in a particular language with optional alternate markup or formatted representation (e.g., Markdown) or embedded media. Used for vulnerability descriptions, rejected reasons, configurations, workarounds, solutions, and exploits.
+message MultiLangDescription
+ {
+  languageTag lang = 0
+  string descriptionValue = 0
+ repeated  supportingMedia supportingMedia = 0
+ }
+// A non-standard impact description in a custom format. May be a prose description or an arbitrary JSON-compatible object.
+message OtherMetric
+ {
+  string otherMetricType = 0
+  any otherMetricContent = 0
+ }
+// Problem type information (e.g., CWE identifier). Wraps one or more problem type descriptions. The CNA requirement is [PROBLEMTYPE].
+message ProblemType
+ {
+ repeated  problemTypeDescription problemTypeDescriptions = 0
+ }
+// Individual problem type description entry.
+message ProblemTypeDescription
+ {
+  languageTag lang = 0
+  string problemDescription = 0
+  string cweId = 0
+  string problemSourceType = 0
+ repeated  cveReference problemReferences = 0
+ }
+// Software or hardware entity affected by the vulnerability.
+message Product
+ {
+  string vendor = 0
+  string name = 0
+  string version = 0
+ repeated  string platforms = 0
+ }
+// An affected source code function, method, subroutine, or procedure.
+message ProgramRoutine
+ {
+  string routineName = 0
+ }
+// Details related to the information container provider (CNA or ADP).
+message ProviderMetadata
+ {
+  uuidType orgId = 0
+  string shortName = 0
+  timestamp dateUpdated = 0
+ }
+// External reference such as an advisory or article.
+message Reference
+ {
+  uri url = 0
+  string name = 0
+  string source = 0
+ }
+// Source information (who discovered it, who researched it, etc.) and optionally a chain of CNA information. This is an open object — at least one property must be present.
+message SourceInformation
+ {
+ repeated  string sourceDefects = 0
+  string sourceAdvisory = 0
+  string sourceDiscovery = 0
+ }
+// Supporting media data for a description such as markdown, diagrams, etc. Similar to RFC 2397, each media object has a media type, data value, and an optional base64 flag.
+message SupportingMedia
+ {
+  string mediaType = 0
+  boolean base64Encoded = 0
+  string mediaValue = 0
+ }
+// A taxonomy mapping identifying the taxonomy by name and version, along with a list of relations relevant to the CVE (e.g., ATT&CK, D3FEND, CWE).
+message TaxonomyMapping
+ {
+  string taxonomyName = 0
+  string taxonomyVersion = 0
+ repeated  taxonomyRelation taxonomyRelations = 0
+ }
+// A relationship between a taxonomy item and a CVE or another taxonomy item. Provides subject (taxonomyId), predicate (relationshipName), and object (relationshipValue).
+message TaxonomyRelation
+ {
+  string taxonomyId = 0
+  string relationshipName = 0
+  string relationshipValue = 0
+ }
+// A timeline event recording a significant event about the vulnerability or changes to the CVE Record. Requires time, lang, and value.
+message TimelineEntry
+ {
+  timestamp eventTime = 0
+  languageTag lang = 0
+  string eventValue = 0
+ }
+// A status change that takes place at a specific point within a version range.
+message VersionChange
+ {
+  versionString changeAt = 0
+  versionStatus changeStatus = 0
+ }
+// A single version or a range of versions of a product with associated vulnerability status. An entry with only version and status is a point version; an entry with versionType and a less-than limit describes a range.
+message VersionEntry
+ {
+  versionString versionValue = 0
+  versionStatus versionStatus = 0
+  string versionType = 0
+  versionString lessThan = 0
+  versionString lessThanOrEqual = 0
+ repeated  versionChange versionChanges = 0
+ }
+// Weakness classification from CWE or a similar taxonomy.
+message Weakness
+ {
+  string cweId = 0
+  string name = 0
+  string description = 0
+ }

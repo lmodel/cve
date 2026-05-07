@@ -4,13 +4,13 @@ description: SQL injection vulnerability in LegacyApp 1.x allows remote attacker
   to execute arbitrary SQL commands via the 'id' parameter in the search module.
 cve_metadata:
   record_cve_id: CVE-2011-44444
-  assigner_org_id: c3d4e5f6-a7b8-4c9d-0e1f-2a3b4c5d6e7f
+  assigner_org_id: c3d4e5f6-a7b8-4c9d-8e1f-2a3b4c5d6e7f
   published_state: PUBLISHED
   date_published: "2011-09-12T00:00:00Z"
 containers:
   cna:
     provider_metadata:
-      org_id: c3d4e5f6-a7b8-4c9d-0e1f-2a3b4c5d6e7f
+      org_id: c3d4e5f6-a7b8-4c9d-8e1f-2a3b4c5d6e7f
     descriptions:
       - lang: en
         description_value: SQL injection vulnerability in the search module in LegacyApp

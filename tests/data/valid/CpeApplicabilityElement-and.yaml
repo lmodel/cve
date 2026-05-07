@@ -5,11 +5,11 @@ cpe_nodes:
     cpe_match_criteria:
       - cpe_vulnerable: true
         cpe_criteria: "cpe:2.3:a:example:plugin:*:*:*:*:*:wordpress:*:*"
-        match_criteria_id: c3d4e5f6-a7b8-4901-cdef-012345678901
+        match_criteria_id: c3d4e5f6-a7b8-4901-8def-012345678901
         version_end_excluding: "1.5.0"
   - cpe_operator: OR
     cpe_negate: false
     cpe_match_criteria:
       - cpe_vulnerable: false
         cpe_criteria: "cpe:2.3:a:wordpress:wordpress:*:*:*:*:*:*:*:*"
-        match_criteria_id: d4e5f6a7-b8c9-4012-def0-123456789012
+        match_criteria_id: d4e5f6a7-b8c9-4012-8ef0-123456789012

@@ -1,0 +1,1259 @@
+{
+   "@context": {
+      "xsd": "http://www.w3.org/2001/XMLSchema#",
+      "WIKIDATA": "https://www.wikidata.org/wiki/",
+      "core": "https://w3id.org/lmodel/vulnerability-core/",
+      "cve": "https://w3id.org/lmodel/cve/",
+      "cwe": "https://w3id.org/lmodel/cwe/",
+      "dct": "http://purl.org/dc/terms/",
+      "kev_catalog": "https://w3id.org/lmodel/kev-catalog/",
+      "linkml": "https://w3id.org/linkml/",
+      "nvd": "https://w3id.org/lmodel/nist-nvd/",
+      "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+      "schema": "http://schema.org/",
+      "skos": "http://www.w3.org/2004/02/skos/core#",
+      "@vocab": "https://w3id.org/lmodel/cve/",
+      "adp": {
+         "@type": "@id",
+         "@id": "adp"
+      },
+      "adp_tags": {
+         "@id": "adp_tags"
+      },
+      "affected": {
+         "@type": "@id",
+         "@id": "affected"
+      },
+      "assigner_org_id": {
+         "@id": "assigner_org_id"
+      },
+      "assigner_short_name": {
+         "@id": "assigner_short_name"
+      },
+      "base64_encoded": {
+         "@type": "xsd:boolean",
+         "@id": "base64_encoded"
+      },
+      "capec_id": {
+         "@id": "capec_id"
+      },
+      "change_at": {
+         "@id": "change_at"
+      },
+      "change_status": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "change_status"
+      },
+      "cna": {
+         "@type": "@id",
+         "@id": "cna"
+      },
+      "cna_source": {
+         "@type": "@id",
+         "@id": "cna_source"
+      },
+      "cna_tags": {
+         "@id": "cna_tags"
+      },
+      "collection_url": {
+         "@type": "xsd:anyURI",
+         "@id": "collection_url"
+      },
+      "configurations_text": {
+         "@type": "@id",
+         "@id": "configurations_text"
+      },
+      "containers": {
+         "@type": "@id",
+         "@id": "containers"
+      },
+      "cpe_applicability": {
+         "@type": "@id",
+         "@id": "cpe_applicability"
+      },
+      "cpe_criteria": {
+         "@id": "cpe_criteria"
+      },
+      "cpe_match_criteria": {
+         "@type": "@id",
+         "@id": "cpe_match_criteria"
+      },
+      "cpe_negate": {
+         "@type": "xsd:boolean",
+         "@id": "cpe_negate"
+      },
+      "cpe_nodes": {
+         "@type": "@id",
+         "@id": "cpe_nodes"
+      },
+      "cpe_operator": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "cpe_operator"
+      },
+      "cpe_uri": {
+         "@id": "core:cpe_uri"
+      },
+      "cpe_vulnerable": {
+         "@type": "xsd:boolean",
+         "@id": "cpe_vulnerable"
+      },
+      "cpes": {
+         "@id": "cpes"
+      },
+      "credit_type": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "credit_type"
+      },
+      "credit_user": {
+         "@id": "credit_user"
+      },
+      "credit_value": {
+         "@id": "credit_value"
+      },
+      "credits": {
+         "@type": "@id",
+         "@id": "credits"
+      },
+      "cve_id": "@id",
+      "cve_metadata": {
+         "@type": "@id",
+         "@id": "cve_metadata"
+      },
+      "cve_references": {
+         "@type": "@id",
+         "@id": "cve_references"
+      },
+      "cvss2_access_complexity": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "cvss2_access_complexity"
+      },
+      "cvss2_access_vector": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "cvss2_access_vector"
+      },
+      "cvss2_authentication": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "cvss2_authentication"
+      },
+      "cvss2_availability_impact": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "cvss2_availability_impact"
+      },
+      "cvss2_availability_requirement": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "cvss2_availability_requirement"
+      },
+      "cvss2_base_score": {
+         "@type": "xsd:float",
+         "@id": "cvss2_base_score"
+      },
+      "cvss2_collateral_damage_potential": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "cvss2_collateral_damage_potential"
+      },
+      "cvss2_confidentiality_impact": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "cvss2_confidentiality_impact"
+      },
+      "cvss2_confidentiality_requirement": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "cvss2_confidentiality_requirement"
+      },
+      "cvss2_environmental_score": {
+         "@type": "xsd:float",
+         "@id": "cvss2_environmental_score"
+      },
+      "cvss2_exploitability": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "cvss2_exploitability"
+      },
+      "cvss2_integrity_impact": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "cvss2_integrity_impact"
+      },
+      "cvss2_integrity_requirement": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "cvss2_integrity_requirement"
+      },
+      "cvss2_remediation_level": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "cvss2_remediation_level"
+      },
+      "cvss2_report_confidence": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "cvss2_report_confidence"
+      },
+      "cvss2_target_distribution": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "cvss2_target_distribution"
+      },
+      "cvss2_temporal_score": {
+         "@type": "xsd:float",
+         "@id": "cvss2_temporal_score"
+      },
+      "cvss2_vector_string": {
+         "@id": "cvss2_vector_string"
+      },
+      "cvss2_version": {
+         "@id": "cvss2_version"
+      },
+      "cvss3_attack_complexity": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "cvss3_attack_complexity"
+      },
+      "cvss3_attack_vector": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "cvss3_attack_vector"
+      },
+      "cvss3_availability_impact": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "cvss3_availability_impact"
+      },
+      "cvss3_availability_requirement": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "cvss3_availability_requirement"
+      },
+      "cvss3_base_score": {
+         "@type": "xsd:float",
+         "@id": "cvss3_base_score"
+      },
+      "cvss3_base_severity": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "cvss3_base_severity"
+      },
+      "cvss3_confidentiality_impact": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "cvss3_confidentiality_impact"
+      },
+      "cvss3_confidentiality_requirement": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "cvss3_confidentiality_requirement"
+      },
+      "cvss3_environmental_score": {
+         "@type": "xsd:float",
+         "@id": "cvss3_environmental_score"
+      },
+      "cvss3_environmental_severity": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "cvss3_environmental_severity"
+      },
+      "cvss3_exploit_code_maturity": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "cvss3_exploit_code_maturity"
+      },
+      "cvss3_integrity_impact": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "cvss3_integrity_impact"
+      },
+      "cvss3_integrity_requirement": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "cvss3_integrity_requirement"
+      },
+      "cvss3_modified_attack_complexity": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "cvss3_modified_attack_complexity"
+      },
+      "cvss3_modified_attack_vector": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "cvss3_modified_attack_vector"
+      },
+      "cvss3_modified_availability_impact": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "cvss3_modified_availability_impact"
+      },
+      "cvss3_modified_confidentiality_impact": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "cvss3_modified_confidentiality_impact"
+      },
+      "cvss3_modified_integrity_impact": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "cvss3_modified_integrity_impact"
+      },
+      "cvss3_modified_privileges_required": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "cvss3_modified_privileges_required"
+      },
+      "cvss3_modified_scope": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "cvss3_modified_scope"
+      },
+      "cvss3_modified_user_interaction": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "cvss3_modified_user_interaction"
+      },
+      "cvss3_privileges_required": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "cvss3_privileges_required"
+      },
+      "cvss3_remediation_level": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "cvss3_remediation_level"
+      },
+      "cvss3_report_confidence": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "cvss3_report_confidence"
+      },
+      "cvss3_scope": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "cvss3_scope"
+      },
+      "cvss3_temporal_score": {
+         "@type": "xsd:float",
+         "@id": "cvss3_temporal_score"
+      },
+      "cvss3_temporal_severity": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "cvss3_temporal_severity"
+      },
+      "cvss3_user_interaction": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "cvss3_user_interaction"
+      },
+      "cvss3_vector_string": {
+         "@id": "cvss3_vector_string"
+      },
+      "cvss3_version": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "cvss3_version"
+      },
+      "cvss4_attack_complexity": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "cvss4_attack_complexity"
+      },
+      "cvss4_attack_requirements": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "cvss4_attack_requirements"
+      },
+      "cvss4_attack_vector": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "cvss4_attack_vector"
+      },
+      "cvss4_automatable": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "cvss4_automatable"
+      },
+      "cvss4_availability_requirement": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "cvss4_availability_requirement"
+      },
+      "cvss4_base_score": {
+         "@type": "xsd:float",
+         "@id": "cvss4_base_score"
+      },
+      "cvss4_base_severity": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "cvss4_base_severity"
+      },
+      "cvss4_confidentiality_requirement": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "cvss4_confidentiality_requirement"
+      },
+      "cvss4_exploit_maturity": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "cvss4_exploit_maturity"
+      },
+      "cvss4_integrity_requirement": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "cvss4_integrity_requirement"
+      },
+      "cvss4_modified_attack_complexity": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "cvss4_modified_attack_complexity"
+      },
+      "cvss4_modified_attack_requirements": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "cvss4_modified_attack_requirements"
+      },
+      "cvss4_modified_attack_vector": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "cvss4_modified_attack_vector"
+      },
+      "cvss4_modified_privileges_required": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "cvss4_modified_privileges_required"
+      },
+      "cvss4_modified_sub_availability_impact": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "cvss4_modified_sub_availability_impact"
+      },
+      "cvss4_modified_sub_confidentiality_impact": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "cvss4_modified_sub_confidentiality_impact"
+      },
+      "cvss4_modified_sub_integrity_impact": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "cvss4_modified_sub_integrity_impact"
+      },
+      "cvss4_modified_user_interaction": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "cvss4_modified_user_interaction"
+      },
+      "cvss4_modified_vuln_availability_impact": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "cvss4_modified_vuln_availability_impact"
+      },
+      "cvss4_modified_vuln_confidentiality_impact": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "cvss4_modified_vuln_confidentiality_impact"
+      },
+      "cvss4_modified_vuln_integrity_impact": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "cvss4_modified_vuln_integrity_impact"
+      },
+      "cvss4_privileges_required": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "cvss4_privileges_required"
+      },
+      "cvss4_provider_urgency": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "cvss4_provider_urgency"
+      },
+      "cvss4_recovery": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "cvss4_recovery"
+      },
+      "cvss4_safety": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "cvss4_safety"
+      },
+      "cvss4_sub_availability_impact": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "cvss4_sub_availability_impact"
+      },
+      "cvss4_sub_confidentiality_impact": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "cvss4_sub_confidentiality_impact"
+      },
+      "cvss4_sub_integrity_impact": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "cvss4_sub_integrity_impact"
+      },
+      "cvss4_user_interaction": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "cvss4_user_interaction"
+      },
+      "cvss4_value_density": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "cvss4_value_density"
+      },
+      "cvss4_vector_string": {
+         "@id": "cvss4_vector_string"
+      },
+      "cvss4_version": {
+         "@id": "cvss4_version"
+      },
+      "cvss4_vuln_availability_impact": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "cvss4_vuln_availability_impact"
+      },
+      "cvss4_vuln_confidentiality_impact": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "cvss4_vuln_confidentiality_impact"
+      },
+      "cvss4_vuln_integrity_impact": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "cvss4_vuln_integrity_impact"
+      },
+      "cvss4_vulnerability_response_effort": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "cvss4_vulnerability_response_effort"
+      },
+      "cvss_v2_0": {
+         "@type": "@id",
+         "@id": "cvss_v2_0"
+      },
+      "cvss_v3": {
+         "@type": "@id",
+         "@id": "cvss_v3"
+      },
+      "cvss_v4_0": {
+         "@type": "@id",
+         "@id": "cvss_v4_0"
+      },
+      "cwe_id": {
+         "@id": "dct:identifier"
+      },
+      "data_type": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "data_type"
+      },
+      "data_version": {
+         "@id": "data_version"
+      },
+      "date_assigned": {
+         "@id": "date_assigned"
+      },
+      "date_public": {
+         "@id": "date_public"
+      },
+      "date_published": {
+         "@id": "date_published"
+      },
+      "date_rejected": {
+         "@id": "date_rejected"
+      },
+      "date_reserved": {
+         "@id": "date_reserved"
+      },
+      "date_updated": {
+         "@id": "date_updated"
+      },
+      "default_status": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "default_status"
+      },
+      "description": {
+         "@id": "dct:description"
+      },
+      "description_value": {
+         "@id": "description_value"
+      },
+      "descriptions": {
+         "@type": "@id",
+         "@id": "descriptions"
+      },
+      "event_time": {
+         "@id": "event_time"
+      },
+      "event_value": {
+         "@id": "event_value"
+      },
+      "exploits": {
+         "@type": "@id",
+         "@id": "exploits"
+      },
+      "impact": {
+         "@type": "@id",
+         "@id": "core:impact"
+      },
+      "impact_descriptions": {
+         "@type": "@id",
+         "@id": "impact_descriptions"
+      },
+      "impacts": {
+         "@type": "@id",
+         "@id": "impacts"
+      },
+      "lang": {
+         "@id": "lang"
+      },
+      "last_modified_date": {
+         "@type": "xsd:dateTime",
+         "@id": "dct:modified"
+      },
+      "less_than": {
+         "@id": "less_than"
+      },
+      "less_than_or_equal": {
+         "@id": "less_than_or_equal"
+      },
+      "match_criteria_id": {
+         "@id": "match_criteria_id"
+      },
+      "media_type": {
+         "@id": "media_type"
+      },
+      "media_value": {
+         "@id": "media_value"
+      },
+      "metric_format": {
+         "@id": "metric_format"
+      },
+      "metric_scenarios": {
+         "@type": "@id",
+         "@id": "metric_scenarios"
+      },
+      "metrics": {
+         "@type": "@id",
+         "@id": "metrics"
+      },
+      "modules": {
+         "@id": "modules"
+      },
+      "name": {
+         "@id": "rdfs:label"
+      },
+      "operator": {
+         "@id": "core:operator"
+      },
+      "org_id": {
+         "@id": "org_id"
+      },
+      "other_metric": {
+         "@type": "@id",
+         "@id": "other_metric"
+      },
+      "other_metric_content": {
+         "@type": "@id",
+         "@id": "other_metric_content"
+      },
+      "other_metric_type": {
+         "@id": "other_metric_type"
+      },
+      "package_name": {
+         "@id": "package_name"
+      },
+      "package_url": {
+         "@type": "xsd:anyURI",
+         "@id": "package_url"
+      },
+      "platforms": {
+         "@id": "core:platforms"
+      },
+      "problem_description": {
+         "@id": "problem_description"
+      },
+      "problem_references": {
+         "@type": "@id",
+         "@id": "problem_references"
+      },
+      "problem_source_type": {
+         "@id": "problem_source_type"
+      },
+      "problem_type_descriptions": {
+         "@type": "@id",
+         "@id": "problem_type_descriptions"
+      },
+      "problem_types": {
+         "@type": "@id",
+         "@id": "problem_types"
+      },
+      "products": {
+         "@type": "@id",
+         "@id": "core:products"
+      },
+      "program_files": {
+         "@id": "program_files"
+      },
+      "program_routines": {
+         "@type": "@id",
+         "@id": "program_routines"
+      },
+      "provider_metadata": {
+         "@type": "@id",
+         "@id": "provider_metadata"
+      },
+      "published_date": {
+         "@type": "xsd:dateTime",
+         "@id": "dct:created"
+      },
+      "published_state": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "published_state"
+      },
+      "record_cve_id": {
+         "@id": "record_cve_id"
+      },
+      "reference_tags": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "reference_tags"
+      },
+      "references": {
+         "@type": "@id",
+         "@id": "core:references"
+      },
+      "rejected_reasons": {
+         "@type": "@id",
+         "@id": "rejected_reasons"
+      },
+      "rejected_state": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "rejected_state"
+      },
+      "relationship_name": {
+         "@id": "relationship_name"
+      },
+      "relationship_value": {
+         "@id": "relationship_value"
+      },
+      "replaced_by": {
+         "@id": "replaced_by"
+      },
+      "repo": {
+         "@type": "xsd:anyURI",
+         "@id": "repo"
+      },
+      "requester_user_id": {
+         "@id": "requester_user_id"
+      },
+      "routine_name": {
+         "@id": "routine_name"
+      },
+      "scenario_value": {
+         "@id": "scenario_value"
+      },
+      "score": {
+         "@type": "xsd:float",
+         "@id": "core:score"
+      },
+      "serial": {
+         "@type": "xsd:integer",
+         "@id": "serial"
+      },
+      "severity": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "core:severity"
+      },
+      "short_name": {
+         "@id": "short_name"
+      },
+      "solutions": {
+         "@type": "@id",
+         "@id": "solutions"
+      },
+      "source": {
+         "@id": "dct:source"
+      },
+      "source_advisory": {
+         "@id": "source_advisory"
+      },
+      "source_defects": {
+         "@id": "source_defects"
+      },
+      "source_discovery": {
+         "@id": "source_discovery"
+      },
+      "status": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "core:status"
+      },
+      "supporting_media": {
+         "@type": "@id",
+         "@id": "supporting_media"
+      },
+      "taxonomy_id": {
+         "@id": "taxonomy_id"
+      },
+      "taxonomy_mappings": {
+         "@type": "@id",
+         "@id": "taxonomy_mappings"
+      },
+      "taxonomy_name": {
+         "@id": "taxonomy_name"
+      },
+      "taxonomy_relations": {
+         "@type": "@id",
+         "@id": "taxonomy_relations"
+      },
+      "taxonomy_version": {
+         "@id": "taxonomy_version"
+      },
+      "timeline": {
+         "@type": "@id",
+         "@id": "timeline"
+      },
+      "title": {
+         "@id": "dct:title"
+      },
+      "url": {
+         "@type": "xsd:anyURI",
+         "@id": "schema:url"
+      },
+      "vector": {
+         "@id": "core:vector"
+      },
+      "vendor": {
+         "@id": "schema:name"
+      },
+      "version": {
+         "@id": "schema:version"
+      },
+      "version_changes": {
+         "@type": "@id",
+         "@id": "version_changes"
+      },
+      "version_end_excluding": {
+         "@id": "version_end_excluding"
+      },
+      "version_end_including": {
+         "@id": "version_end_including"
+      },
+      "version_start_excluding": {
+         "@id": "version_start_excluding"
+      },
+      "version_start_including": {
+         "@id": "version_start_including"
+      },
+      "version_status": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "version_status"
+      },
+      "version_type": {
+         "@id": "version_type"
+      },
+      "version_value": {
+         "@id": "version_value"
+      },
+      "versions": {
+         "@type": "@id",
+         "@id": "versions"
+      },
+      "weaknesses": {
+         "@type": "@id",
+         "@id": "core:weaknesses"
+      },
+      "workarounds": {
+         "@type": "@id",
+         "@id": "workarounds"
+      },
+      "AdpContainer": {
+         "@id": "AdpContainer"
+      },
+      "AffectedProduct": {
+         "@id": "AffectedProduct"
+      },
+      "Any": {
+         "@id": "linkml:Any"
+      },
+      "CnaContainer": {
+         "@id": "CnaContainer"
+      },
+      "CnaPublishedContainer": {
+         "@id": "CnaPublishedContainer"
+      },
+      "CnaRejectedContainer": {
+         "@id": "CnaRejectedContainer"
+      },
+      "Configuration": {
+         "@id": "core:Configuration"
+      },
+      "Containers": {
+         "@id": "Containers"
+      },
+      "CpeApplicabilityElement": {
+         "@id": "CpeApplicabilityElement"
+      },
+      "CpeMatch": {
+         "@id": "CpeMatch"
+      },
+      "CpeNode": {
+         "@id": "CpeNode"
+      },
+      "CreditEntry": {
+         "@id": "CreditEntry"
+      },
+      "CveMetadata": {
+         "@id": "CveMetadata"
+      },
+      "CveMetadataPublished": {
+         "@id": "CveMetadataPublished"
+      },
+      "CveMetadataRejected": {
+         "@id": "CveMetadataRejected"
+      },
+      "CVERecord": {
+         "@id": "CVERecord"
+      },
+      "CveReference": {
+         "@id": "CveReference"
+      },
+      "CvssV20": {
+         "@id": "CvssV20"
+      },
+      "CvssV3": {
+         "@id": "CvssV3"
+      },
+      "CvssV40": {
+         "@id": "CvssV40"
+      },
+      "Impact": {
+         "@id": "core:Impact"
+      },
+      "ImpactEntry": {
+         "@id": "ImpactEntry"
+      },
+      "MetricEntry": {
+         "@id": "MetricEntry"
+      },
+      "MetricScenario": {
+         "@id": "MetricScenario"
+      },
+      "MultiLangDescription": {
+         "@id": "MultiLangDescription"
+      },
+      "OtherMetric": {
+         "@id": "OtherMetric"
+      },
+      "ProblemType": {
+         "@id": "ProblemType"
+      },
+      "ProblemTypeDescription": {
+         "@id": "ProblemTypeDescription"
+      },
+      "Product": {
+         "@id": "core:Product"
+      },
+      "ProgramRoutine": {
+         "@id": "ProgramRoutine"
+      },
+      "ProviderMetadata": {
+         "@id": "ProviderMetadata"
+      },
+      "Reference": {
+         "@id": "core:Reference"
+      },
+      "SourceInformation": {
+         "@id": "SourceInformation"
+      },
+      "SupportingMedia": {
+         "@id": "SupportingMedia"
+      },
+      "TaxonomyMapping": {
+         "@id": "TaxonomyMapping"
+      },
+      "TaxonomyRelation": {
+         "@id": "TaxonomyRelation"
+      },
+      "TimelineEntry": {
+         "@id": "TimelineEntry"
+      },
+      "VersionChange": {
+         "@id": "VersionChange"
+      },
+      "VersionEntry": {
+         "@id": "VersionEntry"
+      },
+      "Vulnerability": {
+         "@id": "core:Vulnerability"
+      },
+      "Weakness": {
+         "@id": "core:Weakness"
+      }
+   }
+}

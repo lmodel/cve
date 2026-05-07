@@ -1,0 +1,923 @@
+# metamodel_version: 1.7.0
+# version: 5.2.0
+enum ADPTag
+  {
+    disputed
+  }
+
+enum CNATag
+  {
+    unsupported__HYPHEN_MINUS__when__HYPHEN_MINUS__assigned
+    exclusively__HYPHEN_MINUS__hosted__HYPHEN_MINUS__service
+    disputed
+  }
+
+enum CpeOperator
+  {
+    AND
+    OR
+  }
+
+enum CreditType
+  {
+    finder
+    reporter
+    analyst
+    coordinator
+    remediation_developer
+    remediation_reviewer
+    remediation_verifier
+    tool
+    sponsor
+    other
+  }
+
+enum Cvss2AccessComplexity
+  {
+    HIGH
+    MEDIUM
+    LOW
+  }
+
+enum Cvss2AccessVector
+  {
+    NETWORK
+    ADJACENT_NETWORK
+    LOCAL
+  }
+
+enum Cvss2Authentication
+  {
+    MULTIPLE
+    SINGLE
+    NONE
+  }
+
+enum Cvss2Cia
+  {
+    NONE
+    PARTIAL
+    COMPLETE
+  }
+
+enum Cvss2CiaRequirement
+  {
+    LOW
+    MEDIUM
+    HIGH
+    NOT_DEFINED
+  }
+
+enum Cvss2CollateralDamagePotential
+  {
+    NONE
+    LOW
+    LOW_MEDIUM
+    MEDIUM_HIGH
+    HIGH
+    NOT_DEFINED
+  }
+
+enum Cvss2Exploitability
+  {
+    UNPROVEN
+    PROOF_OF_CONCEPT
+    FUNCTIONAL
+    HIGH
+    NOT_DEFINED
+  }
+
+enum Cvss2RemediationLevel
+  {
+    OFFICIAL_FIX
+    TEMPORARY_FIX
+    WORKAROUND
+    UNAVAILABLE
+    NOT_DEFINED
+  }
+
+enum Cvss2ReportConfidence
+  {
+    UNCONFIRMED
+    UNCORROBORATED
+    CONFIRMED
+    NOT_DEFINED
+  }
+
+enum Cvss2TargetDistribution
+  {
+    NONE
+    LOW
+    MEDIUM
+    HIGH
+    NOT_DEFINED
+  }
+
+enum Cvss3AttackComplexity
+  {
+    HIGH
+    LOW
+  }
+
+enum Cvss3AttackVector
+  {
+    NETWORK
+    ADJACENT_NETWORK
+    LOCAL
+    PHYSICAL
+  }
+
+enum Cvss3Cia
+  {
+    NONE
+    LOW
+    HIGH
+  }
+
+enum Cvss3CiaRequirement
+  {
+    LOW
+    MEDIUM
+    HIGH
+    NOT_DEFINED
+  }
+
+enum Cvss3Confidence
+  {
+    UNKNOWN
+    REASONABLE
+    CONFIRMED
+    NOT_DEFINED
+  }
+
+enum Cvss3ExploitCodeMaturity
+  {
+    UNPROVEN
+    PROOF_OF_CONCEPT
+    FUNCTIONAL
+    HIGH
+    NOT_DEFINED
+  }
+
+enum Cvss3ModifiedAttackComplexity
+  {
+    HIGH
+    LOW
+    NOT_DEFINED
+  }
+
+enum Cvss3ModifiedAttackVector
+  {
+    NETWORK
+    ADJACENT_NETWORK
+    LOCAL
+    PHYSICAL
+    NOT_DEFINED
+  }
+
+enum Cvss3ModifiedCia
+  {
+    NONE
+    LOW
+    HIGH
+    NOT_DEFINED
+  }
+
+enum Cvss3ModifiedPrivilegesRequired
+  {
+    HIGH
+    LOW
+    NONE
+    NOT_DEFINED
+  }
+
+enum Cvss3ModifiedScope
+  {
+    UNCHANGED
+    CHANGED
+    NOT_DEFINED
+  }
+
+enum Cvss3ModifiedUserInteraction
+  {
+    NONE
+    REQUIRED
+    NOT_DEFINED
+  }
+
+enum Cvss3PrivilegesRequired
+  {
+    HIGH
+    LOW
+    NONE
+  }
+
+enum Cvss3RemediationLevel
+  {
+    OFFICIAL_FIX
+    TEMPORARY_FIX
+    WORKAROUND
+    UNAVAILABLE
+    NOT_DEFINED
+  }
+
+enum Cvss3Scope
+  {
+    UNCHANGED
+    CHANGED
+  }
+
+enum Cvss3Severity
+  {
+    NONE
+    LOW
+    MEDIUM
+    HIGH
+    CRITICAL
+  }
+
+enum Cvss3UserInteraction
+  {
+    NONE
+    REQUIRED
+  }
+
+enum Cvss4AttackComplexity
+  {
+    HIGH
+    LOW
+  }
+
+enum Cvss4AttackRequirements
+  {
+    NONE
+    PRESENT
+  }
+
+enum Cvss4AttackVector
+  {
+    NETWORK
+    ADJACENT
+    LOCAL
+    PHYSICAL
+  }
+
+enum Cvss4Automatable
+  {
+    NO
+    YES
+    NOT_DEFINED
+  }
+
+enum Cvss4CiaRequirement
+  {
+    LOW
+    MEDIUM
+    HIGH
+    NOT_DEFINED
+  }
+
+enum Cvss4ExploitMaturity
+  {
+    UNREPORTED
+    PROOF_OF_CONCEPT
+    ATTACKED
+    NOT_DEFINED
+  }
+
+enum Cvss4ModifiedAttackComplexity
+  {
+    HIGH
+    LOW
+    NOT_DEFINED
+  }
+
+enum Cvss4ModifiedAttackRequirements
+  {
+    NONE
+    PRESENT
+    NOT_DEFINED
+  }
+
+enum Cvss4ModifiedAttackVector
+  {
+    NETWORK
+    ADJACENT
+    LOCAL
+    PHYSICAL
+    NOT_DEFINED
+  }
+
+enum Cvss4ModifiedPrivilegesRequired
+  {
+    HIGH
+    LOW
+    NONE
+    NOT_DEFINED
+  }
+
+enum Cvss4ModifiedSubC
+  {
+    NONE
+    LOW
+    HIGH
+    NOT_DEFINED
+  }
+
+enum Cvss4ModifiedSubIa
+  {
+    NONE
+    LOW
+    HIGH
+    SAFETY
+    NOT_DEFINED
+  }
+
+enum Cvss4ModifiedUserInteraction
+  {
+    NONE
+    PASSIVE
+    ACTIVE
+    NOT_DEFINED
+  }
+
+enum Cvss4ModifiedVulnCia
+  {
+    NONE
+    LOW
+    HIGH
+    NOT_DEFINED
+  }
+
+enum Cvss4PrivilegesRequired
+  {
+    HIGH
+    LOW
+    NONE
+  }
+
+enum Cvss4ProviderUrgency
+  {
+    CLEAR
+    GREEN
+    AMBER
+    RED
+    NOT_DEFINED
+  }
+
+enum Cvss4Recovery
+  {
+    AUTOMATIC
+    USER
+    IRRECOVERABLE
+    NOT_DEFINED
+  }
+
+enum Cvss4Safety
+  {
+    NEGLIGIBLE
+    PRESENT
+    NOT_DEFINED
+  }
+
+enum Cvss4Severity
+  {
+    NONE
+    LOW
+    MEDIUM
+    HIGH
+    CRITICAL
+  }
+
+enum Cvss4SubCia
+  {
+    NONE
+    LOW
+    HIGH
+  }
+
+enum Cvss4UserInteraction
+  {
+    NONE
+    PASSIVE
+    ACTIVE
+  }
+
+enum Cvss4ValueDensity
+  {
+    DIFFUSE
+    CONCENTRATED
+    NOT_DEFINED
+  }
+
+enum Cvss4VulnCia
+  {
+    NONE
+    LOW
+    HIGH
+  }
+
+enum Cvss4VulnerabilityResponseEffort
+  {
+    LOW
+    MODERATE
+    HIGH
+    NOT_DEFINED
+  }
+
+enum CvssV3Version
+  {
+    __3__FULL_STOP__0
+    __3__FULL_STOP__1
+  }
+
+enum DataType
+  {
+    CVE_RECORD
+  }
+
+enum ImpactSeverity
+  {
+    NONE
+    LOW
+    MEDIUM
+    HIGH
+    CRITICAL
+    UNKNOWN
+  }
+
+enum RecordState
+  {
+    PUBLISHED
+    REJECTED
+  }
+
+enum ReferenceTag
+  {
+    broken__HYPHEN_MINUS__link
+    customer__HYPHEN_MINUS__entitlement
+    exploit
+    government__HYPHEN_MINUS__resource
+    issue__HYPHEN_MINUS__tracking
+    mailing__HYPHEN_MINUS__list
+    mitigation
+    not__HYPHEN_MINUS__applicable
+    patch
+    permissions__HYPHEN_MINUS__required
+    media__HYPHEN_MINUS__coverage
+    product
+    related
+    release__HYPHEN_MINUS__notes
+    signature
+    technical__HYPHEN_MINUS__description
+    third__HYPHEN_MINUS__party__HYPHEN_MINUS__advisory
+    vendor__HYPHEN_MINUS__advisory
+    vdb__HYPHEN_MINUS__entry
+  }
+
+enum VersionStatus
+  {
+    affected
+    unaffected
+    unknown
+  }
+
+enum VulnerabilityStatus
+  {
+    ACTIVE
+    REJECTED
+    DISPUTED
+    RESERVED
+    DEPRECATED
+  }
+
+type AdpContainer
+  {
+    providerMetadata: ProviderMetadata!
+    datePublic: Timestamp
+    title: String
+    descriptions: [MultiLangDescription]
+    affected: [AffectedProduct]
+    cpeApplicability: [CpeApplicabilityElement]
+    problemTypes: [ProblemType]
+    cveReferences: [CveReference]
+    impacts: [ImpactEntry]
+    metrics: [MetricEntry]
+    configurationsText: [MultiLangDescription]
+    workarounds: [MultiLangDescription]
+    solutions: [MultiLangDescription]
+    exploits: [MultiLangDescription]
+    timeline: [TimelineEntry]
+    credits: [CreditEntry]
+    cnaSource: SourceInformation
+    adpTags: [String]
+    taxonomyMappings: [TaxonomyMapping]
+  }
+
+type AffectedProduct
+  {
+    vendor: String
+    name: String
+    version: String
+    platforms: [String]
+    collectionUrl: String
+    packageName: String
+    cpes: [CpeNameType]
+    modules: [String]
+    programFiles: [String]
+    programRoutines: [ProgramRoutine]
+    repo: String
+    defaultStatus: VersionStatus
+    versions: [VersionEntry]
+    packageUrl: String
+  }
+
+scalar Any
+
+interface CnaContainer
+  {
+  }
+
+type CnaPublishedContainer
+  {
+    providerMetadata: ProviderMetadata!
+    dateAssigned: Timestamp
+    datePublic: Timestamp
+    title: String
+    descriptions: [MultiLangDescription]!
+    affected: [AffectedProduct]!
+    cpeApplicability: [CpeApplicabilityElement]
+    problemTypes: [ProblemType]
+    cveReferences: [CveReference]!
+    impacts: [ImpactEntry]
+    metrics: [MetricEntry]
+    configurationsText: [MultiLangDescription]
+    workarounds: [MultiLangDescription]
+    solutions: [MultiLangDescription]
+    exploits: [MultiLangDescription]
+    timeline: [TimelineEntry]
+    credits: [CreditEntry]
+    cnaSource: SourceInformation
+    cnaTags: [String]
+    taxonomyMappings: [TaxonomyMapping]
+  }
+
+type CnaRejectedContainer
+  {
+    providerMetadata: ProviderMetadata!
+    rejectedReasons: [MultiLangDescription]!
+    replacedBy: [CveId]
+  }
+
+type Configuration
+  {
+    cpeUri: String
+    operator: String
+  }
+
+type Containers
+  {
+    cna: CnaContainer!
+    adp: [AdpContainer]
+  }
+
+type CpeApplicabilityElement
+  {
+    cpeOperator: CpeOperator
+    cpeNegate: Boolean
+    cpeNodes: [CpeNode]!
+  }
+
+type CpeMatch
+  {
+    cpeVulnerable: Boolean!
+    cpeCriteria: CpeName23Type!
+    matchCriteriaId: UuidType
+    versionStartExcluding: VersionString
+    versionStartIncluding: VersionString
+    versionEndExcluding: VersionString
+    versionEndIncluding: VersionString
+  }
+
+type CpeNode
+  {
+    cpeOperator: CpeOperator!
+    cpeNegate: Boolean
+    cpeMatchCriteria: [CpeMatch]!
+  }
+
+type CreditEntry
+  {
+    lang: LanguageTag!
+    creditValue: String!
+    creditUser: UuidType
+    creditType: CreditType
+  }
+
+interface CveMetadata
+  {
+  }
+
+type CveMetadataPublished
+  {
+    recordCveId: CveId!
+    assignerOrgId: UuidType!
+    assignerShortName: String
+    serial: Int
+    dateUpdated: Timestamp
+    dateReserved: Timestamp
+    requesterUserId: UuidType
+    datePublished: Timestamp
+    publishedState: RecordState!
+  }
+
+type CveMetadataRejected
+  {
+    recordCveId: CveId!
+    assignerOrgId: UuidType!
+    assignerShortName: String
+    serial: Int
+    dateUpdated: Timestamp
+    dateReserved: Timestamp
+    datePublished: Timestamp
+    dateRejected: Timestamp
+    rejectedState: RecordState!
+  }
+
+type CVERecord
+  {
+    title: String
+    description: String
+    publishedDate: String
+    lastModifiedDate: String
+    products: [Product]
+    weaknesses: [Weakness]
+    references: [Reference]
+    impact: Impact
+    status: VulnerabilityStatus
+    dataType: DataType
+    dataVersion: String
+    cveMetadata: CveMetadata!
+    containers: Containers!
+    cveId: CveId!
+  }
+
+type CveReference
+  {
+    name: String
+    source: String
+    referenceTags: [ReferenceTag]
+    url: String!
+  }
+
+type CvssV20
+  {
+    cvss2Version: String!
+    cvss2VectorString: String!
+    cvss2AccessVector: Cvss2AccessVector
+    cvss2AccessComplexity: Cvss2AccessComplexity
+    cvss2Authentication: Cvss2Authentication
+    cvss2ConfidentialityImpact: Cvss2Cia
+    cvss2IntegrityImpact: Cvss2Cia
+    cvss2AvailabilityImpact: Cvss2Cia
+    cvss2BaseScore: Float!
+    cvss2Exploitability: Cvss2Exploitability
+    cvss2RemediationLevel: Cvss2RemediationLevel
+    cvss2ReportConfidence: Cvss2ReportConfidence
+    cvss2TemporalScore: Float
+    cvss2CollateralDamagePotential: Cvss2CollateralDamagePotential
+    cvss2TargetDistribution: Cvss2TargetDistribution
+    cvss2ConfidentialityRequirement: Cvss2CiaRequirement
+    cvss2IntegrityRequirement: Cvss2CiaRequirement
+    cvss2AvailabilityRequirement: Cvss2CiaRequirement
+    cvss2EnvironmentalScore: Float
+  }
+
+type CvssV3
+  {
+    cvss3Version: CvssV3Version!
+    cvss3VectorString: String!
+    cvss3AttackVector: Cvss3AttackVector
+    cvss3AttackComplexity: Cvss3AttackComplexity
+    cvss3PrivilegesRequired: Cvss3PrivilegesRequired
+    cvss3UserInteraction: Cvss3UserInteraction
+    cvss3Scope: Cvss3Scope
+    cvss3ConfidentialityImpact: Cvss3Cia
+    cvss3IntegrityImpact: Cvss3Cia
+    cvss3AvailabilityImpact: Cvss3Cia
+    cvss3BaseScore: Float!
+    cvss3BaseSeverity: Cvss3Severity!
+    cvss3ExploitCodeMaturity: Cvss3ExploitCodeMaturity
+    cvss3RemediationLevel: Cvss3RemediationLevel
+    cvss3ReportConfidence: Cvss3Confidence
+    cvss3TemporalScore: Float
+    cvss3TemporalSeverity: Cvss3Severity
+    cvss3ConfidentialityRequirement: Cvss3CiaRequirement
+    cvss3IntegrityRequirement: Cvss3CiaRequirement
+    cvss3AvailabilityRequirement: Cvss3CiaRequirement
+    cvss3ModifiedAttackVector: Cvss3ModifiedAttackVector
+    cvss3ModifiedAttackComplexity: Cvss3ModifiedAttackComplexity
+    cvss3ModifiedPrivilegesRequired: Cvss3ModifiedPrivilegesRequired
+    cvss3ModifiedUserInteraction: Cvss3ModifiedUserInteraction
+    cvss3ModifiedScope: Cvss3ModifiedScope
+    cvss3ModifiedConfidentialityImpact: Cvss3ModifiedCia
+    cvss3ModifiedIntegrityImpact: Cvss3ModifiedCia
+    cvss3ModifiedAvailabilityImpact: Cvss3ModifiedCia
+    cvss3EnvironmentalScore: Float
+    cvss3EnvironmentalSeverity: Cvss3Severity
+  }
+
+type CvssV40
+  {
+    cvss4Version: String!
+    cvss4VectorString: String!
+    cvss4BaseScore: Float!
+    cvss4BaseSeverity: Cvss4Severity!
+    cvss4AttackVector: Cvss4AttackVector
+    cvss4AttackComplexity: Cvss4AttackComplexity
+    cvss4AttackRequirements: Cvss4AttackRequirements
+    cvss4PrivilegesRequired: Cvss4PrivilegesRequired
+    cvss4UserInteraction: Cvss4UserInteraction
+    cvss4VulnConfidentialityImpact: Cvss4VulnCia
+    cvss4VulnIntegrityImpact: Cvss4VulnCia
+    cvss4VulnAvailabilityImpact: Cvss4VulnCia
+    cvss4SubConfidentialityImpact: Cvss4SubCia
+    cvss4SubIntegrityImpact: Cvss4SubCia
+    cvss4SubAvailabilityImpact: Cvss4SubCia
+    cvss4ExploitMaturity: Cvss4ExploitMaturity
+    cvss4ConfidentialityRequirement: Cvss4CiaRequirement
+    cvss4IntegrityRequirement: Cvss4CiaRequirement
+    cvss4AvailabilityRequirement: Cvss4CiaRequirement
+    cvss4ModifiedAttackVector: Cvss4ModifiedAttackVector
+    cvss4ModifiedAttackComplexity: Cvss4ModifiedAttackComplexity
+    cvss4ModifiedAttackRequirements: Cvss4ModifiedAttackRequirements
+    cvss4ModifiedPrivilegesRequired: Cvss4ModifiedPrivilegesRequired
+    cvss4ModifiedUserInteraction: Cvss4ModifiedUserInteraction
+    cvss4ModifiedVulnConfidentialityImpact: Cvss4ModifiedVulnCia
+    cvss4ModifiedVulnIntegrityImpact: Cvss4ModifiedVulnCia
+    cvss4ModifiedVulnAvailabilityImpact: Cvss4ModifiedVulnCia
+    cvss4ModifiedSubConfidentialityImpact: Cvss4ModifiedSubC
+    cvss4ModifiedSubIntegrityImpact: Cvss4ModifiedSubIa
+    cvss4ModifiedSubAvailabilityImpact: Cvss4ModifiedSubIa
+    cvss4Safety: Cvss4Safety
+    cvss4Automatable: Cvss4Automatable
+    cvss4Recovery: Cvss4Recovery
+    cvss4ValueDensity: Cvss4ValueDensity
+    cvss4VulnerabilityResponseEffort: Cvss4VulnerabilityResponseEffort
+    cvss4ProviderUrgency: Cvss4ProviderUrgency
+  }
+
+type Impact
+  {
+    severity: ImpactSeverity
+    vector: String
+    score: Float
+  }
+
+type ImpactEntry
+  {
+    capecId: String
+    impactDescriptions: [MultiLangDescription]!
+  }
+
+type MetricEntry
+  {
+    metricFormat: String
+    metricScenarios: [MetricScenario]
+    cvssV40: CvssV40
+    cvssV3: CvssV3
+    cvssV20: CvssV20
+    otherMetric: OtherMetric
+  }
+
+type MetricScenario
+  {
+    lang: LanguageTag!
+    scenarioValue: String!
+  }
+
+type MultiLangDescription
+  {
+    lang: LanguageTag!
+    descriptionValue: String!
+    supportingMedia: [SupportingMedia]
+  }
+
+type OtherMetric
+  {
+    otherMetricType: String!
+    otherMetricContent: Any!
+  }
+
+type ProblemType
+  {
+    problemTypeDescriptions: [ProblemTypeDescription]!
+  }
+
+type ProblemTypeDescription
+  {
+    lang: LanguageTag!
+    problemDescription: String!
+    cweId: String
+    problemSourceType: String
+    problemReferences: [CveReference]
+  }
+
+type Product
+  {
+    vendor: String
+    name: String
+    version: String
+    platforms: [String]
+  }
+
+type ProgramRoutine
+  {
+    routineName: String!
+  }
+
+type ProviderMetadata
+  {
+    orgId: UuidType!
+    shortName: String
+    dateUpdated: Timestamp
+  }
+
+type Reference
+  {
+    url: String
+    name: String
+    source: String
+  }
+
+type SourceInformation
+  {
+    sourceDefects: [String]
+    sourceAdvisory: String
+    sourceDiscovery: String
+  }
+
+type SupportingMedia
+  {
+    mediaType: String!
+    base64Encoded: Boolean
+    mediaValue: String!
+  }
+
+type TaxonomyMapping
+  {
+    taxonomyName: String!
+    taxonomyVersion: String
+    taxonomyRelations: [TaxonomyRelation]!
+  }
+
+type TaxonomyRelation
+  {
+    taxonomyId: String!
+    relationshipName: String!
+    relationshipValue: String!
+  }
+
+type TimelineEntry
+  {
+    eventTime: Timestamp!
+    lang: LanguageTag!
+    eventValue: String!
+  }
+
+type VersionChange
+  {
+    changeAt: VersionString!
+    changeStatus: VersionStatus!
+  }
+
+type VersionEntry
+  {
+    versionValue: VersionString!
+    versionStatus: VersionStatus!
+    versionType: String
+    lessThan: VersionString
+    lessThanOrEqual: VersionString
+    versionChanges: [VersionChange]
+  }
+
+interface Vulnerability
+  {
+    cveId: CveId!
+    title: String
+    description: String
+    publishedDate: String
+    lastModifiedDate: String
+    products: [Product]
+    weaknesses: [Weakness]
+    references: [Reference]
+    impact: Impact
+    status: VulnerabilityStatus
+  }
+
+type Weakness
+  {
+    cweId: String
+    name: String
+    description: String
+  }

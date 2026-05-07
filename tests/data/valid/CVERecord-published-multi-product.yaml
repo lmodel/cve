@@ -5,12 +5,12 @@ description: Authentication bypass in GammaRouter firmware allows a local attack
   to gain administrative access without credentials.
 cve_metadata:
   record_cve_id: CVE-2024-66666
-  assigner_org_id: a8b9c0d1-e2f3-4a4b-5c6d-7e8f9a0b1c2d
+  assigner_org_id: a8b9c0d1-e2f3-4a4b-8c6d-7e8f9a0b1c2d
   published_state: PUBLISHED
 containers:
   cna:
     provider_metadata:
-      org_id: a8b9c0d1-e2f3-4a4b-5c6d-7e8f9a0b1c2d
+      org_id: a8b9c0d1-e2f3-4a4b-8c6d-7e8f9a0b1c2d
     descriptions:
       - lang: en
         description_value: An authentication bypass vulnerability in the web management

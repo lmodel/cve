@@ -2,7 +2,7 @@
 
 # cve
 
-Mitre CVE™ - LinkML Schema
+CVE™ Program - LinkML Schema
 
 ## Documentation Website
 

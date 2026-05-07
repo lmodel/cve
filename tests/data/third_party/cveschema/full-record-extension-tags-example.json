@@ -1,0 +1,85 @@
+{
+  "dataType": "CVE_RECORD",
+  "dataVersion": "5.2",
+  "cveMetadata": {
+    "cveId": "CVE-2024-8888",
+    "assignerOrgId": "b3476cb9-2e3d-41a6-98d0-0f47421a65b6",
+    "assignerShortName": "example",
+    "serial": 1,
+    "state": "PUBLISHED",
+    "datePublished": "2024-03-01T12:00:00.000Z",
+    "dateUpdated": "2024-03-01T12:00:00.000Z"
+  },
+  "containers": {
+    "cna": {
+      "providerMetadata": {
+        "orgId": "b3476cb9-2e3d-41a6-98d0-0f47421a65b6",
+        "shortName": "example",
+        "dateUpdated": "2024-03-01T12:00:00.000Z"
+      },
+      "title": "Vendor-extended CVE record with x_ extension tags",
+      "descriptions": [
+        {
+          "lang": "en",
+          "value": "An improper input validation vulnerability in Example Appliance allows authenticated attackers to perform privilege escalation."
+        }
+      ],
+      "affected": [
+        {
+          "vendor": "Example Corp",
+          "product": "Example Appliance",
+          "versions": [
+            {
+              "version": "2.0.0",
+              "status": "affected",
+              "lessThanOrEqual": "2.3.5",
+              "versionType": "semver"
+            }
+          ],
+          "defaultStatus": "unaffected"
+        }
+      ],
+      "references": [
+        {
+          "url": "https://example.com/security/ESA-2024-002",
+          "name": "ESA-2024-002",
+          "tags": ["vendor-advisory", "patch"]
+        },
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-8888",
+          "tags": ["vdb-entry"]
+        }
+      ],
+      "metrics": [
+        {
+          "format": "CVSS",
+          "scenarios": [
+            {
+              "lang": "en",
+              "value": "GENERAL"
+            }
+          ],
+          "cvssV3_1": {
+            "version": "3.1",
+            "attackVector": "NETWORK",
+            "attackComplexity": "LOW",
+            "privilegesRequired": "LOW",
+            "userInteraction": "NONE",
+            "scope": "UNCHANGED",
+            "confidentialityImpact": "HIGH",
+            "integrityImpact": "HIGH",
+            "availabilityImpact": "NONE",
+            "baseScore": 8.1,
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:N"
+          }
+        }
+      ],
+      "tags": [
+        "unsupported-when-assigned",
+        "x_internal_tracking",
+        "x_severity.override"
+      ]
+    }
+  }
+}
