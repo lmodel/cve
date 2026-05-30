@@ -509,10 +509,9 @@
 
 <h1 id="slot-date_published">Slot: date_published</h1>
 <p><em>The date/time the CVE Record was first published in the CVE List.</em></p>
-<p>URI: <a href="https://w3id.org/lmodel/cve/date_published">cve:date_published</a>
-Alias: date_published</p>
+<div>
+<p>URI: <a href="https://w3id.org/lmodel/cve/date_published">cve:date_published</a></p>
 <!-- no inheritance hierarchy -->
-
 <h2 id="applicable-classes">Applicable Classes</h2>
 <table>
 <thead>
@@ -524,13 +523,13 @@ Alias: date_published</p>
 </thead>
 <tbody>
 <tr>
-<td><a href="../CveMetadataRejected/">CveMetadataRejected</a></td>
-<td>Metadata for a CVE Record in the REJECTED state</td>
+<td><a href="../CveMetadataPublished/">CveMetadataPublished</a></td>
+<td>Metadata for a CVE Record in the PUBLISHED state</td>
 <td>no</td>
 </tr>
 <tr>
-<td><a href="../CveMetadataPublished/">CveMetadataPublished</a></td>
-<td>Metadata for a CVE Record in the PUBLISHED state</td>
+<td><a href="../CveMetadataRejected/">CveMetadataRejected</a></td>
+<td>Metadata for a CVE Record in the REJECTED state</td>
 <td>no</td>
 </tr>
 </tbody>
@@ -600,6 +599,10 @@ Alias: date_published</p>
 <td>native</td>
 <td>cve:date_published</td>
 </tr>
+<tr>
+<td>related</td>
+<td>kev_catalog:date_added</td>
+</tr>
 </tbody>
 </table>
 <h2 id="linkml-source">LinkML Source</h2>
@@ -611,20 +614,25 @@ Alias: date_published</p>
 <span class="nt">from_schema</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://w3id.org/lmodel/cve</span>
 <span class="nt">aliases</span><span class="p">:</span>
 <span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">datePublished</span>
+<span class="nt">related_mappings</span><span class="p">:</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kev_catalog:date_added</span>
 <span class="nt">rank</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1000</span>
-<span class="nt">alias</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">date_published</span>
 <span class="nt">domain_of</span><span class="p">:</span>
 <span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">CveMetadataPublished</span>
 <span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">CveMetadataRejected</span>
 <span class="nt">range</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Timestamp</span>
 </code></pre></div>
 </details>
+</div>
 
 
 
 
 
 
+
+  
+  
 
 
 
