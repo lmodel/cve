@@ -1,7 +1,5 @@
 # INVALID: CVERecord with invalid state value in metadata
 # 'PUBLIC' is not a valid RecordState (must be PUBLISHED or REJECTED)
-cve_id: CVE-2024-99002
-description: Invalid state value in cveMetadata.
 cve_metadata:
   record_cve_id: CVE-2024-99002
   assigner_org_id: c0d1e2f3-a4b5-4c6d-7e8f-9a0b1c2d3e4f

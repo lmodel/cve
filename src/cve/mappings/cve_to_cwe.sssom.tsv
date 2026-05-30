@@ -16,10 +16,10 @@
 # mapping_provider: https://lmodel.github.io/cve
 # mapping_date: 2026-05-07
 subject_id	subject_label	predicate_id	object_id	object_label	mapping_justification	comment
-cve:ProblemType	ProblemType	skos:closeMatch	cwe:Weakness	Weakness	semapv:ManualMappingCuration	A CVE ProblemType identifies a CWE weakness type via the embedded cwe_id; CWE Weakness is the canonical record for that classification.
-cve:ProblemTypeDescription	ProblemTypeDescription	skos:closeMatch	cwe:Weakness	Weakness	semapv:ManualMappingCuration	Per-language description of a CWE classification attached to a CVE.
-cve:TaxonomyMapping	TaxonomyMapping	skos:exactMatch	cwe:TaxonomyMapping	TaxonomyMapping	semapv:ManualMappingCuration	Identical class name and intent in both schemas - external taxonomy linkage by name and version.
-cve:TaxonomyRelation	TaxonomyRelation	skos:closeMatch	cwe:Relationship	Relationship	semapv:ManualMappingCuration	CVE TaxonomyRelation expresses a relation across taxonomies; CWE Relationship models the same kind of cross-entry linkage.
-cve:CveReference	CveReference	skos:relatedMatch	cwe:ExternalReference	ExternalReference	semapv:ManualMappingCuration	Both model an external URL/document reference attached to a vulnerability or weakness record.
-cve:cwe_id	cwe_id	skos:relatedMatch	cwe:Weakness	Weakness	semapv:ManualMappingCuration	Slot value is a CWE identifier; resolves to a Weakness record on the CWE side.
-cve:problem_description	problem_description	skos:closeMatch	cwe:Weakness	Weakness	semapv:ManualMappingCuration	Free-text problem description sourced from CWE Name/title.
+cve:ProblemType	ProblemType	skos:closeMatch	cwe:Weakness	Weakness	semapv:LLMBasedMatching	A CVE ProblemType identifies a CWE weakness type via the embedded cwe_id; CWE Weakness is the canonical record for that classification.
+cve:ProblemTypeDescription	ProblemTypeDescription	skos:closeMatch	cwe:Weakness	Weakness	semapv:LLMBasedMatching	Per-language description of a CWE classification attached to a CVE.
+cve:TaxonomyMapping	TaxonomyMapping	skos:exactMatch	cwe:TaxonomyMapping	TaxonomyMapping	semapv:LLMBasedMatching	Identical class name and intent in both schemas - external taxonomy linkage by name and version.
+cve:TaxonomyRelation	TaxonomyRelation	skos:closeMatch	cwe:Relationship	Relationship	semapv:LLMBasedMatching	CVE TaxonomyRelation expresses a relation across taxonomies; CWE Relationship models the same kind of cross-entry linkage.
+cve:CveReference	CveReference	skos:relatedMatch	cwe:ExternalReference	ExternalReference	semapv:LLMBasedMatching	Both model an external URL/document reference attached to a vulnerability or weakness record.
+cve:cwe_id	cwe_id	skos:relatedMatch	cwe:Weakness	Weakness	semapv:LLMBasedMatching	Slot value is a CWE identifier; resolves to a Weakness record on the CWE side.
+cve:problem_description	problem_description	skos:closeMatch	cwe:Weakness	Weakness	semapv:LLMBasedMatching	Free-text problem description sourced from CWE Name/title.

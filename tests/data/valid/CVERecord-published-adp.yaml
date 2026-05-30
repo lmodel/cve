@@ -1,7 +1,4 @@
 # Published CVE Record with an ADP container providing additional scoring
-cve_id: CVE-2024-33333
-description: Path traversal vulnerability in BetaFileServer before 5.2 allows authenticated
-  users to read arbitrary files via a crafted file path.
 cve_metadata:
   record_cve_id: CVE-2024-33333
   assigner_org_id: e5f6a7b8-c9d0-4e1f-8a3b-4c5d6e7f8a9b

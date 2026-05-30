@@ -1,5 +1,5 @@
 # Auto generated from cve.yaml by pythongen.py version: 0.0.1
-# Generation date: 2026-05-07T15:00:52
+# Generation date: 2026-05-31T00:52:19
 # Schema: cve
 #
 # id: https://w3id.org/lmodel/cve
@@ -60,7 +60,31 @@ from rdflib import (
 from linkml_runtime.linkml_model.types import Boolean, Datetime, Float, Integer, String, Uri
 from linkml_runtime.utils.metamodelcore import Bool, URI, XSDDateTime
 
-metamodel_version = "1.7.0"
+# fix-protocol patch: enum hash/eq
+from linkml_runtime.linkml_model.meta import PermissibleValue as _PV
+from linkml_runtime.utils.enumerations import EnumDefinitionImpl as _EDI
+if not getattr(_PV, "_fix_protocol_patched", False):
+    _orig_pv_eq = _PV.__eq__
+    def _pv_eq(self, other):
+        if isinstance(other, str):
+            return self.text == other
+        return _orig_pv_eq(self, other)
+    _PV.__eq__ = _pv_eq
+    _PV.__hash__ = lambda self: hash(self.text)
+    _PV._fix_protocol_patched = True
+if not getattr(_EDI, "_fix_protocol_patched", False):
+    _orig_edi_eq = _EDI.__eq__
+    def _edi_eq(self, other):
+        if isinstance(other, str):
+            return str(self) == other
+        return _orig_edi_eq(self, other)
+    # Bypass EnumDefinitionMeta.__setattr__, which routes assignments on
+    # enum subclasses through PermissibleValue handling.
+    type.__setattr__(_EDI, "__eq__", _edi_eq)
+    type.__setattr__(_EDI, "__hash__", lambda self: hash(str(self)))
+    type.__setattr__(_EDI, "_fix_protocol_patched", True)
+
+metamodel_version = "1.11.0"
 version = "5.2.0"
 
 # Namespaces
@@ -69,11 +93,13 @@ CORE = CurieNamespace('core', 'https://w3id.org/lmodel/vulnerability-core/')
 CVE = CurieNamespace('cve', 'https://w3id.org/lmodel/cve/')
 CWE = CurieNamespace('cwe', 'https://w3id.org/lmodel/cwe/')
 DCT = CurieNamespace('dct', 'http://purl.org/dc/terms/')
+DCTERMS = CurieNamespace('dcterms', 'http://purl.org/dc/terms/')
 KEV_CATALOG = CurieNamespace('kev_catalog', 'https://w3id.org/lmodel/kev-catalog/')
 LINKML = CurieNamespace('linkml', 'https://w3id.org/linkml/')
 NVD = CurieNamespace('nvd', 'https://w3id.org/lmodel/nist-nvd/')
 RDFS = CurieNamespace('rdfs', 'http://www.w3.org/2000/01/rdf-schema#')
 SCHEMA = CurieNamespace('schema', 'http://schema.org/')
+SCHEMA_VULNERABILITY_CORE = CurieNamespace('schema_vulnerability_core', 'https://w3id.org/lmodel/vulnerability-core/schema/')
 SKOS = CurieNamespace('skos', 'http://www.w3.org/2004/02/skos/core#')
 XSD = CurieNamespace('xsd', 'http://www.w3.org/2001/XMLSchema#')
 DEFAULT_ = CVE
@@ -152,1843 +178,6 @@ class IsoDate(str):
     type_model_uri = CVE.IsoDate
 
 
-# Class references
-class VulnerabilityCveId(extended_str):
-    pass
-
-
-class CVERecordCveId(VulnerabilityCveId):
-    pass
-
-
-Any = Any
-
-class CveMetadata(YAMLRoot):
-    """
-    Abstract base for CVE Record metadata. Represents either a Published or Rejected record's metadata. All fields are
-    controlled by CVE Services.
-    """
-    _inherited_slots: ClassVar[list[str]] = []
-
-    class_class_uri: ClassVar[URIRef] = CVE["CveMetadata"]
-    class_class_curie: ClassVar[str] = "cve:CveMetadata"
-    class_name: ClassVar[str] = "CveMetadata"
-    class_model_uri: ClassVar[URIRef] = CVE.CveMetadata
-
-
-@dataclass(repr=False)
-class CveMetadataPublished(CveMetadata):
-    """
-    Metadata for a CVE Record in the PUBLISHED state.
-    """
-    _inherited_slots: ClassVar[list[str]] = []
-
-    class_class_uri: ClassVar[URIRef] = CVE["CveMetadataPublished"]
-    class_class_curie: ClassVar[str] = "cve:CveMetadataPublished"
-    class_name: ClassVar[str] = "CveMetadataPublished"
-    class_model_uri: ClassVar[URIRef] = CVE.CveMetadataPublished
-
-    record_cve_id: str = None
-    assigner_org_id: str = None
-    published_state: Union[str, "RecordState"] = None
-    assigner_short_name: Optional[str] = None
-    serial: Optional[int] = None
-    date_updated: Optional[str] = None
-    date_reserved: Optional[str] = None
-    requester_user_id: Optional[str] = None
-    date_published: Optional[str] = None
-
-    def __post_init__(self, *_: str, **kwargs: Any):
-        if self._is_empty(self.record_cve_id):
-            self.MissingRequiredField("record_cve_id")
-        if not isinstance(self.record_cve_id, str):
-            self.record_cve_id = str(self.record_cve_id)
-
-        if self._is_empty(self.assigner_org_id):
-            self.MissingRequiredField("assigner_org_id")
-        if not isinstance(self.assigner_org_id, str):
-            self.assigner_org_id = str(self.assigner_org_id)
-
-        if self._is_empty(self.published_state):
-            self.MissingRequiredField("published_state")
-        if not isinstance(self.published_state, RecordState):
-            self.published_state = RecordState(self.published_state)
-
-        if self.assigner_short_name is not None and not isinstance(self.assigner_short_name, str):
-            self.assigner_short_name = str(self.assigner_short_name)
-
-        if self.serial is not None and not isinstance(self.serial, int):
-            self.serial = int(self.serial)
-
-        if self.date_updated is not None and not isinstance(self.date_updated, str):
-            self.date_updated = str(self.date_updated)
-
-        if self.date_reserved is not None and not isinstance(self.date_reserved, str):
-            self.date_reserved = str(self.date_reserved)
-
-        if self.requester_user_id is not None and not isinstance(self.requester_user_id, str):
-            self.requester_user_id = str(self.requester_user_id)
-
-        if self.date_published is not None and not isinstance(self.date_published, str):
-            self.date_published = str(self.date_published)
-
-        super().__post_init__(**kwargs)
-
-
-@dataclass(repr=False)
-class CveMetadataRejected(CveMetadata):
-    """
-    Metadata for a CVE Record in the REJECTED state.
-    """
-    _inherited_slots: ClassVar[list[str]] = []
-
-    class_class_uri: ClassVar[URIRef] = CVE["CveMetadataRejected"]
-    class_class_curie: ClassVar[str] = "cve:CveMetadataRejected"
-    class_name: ClassVar[str] = "CveMetadataRejected"
-    class_model_uri: ClassVar[URIRef] = CVE.CveMetadataRejected
-
-    record_cve_id: str = None
-    assigner_org_id: str = None
-    rejected_state: Union[str, "RecordState"] = None
-    assigner_short_name: Optional[str] = None
-    serial: Optional[int] = None
-    date_updated: Optional[str] = None
-    date_reserved: Optional[str] = None
-    date_published: Optional[str] = None
-    date_rejected: Optional[str] = None
-
-    def __post_init__(self, *_: str, **kwargs: Any):
-        if self._is_empty(self.record_cve_id):
-            self.MissingRequiredField("record_cve_id")
-        if not isinstance(self.record_cve_id, str):
-            self.record_cve_id = str(self.record_cve_id)
-
-        if self._is_empty(self.assigner_org_id):
-            self.MissingRequiredField("assigner_org_id")
-        if not isinstance(self.assigner_org_id, str):
-            self.assigner_org_id = str(self.assigner_org_id)
-
-        if self._is_empty(self.rejected_state):
-            self.MissingRequiredField("rejected_state")
-        if not isinstance(self.rejected_state, RecordState):
-            self.rejected_state = RecordState(self.rejected_state)
-
-        if self.assigner_short_name is not None and not isinstance(self.assigner_short_name, str):
-            self.assigner_short_name = str(self.assigner_short_name)
-
-        if self.serial is not None and not isinstance(self.serial, int):
-            self.serial = int(self.serial)
-
-        if self.date_updated is not None and not isinstance(self.date_updated, str):
-            self.date_updated = str(self.date_updated)
-
-        if self.date_reserved is not None and not isinstance(self.date_reserved, str):
-            self.date_reserved = str(self.date_reserved)
-
-        if self.date_published is not None and not isinstance(self.date_published, str):
-            self.date_published = str(self.date_published)
-
-        if self.date_rejected is not None and not isinstance(self.date_rejected, str):
-            self.date_rejected = str(self.date_rejected)
-
-        super().__post_init__(**kwargs)
-
-
-@dataclass(repr=False)
-class Containers(YAMLRoot):
-    """
-    A set of structures (called containers) used to store vulnerability information related to a specific CVE ID. At
-    minimum a 'cna' container is required.
-    """
-    _inherited_slots: ClassVar[list[str]] = []
-
-    class_class_uri: ClassVar[URIRef] = CVE["Containers"]
-    class_class_curie: ClassVar[str] = "cve:Containers"
-    class_name: ClassVar[str] = "Containers"
-    class_model_uri: ClassVar[URIRef] = CVE.Containers
-
-    cna: Union[dict, "CnaContainer"] = None
-    adp: Optional[Union[Union[dict, "AdpContainer"], list[Union[dict, "AdpContainer"]]]] = empty_list()
-
-    def __post_init__(self, *_: str, **kwargs: Any):
-        if self._is_empty(self.cna):
-            self.MissingRequiredField("cna")
-        if not isinstance(self.cna, CnaContainer):
-            self.cna = CnaContainer()
-
-        if not isinstance(self.adp, list):
-            self.adp = [self.adp] if self.adp is not None else []
-        self.adp = [v if isinstance(v, AdpContainer) else AdpContainer(**as_dict(v)) for v in self.adp]
-
-        super().__post_init__(**kwargs)
-
-
-@dataclass(repr=False)
-class ProviderMetadata(YAMLRoot):
-    """
-    Details related to the information container provider (CNA or ADP).
-    """
-    _inherited_slots: ClassVar[list[str]] = []
-
-    class_class_uri: ClassVar[URIRef] = CVE["ProviderMetadata"]
-    class_class_curie: ClassVar[str] = "cve:ProviderMetadata"
-    class_name: ClassVar[str] = "ProviderMetadata"
-    class_model_uri: ClassVar[URIRef] = CVE.ProviderMetadata
-
-    org_id: str = None
-    short_name: Optional[str] = None
-    date_updated: Optional[str] = None
-
-    def __post_init__(self, *_: str, **kwargs: Any):
-        if self._is_empty(self.org_id):
-            self.MissingRequiredField("org_id")
-        if not isinstance(self.org_id, str):
-            self.org_id = str(self.org_id)
-
-        if self.short_name is not None and not isinstance(self.short_name, str):
-            self.short_name = str(self.short_name)
-
-        if self.date_updated is not None and not isinstance(self.date_updated, str):
-            self.date_updated = str(self.date_updated)
-
-        super().__post_init__(**kwargs)
-
-
-class CnaContainer(YAMLRoot):
-    """
-    Abstract base for CNA containers (published and rejected).
-    """
-    _inherited_slots: ClassVar[list[str]] = []
-
-    class_class_uri: ClassVar[URIRef] = CVE["CnaContainer"]
-    class_class_curie: ClassVar[str] = "cve:CnaContainer"
-    class_name: ClassVar[str] = "CnaContainer"
-    class_model_uri: ClassVar[URIRef] = CVE.CnaContainer
-
-
-@dataclass(repr=False)
-class CnaPublishedContainer(CnaContainer):
-    """
-    An object containing vulnerability information provided by a CVE Numbering Authority (CNA) for a published CVE ID.
-    There can only be one CNA container per CVE record since there can only be one assigning CNA.
-    """
-    _inherited_slots: ClassVar[list[str]] = []
-
-    class_class_uri: ClassVar[URIRef] = CVE["CnaPublishedContainer"]
-    class_class_curie: ClassVar[str] = "cve:CnaPublishedContainer"
-    class_name: ClassVar[str] = "CnaPublishedContainer"
-    class_model_uri: ClassVar[URIRef] = CVE.CnaPublishedContainer
-
-    provider_metadata: Union[dict, ProviderMetadata] = None
-    descriptions: Union[Union[dict, "MultiLangDescription"], list[Union[dict, "MultiLangDescription"]]] = None
-    affected: Union[Union[dict, "AffectedProduct"], list[Union[dict, "AffectedProduct"]]] = None
-    cve_references: Union[Union[dict, "CveReference"], list[Union[dict, "CveReference"]]] = None
-    date_assigned: Optional[str] = None
-    date_public: Optional[str] = None
-    title: Optional[str] = None
-    cpe_applicability: Optional[Union[Union[dict, "CpeApplicabilityElement"], list[Union[dict, "CpeApplicabilityElement"]]]] = empty_list()
-    problem_types: Optional[Union[Union[dict, "ProblemType"], list[Union[dict, "ProblemType"]]]] = empty_list()
-    impacts: Optional[Union[Union[dict, "ImpactEntry"], list[Union[dict, "ImpactEntry"]]]] = empty_list()
-    metrics: Optional[Union[Union[dict, "MetricEntry"], list[Union[dict, "MetricEntry"]]]] = empty_list()
-    configurations_text: Optional[Union[Union[dict, "MultiLangDescription"], list[Union[dict, "MultiLangDescription"]]]] = empty_list()
-    workarounds: Optional[Union[Union[dict, "MultiLangDescription"], list[Union[dict, "MultiLangDescription"]]]] = empty_list()
-    solutions: Optional[Union[Union[dict, "MultiLangDescription"], list[Union[dict, "MultiLangDescription"]]]] = empty_list()
-    exploits: Optional[Union[Union[dict, "MultiLangDescription"], list[Union[dict, "MultiLangDescription"]]]] = empty_list()
-    timeline: Optional[Union[Union[dict, "TimelineEntry"], list[Union[dict, "TimelineEntry"]]]] = empty_list()
-    credits: Optional[Union[Union[dict, "CreditEntry"], list[Union[dict, "CreditEntry"]]]] = empty_list()
-    cna_source: Optional[Union[dict, "SourceInformation"]] = None
-    cna_tags: Optional[Union[str, list[str]]] = empty_list()
-    taxonomy_mappings: Optional[Union[Union[dict, "TaxonomyMapping"], list[Union[dict, "TaxonomyMapping"]]]] = empty_list()
-
-    def __post_init__(self, *_: str, **kwargs: Any):
-        if self._is_empty(self.provider_metadata):
-            self.MissingRequiredField("provider_metadata")
-        if not isinstance(self.provider_metadata, ProviderMetadata):
-            self.provider_metadata = ProviderMetadata(**as_dict(self.provider_metadata))
-
-        if self._is_empty(self.descriptions):
-            self.MissingRequiredField("descriptions")
-        self._normalize_inlined_as_list(slot_name="descriptions", slot_type=MultiLangDescription, key_name="lang", keyed=False)
-
-        if self._is_empty(self.affected):
-            self.MissingRequiredField("affected")
-        if not isinstance(self.affected, list):
-            self.affected = [self.affected] if self.affected is not None else []
-        self.affected = [v if isinstance(v, AffectedProduct) else AffectedProduct(**as_dict(v)) for v in self.affected]
-
-        if self._is_empty(self.cve_references):
-            self.MissingRequiredField("cve_references")
-        self._normalize_inlined_as_list(slot_name="cve_references", slot_type=CveReference, key_name="url", keyed=False)
-
-        if self.date_assigned is not None and not isinstance(self.date_assigned, str):
-            self.date_assigned = str(self.date_assigned)
-
-        if self.date_public is not None and not isinstance(self.date_public, str):
-            self.date_public = str(self.date_public)
-
-        if self.title is not None and not isinstance(self.title, str):
-            self.title = str(self.title)
-
-        if not isinstance(self.cpe_applicability, list):
-            self.cpe_applicability = [self.cpe_applicability] if self.cpe_applicability is not None else []
-        self.cpe_applicability = [v if isinstance(v, CpeApplicabilityElement) else CpeApplicabilityElement(**as_dict(v)) for v in self.cpe_applicability]
-
-        if not isinstance(self.problem_types, list):
-            self.problem_types = [self.problem_types] if self.problem_types is not None else []
-        self.problem_types = [v if isinstance(v, ProblemType) else ProblemType(**as_dict(v)) for v in self.problem_types]
-
-        if not isinstance(self.impacts, list):
-            self.impacts = [self.impacts] if self.impacts is not None else []
-        self.impacts = [v if isinstance(v, ImpactEntry) else ImpactEntry(**as_dict(v)) for v in self.impacts]
-
-        if not isinstance(self.metrics, list):
-            self.metrics = [self.metrics] if self.metrics is not None else []
-        self.metrics = [v if isinstance(v, MetricEntry) else MetricEntry(**as_dict(v)) for v in self.metrics]
-
-        self._normalize_inlined_as_list(slot_name="configurations_text", slot_type=MultiLangDescription, key_name="lang", keyed=False)
-
-        self._normalize_inlined_as_list(slot_name="workarounds", slot_type=MultiLangDescription, key_name="lang", keyed=False)
-
-        self._normalize_inlined_as_list(slot_name="solutions", slot_type=MultiLangDescription, key_name="lang", keyed=False)
-
-        self._normalize_inlined_as_list(slot_name="exploits", slot_type=MultiLangDescription, key_name="lang", keyed=False)
-
-        self._normalize_inlined_as_list(slot_name="timeline", slot_type=TimelineEntry, key_name="event_time", keyed=False)
-
-        self._normalize_inlined_as_list(slot_name="credits", slot_type=CreditEntry, key_name="lang", keyed=False)
-
-        if self.cna_source is not None and not isinstance(self.cna_source, SourceInformation):
-            self.cna_source = SourceInformation(**as_dict(self.cna_source))
-
-        if not isinstance(self.cna_tags, list):
-            self.cna_tags = [self.cna_tags] if self.cna_tags is not None else []
-        self.cna_tags = [v if isinstance(v, str) else str(v) for v in self.cna_tags]
-
-        self._normalize_inlined_as_list(slot_name="taxonomy_mappings", slot_type=TaxonomyMapping, key_name="taxonomy_name", keyed=False)
-
-        super().__post_init__(**kwargs)
-
-
-@dataclass(repr=False)
-class CnaRejectedContainer(CnaContainer):
-    """
-    An object containing vulnerability information provided by a CVE Numbering Authority (CNA) for a rejected CVE ID.
-    There can only be one CNA container per CVE record.
-    """
-    _inherited_slots: ClassVar[list[str]] = []
-
-    class_class_uri: ClassVar[URIRef] = CVE["CnaRejectedContainer"]
-    class_class_curie: ClassVar[str] = "cve:CnaRejectedContainer"
-    class_name: ClassVar[str] = "CnaRejectedContainer"
-    class_model_uri: ClassVar[URIRef] = CVE.CnaRejectedContainer
-
-    provider_metadata: Union[dict, ProviderMetadata] = None
-    rejected_reasons: Union[Union[dict, "MultiLangDescription"], list[Union[dict, "MultiLangDescription"]]] = None
-    replaced_by: Optional[Union[str, list[str]]] = empty_list()
-
-    def __post_init__(self, *_: str, **kwargs: Any):
-        if self._is_empty(self.provider_metadata):
-            self.MissingRequiredField("provider_metadata")
-        if not isinstance(self.provider_metadata, ProviderMetadata):
-            self.provider_metadata = ProviderMetadata(**as_dict(self.provider_metadata))
-
-        if self._is_empty(self.rejected_reasons):
-            self.MissingRequiredField("rejected_reasons")
-        self._normalize_inlined_as_list(slot_name="rejected_reasons", slot_type=MultiLangDescription, key_name="lang", keyed=False)
-
-        if not isinstance(self.replaced_by, list):
-            self.replaced_by = [self.replaced_by] if self.replaced_by is not None else []
-        self.replaced_by = [v if isinstance(v, str) else str(v) for v in self.replaced_by]
-
-        super().__post_init__(**kwargs)
-
-
-@dataclass(repr=False)
-class AdpContainer(YAMLRoot):
-    """
-    An object containing vulnerability information provided by an Authorized Data Publisher (ADP). Multiple ADPs can
-    provide containers for a single CVE ID.
-    """
-    _inherited_slots: ClassVar[list[str]] = []
-
-    class_class_uri: ClassVar[URIRef] = CVE["AdpContainer"]
-    class_class_curie: ClassVar[str] = "cve:AdpContainer"
-    class_name: ClassVar[str] = "AdpContainer"
-    class_model_uri: ClassVar[URIRef] = CVE.AdpContainer
-
-    provider_metadata: Union[dict, ProviderMetadata] = None
-    date_public: Optional[str] = None
-    title: Optional[str] = None
-    descriptions: Optional[Union[Union[dict, "MultiLangDescription"], list[Union[dict, "MultiLangDescription"]]]] = empty_list()
-    affected: Optional[Union[Union[dict, "AffectedProduct"], list[Union[dict, "AffectedProduct"]]]] = empty_list()
-    cpe_applicability: Optional[Union[Union[dict, "CpeApplicabilityElement"], list[Union[dict, "CpeApplicabilityElement"]]]] = empty_list()
-    problem_types: Optional[Union[Union[dict, "ProblemType"], list[Union[dict, "ProblemType"]]]] = empty_list()
-    cve_references: Optional[Union[Union[dict, "CveReference"], list[Union[dict, "CveReference"]]]] = empty_list()
-    impacts: Optional[Union[Union[dict, "ImpactEntry"], list[Union[dict, "ImpactEntry"]]]] = empty_list()
-    metrics: Optional[Union[Union[dict, "MetricEntry"], list[Union[dict, "MetricEntry"]]]] = empty_list()
-    configurations_text: Optional[Union[Union[dict, "MultiLangDescription"], list[Union[dict, "MultiLangDescription"]]]] = empty_list()
-    workarounds: Optional[Union[Union[dict, "MultiLangDescription"], list[Union[dict, "MultiLangDescription"]]]] = empty_list()
-    solutions: Optional[Union[Union[dict, "MultiLangDescription"], list[Union[dict, "MultiLangDescription"]]]] = empty_list()
-    exploits: Optional[Union[Union[dict, "MultiLangDescription"], list[Union[dict, "MultiLangDescription"]]]] = empty_list()
-    timeline: Optional[Union[Union[dict, "TimelineEntry"], list[Union[dict, "TimelineEntry"]]]] = empty_list()
-    credits: Optional[Union[Union[dict, "CreditEntry"], list[Union[dict, "CreditEntry"]]]] = empty_list()
-    cna_source: Optional[Union[dict, "SourceInformation"]] = None
-    adp_tags: Optional[Union[str, list[str]]] = empty_list()
-    taxonomy_mappings: Optional[Union[Union[dict, "TaxonomyMapping"], list[Union[dict, "TaxonomyMapping"]]]] = empty_list()
-
-    def __post_init__(self, *_: str, **kwargs: Any):
-        if self._is_empty(self.provider_metadata):
-            self.MissingRequiredField("provider_metadata")
-        if not isinstance(self.provider_metadata, ProviderMetadata):
-            self.provider_metadata = ProviderMetadata(**as_dict(self.provider_metadata))
-
-        if self.date_public is not None and not isinstance(self.date_public, str):
-            self.date_public = str(self.date_public)
-
-        if self.title is not None and not isinstance(self.title, str):
-            self.title = str(self.title)
-
-        self._normalize_inlined_as_list(slot_name="descriptions", slot_type=MultiLangDescription, key_name="lang", keyed=False)
-
-        if not isinstance(self.affected, list):
-            self.affected = [self.affected] if self.affected is not None else []
-        self.affected = [v if isinstance(v, AffectedProduct) else AffectedProduct(**as_dict(v)) for v in self.affected]
-
-        if not isinstance(self.cpe_applicability, list):
-            self.cpe_applicability = [self.cpe_applicability] if self.cpe_applicability is not None else []
-        self.cpe_applicability = [v if isinstance(v, CpeApplicabilityElement) else CpeApplicabilityElement(**as_dict(v)) for v in self.cpe_applicability]
-
-        if not isinstance(self.problem_types, list):
-            self.problem_types = [self.problem_types] if self.problem_types is not None else []
-        self.problem_types = [v if isinstance(v, ProblemType) else ProblemType(**as_dict(v)) for v in self.problem_types]
-
-        self._normalize_inlined_as_list(slot_name="cve_references", slot_type=CveReference, key_name="url", keyed=False)
-
-        if not isinstance(self.impacts, list):
-            self.impacts = [self.impacts] if self.impacts is not None else []
-        self.impacts = [v if isinstance(v, ImpactEntry) else ImpactEntry(**as_dict(v)) for v in self.impacts]
-
-        if not isinstance(self.metrics, list):
-            self.metrics = [self.metrics] if self.metrics is not None else []
-        self.metrics = [v if isinstance(v, MetricEntry) else MetricEntry(**as_dict(v)) for v in self.metrics]
-
-        self._normalize_inlined_as_list(slot_name="configurations_text", slot_type=MultiLangDescription, key_name="lang", keyed=False)
-
-        self._normalize_inlined_as_list(slot_name="workarounds", slot_type=MultiLangDescription, key_name="lang", keyed=False)
-
-        self._normalize_inlined_as_list(slot_name="solutions", slot_type=MultiLangDescription, key_name="lang", keyed=False)
-
-        self._normalize_inlined_as_list(slot_name="exploits", slot_type=MultiLangDescription, key_name="lang", keyed=False)
-
-        self._normalize_inlined_as_list(slot_name="timeline", slot_type=TimelineEntry, key_name="event_time", keyed=False)
-
-        self._normalize_inlined_as_list(slot_name="credits", slot_type=CreditEntry, key_name="lang", keyed=False)
-
-        if self.cna_source is not None and not isinstance(self.cna_source, SourceInformation):
-            self.cna_source = SourceInformation(**as_dict(self.cna_source))
-
-        if not isinstance(self.adp_tags, list):
-            self.adp_tags = [self.adp_tags] if self.adp_tags is not None else []
-        self.adp_tags = [v if isinstance(v, str) else str(v) for v in self.adp_tags]
-
-        self._normalize_inlined_as_list(slot_name="taxonomy_mappings", slot_type=TaxonomyMapping, key_name="taxonomy_name", keyed=False)
-
-        super().__post_init__(**kwargs)
-
-
-@dataclass(repr=False)
-class ProgramRoutine(YAMLRoot):
-    """
-    An affected source code function, method, subroutine, or procedure.
-    """
-    _inherited_slots: ClassVar[list[str]] = []
-
-    class_class_uri: ClassVar[URIRef] = CVE["ProgramRoutine"]
-    class_class_curie: ClassVar[str] = "cve:ProgramRoutine"
-    class_name: ClassVar[str] = "ProgramRoutine"
-    class_model_uri: ClassVar[URIRef] = CVE.ProgramRoutine
-
-    routine_name: str = None
-
-    def __post_init__(self, *_: str, **kwargs: Any):
-        if self._is_empty(self.routine_name):
-            self.MissingRequiredField("routine_name")
-        if not isinstance(self.routine_name, str):
-            self.routine_name = str(self.routine_name)
-
-        super().__post_init__(**kwargs)
-
-
-@dataclass(repr=False)
-class VersionEntry(YAMLRoot):
-    """
-    A single version or a range of versions of a product with associated vulnerability status. An entry with only
-    version and status is a point version; an entry with versionType and a less-than limit describes a range.
-    """
-    _inherited_slots: ClassVar[list[str]] = []
-
-    class_class_uri: ClassVar[URIRef] = CVE["VersionEntry"]
-    class_class_curie: ClassVar[str] = "cve:VersionEntry"
-    class_name: ClassVar[str] = "VersionEntry"
-    class_model_uri: ClassVar[URIRef] = CVE.VersionEntry
-
-    version_value: str = None
-    version_status: Union[str, "VersionStatus"] = None
-    version_type: Optional[str] = None
-    less_than: Optional[str] = None
-    less_than_or_equal: Optional[str] = None
-    version_changes: Optional[Union[Union[dict, "VersionChange"], list[Union[dict, "VersionChange"]]]] = empty_list()
-
-    def __post_init__(self, *_: str, **kwargs: Any):
-        if self._is_empty(self.version_value):
-            self.MissingRequiredField("version_value")
-        if not isinstance(self.version_value, str):
-            self.version_value = str(self.version_value)
-
-        if self._is_empty(self.version_status):
-            self.MissingRequiredField("version_status")
-        if not isinstance(self.version_status, VersionStatus):
-            self.version_status = VersionStatus(self.version_status)
-
-        if self.version_type is not None and not isinstance(self.version_type, str):
-            self.version_type = str(self.version_type)
-
-        if self.less_than is not None and not isinstance(self.less_than, str):
-            self.less_than = str(self.less_than)
-
-        if self.less_than_or_equal is not None and not isinstance(self.less_than_or_equal, str):
-            self.less_than_or_equal = str(self.less_than_or_equal)
-
-        self._normalize_inlined_as_list(slot_name="version_changes", slot_type=VersionChange, key_name="change_at", keyed=False)
-
-        super().__post_init__(**kwargs)
-
-
-@dataclass(repr=False)
-class VersionChange(YAMLRoot):
-    """
-    A status change that takes place at a specific point within a version range.
-    """
-    _inherited_slots: ClassVar[list[str]] = []
-
-    class_class_uri: ClassVar[URIRef] = CVE["VersionChange"]
-    class_class_curie: ClassVar[str] = "cve:VersionChange"
-    class_name: ClassVar[str] = "VersionChange"
-    class_model_uri: ClassVar[URIRef] = CVE.VersionChange
-
-    change_at: str = None
-    change_status: Union[str, "VersionStatus"] = None
-
-    def __post_init__(self, *_: str, **kwargs: Any):
-        if self._is_empty(self.change_at):
-            self.MissingRequiredField("change_at")
-        if not isinstance(self.change_at, str):
-            self.change_at = str(self.change_at)
-
-        if self._is_empty(self.change_status):
-            self.MissingRequiredField("change_status")
-        if not isinstance(self.change_status, VersionStatus):
-            self.change_status = VersionStatus(self.change_status)
-
-        super().__post_init__(**kwargs)
-
-
-@dataclass(repr=False)
-class MultiLangDescription(YAMLRoot):
-    """
-    Text in a particular language with optional alternate markup or formatted representation (e.g., Markdown) or
-    embedded media. Used for vulnerability descriptions, rejected reasons, configurations, workarounds, solutions, and
-    exploits.
-    """
-    _inherited_slots: ClassVar[list[str]] = []
-
-    class_class_uri: ClassVar[URIRef] = CVE["MultiLangDescription"]
-    class_class_curie: ClassVar[str] = "cve:MultiLangDescription"
-    class_name: ClassVar[str] = "MultiLangDescription"
-    class_model_uri: ClassVar[URIRef] = CVE.MultiLangDescription
-
-    description_value: str = None
-    lang: str = "en"
-    supporting_media: Optional[Union[Union[dict, "SupportingMedia"], list[Union[dict, "SupportingMedia"]]]] = empty_list()
-
-    def __post_init__(self, *_: str, **kwargs: Any):
-        if self._is_empty(self.lang):
-            self.MissingRequiredField("lang")
-        if not isinstance(self.lang, str):
-            self.lang = str(self.lang)
-
-        if self._is_empty(self.description_value):
-            self.MissingRequiredField("description_value")
-        if not isinstance(self.description_value, str):
-            self.description_value = str(self.description_value)
-
-        self._normalize_inlined_as_list(slot_name="supporting_media", slot_type=SupportingMedia, key_name="media_type", keyed=False)
-
-        super().__post_init__(**kwargs)
-
-
-@dataclass(repr=False)
-class SupportingMedia(YAMLRoot):
-    """
-    Supporting media data for a description such as markdown, diagrams, etc. Similar to RFC 2397, each media object
-    has a media type, data value, and an optional base64 flag.
-    """
-    _inherited_slots: ClassVar[list[str]] = []
-
-    class_class_uri: ClassVar[URIRef] = CVE["SupportingMedia"]
-    class_class_curie: ClassVar[str] = "cve:SupportingMedia"
-    class_name: ClassVar[str] = "SupportingMedia"
-    class_model_uri: ClassVar[URIRef] = CVE.SupportingMedia
-
-    media_type: str = None
-    media_value: str = None
-    base64_encoded: Optional[Union[bool, Bool]] = False
-
-    def __post_init__(self, *_: str, **kwargs: Any):
-        if self._is_empty(self.media_type):
-            self.MissingRequiredField("media_type")
-        if not isinstance(self.media_type, str):
-            self.media_type = str(self.media_type)
-
-        if self._is_empty(self.media_value):
-            self.MissingRequiredField("media_value")
-        if not isinstance(self.media_value, str):
-            self.media_value = str(self.media_value)
-
-        if self.base64_encoded is not None and not isinstance(self.base64_encoded, Bool):
-            self.base64_encoded = Bool(self.base64_encoded)
-
-        super().__post_init__(**kwargs)
-
-
-@dataclass(repr=False)
-class ProblemType(YAMLRoot):
-    """
-    Problem type information (e.g., CWE identifier). Wraps one or more problem type descriptions. The CNA requirement
-    is [PROBLEMTYPE].
-    """
-    _inherited_slots: ClassVar[list[str]] = []
-
-    class_class_uri: ClassVar[URIRef] = CVE["ProblemType"]
-    class_class_curie: ClassVar[str] = "cve:ProblemType"
-    class_name: ClassVar[str] = "ProblemType"
-    class_model_uri: ClassVar[URIRef] = CVE.ProblemType
-
-    problem_type_descriptions: Union[Union[dict, "ProblemTypeDescription"], list[Union[dict, "ProblemTypeDescription"]]] = None
-
-    def __post_init__(self, *_: str, **kwargs: Any):
-        if self._is_empty(self.problem_type_descriptions):
-            self.MissingRequiredField("problem_type_descriptions")
-        self._normalize_inlined_as_list(slot_name="problem_type_descriptions", slot_type=ProblemTypeDescription, key_name="lang", keyed=False)
-
-        super().__post_init__(**kwargs)
-
-
-@dataclass(repr=False)
-class ProblemTypeDescription(YAMLRoot):
-    """
-    Individual problem type description entry.
-    """
-    _inherited_slots: ClassVar[list[str]] = []
-
-    class_class_uri: ClassVar[URIRef] = CVE["ProblemTypeDescription"]
-    class_class_curie: ClassVar[str] = "cve:ProblemTypeDescription"
-    class_name: ClassVar[str] = "ProblemTypeDescription"
-    class_model_uri: ClassVar[URIRef] = CVE.ProblemTypeDescription
-
-    problem_description: str = None
-    lang: str = "en"
-    cwe_id: Optional[str] = None
-    problem_source_type: Optional[str] = None
-    problem_references: Optional[Union[Union[dict, "CveReference"], list[Union[dict, "CveReference"]]]] = empty_list()
-
-    def __post_init__(self, *_: str, **kwargs: Any):
-        if self._is_empty(self.lang):
-            self.MissingRequiredField("lang")
-        if not isinstance(self.lang, str):
-            self.lang = str(self.lang)
-
-        if self._is_empty(self.problem_description):
-            self.MissingRequiredField("problem_description")
-        if not isinstance(self.problem_description, str):
-            self.problem_description = str(self.problem_description)
-
-        if self.cwe_id is not None and not isinstance(self.cwe_id, str):
-            self.cwe_id = str(self.cwe_id)
-
-        if self.problem_source_type is not None and not isinstance(self.problem_source_type, str):
-            self.problem_source_type = str(self.problem_source_type)
-
-        self._normalize_inlined_as_list(slot_name="problem_references", slot_type=CveReference, key_name="url", keyed=False)
-
-        super().__post_init__(**kwargs)
-
-
-@dataclass(repr=False)
-class ImpactEntry(YAMLRoot):
-    """
-    An impact entry linking an optional CAPEC attack pattern ID to one or more prose descriptions of the impact
-    scenario.
-    """
-    _inherited_slots: ClassVar[list[str]] = []
-
-    class_class_uri: ClassVar[URIRef] = CVE["ImpactEntry"]
-    class_class_curie: ClassVar[str] = "cve:ImpactEntry"
-    class_name: ClassVar[str] = "ImpactEntry"
-    class_model_uri: ClassVar[URIRef] = CVE.ImpactEntry
-
-    impact_descriptions: Union[Union[dict, MultiLangDescription], list[Union[dict, MultiLangDescription]]] = None
-    capec_id: Optional[str] = None
-
-    def __post_init__(self, *_: str, **kwargs: Any):
-        if self._is_empty(self.impact_descriptions):
-            self.MissingRequiredField("impact_descriptions")
-        self._normalize_inlined_as_list(slot_name="impact_descriptions", slot_type=MultiLangDescription, key_name="lang", keyed=False)
-
-        if self.capec_id is not None and not isinstance(self.capec_id, str):
-            self.capec_id = str(self.capec_id)
-
-        super().__post_init__(**kwargs)
-
-
-@dataclass(repr=False)
-class MetricEntry(YAMLRoot):
-    """
-    A metric entry containing scoring data in one of the CVSS formats (v4.0, v3.x, v2.0) or a custom format, with
-    optional applicability scenarios. At least one of cvss_v4_0, cvss_v3, cvss_v2_0, or other_metric is required. CVSS
-    3.0 and 3.1 are both represented by CvssV3 (distinguished by the cvss3_version slot).
-    """
-    _inherited_slots: ClassVar[list[str]] = []
-
-    class_class_uri: ClassVar[URIRef] = CVE["MetricEntry"]
-    class_class_curie: ClassVar[str] = "cve:MetricEntry"
-    class_name: ClassVar[str] = "MetricEntry"
-    class_model_uri: ClassVar[URIRef] = CVE.MetricEntry
-
-    metric_format: Optional[str] = None
-    metric_scenarios: Optional[Union[Union[dict, "MetricScenario"], list[Union[dict, "MetricScenario"]]]] = empty_list()
-    cvss_v4_0: Optional[Union[dict, "CvssV40"]] = None
-    cvss_v3: Optional[Union[dict, "CvssV3"]] = None
-    cvss_v2_0: Optional[Union[dict, "CvssV20"]] = None
-    other_metric: Optional[Union[dict, "OtherMetric"]] = None
-
-    def __post_init__(self, *_: str, **kwargs: Any):
-        if self.metric_format is not None and not isinstance(self.metric_format, str):
-            self.metric_format = str(self.metric_format)
-
-        self._normalize_inlined_as_list(slot_name="metric_scenarios", slot_type=MetricScenario, key_name="lang", keyed=False)
-
-        if self.cvss_v4_0 is not None and not isinstance(self.cvss_v4_0, CvssV40):
-            self.cvss_v4_0 = CvssV40(**as_dict(self.cvss_v4_0))
-
-        if self.cvss_v3 is not None and not isinstance(self.cvss_v3, CvssV3):
-            self.cvss_v3 = CvssV3(**as_dict(self.cvss_v3))
-
-        if self.cvss_v2_0 is not None and not isinstance(self.cvss_v2_0, CvssV20):
-            self.cvss_v2_0 = CvssV20(**as_dict(self.cvss_v2_0))
-
-        if self.other_metric is not None and not isinstance(self.other_metric, OtherMetric):
-            self.other_metric = OtherMetric(**as_dict(self.other_metric))
-
-        super().__post_init__(**kwargs)
-
-
-@dataclass(repr=False)
-class MetricScenario(YAMLRoot):
-    """
-    A scenario description indicating the context in which a metric applies. If no specific scenario is given, GENERAL
-    is used as the default.
-    """
-    _inherited_slots: ClassVar[list[str]] = []
-
-    class_class_uri: ClassVar[URIRef] = CVE["MetricScenario"]
-    class_class_curie: ClassVar[str] = "cve:MetricScenario"
-    class_name: ClassVar[str] = "MetricScenario"
-    class_model_uri: ClassVar[URIRef] = CVE.MetricScenario
-
-    lang: str = "en"
-    scenario_value: str = "GENERAL"
-
-    def __post_init__(self, *_: str, **kwargs: Any):
-        if self._is_empty(self.lang):
-            self.MissingRequiredField("lang")
-        if not isinstance(self.lang, str):
-            self.lang = str(self.lang)
-
-        if self._is_empty(self.scenario_value):
-            self.MissingRequiredField("scenario_value")
-        if not isinstance(self.scenario_value, str):
-            self.scenario_value = str(self.scenario_value)
-
-        super().__post_init__(**kwargs)
-
-
-@dataclass(repr=False)
-class CvssV40(YAMLRoot):
-    """
-    CVSS version 4.0 scoring object. Requires version, vectorString, baseScore, and baseSeverity. All other fields are
-    optional.
-    """
-    _inherited_slots: ClassVar[list[str]] = []
-
-    class_class_uri: ClassVar[URIRef] = CVE["CvssV40"]
-    class_class_curie: ClassVar[str] = "cve:CvssV40"
-    class_name: ClassVar[str] = "CvssV4_0"
-    class_model_uri: ClassVar[URIRef] = CVE.CvssV40
-
-    cvss4_version: str = None
-    cvss4_vector_string: str = None
-    cvss4_base_score: float = None
-    cvss4_base_severity: Union[str, "Cvss4Severity"] = None
-    cvss4_attack_vector: Optional[Union[str, "Cvss4AttackVector"]] = None
-    cvss4_attack_complexity: Optional[Union[str, "Cvss4AttackComplexity"]] = None
-    cvss4_attack_requirements: Optional[Union[str, "Cvss4AttackRequirements"]] = None
-    cvss4_privileges_required: Optional[Union[str, "Cvss4PrivilegesRequired"]] = None
-    cvss4_user_interaction: Optional[Union[str, "Cvss4UserInteraction"]] = None
-    cvss4_vuln_confidentiality_impact: Optional[Union[str, "Cvss4VulnCia"]] = None
-    cvss4_vuln_integrity_impact: Optional[Union[str, "Cvss4VulnCia"]] = None
-    cvss4_vuln_availability_impact: Optional[Union[str, "Cvss4VulnCia"]] = None
-    cvss4_sub_confidentiality_impact: Optional[Union[str, "Cvss4SubCia"]] = None
-    cvss4_sub_integrity_impact: Optional[Union[str, "Cvss4SubCia"]] = None
-    cvss4_sub_availability_impact: Optional[Union[str, "Cvss4SubCia"]] = None
-    cvss4_exploit_maturity: Optional[Union[str, "Cvss4ExploitMaturity"]] = None
-    cvss4_confidentiality_requirement: Optional[Union[str, "Cvss4CiaRequirement"]] = None
-    cvss4_integrity_requirement: Optional[Union[str, "Cvss4CiaRequirement"]] = None
-    cvss4_availability_requirement: Optional[Union[str, "Cvss4CiaRequirement"]] = None
-    cvss4_modified_attack_vector: Optional[Union[str, "Cvss4ModifiedAttackVector"]] = None
-    cvss4_modified_attack_complexity: Optional[Union[str, "Cvss4ModifiedAttackComplexity"]] = None
-    cvss4_modified_attack_requirements: Optional[Union[str, "Cvss4ModifiedAttackRequirements"]] = None
-    cvss4_modified_privileges_required: Optional[Union[str, "Cvss4ModifiedPrivilegesRequired"]] = None
-    cvss4_modified_user_interaction: Optional[Union[str, "Cvss4ModifiedUserInteraction"]] = None
-    cvss4_modified_vuln_confidentiality_impact: Optional[Union[str, "Cvss4ModifiedVulnCia"]] = None
-    cvss4_modified_vuln_integrity_impact: Optional[Union[str, "Cvss4ModifiedVulnCia"]] = None
-    cvss4_modified_vuln_availability_impact: Optional[Union[str, "Cvss4ModifiedVulnCia"]] = None
-    cvss4_modified_sub_confidentiality_impact: Optional[Union[str, "Cvss4ModifiedSubC"]] = None
-    cvss4_modified_sub_integrity_impact: Optional[Union[str, "Cvss4ModifiedSubIa"]] = None
-    cvss4_modified_sub_availability_impact: Optional[Union[str, "Cvss4ModifiedSubIa"]] = None
-    cvss4_safety: Optional[Union[str, "Cvss4Safety"]] = None
-    cvss4_automatable: Optional[Union[str, "Cvss4Automatable"]] = None
-    cvss4_recovery: Optional[Union[str, "Cvss4Recovery"]] = None
-    cvss4_value_density: Optional[Union[str, "Cvss4ValueDensity"]] = None
-    cvss4_vulnerability_response_effort: Optional[Union[str, "Cvss4VulnerabilityResponseEffort"]] = None
-    cvss4_provider_urgency: Optional[Union[str, "Cvss4ProviderUrgency"]] = None
-
-    def __post_init__(self, *_: str, **kwargs: Any):
-        if self._is_empty(self.cvss4_version):
-            self.MissingRequiredField("cvss4_version")
-        if not isinstance(self.cvss4_version, str):
-            self.cvss4_version = str(self.cvss4_version)
-
-        if self._is_empty(self.cvss4_vector_string):
-            self.MissingRequiredField("cvss4_vector_string")
-        if not isinstance(self.cvss4_vector_string, str):
-            self.cvss4_vector_string = str(self.cvss4_vector_string)
-
-        if self._is_empty(self.cvss4_base_score):
-            self.MissingRequiredField("cvss4_base_score")
-        if not isinstance(self.cvss4_base_score, float):
-            self.cvss4_base_score = float(self.cvss4_base_score)
-
-        if self._is_empty(self.cvss4_base_severity):
-            self.MissingRequiredField("cvss4_base_severity")
-        if not isinstance(self.cvss4_base_severity, Cvss4Severity):
-            self.cvss4_base_severity = Cvss4Severity(self.cvss4_base_severity)
-
-        if self.cvss4_attack_vector is not None and not isinstance(self.cvss4_attack_vector, Cvss4AttackVector):
-            self.cvss4_attack_vector = Cvss4AttackVector(self.cvss4_attack_vector)
-
-        if self.cvss4_attack_complexity is not None and not isinstance(self.cvss4_attack_complexity, Cvss4AttackComplexity):
-            self.cvss4_attack_complexity = Cvss4AttackComplexity(self.cvss4_attack_complexity)
-
-        if self.cvss4_attack_requirements is not None and not isinstance(self.cvss4_attack_requirements, Cvss4AttackRequirements):
-            self.cvss4_attack_requirements = Cvss4AttackRequirements(self.cvss4_attack_requirements)
-
-        if self.cvss4_privileges_required is not None and not isinstance(self.cvss4_privileges_required, Cvss4PrivilegesRequired):
-            self.cvss4_privileges_required = Cvss4PrivilegesRequired(self.cvss4_privileges_required)
-
-        if self.cvss4_user_interaction is not None and not isinstance(self.cvss4_user_interaction, Cvss4UserInteraction):
-            self.cvss4_user_interaction = Cvss4UserInteraction(self.cvss4_user_interaction)
-
-        if self.cvss4_vuln_confidentiality_impact is not None and not isinstance(self.cvss4_vuln_confidentiality_impact, Cvss4VulnCia):
-            self.cvss4_vuln_confidentiality_impact = Cvss4VulnCia(self.cvss4_vuln_confidentiality_impact)
-
-        if self.cvss4_vuln_integrity_impact is not None and not isinstance(self.cvss4_vuln_integrity_impact, Cvss4VulnCia):
-            self.cvss4_vuln_integrity_impact = Cvss4VulnCia(self.cvss4_vuln_integrity_impact)
-
-        if self.cvss4_vuln_availability_impact is not None and not isinstance(self.cvss4_vuln_availability_impact, Cvss4VulnCia):
-            self.cvss4_vuln_availability_impact = Cvss4VulnCia(self.cvss4_vuln_availability_impact)
-
-        if self.cvss4_sub_confidentiality_impact is not None and not isinstance(self.cvss4_sub_confidentiality_impact, Cvss4SubCia):
-            self.cvss4_sub_confidentiality_impact = Cvss4SubCia(self.cvss4_sub_confidentiality_impact)
-
-        if self.cvss4_sub_integrity_impact is not None and not isinstance(self.cvss4_sub_integrity_impact, Cvss4SubCia):
-            self.cvss4_sub_integrity_impact = Cvss4SubCia(self.cvss4_sub_integrity_impact)
-
-        if self.cvss4_sub_availability_impact is not None and not isinstance(self.cvss4_sub_availability_impact, Cvss4SubCia):
-            self.cvss4_sub_availability_impact = Cvss4SubCia(self.cvss4_sub_availability_impact)
-
-        if self.cvss4_exploit_maturity is not None and not isinstance(self.cvss4_exploit_maturity, Cvss4ExploitMaturity):
-            self.cvss4_exploit_maturity = Cvss4ExploitMaturity(self.cvss4_exploit_maturity)
-
-        if self.cvss4_confidentiality_requirement is not None and not isinstance(self.cvss4_confidentiality_requirement, Cvss4CiaRequirement):
-            self.cvss4_confidentiality_requirement = Cvss4CiaRequirement(self.cvss4_confidentiality_requirement)
-
-        if self.cvss4_integrity_requirement is not None and not isinstance(self.cvss4_integrity_requirement, Cvss4CiaRequirement):
-            self.cvss4_integrity_requirement = Cvss4CiaRequirement(self.cvss4_integrity_requirement)
-
-        if self.cvss4_availability_requirement is not None and not isinstance(self.cvss4_availability_requirement, Cvss4CiaRequirement):
-            self.cvss4_availability_requirement = Cvss4CiaRequirement(self.cvss4_availability_requirement)
-
-        if self.cvss4_modified_attack_vector is not None and not isinstance(self.cvss4_modified_attack_vector, Cvss4ModifiedAttackVector):
-            self.cvss4_modified_attack_vector = Cvss4ModifiedAttackVector(self.cvss4_modified_attack_vector)
-
-        if self.cvss4_modified_attack_complexity is not None and not isinstance(self.cvss4_modified_attack_complexity, Cvss4ModifiedAttackComplexity):
-            self.cvss4_modified_attack_complexity = Cvss4ModifiedAttackComplexity(self.cvss4_modified_attack_complexity)
-
-        if self.cvss4_modified_attack_requirements is not None and not isinstance(self.cvss4_modified_attack_requirements, Cvss4ModifiedAttackRequirements):
-            self.cvss4_modified_attack_requirements = Cvss4ModifiedAttackRequirements(self.cvss4_modified_attack_requirements)
-
-        if self.cvss4_modified_privileges_required is not None and not isinstance(self.cvss4_modified_privileges_required, Cvss4ModifiedPrivilegesRequired):
-            self.cvss4_modified_privileges_required = Cvss4ModifiedPrivilegesRequired(self.cvss4_modified_privileges_required)
-
-        if self.cvss4_modified_user_interaction is not None and not isinstance(self.cvss4_modified_user_interaction, Cvss4ModifiedUserInteraction):
-            self.cvss4_modified_user_interaction = Cvss4ModifiedUserInteraction(self.cvss4_modified_user_interaction)
-
-        if self.cvss4_modified_vuln_confidentiality_impact is not None and not isinstance(self.cvss4_modified_vuln_confidentiality_impact, Cvss4ModifiedVulnCia):
-            self.cvss4_modified_vuln_confidentiality_impact = Cvss4ModifiedVulnCia(self.cvss4_modified_vuln_confidentiality_impact)
-
-        if self.cvss4_modified_vuln_integrity_impact is not None and not isinstance(self.cvss4_modified_vuln_integrity_impact, Cvss4ModifiedVulnCia):
-            self.cvss4_modified_vuln_integrity_impact = Cvss4ModifiedVulnCia(self.cvss4_modified_vuln_integrity_impact)
-
-        if self.cvss4_modified_vuln_availability_impact is not None and not isinstance(self.cvss4_modified_vuln_availability_impact, Cvss4ModifiedVulnCia):
-            self.cvss4_modified_vuln_availability_impact = Cvss4ModifiedVulnCia(self.cvss4_modified_vuln_availability_impact)
-
-        if self.cvss4_modified_sub_confidentiality_impact is not None and not isinstance(self.cvss4_modified_sub_confidentiality_impact, Cvss4ModifiedSubC):
-            self.cvss4_modified_sub_confidentiality_impact = Cvss4ModifiedSubC(self.cvss4_modified_sub_confidentiality_impact)
-
-        if self.cvss4_modified_sub_integrity_impact is not None and not isinstance(self.cvss4_modified_sub_integrity_impact, Cvss4ModifiedSubIa):
-            self.cvss4_modified_sub_integrity_impact = Cvss4ModifiedSubIa(self.cvss4_modified_sub_integrity_impact)
-
-        if self.cvss4_modified_sub_availability_impact is not None and not isinstance(self.cvss4_modified_sub_availability_impact, Cvss4ModifiedSubIa):
-            self.cvss4_modified_sub_availability_impact = Cvss4ModifiedSubIa(self.cvss4_modified_sub_availability_impact)
-
-        if self.cvss4_safety is not None and not isinstance(self.cvss4_safety, Cvss4Safety):
-            self.cvss4_safety = Cvss4Safety(self.cvss4_safety)
-
-        if self.cvss4_automatable is not None and not isinstance(self.cvss4_automatable, Cvss4Automatable):
-            self.cvss4_automatable = Cvss4Automatable(self.cvss4_automatable)
-
-        if self.cvss4_recovery is not None and not isinstance(self.cvss4_recovery, Cvss4Recovery):
-            self.cvss4_recovery = Cvss4Recovery(self.cvss4_recovery)
-
-        if self.cvss4_value_density is not None and not isinstance(self.cvss4_value_density, Cvss4ValueDensity):
-            self.cvss4_value_density = Cvss4ValueDensity(self.cvss4_value_density)
-
-        if self.cvss4_vulnerability_response_effort is not None and not isinstance(self.cvss4_vulnerability_response_effort, Cvss4VulnerabilityResponseEffort):
-            self.cvss4_vulnerability_response_effort = Cvss4VulnerabilityResponseEffort(self.cvss4_vulnerability_response_effort)
-
-        if self.cvss4_provider_urgency is not None and not isinstance(self.cvss4_provider_urgency, Cvss4ProviderUrgency):
-            self.cvss4_provider_urgency = Cvss4ProviderUrgency(self.cvss4_provider_urgency)
-
-        super().__post_init__(**kwargs)
-
-
-@dataclass(repr=False)
-class CvssV3(YAMLRoot):
-    """
-    CVSS version 3.x scoring object covering both CVSS 3.0 and CVSS 3.1. The two versions share an identical metric
-    model; the 3.1 spec was a clarification, not a structural change. The cvss3_version slot distinguishes between
-    them. Requires version ('3.0' or '3.1'), vectorString, baseScore, and baseSeverity.
-    """
-    _inherited_slots: ClassVar[list[str]] = []
-
-    class_class_uri: ClassVar[URIRef] = CVE["CvssV3"]
-    class_class_curie: ClassVar[str] = "cve:CvssV3"
-    class_name: ClassVar[str] = "CvssV3"
-    class_model_uri: ClassVar[URIRef] = CVE.CvssV3
-
-    cvss3_version: Union[str, "CvssV3Version"] = None
-    cvss3_vector_string: str = None
-    cvss3_base_score: float = None
-    cvss3_base_severity: Union[str, "Cvss3Severity"] = None
-    cvss3_attack_vector: Optional[Union[str, "Cvss3AttackVector"]] = None
-    cvss3_attack_complexity: Optional[Union[str, "Cvss3AttackComplexity"]] = None
-    cvss3_privileges_required: Optional[Union[str, "Cvss3PrivilegesRequired"]] = None
-    cvss3_user_interaction: Optional[Union[str, "Cvss3UserInteraction"]] = None
-    cvss3_scope: Optional[Union[str, "Cvss3Scope"]] = None
-    cvss3_confidentiality_impact: Optional[Union[str, "Cvss3Cia"]] = None
-    cvss3_integrity_impact: Optional[Union[str, "Cvss3Cia"]] = None
-    cvss3_availability_impact: Optional[Union[str, "Cvss3Cia"]] = None
-    cvss3_exploit_code_maturity: Optional[Union[str, "Cvss3ExploitCodeMaturity"]] = None
-    cvss3_remediation_level: Optional[Union[str, "Cvss3RemediationLevel"]] = None
-    cvss3_report_confidence: Optional[Union[str, "Cvss3Confidence"]] = None
-    cvss3_temporal_score: Optional[float] = None
-    cvss3_temporal_severity: Optional[Union[str, "Cvss3Severity"]] = None
-    cvss3_confidentiality_requirement: Optional[Union[str, "Cvss3CiaRequirement"]] = None
-    cvss3_integrity_requirement: Optional[Union[str, "Cvss3CiaRequirement"]] = None
-    cvss3_availability_requirement: Optional[Union[str, "Cvss3CiaRequirement"]] = None
-    cvss3_modified_attack_vector: Optional[Union[str, "Cvss3ModifiedAttackVector"]] = None
-    cvss3_modified_attack_complexity: Optional[Union[str, "Cvss3ModifiedAttackComplexity"]] = None
-    cvss3_modified_privileges_required: Optional[Union[str, "Cvss3ModifiedPrivilegesRequired"]] = None
-    cvss3_modified_user_interaction: Optional[Union[str, "Cvss3ModifiedUserInteraction"]] = None
-    cvss3_modified_scope: Optional[Union[str, "Cvss3ModifiedScope"]] = None
-    cvss3_modified_confidentiality_impact: Optional[Union[str, "Cvss3ModifiedCia"]] = None
-    cvss3_modified_integrity_impact: Optional[Union[str, "Cvss3ModifiedCia"]] = None
-    cvss3_modified_availability_impact: Optional[Union[str, "Cvss3ModifiedCia"]] = None
-    cvss3_environmental_score: Optional[float] = None
-    cvss3_environmental_severity: Optional[Union[str, "Cvss3Severity"]] = None
-
-    def __post_init__(self, *_: str, **kwargs: Any):
-        if self._is_empty(self.cvss3_version):
-            self.MissingRequiredField("cvss3_version")
-        if not isinstance(self.cvss3_version, CvssV3Version):
-            self.cvss3_version = CvssV3Version(self.cvss3_version)
-
-        if self._is_empty(self.cvss3_vector_string):
-            self.MissingRequiredField("cvss3_vector_string")
-        if not isinstance(self.cvss3_vector_string, str):
-            self.cvss3_vector_string = str(self.cvss3_vector_string)
-
-        if self._is_empty(self.cvss3_base_score):
-            self.MissingRequiredField("cvss3_base_score")
-        if not isinstance(self.cvss3_base_score, float):
-            self.cvss3_base_score = float(self.cvss3_base_score)
-
-        if self._is_empty(self.cvss3_base_severity):
-            self.MissingRequiredField("cvss3_base_severity")
-        if not isinstance(self.cvss3_base_severity, Cvss3Severity):
-            self.cvss3_base_severity = Cvss3Severity(self.cvss3_base_severity)
-
-        if self.cvss3_attack_vector is not None and not isinstance(self.cvss3_attack_vector, Cvss3AttackVector):
-            self.cvss3_attack_vector = Cvss3AttackVector(self.cvss3_attack_vector)
-
-        if self.cvss3_attack_complexity is not None and not isinstance(self.cvss3_attack_complexity, Cvss3AttackComplexity):
-            self.cvss3_attack_complexity = Cvss3AttackComplexity(self.cvss3_attack_complexity)
-
-        if self.cvss3_privileges_required is not None and not isinstance(self.cvss3_privileges_required, Cvss3PrivilegesRequired):
-            self.cvss3_privileges_required = Cvss3PrivilegesRequired(self.cvss3_privileges_required)
-
-        if self.cvss3_user_interaction is not None and not isinstance(self.cvss3_user_interaction, Cvss3UserInteraction):
-            self.cvss3_user_interaction = Cvss3UserInteraction(self.cvss3_user_interaction)
-
-        if self.cvss3_scope is not None and not isinstance(self.cvss3_scope, Cvss3Scope):
-            self.cvss3_scope = Cvss3Scope(self.cvss3_scope)
-
-        if self.cvss3_confidentiality_impact is not None and not isinstance(self.cvss3_confidentiality_impact, Cvss3Cia):
-            self.cvss3_confidentiality_impact = Cvss3Cia(self.cvss3_confidentiality_impact)
-
-        if self.cvss3_integrity_impact is not None and not isinstance(self.cvss3_integrity_impact, Cvss3Cia):
-            self.cvss3_integrity_impact = Cvss3Cia(self.cvss3_integrity_impact)
-
-        if self.cvss3_availability_impact is not None and not isinstance(self.cvss3_availability_impact, Cvss3Cia):
-            self.cvss3_availability_impact = Cvss3Cia(self.cvss3_availability_impact)
-
-        if self.cvss3_exploit_code_maturity is not None and not isinstance(self.cvss3_exploit_code_maturity, Cvss3ExploitCodeMaturity):
-            self.cvss3_exploit_code_maturity = Cvss3ExploitCodeMaturity(self.cvss3_exploit_code_maturity)
-
-        if self.cvss3_remediation_level is not None and not isinstance(self.cvss3_remediation_level, Cvss3RemediationLevel):
-            self.cvss3_remediation_level = Cvss3RemediationLevel(self.cvss3_remediation_level)
-
-        if self.cvss3_report_confidence is not None and not isinstance(self.cvss3_report_confidence, Cvss3Confidence):
-            self.cvss3_report_confidence = Cvss3Confidence(self.cvss3_report_confidence)
-
-        if self.cvss3_temporal_score is not None and not isinstance(self.cvss3_temporal_score, float):
-            self.cvss3_temporal_score = float(self.cvss3_temporal_score)
-
-        if self.cvss3_temporal_severity is not None and not isinstance(self.cvss3_temporal_severity, Cvss3Severity):
-            self.cvss3_temporal_severity = Cvss3Severity(self.cvss3_temporal_severity)
-
-        if self.cvss3_confidentiality_requirement is not None and not isinstance(self.cvss3_confidentiality_requirement, Cvss3CiaRequirement):
-            self.cvss3_confidentiality_requirement = Cvss3CiaRequirement(self.cvss3_confidentiality_requirement)
-
-        if self.cvss3_integrity_requirement is not None and not isinstance(self.cvss3_integrity_requirement, Cvss3CiaRequirement):
-            self.cvss3_integrity_requirement = Cvss3CiaRequirement(self.cvss3_integrity_requirement)
-
-        if self.cvss3_availability_requirement is not None and not isinstance(self.cvss3_availability_requirement, Cvss3CiaRequirement):
-            self.cvss3_availability_requirement = Cvss3CiaRequirement(self.cvss3_availability_requirement)
-
-        if self.cvss3_modified_attack_vector is not None and not isinstance(self.cvss3_modified_attack_vector, Cvss3ModifiedAttackVector):
-            self.cvss3_modified_attack_vector = Cvss3ModifiedAttackVector(self.cvss3_modified_attack_vector)
-
-        if self.cvss3_modified_attack_complexity is not None and not isinstance(self.cvss3_modified_attack_complexity, Cvss3ModifiedAttackComplexity):
-            self.cvss3_modified_attack_complexity = Cvss3ModifiedAttackComplexity(self.cvss3_modified_attack_complexity)
-
-        if self.cvss3_modified_privileges_required is not None and not isinstance(self.cvss3_modified_privileges_required, Cvss3ModifiedPrivilegesRequired):
-            self.cvss3_modified_privileges_required = Cvss3ModifiedPrivilegesRequired(self.cvss3_modified_privileges_required)
-
-        if self.cvss3_modified_user_interaction is not None and not isinstance(self.cvss3_modified_user_interaction, Cvss3ModifiedUserInteraction):
-            self.cvss3_modified_user_interaction = Cvss3ModifiedUserInteraction(self.cvss3_modified_user_interaction)
-
-        if self.cvss3_modified_scope is not None and not isinstance(self.cvss3_modified_scope, Cvss3ModifiedScope):
-            self.cvss3_modified_scope = Cvss3ModifiedScope(self.cvss3_modified_scope)
-
-        if self.cvss3_modified_confidentiality_impact is not None and not isinstance(self.cvss3_modified_confidentiality_impact, Cvss3ModifiedCia):
-            self.cvss3_modified_confidentiality_impact = Cvss3ModifiedCia(self.cvss3_modified_confidentiality_impact)
-
-        if self.cvss3_modified_integrity_impact is not None and not isinstance(self.cvss3_modified_integrity_impact, Cvss3ModifiedCia):
-            self.cvss3_modified_integrity_impact = Cvss3ModifiedCia(self.cvss3_modified_integrity_impact)
-
-        if self.cvss3_modified_availability_impact is not None and not isinstance(self.cvss3_modified_availability_impact, Cvss3ModifiedCia):
-            self.cvss3_modified_availability_impact = Cvss3ModifiedCia(self.cvss3_modified_availability_impact)
-
-        if self.cvss3_environmental_score is not None and not isinstance(self.cvss3_environmental_score, float):
-            self.cvss3_environmental_score = float(self.cvss3_environmental_score)
-
-        if self.cvss3_environmental_severity is not None and not isinstance(self.cvss3_environmental_severity, Cvss3Severity):
-            self.cvss3_environmental_severity = Cvss3Severity(self.cvss3_environmental_severity)
-
-        super().__post_init__(**kwargs)
-
-
-@dataclass(repr=False)
-class CvssV20(YAMLRoot):
-    """
-    CVSS version 2.0 scoring object. Requires version ('2.0'), vectorString, and baseScore.
-    """
-    _inherited_slots: ClassVar[list[str]] = []
-
-    class_class_uri: ClassVar[URIRef] = CVE["CvssV20"]
-    class_class_curie: ClassVar[str] = "cve:CvssV20"
-    class_name: ClassVar[str] = "CvssV2_0"
-    class_model_uri: ClassVar[URIRef] = CVE.CvssV20
-
-    cvss2_vector_string: str = None
-    cvss2_base_score: float = None
-    cvss2_version: str = "2.0"
-    cvss2_access_vector: Optional[Union[str, "Cvss2AccessVector"]] = None
-    cvss2_access_complexity: Optional[Union[str, "Cvss2AccessComplexity"]] = None
-    cvss2_authentication: Optional[Union[str, "Cvss2Authentication"]] = None
-    cvss2_confidentiality_impact: Optional[Union[str, "Cvss2Cia"]] = None
-    cvss2_integrity_impact: Optional[Union[str, "Cvss2Cia"]] = None
-    cvss2_availability_impact: Optional[Union[str, "Cvss2Cia"]] = None
-    cvss2_exploitability: Optional[Union[str, "Cvss2Exploitability"]] = None
-    cvss2_remediation_level: Optional[Union[str, "Cvss2RemediationLevel"]] = None
-    cvss2_report_confidence: Optional[Union[str, "Cvss2ReportConfidence"]] = None
-    cvss2_temporal_score: Optional[float] = None
-    cvss2_collateral_damage_potential: Optional[Union[str, "Cvss2CollateralDamagePotential"]] = None
-    cvss2_target_distribution: Optional[Union[str, "Cvss2TargetDistribution"]] = None
-    cvss2_confidentiality_requirement: Optional[Union[str, "Cvss2CiaRequirement"]] = None
-    cvss2_integrity_requirement: Optional[Union[str, "Cvss2CiaRequirement"]] = None
-    cvss2_availability_requirement: Optional[Union[str, "Cvss2CiaRequirement"]] = None
-    cvss2_environmental_score: Optional[float] = None
-
-    def __post_init__(self, *_: str, **kwargs: Any):
-        if self._is_empty(self.cvss2_version):
-            self.MissingRequiredField("cvss2_version")
-        if not isinstance(self.cvss2_version, str):
-            self.cvss2_version = str(self.cvss2_version)
-
-        if self._is_empty(self.cvss2_vector_string):
-            self.MissingRequiredField("cvss2_vector_string")
-        if not isinstance(self.cvss2_vector_string, str):
-            self.cvss2_vector_string = str(self.cvss2_vector_string)
-
-        if self._is_empty(self.cvss2_base_score):
-            self.MissingRequiredField("cvss2_base_score")
-        if not isinstance(self.cvss2_base_score, float):
-            self.cvss2_base_score = float(self.cvss2_base_score)
-
-        if self.cvss2_access_vector is not None and not isinstance(self.cvss2_access_vector, Cvss2AccessVector):
-            self.cvss2_access_vector = Cvss2AccessVector(self.cvss2_access_vector)
-
-        if self.cvss2_access_complexity is not None and not isinstance(self.cvss2_access_complexity, Cvss2AccessComplexity):
-            self.cvss2_access_complexity = Cvss2AccessComplexity(self.cvss2_access_complexity)
-
-        if self.cvss2_authentication is not None and not isinstance(self.cvss2_authentication, Cvss2Authentication):
-            self.cvss2_authentication = Cvss2Authentication(self.cvss2_authentication)
-
-        if self.cvss2_confidentiality_impact is not None and not isinstance(self.cvss2_confidentiality_impact, Cvss2Cia):
-            self.cvss2_confidentiality_impact = Cvss2Cia(self.cvss2_confidentiality_impact)
-
-        if self.cvss2_integrity_impact is not None and not isinstance(self.cvss2_integrity_impact, Cvss2Cia):
-            self.cvss2_integrity_impact = Cvss2Cia(self.cvss2_integrity_impact)
-
-        if self.cvss2_availability_impact is not None and not isinstance(self.cvss2_availability_impact, Cvss2Cia):
-            self.cvss2_availability_impact = Cvss2Cia(self.cvss2_availability_impact)
-
-        if self.cvss2_exploitability is not None and not isinstance(self.cvss2_exploitability, Cvss2Exploitability):
-            self.cvss2_exploitability = Cvss2Exploitability(self.cvss2_exploitability)
-
-        if self.cvss2_remediation_level is not None and not isinstance(self.cvss2_remediation_level, Cvss2RemediationLevel):
-            self.cvss2_remediation_level = Cvss2RemediationLevel(self.cvss2_remediation_level)
-
-        if self.cvss2_report_confidence is not None and not isinstance(self.cvss2_report_confidence, Cvss2ReportConfidence):
-            self.cvss2_report_confidence = Cvss2ReportConfidence(self.cvss2_report_confidence)
-
-        if self.cvss2_temporal_score is not None and not isinstance(self.cvss2_temporal_score, float):
-            self.cvss2_temporal_score = float(self.cvss2_temporal_score)
-
-        if self.cvss2_collateral_damage_potential is not None and not isinstance(self.cvss2_collateral_damage_potential, Cvss2CollateralDamagePotential):
-            self.cvss2_collateral_damage_potential = Cvss2CollateralDamagePotential(self.cvss2_collateral_damage_potential)
-
-        if self.cvss2_target_distribution is not None and not isinstance(self.cvss2_target_distribution, Cvss2TargetDistribution):
-            self.cvss2_target_distribution = Cvss2TargetDistribution(self.cvss2_target_distribution)
-
-        if self.cvss2_confidentiality_requirement is not None and not isinstance(self.cvss2_confidentiality_requirement, Cvss2CiaRequirement):
-            self.cvss2_confidentiality_requirement = Cvss2CiaRequirement(self.cvss2_confidentiality_requirement)
-
-        if self.cvss2_integrity_requirement is not None and not isinstance(self.cvss2_integrity_requirement, Cvss2CiaRequirement):
-            self.cvss2_integrity_requirement = Cvss2CiaRequirement(self.cvss2_integrity_requirement)
-
-        if self.cvss2_availability_requirement is not None and not isinstance(self.cvss2_availability_requirement, Cvss2CiaRequirement):
-            self.cvss2_availability_requirement = Cvss2CiaRequirement(self.cvss2_availability_requirement)
-
-        if self.cvss2_environmental_score is not None and not isinstance(self.cvss2_environmental_score, float):
-            self.cvss2_environmental_score = float(self.cvss2_environmental_score)
-
-        super().__post_init__(**kwargs)
-
-
-@dataclass(repr=False)
-class OtherMetric(YAMLRoot):
-    """
-    A non-standard impact description in a custom format. May be a prose description or an arbitrary JSON-compatible
-    object.
-    """
-    _inherited_slots: ClassVar[list[str]] = []
-
-    class_class_uri: ClassVar[URIRef] = CVE["OtherMetric"]
-    class_class_curie: ClassVar[str] = "cve:OtherMetric"
-    class_name: ClassVar[str] = "OtherMetric"
-    class_model_uri: ClassVar[URIRef] = CVE.OtherMetric
-
-    other_metric_type: str = None
-    other_metric_content: Union[dict, Any] = None
-
-    def __post_init__(self, *_: str, **kwargs: Any):
-        if self._is_empty(self.other_metric_type):
-            self.MissingRequiredField("other_metric_type")
-        if not isinstance(self.other_metric_type, str):
-            self.other_metric_type = str(self.other_metric_type)
-
-        super().__post_init__(**kwargs)
-
-
-@dataclass(repr=False)
-class TimelineEntry(YAMLRoot):
-    """
-    A timeline event recording a significant event about the vulnerability or changes to the CVE Record. Requires
-    time, lang, and value.
-    """
-    _inherited_slots: ClassVar[list[str]] = []
-
-    class_class_uri: ClassVar[URIRef] = CVE["TimelineEntry"]
-    class_class_curie: ClassVar[str] = "cve:TimelineEntry"
-    class_name: ClassVar[str] = "TimelineEntry"
-    class_model_uri: ClassVar[URIRef] = CVE.TimelineEntry
-
-    event_time: str = None
-    event_value: str = None
-    lang: str = "en"
-
-    def __post_init__(self, *_: str, **kwargs: Any):
-        if self._is_empty(self.event_time):
-            self.MissingRequiredField("event_time")
-        if not isinstance(self.event_time, str):
-            self.event_time = str(self.event_time)
-
-        if self._is_empty(self.lang):
-            self.MissingRequiredField("lang")
-        if not isinstance(self.lang, str):
-            self.lang = str(self.lang)
-
-        if self._is_empty(self.event_value):
-            self.MissingRequiredField("event_value")
-        if not isinstance(self.event_value, str):
-            self.event_value = str(self.event_value)
-
-        super().__post_init__(**kwargs)
-
-
-@dataclass(repr=False)
-class CreditEntry(YAMLRoot):
-    """
-    A credit acknowledging a specific person, organization, or tool for work related to the research, discovery,
-    remediation, or coordination of the vulnerability.
-    """
-    _inherited_slots: ClassVar[list[str]] = []
-
-    class_class_uri: ClassVar[URIRef] = CVE["CreditEntry"]
-    class_class_curie: ClassVar[str] = "cve:CreditEntry"
-    class_name: ClassVar[str] = "CreditEntry"
-    class_model_uri: ClassVar[URIRef] = CVE.CreditEntry
-
-    credit_value: str = None
-    lang: str = "en"
-    credit_user: Optional[str] = None
-    credit_type: Optional[Union[str, "CreditType"]] = 'finder'
-
-    def __post_init__(self, *_: str, **kwargs: Any):
-        if self._is_empty(self.lang):
-            self.MissingRequiredField("lang")
-        if not isinstance(self.lang, str):
-            self.lang = str(self.lang)
-
-        if self._is_empty(self.credit_value):
-            self.MissingRequiredField("credit_value")
-        if not isinstance(self.credit_value, str):
-            self.credit_value = str(self.credit_value)
-
-        if self.credit_user is not None and not isinstance(self.credit_user, str):
-            self.credit_user = str(self.credit_user)
-
-        if self.credit_type is not None and not isinstance(self.credit_type, CreditType):
-            self.credit_type = getattr(CreditType, self.credit_type)
-
-        super().__post_init__(**kwargs)
-
-
-@dataclass(repr=False)
-class SourceInformation(YAMLRoot):
-    """
-    Source information (who discovered it, who researched it, etc.) and optionally a chain of CNA information. This is
-    an open object — at least one property must be present.
-    """
-    _inherited_slots: ClassVar[list[str]] = []
-
-    class_class_uri: ClassVar[URIRef] = CVE["SourceInformation"]
-    class_class_curie: ClassVar[str] = "cve:SourceInformation"
-    class_name: ClassVar[str] = "SourceInformation"
-    class_model_uri: ClassVar[URIRef] = CVE.SourceInformation
-
-    source_defects: Optional[Union[str, list[str]]] = empty_list()
-    source_advisory: Optional[str] = None
-    source_discovery: Optional[str] = None
-
-    def __post_init__(self, *_: str, **kwargs: Any):
-        if not isinstance(self.source_defects, list):
-            self.source_defects = [self.source_defects] if self.source_defects is not None else []
-        self.source_defects = [v if isinstance(v, str) else str(v) for v in self.source_defects]
-
-        if self.source_advisory is not None and not isinstance(self.source_advisory, str):
-            self.source_advisory = str(self.source_advisory)
-
-        if self.source_discovery is not None and not isinstance(self.source_discovery, str):
-            self.source_discovery = str(self.source_discovery)
-
-        super().__post_init__(**kwargs)
-
-
-@dataclass(repr=False)
-class TaxonomyMapping(YAMLRoot):
-    """
-    A taxonomy mapping identifying the taxonomy by name and version, along with a list of relations relevant to the
-    CVE (e.g., ATT&CK, D3FEND, CWE).
-    """
-    _inherited_slots: ClassVar[list[str]] = []
-
-    class_class_uri: ClassVar[URIRef] = CVE["TaxonomyMapping"]
-    class_class_curie: ClassVar[str] = "cve:TaxonomyMapping"
-    class_name: ClassVar[str] = "TaxonomyMapping"
-    class_model_uri: ClassVar[URIRef] = CVE.TaxonomyMapping
-
-    taxonomy_name: str = None
-    taxonomy_relations: Union[Union[dict, "TaxonomyRelation"], list[Union[dict, "TaxonomyRelation"]]] = None
-    taxonomy_version: Optional[str] = None
-
-    def __post_init__(self, *_: str, **kwargs: Any):
-        if self._is_empty(self.taxonomy_name):
-            self.MissingRequiredField("taxonomy_name")
-        if not isinstance(self.taxonomy_name, str):
-            self.taxonomy_name = str(self.taxonomy_name)
-
-        if self._is_empty(self.taxonomy_relations):
-            self.MissingRequiredField("taxonomy_relations")
-        self._normalize_inlined_as_list(slot_name="taxonomy_relations", slot_type=TaxonomyRelation, key_name="taxonomy_id", keyed=False)
-
-        if self.taxonomy_version is not None and not isinstance(self.taxonomy_version, str):
-            self.taxonomy_version = str(self.taxonomy_version)
-
-        super().__post_init__(**kwargs)
-
-
-@dataclass(repr=False)
-class TaxonomyRelation(YAMLRoot):
-    """
-    A relationship between a taxonomy item and a CVE or another taxonomy item. Provides subject (taxonomyId),
-    predicate (relationshipName), and object (relationshipValue).
-    """
-    _inherited_slots: ClassVar[list[str]] = []
-
-    class_class_uri: ClassVar[URIRef] = CVE["TaxonomyRelation"]
-    class_class_curie: ClassVar[str] = "cve:TaxonomyRelation"
-    class_name: ClassVar[str] = "TaxonomyRelation"
-    class_model_uri: ClassVar[URIRef] = CVE.TaxonomyRelation
-
-    taxonomy_id: str = None
-    relationship_name: str = None
-    relationship_value: str = None
-
-    def __post_init__(self, *_: str, **kwargs: Any):
-        if self._is_empty(self.taxonomy_id):
-            self.MissingRequiredField("taxonomy_id")
-        if not isinstance(self.taxonomy_id, str):
-            self.taxonomy_id = str(self.taxonomy_id)
-
-        if self._is_empty(self.relationship_name):
-            self.MissingRequiredField("relationship_name")
-        if not isinstance(self.relationship_name, str):
-            self.relationship_name = str(self.relationship_name)
-
-        if self._is_empty(self.relationship_value):
-            self.MissingRequiredField("relationship_value")
-        if not isinstance(self.relationship_value, str):
-            self.relationship_value = str(self.relationship_value)
-
-        super().__post_init__(**kwargs)
-
-
-@dataclass(repr=False)
-class CpeApplicabilityElement(YAMLRoot):
-    """
-    Affected products defined using an implementation of the CPE Applicability Language. An operator property allows
-    AND or OR logic between CPEs or combinations of CPEs.
-    """
-    _inherited_slots: ClassVar[list[str]] = []
-
-    class_class_uri: ClassVar[URIRef] = CVE["CpeApplicabilityElement"]
-    class_class_curie: ClassVar[str] = "cve:CpeApplicabilityElement"
-    class_name: ClassVar[str] = "CpeApplicabilityElement"
-    class_model_uri: ClassVar[URIRef] = CVE.CpeApplicabilityElement
-
-    cpe_nodes: Union[Union[dict, "CpeNode"], list[Union[dict, "CpeNode"]]] = None
-    cpe_operator: Optional[Union[str, "CpeOperator"]] = None
-    cpe_negate: Optional[Union[bool, Bool]] = None
-
-    def __post_init__(self, *_: str, **kwargs: Any):
-        if self._is_empty(self.cpe_nodes):
-            self.MissingRequiredField("cpe_nodes")
-        self._normalize_inlined_as_list(slot_name="cpe_nodes", slot_type=CpeNode, key_name="cpe_operator", keyed=False)
-
-        if self.cpe_operator is not None and not isinstance(self.cpe_operator, CpeOperator):
-            self.cpe_operator = CpeOperator(self.cpe_operator)
-
-        if self.cpe_negate is not None and not isinstance(self.cpe_negate, Bool):
-            self.cpe_negate = Bool(self.cpe_negate)
-
-        super().__post_init__(**kwargs)
-
-
-@dataclass(repr=False)
-class CpeNode(YAMLRoot):
-    """
-    Defines a CPE configuration node in an applicability statement.
-    """
-    _inherited_slots: ClassVar[list[str]] = []
-
-    class_class_uri: ClassVar[URIRef] = CVE["CpeNode"]
-    class_class_curie: ClassVar[str] = "cve:CpeNode"
-    class_name: ClassVar[str] = "CpeNode"
-    class_model_uri: ClassVar[URIRef] = CVE.CpeNode
-
-    cpe_operator: Union[str, "CpeOperator"] = None
-    cpe_match_criteria: Union[Union[dict, "CpeMatch"], list[Union[dict, "CpeMatch"]]] = None
-    cpe_negate: Optional[Union[bool, Bool]] = None
-
-    def __post_init__(self, *_: str, **kwargs: Any):
-        if self._is_empty(self.cpe_operator):
-            self.MissingRequiredField("cpe_operator")
-        if not isinstance(self.cpe_operator, CpeOperator):
-            self.cpe_operator = CpeOperator(self.cpe_operator)
-
-        if self._is_empty(self.cpe_match_criteria):
-            self.MissingRequiredField("cpe_match_criteria")
-        self._normalize_inlined_as_list(slot_name="cpe_match_criteria", slot_type=CpeMatch, key_name="cpe_vulnerable", keyed=False)
-
-        if self.cpe_negate is not None and not isinstance(self.cpe_negate, Bool):
-            self.cpe_negate = Bool(self.cpe_negate)
-
-        super().__post_init__(**kwargs)
-
-
-@dataclass(repr=False)
-class CpeMatch(YAMLRoot):
-    """
-    CPE match string or range within a CPE applicability node.
-    """
-    _inherited_slots: ClassVar[list[str]] = []
-
-    class_class_uri: ClassVar[URIRef] = CVE["CpeMatch"]
-    class_class_curie: ClassVar[str] = "cve:CpeMatch"
-    class_name: ClassVar[str] = "CpeMatch"
-    class_model_uri: ClassVar[URIRef] = CVE.CpeMatch
-
-    cpe_vulnerable: Union[bool, Bool] = None
-    cpe_criteria: str = None
-    match_criteria_id: Optional[str] = None
-    version_start_excluding: Optional[str] = None
-    version_start_including: Optional[str] = None
-    version_end_excluding: Optional[str] = None
-    version_end_including: Optional[str] = None
-
-    def __post_init__(self, *_: str, **kwargs: Any):
-        if self._is_empty(self.cpe_vulnerable):
-            self.MissingRequiredField("cpe_vulnerable")
-        if not isinstance(self.cpe_vulnerable, Bool):
-            self.cpe_vulnerable = Bool(self.cpe_vulnerable)
-
-        if self._is_empty(self.cpe_criteria):
-            self.MissingRequiredField("cpe_criteria")
-        if not isinstance(self.cpe_criteria, str):
-            self.cpe_criteria = str(self.cpe_criteria)
-
-        if self.match_criteria_id is not None and not isinstance(self.match_criteria_id, str):
-            self.match_criteria_id = str(self.match_criteria_id)
-
-        if self.version_start_excluding is not None and not isinstance(self.version_start_excluding, str):
-            self.version_start_excluding = str(self.version_start_excluding)
-
-        if self.version_start_including is not None and not isinstance(self.version_start_including, str):
-            self.version_start_including = str(self.version_start_including)
-
-        if self.version_end_excluding is not None and not isinstance(self.version_end_excluding, str):
-            self.version_end_excluding = str(self.version_end_excluding)
-
-        if self.version_end_including is not None and not isinstance(self.version_end_including, str):
-            self.version_end_including = str(self.version_end_including)
-
-        super().__post_init__(**kwargs)
-
-
-@dataclass(repr=False)
-class Vulnerability(YAMLRoot):
-    """
-    Abstract base representation of a security vulnerability. Extended by source-specific schemas (KEV, CVE, NVD).
-    """
-    _inherited_slots: ClassVar[list[str]] = []
-
-    class_class_uri: ClassVar[URIRef] = CORE["Vulnerability"]
-    class_class_curie: ClassVar[str] = "core:Vulnerability"
-    class_name: ClassVar[str] = "Vulnerability"
-    class_model_uri: ClassVar[URIRef] = CVE.Vulnerability
-
-    cve_id: Union[str, VulnerabilityCveId] = None
-    title: Optional[str] = None
-    description: Optional[str] = None
-    published_date: Optional[Union[str, XSDDateTime]] = None
-    last_modified_date: Optional[Union[str, XSDDateTime]] = None
-    products: Optional[Union[Union[dict, "Product"], list[Union[dict, "Product"]]]] = empty_list()
-    weaknesses: Optional[Union[Union[dict, "Weakness"], list[Union[dict, "Weakness"]]]] = empty_list()
-    references: Optional[Union[Union[dict, "Reference"], list[Union[dict, "Reference"]]]] = empty_list()
-    impact: Optional[Union[dict, "Impact"]] = None
-    status: Optional[Union[str, "VulnerabilityStatus"]] = None
-
-    def __post_init__(self, *_: str, **kwargs: Any):
-        if self._is_empty(self.cve_id):
-            self.MissingRequiredField("cve_id")
-        if not isinstance(self.cve_id, VulnerabilityCveId):
-            self.cve_id = VulnerabilityCveId(self.cve_id)
-
-        if self.title is not None and not isinstance(self.title, str):
-            self.title = str(self.title)
-
-        if self.description is not None and not isinstance(self.description, str):
-            self.description = str(self.description)
-
-        if self.published_date is not None and not isinstance(self.published_date, XSDDateTime):
-            self.published_date = XSDDateTime(self.published_date)
-
-        if self.last_modified_date is not None and not isinstance(self.last_modified_date, XSDDateTime):
-            self.last_modified_date = XSDDateTime(self.last_modified_date)
-
-        if not isinstance(self.products, list):
-            self.products = [self.products] if self.products is not None else []
-        self.products = [v if isinstance(v, Product) else Product(**as_dict(v)) for v in self.products]
-
-        if not isinstance(self.weaknesses, list):
-            self.weaknesses = [self.weaknesses] if self.weaknesses is not None else []
-        self.weaknesses = [v if isinstance(v, Weakness) else Weakness(**as_dict(v)) for v in self.weaknesses]
-
-        if not isinstance(self.references, list):
-            self.references = [self.references] if self.references is not None else []
-        self.references = [v if isinstance(v, Reference) else Reference(**as_dict(v)) for v in self.references]
-
-        if self.impact is not None and not isinstance(self.impact, Impact):
-            self.impact = Impact(**as_dict(self.impact))
-
-        if self.status is not None and not isinstance(self.status, VulnerabilityStatus):
-            self.status = VulnerabilityStatus(self.status)
-
-        super().__post_init__(**kwargs)
-
-
-@dataclass(repr=False)
-class CVERecord(Vulnerability):
-    """
-    Official CVE Record corresponding to a CVE ID. Represents either a Published or Rejected record in the CVE™
-    Program. The dataType field is always CVE_RECORD. Use cveMetadata.state to distinguish Published from Rejected
-    records.
-    """
-    _inherited_slots: ClassVar[list[str]] = []
-
-    class_class_uri: ClassVar[URIRef] = CVE["CVERecord"]
-    class_class_curie: ClassVar[str] = "cve:CVERecord"
-    class_name: ClassVar[str] = "CVERecord"
-    class_model_uri: ClassVar[URIRef] = CVE.CVERecord
-
-    cve_id: Union[str, CVERecordCveId] = None
-    cve_metadata: Union[dict, CveMetadata] = None
-    containers: Union[dict, Containers] = None
-    data_type: Optional[Union[str, "DataType"]] = 'CVE_RECORD'
-    data_version: Optional[str] = "5.2.0"
-
-    def __post_init__(self, *_: str, **kwargs: Any):
-        if self._is_empty(self.cve_id):
-            self.MissingRequiredField("cve_id")
-        if not isinstance(self.cve_id, CVERecordCveId):
-            self.cve_id = CVERecordCveId(self.cve_id)
-
-        if self._is_empty(self.cve_metadata):
-            self.MissingRequiredField("cve_metadata")
-        if not isinstance(self.cve_metadata, CveMetadata):
-            self.cve_metadata = CveMetadata()
-
-        if self._is_empty(self.containers):
-            self.MissingRequiredField("containers")
-        if not isinstance(self.containers, Containers):
-            self.containers = Containers(**as_dict(self.containers))
-
-        if self.data_type is not None and not isinstance(self.data_type, DataType):
-            self.data_type = getattr(DataType, self.data_type)
-
-        if self.data_version is not None and not isinstance(self.data_version, str):
-            self.data_version = str(self.data_version)
-
-        super().__post_init__(**kwargs)
-
-
-@dataclass(repr=False)
-class Product(YAMLRoot):
-    """
-    Software or hardware entity affected by the vulnerability.
-    """
-    _inherited_slots: ClassVar[list[str]] = []
-
-    class_class_uri: ClassVar[URIRef] = CORE["Product"]
-    class_class_curie: ClassVar[str] = "core:Product"
-    class_name: ClassVar[str] = "Product"
-    class_model_uri: ClassVar[URIRef] = CVE.Product
-
-    vendor: Optional[str] = None
-    name: Optional[str] = None
-    version: Optional[str] = None
-    platforms: Optional[Union[str, list[str]]] = empty_list()
-
-    def __post_init__(self, *_: str, **kwargs: Any):
-        if self.vendor is not None and not isinstance(self.vendor, str):
-            self.vendor = str(self.vendor)
-
-        if self.name is not None and not isinstance(self.name, str):
-            self.name = str(self.name)
-
-        if self.version is not None and not isinstance(self.version, str):
-            self.version = str(self.version)
-
-        if not isinstance(self.platforms, list):
-            self.platforms = [self.platforms] if self.platforms is not None else []
-        self.platforms = [v if isinstance(v, str) else str(v) for v in self.platforms]
-
-        super().__post_init__(**kwargs)
-
-
-@dataclass(repr=False)
-class AffectedProduct(Product):
-    """
-    Information about the set of products and services affected by a vulnerability. At least one of (vendor + product)
-    or (collectionURL + packageName) is required, and at least one of versions or defaultStatus is required.
-    """
-    _inherited_slots: ClassVar[list[str]] = []
-
-    class_class_uri: ClassVar[URIRef] = CVE["AffectedProduct"]
-    class_class_curie: ClassVar[str] = "cve:AffectedProduct"
-    class_name: ClassVar[str] = "AffectedProduct"
-    class_model_uri: ClassVar[URIRef] = CVE.AffectedProduct
-
-    collection_url: Optional[Union[str, URI]] = None
-    package_name: Optional[str] = None
-    cpes: Optional[Union[str, list[str]]] = empty_list()
-    modules: Optional[Union[str, list[str]]] = empty_list()
-    program_files: Optional[Union[str, list[str]]] = empty_list()
-    program_routines: Optional[Union[Union[dict, ProgramRoutine], list[Union[dict, ProgramRoutine]]]] = empty_list()
-    repo: Optional[Union[str, URI]] = None
-    default_status: Optional[Union[str, "VersionStatus"]] = None
-    versions: Optional[Union[Union[dict, VersionEntry], list[Union[dict, VersionEntry]]]] = empty_list()
-    package_url: Optional[Union[str, URI]] = None
-
-    def __post_init__(self, *_: str, **kwargs: Any):
-        if self.collection_url is not None and not isinstance(self.collection_url, URI):
-            self.collection_url = URI(self.collection_url)
-
-        if self.package_name is not None and not isinstance(self.package_name, str):
-            self.package_name = str(self.package_name)
-
-        if not isinstance(self.cpes, list):
-            self.cpes = [self.cpes] if self.cpes is not None else []
-        self.cpes = [v if isinstance(v, str) else str(v) for v in self.cpes]
-
-        if not isinstance(self.modules, list):
-            self.modules = [self.modules] if self.modules is not None else []
-        self.modules = [v if isinstance(v, str) else str(v) for v in self.modules]
-
-        if not isinstance(self.program_files, list):
-            self.program_files = [self.program_files] if self.program_files is not None else []
-        self.program_files = [v if isinstance(v, str) else str(v) for v in self.program_files]
-
-        self._normalize_inlined_as_list(slot_name="program_routines", slot_type=ProgramRoutine, key_name="routine_name", keyed=False)
-
-        if self.repo is not None and not isinstance(self.repo, URI):
-            self.repo = URI(self.repo)
-
-        if self.default_status is not None and not isinstance(self.default_status, VersionStatus):
-            self.default_status = VersionStatus(self.default_status)
-
-        self._normalize_inlined_as_list(slot_name="versions", slot_type=VersionEntry, key_name="version_value", keyed=False)
-
-        if self.package_url is not None and not isinstance(self.package_url, URI):
-            self.package_url = URI(self.package_url)
-
-        super().__post_init__(**kwargs)
-
-
-@dataclass(repr=False)
-class Reference(YAMLRoot):
-    """
-    External reference such as an advisory or article.
-    """
-    _inherited_slots: ClassVar[list[str]] = []
-
-    class_class_uri: ClassVar[URIRef] = CORE["Reference"]
-    class_class_curie: ClassVar[str] = "core:Reference"
-    class_name: ClassVar[str] = "Reference"
-    class_model_uri: ClassVar[URIRef] = CVE.Reference
-
-    url: Optional[Union[str, URI]] = None
-    name: Optional[str] = None
-    source: Optional[str] = None
-
-    def __post_init__(self, *_: str, **kwargs: Any):
-        if self.url is not None and not isinstance(self.url, URI):
-            self.url = URI(self.url)
-
-        if self.name is not None and not isinstance(self.name, str):
-            self.name = str(self.name)
-
-        if self.source is not None and not isinstance(self.source, str):
-            self.source = str(self.source)
-
-        super().__post_init__(**kwargs)
-
-
-@dataclass(repr=False)
-class CveReference(Reference):
-    """
-    An external reference associated with a CVE Record. Extends the core Reference with optional descriptive tags
-    characterizing the resource.
-    """
-    _inherited_slots: ClassVar[list[str]] = []
-
-    class_class_uri: ClassVar[URIRef] = CVE["CveReference"]
-    class_class_curie: ClassVar[str] = "cve:CveReference"
-    class_name: ClassVar[str] = "CveReference"
-    class_model_uri: ClassVar[URIRef] = CVE.CveReference
-
-    url: Union[str, URI] = None
-    reference_tags: Optional[Union[Union[str, "ReferenceTag"], list[Union[str, "ReferenceTag"]]]] = empty_list()
-
-    def __post_init__(self, *_: str, **kwargs: Any):
-        if self._is_empty(self.url):
-            self.MissingRequiredField("url")
-        if not isinstance(self.url, URI):
-            self.url = URI(self.url)
-
-        if not isinstance(self.reference_tags, list):
-            self.reference_tags = [self.reference_tags] if self.reference_tags is not None else []
-        self.reference_tags = [v if isinstance(v, ReferenceTag) else ReferenceTag(v) for v in self.reference_tags]
-
-        super().__post_init__(**kwargs)
-
-
-@dataclass(repr=False)
-class Weakness(YAMLRoot):
-    """
-    Weakness classification from CWE or a similar taxonomy.
-    """
-    _inherited_slots: ClassVar[list[str]] = []
-
-    class_class_uri: ClassVar[URIRef] = CORE["Weakness"]
-    class_class_curie: ClassVar[str] = "core:Weakness"
-    class_name: ClassVar[str] = "Weakness"
-    class_model_uri: ClassVar[URIRef] = CVE.Weakness
-
-    cwe_id: Optional[str] = None
-    name: Optional[str] = None
-    description: Optional[str] = None
-
-    def __post_init__(self, *_: str, **kwargs: Any):
-        if self.cwe_id is not None and not isinstance(self.cwe_id, str):
-            self.cwe_id = str(self.cwe_id)
-
-        if self.name is not None and not isinstance(self.name, str):
-            self.name = str(self.name)
-
-        if self.description is not None and not isinstance(self.description, str):
-            self.description = str(self.description)
-
-        super().__post_init__(**kwargs)
-
-
-@dataclass(repr=False)
-class Impact(YAMLRoot):
-    """
-    Assessment of the vulnerability's impact and severity.
-    """
-    _inherited_slots: ClassVar[list[str]] = []
-
-    class_class_uri: ClassVar[URIRef] = CORE["Impact"]
-    class_class_curie: ClassVar[str] = "core:Impact"
-    class_name: ClassVar[str] = "Impact"
-    class_model_uri: ClassVar[URIRef] = CVE.Impact
-
-    severity: Optional[Union[str, "ImpactSeverity"]] = None
-    vector: Optional[str] = None
-    score: Optional[float] = None
-
-    def __post_init__(self, *_: str, **kwargs: Any):
-        if self.severity is not None and not isinstance(self.severity, ImpactSeverity):
-            self.severity = ImpactSeverity(self.severity)
-
-        if self.vector is not None and not isinstance(self.vector, str):
-            self.vector = str(self.vector)
-
-        if self.score is not None and not isinstance(self.score, float):
-            self.score = float(self.score)
-
-        super().__post_init__(**kwargs)
-
-
-@dataclass(repr=False)
-class Configuration(YAMLRoot):
-    """
-    Logical grouping of CPE match expressions.
-    """
-    _inherited_slots: ClassVar[list[str]] = []
-
-    class_class_uri: ClassVar[URIRef] = CORE["Configuration"]
-    class_class_curie: ClassVar[str] = "core:Configuration"
-    class_name: ClassVar[str] = "Configuration"
-    class_model_uri: ClassVar[URIRef] = CVE.Configuration
-
-    cpe_uri: Optional[str] = None
-    operator: Optional[str] = None
-
-    def __post_init__(self, *_: str, **kwargs: Any):
-        if self.cpe_uri is not None and not isinstance(self.cpe_uri, str):
-            self.cpe_uri = str(self.cpe_uri)
-
-        if self.operator is not None and not isinstance(self.operator, str):
-            self.operator = str(self.operator)
-
-        super().__post_init__(**kwargs)
 
 
 # Enumerations
@@ -3001,6 +1190,1863 @@ class ImpactSeverity(EnumDefinitionImpl):
         description="CVSS qualitative severity rating.",
     )
 
+
+# Class references
+class VulnerabilityCveId(extended_str):
+    pass
+
+
+Any = Any
+
+@dataclass(repr=False)
+class CVERecord(YAMLRoot):
+    """
+    Official CVE Record corresponding to a CVE ID. Represents either a Published or Rejected record in the CVE™
+    Program. The dataType field is always CVE_RECORD. Use cveMetadata.state to distinguish Published from Rejected
+    records.
+    This class deliberately does NOT inherit from ``vulnerability_core.Vulnerability``: the upstream CVE Record Format
+    places the CVE ID inside ``cveMetadata.cveId`` rather than at the record root. Semantic equivalence with the
+    broader ``Vulnerability`` concept is preserved via ``exact_mappings``.
+    """
+    _inherited_slots: ClassVar[list[str]] = []
+
+    class_class_uri: ClassVar[URIRef] = CVE["CVERecord"]
+    class_class_curie: ClassVar[str] = "cve:CVERecord"
+    class_name: ClassVar[str] = "CVERecord"
+    class_model_uri: ClassVar[URIRef] = CVE.CVERecord
+
+    cve_metadata: Union[dict, "CveMetadata"] = None
+    containers: Union[dict, "Containers"] = None
+    data_type: Optional[Union[str, "DataType"]] = 'CVE_RECORD'
+    data_version: Optional[str] = "5.2.0"
+
+    def __post_init__(self, *_: str, **kwargs: Any):
+        if self._is_empty(self.cve_metadata):
+            self.MissingRequiredField("cve_metadata")
+        if not isinstance(self.cve_metadata, CveMetadata):
+            self.cve_metadata = CveMetadata()
+
+        if self._is_empty(self.containers):
+            self.MissingRequiredField("containers")
+        if not isinstance(self.containers, Containers):
+            self.containers = Containers(**as_dict(self.containers))
+
+        if self.data_type is not None and not isinstance(self.data_type, DataType):
+            self.data_type = DataType(self.data_type)
+
+        if self.data_version is not None and not isinstance(self.data_version, str):
+            self.data_version = str(self.data_version)
+
+        super().__post_init__(**kwargs)
+
+
+class CveMetadata(YAMLRoot):
+    """
+    Abstract base for CVE Record metadata. Represents either a Published or Rejected record's metadata. All fields are
+    controlled by CVE Services. Polymorphism is provided via ``is_a`` on the two concrete subclasses
+    (``CveMetadataPublished``, ``CveMetadataRejected``); slot-level ``any_of`` on the ``cve_metadata`` slot preserves
+    the choice for generators (e.g. JSON Schema ``anyOf``).
+    """
+    _inherited_slots: ClassVar[list[str]] = []
+
+    class_class_uri: ClassVar[URIRef] = CVE["CveMetadata"]
+    class_class_curie: ClassVar[str] = "cve:CveMetadata"
+    class_name: ClassVar[str] = "CveMetadata"
+    class_model_uri: ClassVar[URIRef] = CVE.CveMetadata
+
+
+@dataclass(repr=False)
+class CveMetadataPublished(CveMetadata):
+    """
+    Metadata for a CVE Record in the PUBLISHED state.
+    """
+    _inherited_slots: ClassVar[list[str]] = []
+
+    class_class_uri: ClassVar[URIRef] = CVE["CveMetadataPublished"]
+    class_class_curie: ClassVar[str] = "cve:CveMetadataPublished"
+    class_name: ClassVar[str] = "CveMetadataPublished"
+    class_model_uri: ClassVar[URIRef] = CVE.CveMetadataPublished
+
+    record_cve_id: str = None
+    assigner_org_id: str = None
+    published_state: Union[str, "RecordState"] = None
+    assigner_short_name: Optional[str] = None
+    serial: Optional[int] = None
+    date_updated: Optional[str] = None
+    date_reserved: Optional[str] = None
+    requester_user_id: Optional[str] = None
+    date_published: Optional[str] = None
+
+    def __post_init__(self, *_: str, **kwargs: Any):
+        if self._is_empty(self.record_cve_id):
+            self.MissingRequiredField("record_cve_id")
+        if not isinstance(self.record_cve_id, str):
+            self.record_cve_id = str(self.record_cve_id)
+
+        if self._is_empty(self.assigner_org_id):
+            self.MissingRequiredField("assigner_org_id")
+        if not isinstance(self.assigner_org_id, str):
+            self.assigner_org_id = str(self.assigner_org_id)
+
+        if self._is_empty(self.published_state):
+            self.MissingRequiredField("published_state")
+        if not isinstance(self.published_state, RecordState):
+            self.published_state = RecordState(self.published_state)
+
+        if self.assigner_short_name is not None and not isinstance(self.assigner_short_name, str):
+            self.assigner_short_name = str(self.assigner_short_name)
+
+        if self.serial is not None and not isinstance(self.serial, int):
+            self.serial = int(self.serial)
+
+        if self.date_updated is not None and not isinstance(self.date_updated, str):
+            self.date_updated = str(self.date_updated)
+
+        if self.date_reserved is not None and not isinstance(self.date_reserved, str):
+            self.date_reserved = str(self.date_reserved)
+
+        if self.requester_user_id is not None and not isinstance(self.requester_user_id, str):
+            self.requester_user_id = str(self.requester_user_id)
+
+        if self.date_published is not None and not isinstance(self.date_published, str):
+            self.date_published = str(self.date_published)
+
+        super().__post_init__(**kwargs)
+
+
+@dataclass(repr=False)
+class CveMetadataRejected(CveMetadata):
+    """
+    Metadata for a CVE Record in the REJECTED state.
+    """
+    _inherited_slots: ClassVar[list[str]] = []
+
+    class_class_uri: ClassVar[URIRef] = CVE["CveMetadataRejected"]
+    class_class_curie: ClassVar[str] = "cve:CveMetadataRejected"
+    class_name: ClassVar[str] = "CveMetadataRejected"
+    class_model_uri: ClassVar[URIRef] = CVE.CveMetadataRejected
+
+    record_cve_id: str = None
+    assigner_org_id: str = None
+    rejected_state: Union[str, "RecordState"] = None
+    assigner_short_name: Optional[str] = None
+    serial: Optional[int] = None
+    date_updated: Optional[str] = None
+    date_reserved: Optional[str] = None
+    date_published: Optional[str] = None
+    date_rejected: Optional[str] = None
+
+    def __post_init__(self, *_: str, **kwargs: Any):
+        if self._is_empty(self.record_cve_id):
+            self.MissingRequiredField("record_cve_id")
+        if not isinstance(self.record_cve_id, str):
+            self.record_cve_id = str(self.record_cve_id)
+
+        if self._is_empty(self.assigner_org_id):
+            self.MissingRequiredField("assigner_org_id")
+        if not isinstance(self.assigner_org_id, str):
+            self.assigner_org_id = str(self.assigner_org_id)
+
+        if self._is_empty(self.rejected_state):
+            self.MissingRequiredField("rejected_state")
+        if not isinstance(self.rejected_state, RecordState):
+            self.rejected_state = RecordState(self.rejected_state)
+
+        if self.assigner_short_name is not None and not isinstance(self.assigner_short_name, str):
+            self.assigner_short_name = str(self.assigner_short_name)
+
+        if self.serial is not None and not isinstance(self.serial, int):
+            self.serial = int(self.serial)
+
+        if self.date_updated is not None and not isinstance(self.date_updated, str):
+            self.date_updated = str(self.date_updated)
+
+        if self.date_reserved is not None and not isinstance(self.date_reserved, str):
+            self.date_reserved = str(self.date_reserved)
+
+        if self.date_published is not None and not isinstance(self.date_published, str):
+            self.date_published = str(self.date_published)
+
+        if self.date_rejected is not None and not isinstance(self.date_rejected, str):
+            self.date_rejected = str(self.date_rejected)
+
+        super().__post_init__(**kwargs)
+
+
+@dataclass(repr=False)
+class Containers(YAMLRoot):
+    """
+    A set of structures (called containers) used to store vulnerability information related to a specific CVE ID. At
+    minimum a 'cna' container is required.
+    """
+    _inherited_slots: ClassVar[list[str]] = []
+
+    class_class_uri: ClassVar[URIRef] = CVE["Containers"]
+    class_class_curie: ClassVar[str] = "cve:Containers"
+    class_name: ClassVar[str] = "Containers"
+    class_model_uri: ClassVar[URIRef] = CVE.Containers
+
+    cna: Union[dict, "CnaContainer"] = None
+    adp: Optional[Union[Union[dict, "AdpContainer"], list[Union[dict, "AdpContainer"]]]] = empty_list()
+
+    def __post_init__(self, *_: str, **kwargs: Any):
+        if self._is_empty(self.cna):
+            self.MissingRequiredField("cna")
+        if not isinstance(self.cna, CnaContainer):
+            self.cna = CnaContainer()
+
+        if not isinstance(self.adp, list):
+            self.adp = [self.adp] if self.adp is not None else []
+        self.adp = [v if isinstance(v, AdpContainer) else AdpContainer(**as_dict(v)) for v in self.adp]
+
+        super().__post_init__(**kwargs)
+
+
+@dataclass(repr=False)
+class ProviderMetadata(YAMLRoot):
+    """
+    Details related to the information container provider (CNA or ADP).
+    """
+    _inherited_slots: ClassVar[list[str]] = []
+
+    class_class_uri: ClassVar[URIRef] = CVE["ProviderMetadata"]
+    class_class_curie: ClassVar[str] = "cve:ProviderMetadata"
+    class_name: ClassVar[str] = "ProviderMetadata"
+    class_model_uri: ClassVar[URIRef] = CVE.ProviderMetadata
+
+    org_id: str = None
+    short_name: Optional[str] = None
+    date_updated: Optional[str] = None
+
+    def __post_init__(self, *_: str, **kwargs: Any):
+        if self._is_empty(self.org_id):
+            self.MissingRequiredField("org_id")
+        if not isinstance(self.org_id, str):
+            self.org_id = str(self.org_id)
+
+        if self.short_name is not None and not isinstance(self.short_name, str):
+            self.short_name = str(self.short_name)
+
+        if self.date_updated is not None and not isinstance(self.date_updated, str):
+            self.date_updated = str(self.date_updated)
+
+        super().__post_init__(**kwargs)
+
+
+class CnaContainer(YAMLRoot):
+    """
+    Abstract base for CNA containers (published and rejected). Polymorphism is provided via ``is_a`` on the two
+    concrete subclasses (``CnaPublishedContainer``, ``CnaRejectedContainer``); slot-level ``any_of`` on the ``cna``
+    slot preserves the choice for generators.
+    """
+    _inherited_slots: ClassVar[list[str]] = []
+
+    class_class_uri: ClassVar[URIRef] = CVE["CnaContainer"]
+    class_class_curie: ClassVar[str] = "cve:CnaContainer"
+    class_name: ClassVar[str] = "CnaContainer"
+    class_model_uri: ClassVar[URIRef] = CVE.CnaContainer
+
+
+@dataclass(repr=False)
+class CnaPublishedContainer(CnaContainer):
+    """
+    An object containing vulnerability information provided by a CVE Numbering Authority (CNA) for a published CVE ID.
+    There can only be one CNA container per CVE record since there can only be one assigning CNA.
+    """
+    _inherited_slots: ClassVar[list[str]] = []
+
+    class_class_uri: ClassVar[URIRef] = CVE["CnaPublishedContainer"]
+    class_class_curie: ClassVar[str] = "cve:CnaPublishedContainer"
+    class_name: ClassVar[str] = "CnaPublishedContainer"
+    class_model_uri: ClassVar[URIRef] = CVE.CnaPublishedContainer
+
+    provider_metadata: Union[dict, ProviderMetadata] = None
+    descriptions: Union[Union[dict, "MultiLangDescription"], list[Union[dict, "MultiLangDescription"]]] = None
+    affected: Union[Union[dict, "AffectedProduct"], list[Union[dict, "AffectedProduct"]]] = None
+    cve_references: Union[Union[dict, "CveReference"], list[Union[dict, "CveReference"]]] = None
+    date_assigned: Optional[str] = None
+    date_public: Optional[str] = None
+    title: Optional[str] = None
+    cpe_applicability: Optional[Union[Union[dict, "CpeApplicabilityElement"], list[Union[dict, "CpeApplicabilityElement"]]]] = empty_list()
+    problem_types: Optional[Union[Union[dict, "ProblemType"], list[Union[dict, "ProblemType"]]]] = empty_list()
+    impacts: Optional[Union[Union[dict, "ImpactEntry"], list[Union[dict, "ImpactEntry"]]]] = empty_list()
+    metrics: Optional[Union[Union[dict, "MetricEntry"], list[Union[dict, "MetricEntry"]]]] = empty_list()
+    configurations_text: Optional[Union[Union[dict, "MultiLangDescription"], list[Union[dict, "MultiLangDescription"]]]] = empty_list()
+    workarounds: Optional[Union[Union[dict, "MultiLangDescription"], list[Union[dict, "MultiLangDescription"]]]] = empty_list()
+    solutions: Optional[Union[Union[dict, "MultiLangDescription"], list[Union[dict, "MultiLangDescription"]]]] = empty_list()
+    exploits: Optional[Union[Union[dict, "MultiLangDescription"], list[Union[dict, "MultiLangDescription"]]]] = empty_list()
+    timeline: Optional[Union[Union[dict, "TimelineEntry"], list[Union[dict, "TimelineEntry"]]]] = empty_list()
+    credits: Optional[Union[Union[dict, "CreditEntry"], list[Union[dict, "CreditEntry"]]]] = empty_list()
+    cna_source: Optional[Union[dict, "SourceInformation"]] = None
+    cna_tags: Optional[Union[str, list[str]]] = empty_list()
+    taxonomy_mappings: Optional[Union[Union[dict, "TaxonomyMapping"], list[Union[dict, "TaxonomyMapping"]]]] = empty_list()
+
+    def __post_init__(self, *_: str, **kwargs: Any):
+        if self._is_empty(self.provider_metadata):
+            self.MissingRequiredField("provider_metadata")
+        if not isinstance(self.provider_metadata, ProviderMetadata):
+            self.provider_metadata = ProviderMetadata(**as_dict(self.provider_metadata))
+
+        if self._is_empty(self.descriptions):
+            self.MissingRequiredField("descriptions")
+        self._normalize_inlined_as_list(slot_name="descriptions", slot_type=MultiLangDescription, key_name="lang", keyed=False)
+
+        if self._is_empty(self.affected):
+            self.MissingRequiredField("affected")
+        if not isinstance(self.affected, list):
+            self.affected = [self.affected] if self.affected is not None else []
+        self.affected = [v if isinstance(v, AffectedProduct) else AffectedProduct(**as_dict(v)) for v in self.affected]
+
+        if self._is_empty(self.cve_references):
+            self.MissingRequiredField("cve_references")
+        self._normalize_inlined_as_list(slot_name="cve_references", slot_type=CveReference, key_name="url", keyed=False)
+
+        if self.date_assigned is not None and not isinstance(self.date_assigned, str):
+            self.date_assigned = str(self.date_assigned)
+
+        if self.date_public is not None and not isinstance(self.date_public, str):
+            self.date_public = str(self.date_public)
+
+        if self.title is not None and not isinstance(self.title, str):
+            self.title = str(self.title)
+
+        if not isinstance(self.cpe_applicability, list):
+            self.cpe_applicability = [self.cpe_applicability] if self.cpe_applicability is not None else []
+        self.cpe_applicability = [v if isinstance(v, CpeApplicabilityElement) else CpeApplicabilityElement(**as_dict(v)) for v in self.cpe_applicability]
+
+        if not isinstance(self.problem_types, list):
+            self.problem_types = [self.problem_types] if self.problem_types is not None else []
+        self.problem_types = [v if isinstance(v, ProblemType) else ProblemType(**as_dict(v)) for v in self.problem_types]
+
+        if not isinstance(self.impacts, list):
+            self.impacts = [self.impacts] if self.impacts is not None else []
+        self.impacts = [v if isinstance(v, ImpactEntry) else ImpactEntry(**as_dict(v)) for v in self.impacts]
+
+        if not isinstance(self.metrics, list):
+            self.metrics = [self.metrics] if self.metrics is not None else []
+        self.metrics = [v if isinstance(v, MetricEntry) else MetricEntry(**as_dict(v)) for v in self.metrics]
+
+        self._normalize_inlined_as_list(slot_name="configurations_text", slot_type=MultiLangDescription, key_name="lang", keyed=False)
+
+        self._normalize_inlined_as_list(slot_name="workarounds", slot_type=MultiLangDescription, key_name="lang", keyed=False)
+
+        self._normalize_inlined_as_list(slot_name="solutions", slot_type=MultiLangDescription, key_name="lang", keyed=False)
+
+        self._normalize_inlined_as_list(slot_name="exploits", slot_type=MultiLangDescription, key_name="lang", keyed=False)
+
+        self._normalize_inlined_as_list(slot_name="timeline", slot_type=TimelineEntry, key_name="event_time", keyed=False)
+
+        self._normalize_inlined_as_list(slot_name="credits", slot_type=CreditEntry, key_name="lang", keyed=False)
+
+        if self.cna_source is not None and not isinstance(self.cna_source, SourceInformation):
+            self.cna_source = SourceInformation(**as_dict(self.cna_source))
+
+        if not isinstance(self.cna_tags, list):
+            self.cna_tags = [self.cna_tags] if self.cna_tags is not None else []
+        self.cna_tags = [v if isinstance(v, str) else str(v) for v in self.cna_tags]
+
+        self._normalize_inlined_as_list(slot_name="taxonomy_mappings", slot_type=TaxonomyMapping, key_name="taxonomy_name", keyed=False)
+
+        super().__post_init__(**kwargs)
+
+
+@dataclass(repr=False)
+class CnaRejectedContainer(CnaContainer):
+    """
+    An object containing vulnerability information provided by a CVE Numbering Authority (CNA) for a rejected CVE ID.
+    There can only be one CNA container per CVE record.
+    """
+    _inherited_slots: ClassVar[list[str]] = []
+
+    class_class_uri: ClassVar[URIRef] = CVE["CnaRejectedContainer"]
+    class_class_curie: ClassVar[str] = "cve:CnaRejectedContainer"
+    class_name: ClassVar[str] = "CnaRejectedContainer"
+    class_model_uri: ClassVar[URIRef] = CVE.CnaRejectedContainer
+
+    provider_metadata: Union[dict, ProviderMetadata] = None
+    rejected_reasons: Union[Union[dict, "MultiLangDescription"], list[Union[dict, "MultiLangDescription"]]] = None
+    replaced_by: Optional[Union[str, list[str]]] = empty_list()
+
+    def __post_init__(self, *_: str, **kwargs: Any):
+        if self._is_empty(self.provider_metadata):
+            self.MissingRequiredField("provider_metadata")
+        if not isinstance(self.provider_metadata, ProviderMetadata):
+            self.provider_metadata = ProviderMetadata(**as_dict(self.provider_metadata))
+
+        if self._is_empty(self.rejected_reasons):
+            self.MissingRequiredField("rejected_reasons")
+        self._normalize_inlined_as_list(slot_name="rejected_reasons", slot_type=MultiLangDescription, key_name="lang", keyed=False)
+
+        if not isinstance(self.replaced_by, list):
+            self.replaced_by = [self.replaced_by] if self.replaced_by is not None else []
+        self.replaced_by = [v if isinstance(v, str) else str(v) for v in self.replaced_by]
+
+        super().__post_init__(**kwargs)
+
+
+@dataclass(repr=False)
+class AdpContainer(YAMLRoot):
+    """
+    An object containing vulnerability information provided by an Authorized Data Publisher (ADP). Multiple ADPs can
+    provide containers for a single CVE ID.
+    """
+    _inherited_slots: ClassVar[list[str]] = []
+
+    class_class_uri: ClassVar[URIRef] = CVE["AdpContainer"]
+    class_class_curie: ClassVar[str] = "cve:AdpContainer"
+    class_name: ClassVar[str] = "AdpContainer"
+    class_model_uri: ClassVar[URIRef] = CVE.AdpContainer
+
+    provider_metadata: Union[dict, ProviderMetadata] = None
+    date_public: Optional[str] = None
+    title: Optional[str] = None
+    descriptions: Optional[Union[Union[dict, "MultiLangDescription"], list[Union[dict, "MultiLangDescription"]]]] = empty_list()
+    affected: Optional[Union[Union[dict, "AffectedProduct"], list[Union[dict, "AffectedProduct"]]]] = empty_list()
+    cpe_applicability: Optional[Union[Union[dict, "CpeApplicabilityElement"], list[Union[dict, "CpeApplicabilityElement"]]]] = empty_list()
+    problem_types: Optional[Union[Union[dict, "ProblemType"], list[Union[dict, "ProblemType"]]]] = empty_list()
+    cve_references: Optional[Union[Union[dict, "CveReference"], list[Union[dict, "CveReference"]]]] = empty_list()
+    impacts: Optional[Union[Union[dict, "ImpactEntry"], list[Union[dict, "ImpactEntry"]]]] = empty_list()
+    metrics: Optional[Union[Union[dict, "MetricEntry"], list[Union[dict, "MetricEntry"]]]] = empty_list()
+    configurations_text: Optional[Union[Union[dict, "MultiLangDescription"], list[Union[dict, "MultiLangDescription"]]]] = empty_list()
+    workarounds: Optional[Union[Union[dict, "MultiLangDescription"], list[Union[dict, "MultiLangDescription"]]]] = empty_list()
+    solutions: Optional[Union[Union[dict, "MultiLangDescription"], list[Union[dict, "MultiLangDescription"]]]] = empty_list()
+    exploits: Optional[Union[Union[dict, "MultiLangDescription"], list[Union[dict, "MultiLangDescription"]]]] = empty_list()
+    timeline: Optional[Union[Union[dict, "TimelineEntry"], list[Union[dict, "TimelineEntry"]]]] = empty_list()
+    credits: Optional[Union[Union[dict, "CreditEntry"], list[Union[dict, "CreditEntry"]]]] = empty_list()
+    cna_source: Optional[Union[dict, "SourceInformation"]] = None
+    adp_tags: Optional[Union[str, list[str]]] = empty_list()
+    taxonomy_mappings: Optional[Union[Union[dict, "TaxonomyMapping"], list[Union[dict, "TaxonomyMapping"]]]] = empty_list()
+
+    def __post_init__(self, *_: str, **kwargs: Any):
+        if self._is_empty(self.provider_metadata):
+            self.MissingRequiredField("provider_metadata")
+        if not isinstance(self.provider_metadata, ProviderMetadata):
+            self.provider_metadata = ProviderMetadata(**as_dict(self.provider_metadata))
+
+        if self.date_public is not None and not isinstance(self.date_public, str):
+            self.date_public = str(self.date_public)
+
+        if self.title is not None and not isinstance(self.title, str):
+            self.title = str(self.title)
+
+        self._normalize_inlined_as_list(slot_name="descriptions", slot_type=MultiLangDescription, key_name="lang", keyed=False)
+
+        if not isinstance(self.affected, list):
+            self.affected = [self.affected] if self.affected is not None else []
+        self.affected = [v if isinstance(v, AffectedProduct) else AffectedProduct(**as_dict(v)) for v in self.affected]
+
+        if not isinstance(self.cpe_applicability, list):
+            self.cpe_applicability = [self.cpe_applicability] if self.cpe_applicability is not None else []
+        self.cpe_applicability = [v if isinstance(v, CpeApplicabilityElement) else CpeApplicabilityElement(**as_dict(v)) for v in self.cpe_applicability]
+
+        if not isinstance(self.problem_types, list):
+            self.problem_types = [self.problem_types] if self.problem_types is not None else []
+        self.problem_types = [v if isinstance(v, ProblemType) else ProblemType(**as_dict(v)) for v in self.problem_types]
+
+        self._normalize_inlined_as_list(slot_name="cve_references", slot_type=CveReference, key_name="url", keyed=False)
+
+        if not isinstance(self.impacts, list):
+            self.impacts = [self.impacts] if self.impacts is not None else []
+        self.impacts = [v if isinstance(v, ImpactEntry) else ImpactEntry(**as_dict(v)) for v in self.impacts]
+
+        if not isinstance(self.metrics, list):
+            self.metrics = [self.metrics] if self.metrics is not None else []
+        self.metrics = [v if isinstance(v, MetricEntry) else MetricEntry(**as_dict(v)) for v in self.metrics]
+
+        self._normalize_inlined_as_list(slot_name="configurations_text", slot_type=MultiLangDescription, key_name="lang", keyed=False)
+
+        self._normalize_inlined_as_list(slot_name="workarounds", slot_type=MultiLangDescription, key_name="lang", keyed=False)
+
+        self._normalize_inlined_as_list(slot_name="solutions", slot_type=MultiLangDescription, key_name="lang", keyed=False)
+
+        self._normalize_inlined_as_list(slot_name="exploits", slot_type=MultiLangDescription, key_name="lang", keyed=False)
+
+        self._normalize_inlined_as_list(slot_name="timeline", slot_type=TimelineEntry, key_name="event_time", keyed=False)
+
+        self._normalize_inlined_as_list(slot_name="credits", slot_type=CreditEntry, key_name="lang", keyed=False)
+
+        if self.cna_source is not None and not isinstance(self.cna_source, SourceInformation):
+            self.cna_source = SourceInformation(**as_dict(self.cna_source))
+
+        if not isinstance(self.adp_tags, list):
+            self.adp_tags = [self.adp_tags] if self.adp_tags is not None else []
+        self.adp_tags = [v if isinstance(v, str) else str(v) for v in self.adp_tags]
+
+        self._normalize_inlined_as_list(slot_name="taxonomy_mappings", slot_type=TaxonomyMapping, key_name="taxonomy_name", keyed=False)
+
+        super().__post_init__(**kwargs)
+
+
+@dataclass(repr=False)
+class AffectedProduct(YAMLRoot):
+    """
+    Information about the set of products and services affected by a vulnerability. At least one of (vendor + product)
+    or (collectionURL + packageName) is required, and at least one of versions or defaultStatus is required.
+    Note: this class deliberately does NOT inherit from ``vulnerability_core.Product``. The upstream CVE ``product``
+    definition uses a multivalued ``versions`` slot (range ``VersionEntry``), which conflicts with ``Product.version``
+    (singular string). The ``vendor``, ``name`` (= upstream ``product``), and ``platforms`` slots are reused from the
+    core schema directly. Semantic equivalence is preserved via ``exact_mappings``.
+    """
+    _inherited_slots: ClassVar[list[str]] = []
+
+    class_class_uri: ClassVar[URIRef] = CVE["AffectedProduct"]
+    class_class_curie: ClassVar[str] = "cve:AffectedProduct"
+    class_name: ClassVar[str] = "AffectedProduct"
+    class_model_uri: ClassVar[URIRef] = CVE.AffectedProduct
+
+    vendor: Optional[str] = None
+    name: Optional[str] = None
+    platforms: Optional[Union[str, list[str]]] = empty_list()
+    collection_url: Optional[Union[str, URI]] = None
+    package_name: Optional[str] = None
+    cpes: Optional[Union[str, list[str]]] = empty_list()
+    modules: Optional[Union[str, list[str]]] = empty_list()
+    program_files: Optional[Union[str, list[str]]] = empty_list()
+    program_routines: Optional[Union[Union[dict, "ProgramRoutine"], list[Union[dict, "ProgramRoutine"]]]] = empty_list()
+    repo: Optional[Union[str, URI]] = None
+    default_status: Optional[Union[str, "VersionStatus"]] = None
+    versions: Optional[Union[Union[dict, "VersionEntry"], list[Union[dict, "VersionEntry"]]]] = empty_list()
+    package_url: Optional[Union[str, URI]] = None
+
+    def __post_init__(self, *_: str, **kwargs: Any):
+        if self.vendor is not None and not isinstance(self.vendor, str):
+            self.vendor = str(self.vendor)
+
+        if self.name is not None and not isinstance(self.name, str):
+            self.name = str(self.name)
+
+        if not isinstance(self.platforms, list):
+            self.platforms = [self.platforms] if self.platforms is not None else []
+        self.platforms = [v if isinstance(v, str) else str(v) for v in self.platforms]
+
+        if self.collection_url is not None and not isinstance(self.collection_url, URI):
+            self.collection_url = URI(self.collection_url)
+
+        if self.package_name is not None and not isinstance(self.package_name, str):
+            self.package_name = str(self.package_name)
+
+        if not isinstance(self.cpes, list):
+            self.cpes = [self.cpes] if self.cpes is not None else []
+        self.cpes = [v if isinstance(v, str) else str(v) for v in self.cpes]
+
+        if not isinstance(self.modules, list):
+            self.modules = [self.modules] if self.modules is not None else []
+        self.modules = [v if isinstance(v, str) else str(v) for v in self.modules]
+
+        if not isinstance(self.program_files, list):
+            self.program_files = [self.program_files] if self.program_files is not None else []
+        self.program_files = [v if isinstance(v, str) else str(v) for v in self.program_files]
+
+        self._normalize_inlined_as_list(slot_name="program_routines", slot_type=ProgramRoutine, key_name="routine_name", keyed=False)
+
+        if self.repo is not None and not isinstance(self.repo, URI):
+            self.repo = URI(self.repo)
+
+        if self.default_status is not None and not isinstance(self.default_status, VersionStatus):
+            self.default_status = VersionStatus(self.default_status)
+
+        self._normalize_inlined_as_list(slot_name="versions", slot_type=VersionEntry, key_name="version_value", keyed=False)
+
+        if self.package_url is not None and not isinstance(self.package_url, URI):
+            self.package_url = URI(self.package_url)
+
+        super().__post_init__(**kwargs)
+
+
+@dataclass(repr=False)
+class ProgramRoutine(YAMLRoot):
+    """
+    An affected source code function, method, subroutine, or procedure.
+    """
+    _inherited_slots: ClassVar[list[str]] = []
+
+    class_class_uri: ClassVar[URIRef] = CVE["ProgramRoutine"]
+    class_class_curie: ClassVar[str] = "cve:ProgramRoutine"
+    class_name: ClassVar[str] = "ProgramRoutine"
+    class_model_uri: ClassVar[URIRef] = CVE.ProgramRoutine
+
+    routine_name: str = None
+
+    def __post_init__(self, *_: str, **kwargs: Any):
+        if self._is_empty(self.routine_name):
+            self.MissingRequiredField("routine_name")
+        if not isinstance(self.routine_name, str):
+            self.routine_name = str(self.routine_name)
+
+        super().__post_init__(**kwargs)
+
+
+@dataclass(repr=False)
+class VersionEntry(YAMLRoot):
+    """
+    A single version or a range of versions of a product with associated vulnerability status. An entry with only
+    version and status is a point version; an entry with versionType and a less-than limit describes a range.
+    """
+    _inherited_slots: ClassVar[list[str]] = []
+
+    class_class_uri: ClassVar[URIRef] = CVE["VersionEntry"]
+    class_class_curie: ClassVar[str] = "cve:VersionEntry"
+    class_name: ClassVar[str] = "VersionEntry"
+    class_model_uri: ClassVar[URIRef] = CVE.VersionEntry
+
+    version_value: str = None
+    version_status: Union[str, "VersionStatus"] = None
+    version_type: Optional[str] = None
+    less_than: Optional[str] = None
+    less_than_or_equal: Optional[str] = None
+    version_changes: Optional[Union[Union[dict, "VersionChange"], list[Union[dict, "VersionChange"]]]] = empty_list()
+
+    def __post_init__(self, *_: str, **kwargs: Any):
+        if self._is_empty(self.version_value):
+            self.MissingRequiredField("version_value")
+        if not isinstance(self.version_value, str):
+            self.version_value = str(self.version_value)
+
+        if self._is_empty(self.version_status):
+            self.MissingRequiredField("version_status")
+        if not isinstance(self.version_status, VersionStatus):
+            self.version_status = VersionStatus(self.version_status)
+
+        if self.version_type is not None and not isinstance(self.version_type, str):
+            self.version_type = str(self.version_type)
+
+        if self.less_than is not None and not isinstance(self.less_than, str):
+            self.less_than = str(self.less_than)
+
+        if self.less_than_or_equal is not None and not isinstance(self.less_than_or_equal, str):
+            self.less_than_or_equal = str(self.less_than_or_equal)
+
+        self._normalize_inlined_as_list(slot_name="version_changes", slot_type=VersionChange, key_name="change_at", keyed=False)
+
+        super().__post_init__(**kwargs)
+
+
+@dataclass(repr=False)
+class VersionChange(YAMLRoot):
+    """
+    A status change that takes place at a specific point within a version range.
+    """
+    _inherited_slots: ClassVar[list[str]] = []
+
+    class_class_uri: ClassVar[URIRef] = CVE["VersionChange"]
+    class_class_curie: ClassVar[str] = "cve:VersionChange"
+    class_name: ClassVar[str] = "VersionChange"
+    class_model_uri: ClassVar[URIRef] = CVE.VersionChange
+
+    change_at: str = None
+    change_status: Union[str, "VersionStatus"] = None
+
+    def __post_init__(self, *_: str, **kwargs: Any):
+        if self._is_empty(self.change_at):
+            self.MissingRequiredField("change_at")
+        if not isinstance(self.change_at, str):
+            self.change_at = str(self.change_at)
+
+        if self._is_empty(self.change_status):
+            self.MissingRequiredField("change_status")
+        if not isinstance(self.change_status, VersionStatus):
+            self.change_status = VersionStatus(self.change_status)
+
+        super().__post_init__(**kwargs)
+
+
+@dataclass(repr=False)
+class MultiLangDescription(YAMLRoot):
+    """
+    Text in a particular language with optional alternate markup or formatted representation (e.g., Markdown) or
+    embedded media. Used for vulnerability descriptions, rejected reasons, configurations, workarounds, solutions, and
+    exploits.
+    """
+    _inherited_slots: ClassVar[list[str]] = []
+
+    class_class_uri: ClassVar[URIRef] = CVE["MultiLangDescription"]
+    class_class_curie: ClassVar[str] = "cve:MultiLangDescription"
+    class_name: ClassVar[str] = "MultiLangDescription"
+    class_model_uri: ClassVar[URIRef] = CVE.MultiLangDescription
+
+    description_value: str = None
+    lang: str = "en"
+    supporting_media: Optional[Union[Union[dict, "SupportingMedia"], list[Union[dict, "SupportingMedia"]]]] = empty_list()
+
+    def __post_init__(self, *_: str, **kwargs: Any):
+        if self._is_empty(self.lang):
+            self.MissingRequiredField("lang")
+        if not isinstance(self.lang, str):
+            self.lang = str(self.lang)
+
+        if self._is_empty(self.description_value):
+            self.MissingRequiredField("description_value")
+        if not isinstance(self.description_value, str):
+            self.description_value = str(self.description_value)
+
+        self._normalize_inlined_as_list(slot_name="supporting_media", slot_type=SupportingMedia, key_name="media_type", keyed=False)
+
+        super().__post_init__(**kwargs)
+
+
+@dataclass(repr=False)
+class SupportingMedia(YAMLRoot):
+    """
+    Supporting media data for a description such as markdown, diagrams, etc. Similar to RFC 2397, each media object
+    has a media type, data value, and an optional base64 flag.
+    """
+    _inherited_slots: ClassVar[list[str]] = []
+
+    class_class_uri: ClassVar[URIRef] = CVE["SupportingMedia"]
+    class_class_curie: ClassVar[str] = "cve:SupportingMedia"
+    class_name: ClassVar[str] = "SupportingMedia"
+    class_model_uri: ClassVar[URIRef] = CVE.SupportingMedia
+
+    media_type: str = None
+    media_value: str = None
+    base64_encoded: Optional[Union[bool, Bool]] = False
+
+    def __post_init__(self, *_: str, **kwargs: Any):
+        if self._is_empty(self.media_type):
+            self.MissingRequiredField("media_type")
+        if not isinstance(self.media_type, str):
+            self.media_type = str(self.media_type)
+
+        if self._is_empty(self.media_value):
+            self.MissingRequiredField("media_value")
+        if not isinstance(self.media_value, str):
+            self.media_value = str(self.media_value)
+
+        if self.base64_encoded is not None and not isinstance(self.base64_encoded, Bool):
+            self.base64_encoded = Bool(self.base64_encoded)
+
+        super().__post_init__(**kwargs)
+
+
+@dataclass(repr=False)
+class ProblemType(YAMLRoot):
+    """
+    Problem type information (e.g., CWE identifier). Wraps one or more problem type descriptions. The CNA requirement
+    is [PROBLEMTYPE].
+    """
+    _inherited_slots: ClassVar[list[str]] = []
+
+    class_class_uri: ClassVar[URIRef] = CVE["ProblemType"]
+    class_class_curie: ClassVar[str] = "cve:ProblemType"
+    class_name: ClassVar[str] = "ProblemType"
+    class_model_uri: ClassVar[URIRef] = CVE.ProblemType
+
+    problem_type_descriptions: Union[Union[dict, "ProblemTypeDescription"], list[Union[dict, "ProblemTypeDescription"]]] = None
+
+    def __post_init__(self, *_: str, **kwargs: Any):
+        if self._is_empty(self.problem_type_descriptions):
+            self.MissingRequiredField("problem_type_descriptions")
+        self._normalize_inlined_as_list(slot_name="problem_type_descriptions", slot_type=ProblemTypeDescription, key_name="lang", keyed=False)
+
+        super().__post_init__(**kwargs)
+
+
+@dataclass(repr=False)
+class ProblemTypeDescription(YAMLRoot):
+    """
+    Individual problem type description entry.
+    """
+    _inherited_slots: ClassVar[list[str]] = []
+
+    class_class_uri: ClassVar[URIRef] = CVE["ProblemTypeDescription"]
+    class_class_curie: ClassVar[str] = "cve:ProblemTypeDescription"
+    class_name: ClassVar[str] = "ProblemTypeDescription"
+    class_model_uri: ClassVar[URIRef] = CVE.ProblemTypeDescription
+
+    problem_description: str = None
+    lang: str = "en"
+    cwe_id: Optional[str] = None
+    problem_source_type: Optional[str] = None
+    problem_references: Optional[Union[Union[dict, "CveReference"], list[Union[dict, "CveReference"]]]] = empty_list()
+
+    def __post_init__(self, *_: str, **kwargs: Any):
+        if self._is_empty(self.lang):
+            self.MissingRequiredField("lang")
+        if not isinstance(self.lang, str):
+            self.lang = str(self.lang)
+
+        if self._is_empty(self.problem_description):
+            self.MissingRequiredField("problem_description")
+        if not isinstance(self.problem_description, str):
+            self.problem_description = str(self.problem_description)
+
+        if self.cwe_id is not None and not isinstance(self.cwe_id, str):
+            self.cwe_id = str(self.cwe_id)
+
+        if self.problem_source_type is not None and not isinstance(self.problem_source_type, str):
+            self.problem_source_type = str(self.problem_source_type)
+
+        self._normalize_inlined_as_list(slot_name="problem_references", slot_type=CveReference, key_name="url", keyed=False)
+
+        super().__post_init__(**kwargs)
+
+
+@dataclass(repr=False)
+class ImpactEntry(YAMLRoot):
+    """
+    An impact entry linking an optional CAPEC attack pattern ID to one or more prose descriptions of the impact
+    scenario.
+    """
+    _inherited_slots: ClassVar[list[str]] = []
+
+    class_class_uri: ClassVar[URIRef] = CVE["ImpactEntry"]
+    class_class_curie: ClassVar[str] = "cve:ImpactEntry"
+    class_name: ClassVar[str] = "ImpactEntry"
+    class_model_uri: ClassVar[URIRef] = CVE.ImpactEntry
+
+    impact_descriptions: Union[Union[dict, MultiLangDescription], list[Union[dict, MultiLangDescription]]] = None
+    capec_id: Optional[str] = None
+
+    def __post_init__(self, *_: str, **kwargs: Any):
+        if self._is_empty(self.impact_descriptions):
+            self.MissingRequiredField("impact_descriptions")
+        self._normalize_inlined_as_list(slot_name="impact_descriptions", slot_type=MultiLangDescription, key_name="lang", keyed=False)
+
+        if self.capec_id is not None and not isinstance(self.capec_id, str):
+            self.capec_id = str(self.capec_id)
+
+        super().__post_init__(**kwargs)
+
+
+@dataclass(repr=False)
+class MetricEntry(YAMLRoot):
+    """
+    A metric entry containing scoring data in one of the CVSS formats (v4.0, v3.x, v2.0) or a custom format, with
+    optional applicability scenarios. At least one of cvss_v4_0, cvss_v3, cvss_v2_0, or other_metric is required. CVSS
+    3.0 and 3.1 are both represented by CvssV3 (distinguished by the cvss3_version slot).
+    """
+    _inherited_slots: ClassVar[list[str]] = []
+
+    class_class_uri: ClassVar[URIRef] = CVE["MetricEntry"]
+    class_class_curie: ClassVar[str] = "cve:MetricEntry"
+    class_name: ClassVar[str] = "MetricEntry"
+    class_model_uri: ClassVar[URIRef] = CVE.MetricEntry
+
+    metric_format: Optional[str] = None
+    metric_scenarios: Optional[Union[Union[dict, "MetricScenario"], list[Union[dict, "MetricScenario"]]]] = empty_list()
+    cvss_v4_0: Optional[Union[dict, "CvssV40"]] = None
+    cvss_v3: Optional[Union[dict, "CvssV3"]] = None
+    cvss_v2_0: Optional[Union[dict, "CvssV20"]] = None
+    other_metric: Optional[Union[dict, "OtherMetric"]] = None
+
+    def __post_init__(self, *_: str, **kwargs: Any):
+        if self.metric_format is not None and not isinstance(self.metric_format, str):
+            self.metric_format = str(self.metric_format)
+
+        self._normalize_inlined_as_list(slot_name="metric_scenarios", slot_type=MetricScenario, key_name="lang", keyed=False)
+
+        if self.cvss_v4_0 is not None and not isinstance(self.cvss_v4_0, CvssV40):
+            self.cvss_v4_0 = CvssV40(**as_dict(self.cvss_v4_0))
+
+        if self.cvss_v3 is not None and not isinstance(self.cvss_v3, CvssV3):
+            self.cvss_v3 = CvssV3(**as_dict(self.cvss_v3))
+
+        if self.cvss_v2_0 is not None and not isinstance(self.cvss_v2_0, CvssV20):
+            self.cvss_v2_0 = CvssV20(**as_dict(self.cvss_v2_0))
+
+        if self.other_metric is not None and not isinstance(self.other_metric, OtherMetric):
+            self.other_metric = OtherMetric(**as_dict(self.other_metric))
+
+        super().__post_init__(**kwargs)
+
+
+@dataclass(repr=False)
+class MetricScenario(YAMLRoot):
+    """
+    A scenario description indicating the context in which a metric applies. If no specific scenario is given, GENERAL
+    is used as the default.
+    """
+    _inherited_slots: ClassVar[list[str]] = []
+
+    class_class_uri: ClassVar[URIRef] = CVE["MetricScenario"]
+    class_class_curie: ClassVar[str] = "cve:MetricScenario"
+    class_name: ClassVar[str] = "MetricScenario"
+    class_model_uri: ClassVar[URIRef] = CVE.MetricScenario
+
+    lang: str = "en"
+    scenario_value: str = "GENERAL"
+
+    def __post_init__(self, *_: str, **kwargs: Any):
+        if self._is_empty(self.lang):
+            self.MissingRequiredField("lang")
+        if not isinstance(self.lang, str):
+            self.lang = str(self.lang)
+
+        if self._is_empty(self.scenario_value):
+            self.MissingRequiredField("scenario_value")
+        if not isinstance(self.scenario_value, str):
+            self.scenario_value = str(self.scenario_value)
+
+        super().__post_init__(**kwargs)
+
+
+@dataclass(repr=False)
+class CvssV40(YAMLRoot):
+    """
+    CVSS version 4.0 scoring object. Requires version, vectorString, baseScore, and baseSeverity. All other fields are
+    optional.
+    """
+    _inherited_slots: ClassVar[list[str]] = []
+
+    class_class_uri: ClassVar[URIRef] = CVE["CvssV40"]
+    class_class_curie: ClassVar[str] = "cve:CvssV40"
+    class_name: ClassVar[str] = "CvssV4_0"
+    class_model_uri: ClassVar[URIRef] = CVE.CvssV40
+
+    cvss4_version: str = None
+    cvss4_vector_string: str = None
+    cvss4_base_score: float = None
+    cvss4_base_severity: Union[str, "Cvss4Severity"] = None
+    cvss4_attack_vector: Optional[Union[str, "Cvss4AttackVector"]] = None
+    cvss4_attack_complexity: Optional[Union[str, "Cvss4AttackComplexity"]] = None
+    cvss4_attack_requirements: Optional[Union[str, "Cvss4AttackRequirements"]] = None
+    cvss4_privileges_required: Optional[Union[str, "Cvss4PrivilegesRequired"]] = None
+    cvss4_user_interaction: Optional[Union[str, "Cvss4UserInteraction"]] = None
+    cvss4_vuln_confidentiality_impact: Optional[Union[str, "Cvss4VulnCia"]] = None
+    cvss4_vuln_integrity_impact: Optional[Union[str, "Cvss4VulnCia"]] = None
+    cvss4_vuln_availability_impact: Optional[Union[str, "Cvss4VulnCia"]] = None
+    cvss4_sub_confidentiality_impact: Optional[Union[str, "Cvss4SubCia"]] = None
+    cvss4_sub_integrity_impact: Optional[Union[str, "Cvss4SubCia"]] = None
+    cvss4_sub_availability_impact: Optional[Union[str, "Cvss4SubCia"]] = None
+    cvss4_exploit_maturity: Optional[Union[str, "Cvss4ExploitMaturity"]] = None
+    cvss4_confidentiality_requirement: Optional[Union[str, "Cvss4CiaRequirement"]] = None
+    cvss4_integrity_requirement: Optional[Union[str, "Cvss4CiaRequirement"]] = None
+    cvss4_availability_requirement: Optional[Union[str, "Cvss4CiaRequirement"]] = None
+    cvss4_modified_attack_vector: Optional[Union[str, "Cvss4ModifiedAttackVector"]] = None
+    cvss4_modified_attack_complexity: Optional[Union[str, "Cvss4ModifiedAttackComplexity"]] = None
+    cvss4_modified_attack_requirements: Optional[Union[str, "Cvss4ModifiedAttackRequirements"]] = None
+    cvss4_modified_privileges_required: Optional[Union[str, "Cvss4ModifiedPrivilegesRequired"]] = None
+    cvss4_modified_user_interaction: Optional[Union[str, "Cvss4ModifiedUserInteraction"]] = None
+    cvss4_modified_vuln_confidentiality_impact: Optional[Union[str, "Cvss4ModifiedVulnCia"]] = None
+    cvss4_modified_vuln_integrity_impact: Optional[Union[str, "Cvss4ModifiedVulnCia"]] = None
+    cvss4_modified_vuln_availability_impact: Optional[Union[str, "Cvss4ModifiedVulnCia"]] = None
+    cvss4_modified_sub_confidentiality_impact: Optional[Union[str, "Cvss4ModifiedSubC"]] = None
+    cvss4_modified_sub_integrity_impact: Optional[Union[str, "Cvss4ModifiedSubIa"]] = None
+    cvss4_modified_sub_availability_impact: Optional[Union[str, "Cvss4ModifiedSubIa"]] = None
+    cvss4_safety: Optional[Union[str, "Cvss4Safety"]] = None
+    cvss4_automatable: Optional[Union[str, "Cvss4Automatable"]] = None
+    cvss4_recovery: Optional[Union[str, "Cvss4Recovery"]] = None
+    cvss4_value_density: Optional[Union[str, "Cvss4ValueDensity"]] = None
+    cvss4_vulnerability_response_effort: Optional[Union[str, "Cvss4VulnerabilityResponseEffort"]] = None
+    cvss4_provider_urgency: Optional[Union[str, "Cvss4ProviderUrgency"]] = None
+
+    def __post_init__(self, *_: str, **kwargs: Any):
+        if self._is_empty(self.cvss4_version):
+            self.MissingRequiredField("cvss4_version")
+        if not isinstance(self.cvss4_version, str):
+            self.cvss4_version = str(self.cvss4_version)
+
+        if self._is_empty(self.cvss4_vector_string):
+            self.MissingRequiredField("cvss4_vector_string")
+        if not isinstance(self.cvss4_vector_string, str):
+            self.cvss4_vector_string = str(self.cvss4_vector_string)
+
+        if self._is_empty(self.cvss4_base_score):
+            self.MissingRequiredField("cvss4_base_score")
+        if not isinstance(self.cvss4_base_score, float):
+            self.cvss4_base_score = float(self.cvss4_base_score)
+
+        if self._is_empty(self.cvss4_base_severity):
+            self.MissingRequiredField("cvss4_base_severity")
+        if not isinstance(self.cvss4_base_severity, Cvss4Severity):
+            self.cvss4_base_severity = Cvss4Severity(self.cvss4_base_severity)
+
+        if self.cvss4_attack_vector is not None and not isinstance(self.cvss4_attack_vector, Cvss4AttackVector):
+            self.cvss4_attack_vector = Cvss4AttackVector(self.cvss4_attack_vector)
+
+        if self.cvss4_attack_complexity is not None and not isinstance(self.cvss4_attack_complexity, Cvss4AttackComplexity):
+            self.cvss4_attack_complexity = Cvss4AttackComplexity(self.cvss4_attack_complexity)
+
+        if self.cvss4_attack_requirements is not None and not isinstance(self.cvss4_attack_requirements, Cvss4AttackRequirements):
+            self.cvss4_attack_requirements = Cvss4AttackRequirements(self.cvss4_attack_requirements)
+
+        if self.cvss4_privileges_required is not None and not isinstance(self.cvss4_privileges_required, Cvss4PrivilegesRequired):
+            self.cvss4_privileges_required = Cvss4PrivilegesRequired(self.cvss4_privileges_required)
+
+        if self.cvss4_user_interaction is not None and not isinstance(self.cvss4_user_interaction, Cvss4UserInteraction):
+            self.cvss4_user_interaction = Cvss4UserInteraction(self.cvss4_user_interaction)
+
+        if self.cvss4_vuln_confidentiality_impact is not None and not isinstance(self.cvss4_vuln_confidentiality_impact, Cvss4VulnCia):
+            self.cvss4_vuln_confidentiality_impact = Cvss4VulnCia(self.cvss4_vuln_confidentiality_impact)
+
+        if self.cvss4_vuln_integrity_impact is not None and not isinstance(self.cvss4_vuln_integrity_impact, Cvss4VulnCia):
+            self.cvss4_vuln_integrity_impact = Cvss4VulnCia(self.cvss4_vuln_integrity_impact)
+
+        if self.cvss4_vuln_availability_impact is not None and not isinstance(self.cvss4_vuln_availability_impact, Cvss4VulnCia):
+            self.cvss4_vuln_availability_impact = Cvss4VulnCia(self.cvss4_vuln_availability_impact)
+
+        if self.cvss4_sub_confidentiality_impact is not None and not isinstance(self.cvss4_sub_confidentiality_impact, Cvss4SubCia):
+            self.cvss4_sub_confidentiality_impact = Cvss4SubCia(self.cvss4_sub_confidentiality_impact)
+
+        if self.cvss4_sub_integrity_impact is not None and not isinstance(self.cvss4_sub_integrity_impact, Cvss4SubCia):
+            self.cvss4_sub_integrity_impact = Cvss4SubCia(self.cvss4_sub_integrity_impact)
+
+        if self.cvss4_sub_availability_impact is not None and not isinstance(self.cvss4_sub_availability_impact, Cvss4SubCia):
+            self.cvss4_sub_availability_impact = Cvss4SubCia(self.cvss4_sub_availability_impact)
+
+        if self.cvss4_exploit_maturity is not None and not isinstance(self.cvss4_exploit_maturity, Cvss4ExploitMaturity):
+            self.cvss4_exploit_maturity = Cvss4ExploitMaturity(self.cvss4_exploit_maturity)
+
+        if self.cvss4_confidentiality_requirement is not None and not isinstance(self.cvss4_confidentiality_requirement, Cvss4CiaRequirement):
+            self.cvss4_confidentiality_requirement = Cvss4CiaRequirement(self.cvss4_confidentiality_requirement)
+
+        if self.cvss4_integrity_requirement is not None and not isinstance(self.cvss4_integrity_requirement, Cvss4CiaRequirement):
+            self.cvss4_integrity_requirement = Cvss4CiaRequirement(self.cvss4_integrity_requirement)
+
+        if self.cvss4_availability_requirement is not None and not isinstance(self.cvss4_availability_requirement, Cvss4CiaRequirement):
+            self.cvss4_availability_requirement = Cvss4CiaRequirement(self.cvss4_availability_requirement)
+
+        if self.cvss4_modified_attack_vector is not None and not isinstance(self.cvss4_modified_attack_vector, Cvss4ModifiedAttackVector):
+            self.cvss4_modified_attack_vector = Cvss4ModifiedAttackVector(self.cvss4_modified_attack_vector)
+
+        if self.cvss4_modified_attack_complexity is not None and not isinstance(self.cvss4_modified_attack_complexity, Cvss4ModifiedAttackComplexity):
+            self.cvss4_modified_attack_complexity = Cvss4ModifiedAttackComplexity(self.cvss4_modified_attack_complexity)
+
+        if self.cvss4_modified_attack_requirements is not None and not isinstance(self.cvss4_modified_attack_requirements, Cvss4ModifiedAttackRequirements):
+            self.cvss4_modified_attack_requirements = Cvss4ModifiedAttackRequirements(self.cvss4_modified_attack_requirements)
+
+        if self.cvss4_modified_privileges_required is not None and not isinstance(self.cvss4_modified_privileges_required, Cvss4ModifiedPrivilegesRequired):
+            self.cvss4_modified_privileges_required = Cvss4ModifiedPrivilegesRequired(self.cvss4_modified_privileges_required)
+
+        if self.cvss4_modified_user_interaction is not None and not isinstance(self.cvss4_modified_user_interaction, Cvss4ModifiedUserInteraction):
+            self.cvss4_modified_user_interaction = Cvss4ModifiedUserInteraction(self.cvss4_modified_user_interaction)
+
+        if self.cvss4_modified_vuln_confidentiality_impact is not None and not isinstance(self.cvss4_modified_vuln_confidentiality_impact, Cvss4ModifiedVulnCia):
+            self.cvss4_modified_vuln_confidentiality_impact = Cvss4ModifiedVulnCia(self.cvss4_modified_vuln_confidentiality_impact)
+
+        if self.cvss4_modified_vuln_integrity_impact is not None and not isinstance(self.cvss4_modified_vuln_integrity_impact, Cvss4ModifiedVulnCia):
+            self.cvss4_modified_vuln_integrity_impact = Cvss4ModifiedVulnCia(self.cvss4_modified_vuln_integrity_impact)
+
+        if self.cvss4_modified_vuln_availability_impact is not None and not isinstance(self.cvss4_modified_vuln_availability_impact, Cvss4ModifiedVulnCia):
+            self.cvss4_modified_vuln_availability_impact = Cvss4ModifiedVulnCia(self.cvss4_modified_vuln_availability_impact)
+
+        if self.cvss4_modified_sub_confidentiality_impact is not None and not isinstance(self.cvss4_modified_sub_confidentiality_impact, Cvss4ModifiedSubC):
+            self.cvss4_modified_sub_confidentiality_impact = Cvss4ModifiedSubC(self.cvss4_modified_sub_confidentiality_impact)
+
+        if self.cvss4_modified_sub_integrity_impact is not None and not isinstance(self.cvss4_modified_sub_integrity_impact, Cvss4ModifiedSubIa):
+            self.cvss4_modified_sub_integrity_impact = Cvss4ModifiedSubIa(self.cvss4_modified_sub_integrity_impact)
+
+        if self.cvss4_modified_sub_availability_impact is not None and not isinstance(self.cvss4_modified_sub_availability_impact, Cvss4ModifiedSubIa):
+            self.cvss4_modified_sub_availability_impact = Cvss4ModifiedSubIa(self.cvss4_modified_sub_availability_impact)
+
+        if self.cvss4_safety is not None and not isinstance(self.cvss4_safety, Cvss4Safety):
+            self.cvss4_safety = Cvss4Safety(self.cvss4_safety)
+
+        if self.cvss4_automatable is not None and not isinstance(self.cvss4_automatable, Cvss4Automatable):
+            self.cvss4_automatable = Cvss4Automatable(self.cvss4_automatable)
+
+        if self.cvss4_recovery is not None and not isinstance(self.cvss4_recovery, Cvss4Recovery):
+            self.cvss4_recovery = Cvss4Recovery(self.cvss4_recovery)
+
+        if self.cvss4_value_density is not None and not isinstance(self.cvss4_value_density, Cvss4ValueDensity):
+            self.cvss4_value_density = Cvss4ValueDensity(self.cvss4_value_density)
+
+        if self.cvss4_vulnerability_response_effort is not None and not isinstance(self.cvss4_vulnerability_response_effort, Cvss4VulnerabilityResponseEffort):
+            self.cvss4_vulnerability_response_effort = Cvss4VulnerabilityResponseEffort(self.cvss4_vulnerability_response_effort)
+
+        if self.cvss4_provider_urgency is not None and not isinstance(self.cvss4_provider_urgency, Cvss4ProviderUrgency):
+            self.cvss4_provider_urgency = Cvss4ProviderUrgency(self.cvss4_provider_urgency)
+
+        super().__post_init__(**kwargs)
+
+
+@dataclass(repr=False)
+class CvssV3(YAMLRoot):
+    """
+    CVSS version 3.x scoring object covering both CVSS 3.0 and CVSS 3.1. The two versions share an identical metric
+    model; the 3.1 spec was a clarification, not a structural change. The cvss3_version slot distinguishes between
+    them. Requires version ('3.0' or '3.1'), vectorString, baseScore, and baseSeverity.
+    """
+    _inherited_slots: ClassVar[list[str]] = []
+
+    class_class_uri: ClassVar[URIRef] = CVE["CvssV3"]
+    class_class_curie: ClassVar[str] = "cve:CvssV3"
+    class_name: ClassVar[str] = "CvssV3"
+    class_model_uri: ClassVar[URIRef] = CVE.CvssV3
+
+    cvss3_version: Union[str, "CvssV3Version"] = None
+    cvss3_vector_string: str = None
+    cvss3_base_score: float = None
+    cvss3_base_severity: Union[str, "Cvss3Severity"] = None
+    cvss3_attack_vector: Optional[Union[str, "Cvss3AttackVector"]] = None
+    cvss3_attack_complexity: Optional[Union[str, "Cvss3AttackComplexity"]] = None
+    cvss3_privileges_required: Optional[Union[str, "Cvss3PrivilegesRequired"]] = None
+    cvss3_user_interaction: Optional[Union[str, "Cvss3UserInteraction"]] = None
+    cvss3_scope: Optional[Union[str, "Cvss3Scope"]] = None
+    cvss3_confidentiality_impact: Optional[Union[str, "Cvss3Cia"]] = None
+    cvss3_integrity_impact: Optional[Union[str, "Cvss3Cia"]] = None
+    cvss3_availability_impact: Optional[Union[str, "Cvss3Cia"]] = None
+    cvss3_exploit_code_maturity: Optional[Union[str, "Cvss3ExploitCodeMaturity"]] = None
+    cvss3_remediation_level: Optional[Union[str, "Cvss3RemediationLevel"]] = None
+    cvss3_report_confidence: Optional[Union[str, "Cvss3Confidence"]] = None
+    cvss3_temporal_score: Optional[float] = None
+    cvss3_temporal_severity: Optional[Union[str, "Cvss3Severity"]] = None
+    cvss3_confidentiality_requirement: Optional[Union[str, "Cvss3CiaRequirement"]] = None
+    cvss3_integrity_requirement: Optional[Union[str, "Cvss3CiaRequirement"]] = None
+    cvss3_availability_requirement: Optional[Union[str, "Cvss3CiaRequirement"]] = None
+    cvss3_modified_attack_vector: Optional[Union[str, "Cvss3ModifiedAttackVector"]] = None
+    cvss3_modified_attack_complexity: Optional[Union[str, "Cvss3ModifiedAttackComplexity"]] = None
+    cvss3_modified_privileges_required: Optional[Union[str, "Cvss3ModifiedPrivilegesRequired"]] = None
+    cvss3_modified_user_interaction: Optional[Union[str, "Cvss3ModifiedUserInteraction"]] = None
+    cvss3_modified_scope: Optional[Union[str, "Cvss3ModifiedScope"]] = None
+    cvss3_modified_confidentiality_impact: Optional[Union[str, "Cvss3ModifiedCia"]] = None
+    cvss3_modified_integrity_impact: Optional[Union[str, "Cvss3ModifiedCia"]] = None
+    cvss3_modified_availability_impact: Optional[Union[str, "Cvss3ModifiedCia"]] = None
+    cvss3_environmental_score: Optional[float] = None
+    cvss3_environmental_severity: Optional[Union[str, "Cvss3Severity"]] = None
+
+    def __post_init__(self, *_: str, **kwargs: Any):
+        if self._is_empty(self.cvss3_version):
+            self.MissingRequiredField("cvss3_version")
+        if not isinstance(self.cvss3_version, CvssV3Version):
+            self.cvss3_version = CvssV3Version(self.cvss3_version)
+
+        if self._is_empty(self.cvss3_vector_string):
+            self.MissingRequiredField("cvss3_vector_string")
+        if not isinstance(self.cvss3_vector_string, str):
+            self.cvss3_vector_string = str(self.cvss3_vector_string)
+
+        if self._is_empty(self.cvss3_base_score):
+            self.MissingRequiredField("cvss3_base_score")
+        if not isinstance(self.cvss3_base_score, float):
+            self.cvss3_base_score = float(self.cvss3_base_score)
+
+        if self._is_empty(self.cvss3_base_severity):
+            self.MissingRequiredField("cvss3_base_severity")
+        if not isinstance(self.cvss3_base_severity, Cvss3Severity):
+            self.cvss3_base_severity = Cvss3Severity(self.cvss3_base_severity)
+
+        if self.cvss3_attack_vector is not None and not isinstance(self.cvss3_attack_vector, Cvss3AttackVector):
+            self.cvss3_attack_vector = Cvss3AttackVector(self.cvss3_attack_vector)
+
+        if self.cvss3_attack_complexity is not None and not isinstance(self.cvss3_attack_complexity, Cvss3AttackComplexity):
+            self.cvss3_attack_complexity = Cvss3AttackComplexity(self.cvss3_attack_complexity)
+
+        if self.cvss3_privileges_required is not None and not isinstance(self.cvss3_privileges_required, Cvss3PrivilegesRequired):
+            self.cvss3_privileges_required = Cvss3PrivilegesRequired(self.cvss3_privileges_required)
+
+        if self.cvss3_user_interaction is not None and not isinstance(self.cvss3_user_interaction, Cvss3UserInteraction):
+            self.cvss3_user_interaction = Cvss3UserInteraction(self.cvss3_user_interaction)
+
+        if self.cvss3_scope is not None and not isinstance(self.cvss3_scope, Cvss3Scope):
+            self.cvss3_scope = Cvss3Scope(self.cvss3_scope)
+
+        if self.cvss3_confidentiality_impact is not None and not isinstance(self.cvss3_confidentiality_impact, Cvss3Cia):
+            self.cvss3_confidentiality_impact = Cvss3Cia(self.cvss3_confidentiality_impact)
+
+        if self.cvss3_integrity_impact is not None and not isinstance(self.cvss3_integrity_impact, Cvss3Cia):
+            self.cvss3_integrity_impact = Cvss3Cia(self.cvss3_integrity_impact)
+
+        if self.cvss3_availability_impact is not None and not isinstance(self.cvss3_availability_impact, Cvss3Cia):
+            self.cvss3_availability_impact = Cvss3Cia(self.cvss3_availability_impact)
+
+        if self.cvss3_exploit_code_maturity is not None and not isinstance(self.cvss3_exploit_code_maturity, Cvss3ExploitCodeMaturity):
+            self.cvss3_exploit_code_maturity = Cvss3ExploitCodeMaturity(self.cvss3_exploit_code_maturity)
+
+        if self.cvss3_remediation_level is not None and not isinstance(self.cvss3_remediation_level, Cvss3RemediationLevel):
+            self.cvss3_remediation_level = Cvss3RemediationLevel(self.cvss3_remediation_level)
+
+        if self.cvss3_report_confidence is not None and not isinstance(self.cvss3_report_confidence, Cvss3Confidence):
+            self.cvss3_report_confidence = Cvss3Confidence(self.cvss3_report_confidence)
+
+        if self.cvss3_temporal_score is not None and not isinstance(self.cvss3_temporal_score, float):
+            self.cvss3_temporal_score = float(self.cvss3_temporal_score)
+
+        if self.cvss3_temporal_severity is not None and not isinstance(self.cvss3_temporal_severity, Cvss3Severity):
+            self.cvss3_temporal_severity = Cvss3Severity(self.cvss3_temporal_severity)
+
+        if self.cvss3_confidentiality_requirement is not None and not isinstance(self.cvss3_confidentiality_requirement, Cvss3CiaRequirement):
+            self.cvss3_confidentiality_requirement = Cvss3CiaRequirement(self.cvss3_confidentiality_requirement)
+
+        if self.cvss3_integrity_requirement is not None and not isinstance(self.cvss3_integrity_requirement, Cvss3CiaRequirement):
+            self.cvss3_integrity_requirement = Cvss3CiaRequirement(self.cvss3_integrity_requirement)
+
+        if self.cvss3_availability_requirement is not None and not isinstance(self.cvss3_availability_requirement, Cvss3CiaRequirement):
+            self.cvss3_availability_requirement = Cvss3CiaRequirement(self.cvss3_availability_requirement)
+
+        if self.cvss3_modified_attack_vector is not None and not isinstance(self.cvss3_modified_attack_vector, Cvss3ModifiedAttackVector):
+            self.cvss3_modified_attack_vector = Cvss3ModifiedAttackVector(self.cvss3_modified_attack_vector)
+
+        if self.cvss3_modified_attack_complexity is not None and not isinstance(self.cvss3_modified_attack_complexity, Cvss3ModifiedAttackComplexity):
+            self.cvss3_modified_attack_complexity = Cvss3ModifiedAttackComplexity(self.cvss3_modified_attack_complexity)
+
+        if self.cvss3_modified_privileges_required is not None and not isinstance(self.cvss3_modified_privileges_required, Cvss3ModifiedPrivilegesRequired):
+            self.cvss3_modified_privileges_required = Cvss3ModifiedPrivilegesRequired(self.cvss3_modified_privileges_required)
+
+        if self.cvss3_modified_user_interaction is not None and not isinstance(self.cvss3_modified_user_interaction, Cvss3ModifiedUserInteraction):
+            self.cvss3_modified_user_interaction = Cvss3ModifiedUserInteraction(self.cvss3_modified_user_interaction)
+
+        if self.cvss3_modified_scope is not None and not isinstance(self.cvss3_modified_scope, Cvss3ModifiedScope):
+            self.cvss3_modified_scope = Cvss3ModifiedScope(self.cvss3_modified_scope)
+
+        if self.cvss3_modified_confidentiality_impact is not None and not isinstance(self.cvss3_modified_confidentiality_impact, Cvss3ModifiedCia):
+            self.cvss3_modified_confidentiality_impact = Cvss3ModifiedCia(self.cvss3_modified_confidentiality_impact)
+
+        if self.cvss3_modified_integrity_impact is not None and not isinstance(self.cvss3_modified_integrity_impact, Cvss3ModifiedCia):
+            self.cvss3_modified_integrity_impact = Cvss3ModifiedCia(self.cvss3_modified_integrity_impact)
+
+        if self.cvss3_modified_availability_impact is not None and not isinstance(self.cvss3_modified_availability_impact, Cvss3ModifiedCia):
+            self.cvss3_modified_availability_impact = Cvss3ModifiedCia(self.cvss3_modified_availability_impact)
+
+        if self.cvss3_environmental_score is not None and not isinstance(self.cvss3_environmental_score, float):
+            self.cvss3_environmental_score = float(self.cvss3_environmental_score)
+
+        if self.cvss3_environmental_severity is not None and not isinstance(self.cvss3_environmental_severity, Cvss3Severity):
+            self.cvss3_environmental_severity = Cvss3Severity(self.cvss3_environmental_severity)
+
+        super().__post_init__(**kwargs)
+
+
+@dataclass(repr=False)
+class CvssV20(YAMLRoot):
+    """
+    CVSS version 2.0 scoring object. Requires version ('2.0'), vectorString, and baseScore.
+    """
+    _inherited_slots: ClassVar[list[str]] = []
+
+    class_class_uri: ClassVar[URIRef] = CVE["CvssV20"]
+    class_class_curie: ClassVar[str] = "cve:CvssV20"
+    class_name: ClassVar[str] = "CvssV2_0"
+    class_model_uri: ClassVar[URIRef] = CVE.CvssV20
+
+    cvss2_vector_string: str = None
+    cvss2_base_score: float = None
+    cvss2_version: str = "2.0"
+    cvss2_access_vector: Optional[Union[str, "Cvss2AccessVector"]] = None
+    cvss2_access_complexity: Optional[Union[str, "Cvss2AccessComplexity"]] = None
+    cvss2_authentication: Optional[Union[str, "Cvss2Authentication"]] = None
+    cvss2_confidentiality_impact: Optional[Union[str, "Cvss2Cia"]] = None
+    cvss2_integrity_impact: Optional[Union[str, "Cvss2Cia"]] = None
+    cvss2_availability_impact: Optional[Union[str, "Cvss2Cia"]] = None
+    cvss2_exploitability: Optional[Union[str, "Cvss2Exploitability"]] = None
+    cvss2_remediation_level: Optional[Union[str, "Cvss2RemediationLevel"]] = None
+    cvss2_report_confidence: Optional[Union[str, "Cvss2ReportConfidence"]] = None
+    cvss2_temporal_score: Optional[float] = None
+    cvss2_collateral_damage_potential: Optional[Union[str, "Cvss2CollateralDamagePotential"]] = None
+    cvss2_target_distribution: Optional[Union[str, "Cvss2TargetDistribution"]] = None
+    cvss2_confidentiality_requirement: Optional[Union[str, "Cvss2CiaRequirement"]] = None
+    cvss2_integrity_requirement: Optional[Union[str, "Cvss2CiaRequirement"]] = None
+    cvss2_availability_requirement: Optional[Union[str, "Cvss2CiaRequirement"]] = None
+    cvss2_environmental_score: Optional[float] = None
+
+    def __post_init__(self, *_: str, **kwargs: Any):
+        if self._is_empty(self.cvss2_version):
+            self.MissingRequiredField("cvss2_version")
+        if not isinstance(self.cvss2_version, str):
+            self.cvss2_version = str(self.cvss2_version)
+
+        if self._is_empty(self.cvss2_vector_string):
+            self.MissingRequiredField("cvss2_vector_string")
+        if not isinstance(self.cvss2_vector_string, str):
+            self.cvss2_vector_string = str(self.cvss2_vector_string)
+
+        if self._is_empty(self.cvss2_base_score):
+            self.MissingRequiredField("cvss2_base_score")
+        if not isinstance(self.cvss2_base_score, float):
+            self.cvss2_base_score = float(self.cvss2_base_score)
+
+        if self.cvss2_access_vector is not None and not isinstance(self.cvss2_access_vector, Cvss2AccessVector):
+            self.cvss2_access_vector = Cvss2AccessVector(self.cvss2_access_vector)
+
+        if self.cvss2_access_complexity is not None and not isinstance(self.cvss2_access_complexity, Cvss2AccessComplexity):
+            self.cvss2_access_complexity = Cvss2AccessComplexity(self.cvss2_access_complexity)
+
+        if self.cvss2_authentication is not None and not isinstance(self.cvss2_authentication, Cvss2Authentication):
+            self.cvss2_authentication = Cvss2Authentication(self.cvss2_authentication)
+
+        if self.cvss2_confidentiality_impact is not None and not isinstance(self.cvss2_confidentiality_impact, Cvss2Cia):
+            self.cvss2_confidentiality_impact = Cvss2Cia(self.cvss2_confidentiality_impact)
+
+        if self.cvss2_integrity_impact is not None and not isinstance(self.cvss2_integrity_impact, Cvss2Cia):
+            self.cvss2_integrity_impact = Cvss2Cia(self.cvss2_integrity_impact)
+
+        if self.cvss2_availability_impact is not None and not isinstance(self.cvss2_availability_impact, Cvss2Cia):
+            self.cvss2_availability_impact = Cvss2Cia(self.cvss2_availability_impact)
+
+        if self.cvss2_exploitability is not None and not isinstance(self.cvss2_exploitability, Cvss2Exploitability):
+            self.cvss2_exploitability = Cvss2Exploitability(self.cvss2_exploitability)
+
+        if self.cvss2_remediation_level is not None and not isinstance(self.cvss2_remediation_level, Cvss2RemediationLevel):
+            self.cvss2_remediation_level = Cvss2RemediationLevel(self.cvss2_remediation_level)
+
+        if self.cvss2_report_confidence is not None and not isinstance(self.cvss2_report_confidence, Cvss2ReportConfidence):
+            self.cvss2_report_confidence = Cvss2ReportConfidence(self.cvss2_report_confidence)
+
+        if self.cvss2_temporal_score is not None and not isinstance(self.cvss2_temporal_score, float):
+            self.cvss2_temporal_score = float(self.cvss2_temporal_score)
+
+        if self.cvss2_collateral_damage_potential is not None and not isinstance(self.cvss2_collateral_damage_potential, Cvss2CollateralDamagePotential):
+            self.cvss2_collateral_damage_potential = Cvss2CollateralDamagePotential(self.cvss2_collateral_damage_potential)
+
+        if self.cvss2_target_distribution is not None and not isinstance(self.cvss2_target_distribution, Cvss2TargetDistribution):
+            self.cvss2_target_distribution = Cvss2TargetDistribution(self.cvss2_target_distribution)
+
+        if self.cvss2_confidentiality_requirement is not None and not isinstance(self.cvss2_confidentiality_requirement, Cvss2CiaRequirement):
+            self.cvss2_confidentiality_requirement = Cvss2CiaRequirement(self.cvss2_confidentiality_requirement)
+
+        if self.cvss2_integrity_requirement is not None and not isinstance(self.cvss2_integrity_requirement, Cvss2CiaRequirement):
+            self.cvss2_integrity_requirement = Cvss2CiaRequirement(self.cvss2_integrity_requirement)
+
+        if self.cvss2_availability_requirement is not None and not isinstance(self.cvss2_availability_requirement, Cvss2CiaRequirement):
+            self.cvss2_availability_requirement = Cvss2CiaRequirement(self.cvss2_availability_requirement)
+
+        if self.cvss2_environmental_score is not None and not isinstance(self.cvss2_environmental_score, float):
+            self.cvss2_environmental_score = float(self.cvss2_environmental_score)
+
+        super().__post_init__(**kwargs)
+
+
+@dataclass(repr=False)
+class OtherMetric(YAMLRoot):
+    """
+    A non-standard impact description in a custom format. May be a prose description or an arbitrary JSON-compatible
+    object.
+    """
+    _inherited_slots: ClassVar[list[str]] = []
+
+    class_class_uri: ClassVar[URIRef] = CVE["OtherMetric"]
+    class_class_curie: ClassVar[str] = "cve:OtherMetric"
+    class_name: ClassVar[str] = "OtherMetric"
+    class_model_uri: ClassVar[URIRef] = CVE.OtherMetric
+
+    other_metric_type: str = None
+    other_metric_content: Union[dict, Any] = None
+
+    def __post_init__(self, *_: str, **kwargs: Any):
+        if self._is_empty(self.other_metric_type):
+            self.MissingRequiredField("other_metric_type")
+        if not isinstance(self.other_metric_type, str):
+            self.other_metric_type = str(self.other_metric_type)
+
+        super().__post_init__(**kwargs)
+
+
+@dataclass(repr=False)
+class TimelineEntry(YAMLRoot):
+    """
+    A timeline event recording a significant event about the vulnerability or changes to the CVE Record. Requires
+    time, lang, and value.
+    """
+    _inherited_slots: ClassVar[list[str]] = []
+
+    class_class_uri: ClassVar[URIRef] = CVE["TimelineEntry"]
+    class_class_curie: ClassVar[str] = "cve:TimelineEntry"
+    class_name: ClassVar[str] = "TimelineEntry"
+    class_model_uri: ClassVar[URIRef] = CVE.TimelineEntry
+
+    event_time: str = None
+    event_value: str = None
+    lang: str = "en"
+
+    def __post_init__(self, *_: str, **kwargs: Any):
+        if self._is_empty(self.event_time):
+            self.MissingRequiredField("event_time")
+        if not isinstance(self.event_time, str):
+            self.event_time = str(self.event_time)
+
+        if self._is_empty(self.lang):
+            self.MissingRequiredField("lang")
+        if not isinstance(self.lang, str):
+            self.lang = str(self.lang)
+
+        if self._is_empty(self.event_value):
+            self.MissingRequiredField("event_value")
+        if not isinstance(self.event_value, str):
+            self.event_value = str(self.event_value)
+
+        super().__post_init__(**kwargs)
+
+
+@dataclass(repr=False)
+class CreditEntry(YAMLRoot):
+    """
+    A credit acknowledging a specific person, organization, or tool for work related to the research, discovery,
+    remediation, or coordination of the vulnerability.
+    """
+    _inherited_slots: ClassVar[list[str]] = []
+
+    class_class_uri: ClassVar[URIRef] = CVE["CreditEntry"]
+    class_class_curie: ClassVar[str] = "cve:CreditEntry"
+    class_name: ClassVar[str] = "CreditEntry"
+    class_model_uri: ClassVar[URIRef] = CVE.CreditEntry
+
+    credit_value: str = None
+    lang: str = "en"
+    credit_user: Optional[str] = None
+    credit_type: Optional[Union[str, "CreditType"]] = 'finder'
+
+    def __post_init__(self, *_: str, **kwargs: Any):
+        if self._is_empty(self.lang):
+            self.MissingRequiredField("lang")
+        if not isinstance(self.lang, str):
+            self.lang = str(self.lang)
+
+        if self._is_empty(self.credit_value):
+            self.MissingRequiredField("credit_value")
+        if not isinstance(self.credit_value, str):
+            self.credit_value = str(self.credit_value)
+
+        if self.credit_user is not None and not isinstance(self.credit_user, str):
+            self.credit_user = str(self.credit_user)
+
+        if self.credit_type is not None and not isinstance(self.credit_type, CreditType):
+            self.credit_type = CreditType(self.credit_type)
+
+        super().__post_init__(**kwargs)
+
+
+@dataclass(repr=False)
+class SourceInformation(YAMLRoot):
+    """
+    Source information (who discovered it, who researched it, etc.) and optionally a chain of CNA information. This is
+    an open object — at least one property must be present.
+    """
+    _inherited_slots: ClassVar[list[str]] = []
+
+    class_class_uri: ClassVar[URIRef] = CVE["SourceInformation"]
+    class_class_curie: ClassVar[str] = "cve:SourceInformation"
+    class_name: ClassVar[str] = "SourceInformation"
+    class_model_uri: ClassVar[URIRef] = CVE.SourceInformation
+
+    source_defects: Optional[Union[str, list[str]]] = empty_list()
+    source_advisory: Optional[str] = None
+    source_discovery: Optional[str] = None
+
+    def __post_init__(self, *_: str, **kwargs: Any):
+        if not isinstance(self.source_defects, list):
+            self.source_defects = [self.source_defects] if self.source_defects is not None else []
+        self.source_defects = [v if isinstance(v, str) else str(v) for v in self.source_defects]
+
+        if self.source_advisory is not None and not isinstance(self.source_advisory, str):
+            self.source_advisory = str(self.source_advisory)
+
+        if self.source_discovery is not None and not isinstance(self.source_discovery, str):
+            self.source_discovery = str(self.source_discovery)
+
+        super().__post_init__(**kwargs)
+
+
+@dataclass(repr=False)
+class TaxonomyMapping(YAMLRoot):
+    """
+    A taxonomy mapping identifying the taxonomy by name and version, along with a list of relations relevant to the
+    CVE (e.g., ATT&CK, D3FEND, CWE).
+    """
+    _inherited_slots: ClassVar[list[str]] = []
+
+    class_class_uri: ClassVar[URIRef] = CVE["TaxonomyMapping"]
+    class_class_curie: ClassVar[str] = "cve:TaxonomyMapping"
+    class_name: ClassVar[str] = "TaxonomyMapping"
+    class_model_uri: ClassVar[URIRef] = CVE.TaxonomyMapping
+
+    taxonomy_name: str = None
+    taxonomy_relations: Union[Union[dict, "TaxonomyRelation"], list[Union[dict, "TaxonomyRelation"]]] = None
+    taxonomy_version: Optional[str] = None
+
+    def __post_init__(self, *_: str, **kwargs: Any):
+        if self._is_empty(self.taxonomy_name):
+            self.MissingRequiredField("taxonomy_name")
+        if not isinstance(self.taxonomy_name, str):
+            self.taxonomy_name = str(self.taxonomy_name)
+
+        if self._is_empty(self.taxonomy_relations):
+            self.MissingRequiredField("taxonomy_relations")
+        self._normalize_inlined_as_list(slot_name="taxonomy_relations", slot_type=TaxonomyRelation, key_name="taxonomy_id", keyed=False)
+
+        if self.taxonomy_version is not None and not isinstance(self.taxonomy_version, str):
+            self.taxonomy_version = str(self.taxonomy_version)
+
+        super().__post_init__(**kwargs)
+
+
+@dataclass(repr=False)
+class TaxonomyRelation(YAMLRoot):
+    """
+    A relationship between a taxonomy item and a CVE or another taxonomy item. Provides subject (taxonomyId),
+    predicate (relationshipName), and object (relationshipValue).
+    """
+    _inherited_slots: ClassVar[list[str]] = []
+
+    class_class_uri: ClassVar[URIRef] = CVE["TaxonomyRelation"]
+    class_class_curie: ClassVar[str] = "cve:TaxonomyRelation"
+    class_name: ClassVar[str] = "TaxonomyRelation"
+    class_model_uri: ClassVar[URIRef] = CVE.TaxonomyRelation
+
+    taxonomy_id: str = None
+    relationship_name: str = None
+    relationship_value: str = None
+
+    def __post_init__(self, *_: str, **kwargs: Any):
+        if self._is_empty(self.taxonomy_id):
+            self.MissingRequiredField("taxonomy_id")
+        if not isinstance(self.taxonomy_id, str):
+            self.taxonomy_id = str(self.taxonomy_id)
+
+        if self._is_empty(self.relationship_name):
+            self.MissingRequiredField("relationship_name")
+        if not isinstance(self.relationship_name, str):
+            self.relationship_name = str(self.relationship_name)
+
+        if self._is_empty(self.relationship_value):
+            self.MissingRequiredField("relationship_value")
+        if not isinstance(self.relationship_value, str):
+            self.relationship_value = str(self.relationship_value)
+
+        super().__post_init__(**kwargs)
+
+
+@dataclass(repr=False)
+class CpeApplicabilityElement(YAMLRoot):
+    """
+    Affected products defined using an implementation of the CPE Applicability Language. An operator property allows
+    AND or OR logic between CPEs or combinations of CPEs.
+    """
+    _inherited_slots: ClassVar[list[str]] = []
+
+    class_class_uri: ClassVar[URIRef] = CVE["CpeApplicabilityElement"]
+    class_class_curie: ClassVar[str] = "cve:CpeApplicabilityElement"
+    class_name: ClassVar[str] = "CpeApplicabilityElement"
+    class_model_uri: ClassVar[URIRef] = CVE.CpeApplicabilityElement
+
+    cpe_nodes: Union[Union[dict, "CpeNode"], list[Union[dict, "CpeNode"]]] = None
+    cpe_operator: Optional[Union[str, "CpeOperator"]] = None
+    cpe_negate: Optional[Union[bool, Bool]] = None
+
+    def __post_init__(self, *_: str, **kwargs: Any):
+        if self._is_empty(self.cpe_nodes):
+            self.MissingRequiredField("cpe_nodes")
+        self._normalize_inlined_as_list(slot_name="cpe_nodes", slot_type=CpeNode, key_name="cpe_operator", keyed=False)
+
+        if self.cpe_operator is not None and not isinstance(self.cpe_operator, CpeOperator):
+            self.cpe_operator = CpeOperator(self.cpe_operator)
+
+        if self.cpe_negate is not None and not isinstance(self.cpe_negate, Bool):
+            self.cpe_negate = Bool(self.cpe_negate)
+
+        super().__post_init__(**kwargs)
+
+
+@dataclass(repr=False)
+class CpeNode(YAMLRoot):
+    """
+    Defines a CPE configuration node in an applicability statement.
+    """
+    _inherited_slots: ClassVar[list[str]] = []
+
+    class_class_uri: ClassVar[URIRef] = CVE["CpeNode"]
+    class_class_curie: ClassVar[str] = "cve:CpeNode"
+    class_name: ClassVar[str] = "CpeNode"
+    class_model_uri: ClassVar[URIRef] = CVE.CpeNode
+
+    cpe_operator: Union[str, "CpeOperator"] = None
+    cpe_match_criteria: Union[Union[dict, "CpeMatch"], list[Union[dict, "CpeMatch"]]] = None
+    cpe_negate: Optional[Union[bool, Bool]] = None
+
+    def __post_init__(self, *_: str, **kwargs: Any):
+        if self._is_empty(self.cpe_operator):
+            self.MissingRequiredField("cpe_operator")
+        if not isinstance(self.cpe_operator, CpeOperator):
+            self.cpe_operator = CpeOperator(self.cpe_operator)
+
+        if self._is_empty(self.cpe_match_criteria):
+            self.MissingRequiredField("cpe_match_criteria")
+        self._normalize_inlined_as_list(slot_name="cpe_match_criteria", slot_type=CpeMatch, key_name="cpe_vulnerable", keyed=False)
+
+        if self.cpe_negate is not None and not isinstance(self.cpe_negate, Bool):
+            self.cpe_negate = Bool(self.cpe_negate)
+
+        super().__post_init__(**kwargs)
+
+
+@dataclass(repr=False)
+class CpeMatch(YAMLRoot):
+    """
+    CPE match string or range within a CPE applicability node.
+    """
+    _inherited_slots: ClassVar[list[str]] = []
+
+    class_class_uri: ClassVar[URIRef] = CVE["CpeMatch"]
+    class_class_curie: ClassVar[str] = "cve:CpeMatch"
+    class_name: ClassVar[str] = "CpeMatch"
+    class_model_uri: ClassVar[URIRef] = CVE.CpeMatch
+
+    cpe_vulnerable: Union[bool, Bool] = None
+    cpe_criteria: str = None
+    match_criteria_id: Optional[str] = None
+    version_start_excluding: Optional[str] = None
+    version_start_including: Optional[str] = None
+    version_end_excluding: Optional[str] = None
+    version_end_including: Optional[str] = None
+
+    def __post_init__(self, *_: str, **kwargs: Any):
+        if self._is_empty(self.cpe_vulnerable):
+            self.MissingRequiredField("cpe_vulnerable")
+        if not isinstance(self.cpe_vulnerable, Bool):
+            self.cpe_vulnerable = Bool(self.cpe_vulnerable)
+
+        if self._is_empty(self.cpe_criteria):
+            self.MissingRequiredField("cpe_criteria")
+        if not isinstance(self.cpe_criteria, str):
+            self.cpe_criteria = str(self.cpe_criteria)
+
+        if self.match_criteria_id is not None and not isinstance(self.match_criteria_id, str):
+            self.match_criteria_id = str(self.match_criteria_id)
+
+        if self.version_start_excluding is not None and not isinstance(self.version_start_excluding, str):
+            self.version_start_excluding = str(self.version_start_excluding)
+
+        if self.version_start_including is not None and not isinstance(self.version_start_including, str):
+            self.version_start_including = str(self.version_start_including)
+
+        if self.version_end_excluding is not None and not isinstance(self.version_end_excluding, str):
+            self.version_end_excluding = str(self.version_end_excluding)
+
+        if self.version_end_including is not None and not isinstance(self.version_end_including, str):
+            self.version_end_including = str(self.version_end_including)
+
+        super().__post_init__(**kwargs)
+
+
+@dataclass(repr=False)
+class Vulnerability(YAMLRoot):
+    """
+    Abstract base representation of a security vulnerability. Extended by source-specific schemas (KEV, CVE, NVD).
+    """
+    _inherited_slots: ClassVar[list[str]] = []
+
+    class_class_uri: ClassVar[URIRef] = CORE["Vulnerability"]
+    class_class_curie: ClassVar[str] = "core:Vulnerability"
+    class_name: ClassVar[str] = "Vulnerability"
+    class_model_uri: ClassVar[URIRef] = CVE.Vulnerability
+
+    cve_id: Union[str, VulnerabilityCveId] = None
+    title: Optional[str] = None
+    description: Optional[str] = None
+    published_date: Optional[Union[str, XSDDateTime]] = None
+    last_modified_date: Optional[Union[str, XSDDateTime]] = None
+    products: Optional[Union[Union[dict, "Product"], list[Union[dict, "Product"]]]] = empty_list()
+    weaknesses: Optional[Union[Union[dict, "Weakness"], list[Union[dict, "Weakness"]]]] = empty_list()
+    references: Optional[Union[Union[dict, "Reference"], list[Union[dict, "Reference"]]]] = empty_list()
+    impact: Optional[Union[dict, "Impact"]] = None
+    status: Optional[Union[str, "VulnerabilityStatus"]] = None
+
+    def __post_init__(self, *_: str, **kwargs: Any):
+        if self._is_empty(self.cve_id):
+            self.MissingRequiredField("cve_id")
+        if not isinstance(self.cve_id, VulnerabilityCveId):
+            self.cve_id = VulnerabilityCveId(self.cve_id)
+
+        if self.title is not None and not isinstance(self.title, str):
+            self.title = str(self.title)
+
+        if self.description is not None and not isinstance(self.description, str):
+            self.description = str(self.description)
+
+        if self.published_date is not None and not isinstance(self.published_date, XSDDateTime):
+            self.published_date = XSDDateTime(self.published_date)
+
+        if self.last_modified_date is not None and not isinstance(self.last_modified_date, XSDDateTime):
+            self.last_modified_date = XSDDateTime(self.last_modified_date)
+
+        if not isinstance(self.products, list):
+            self.products = [self.products] if self.products is not None else []
+        self.products = [v if isinstance(v, Product) else Product(**as_dict(v)) for v in self.products]
+
+        if not isinstance(self.weaknesses, list):
+            self.weaknesses = [self.weaknesses] if self.weaknesses is not None else []
+        self.weaknesses = [v if isinstance(v, Weakness) else Weakness(**as_dict(v)) for v in self.weaknesses]
+
+        if not isinstance(self.references, list):
+            self.references = [self.references] if self.references is not None else []
+        self.references = [v if isinstance(v, Reference) else Reference(**as_dict(v)) for v in self.references]
+
+        if self.impact is not None and not isinstance(self.impact, Impact):
+            self.impact = Impact(**as_dict(self.impact))
+
+        if self.status is not None and not isinstance(self.status, VulnerabilityStatus):
+            self.status = VulnerabilityStatus(self.status)
+
+        super().__post_init__(**kwargs)
+
+
+@dataclass(repr=False)
+class Product(YAMLRoot):
+    """
+    Software or hardware entity affected by the vulnerability.
+    """
+    _inherited_slots: ClassVar[list[str]] = []
+
+    class_class_uri: ClassVar[URIRef] = CORE["Product"]
+    class_class_curie: ClassVar[str] = "core:Product"
+    class_name: ClassVar[str] = "Product"
+    class_model_uri: ClassVar[URIRef] = CVE.Product
+
+    vendor: Optional[str] = None
+    name: Optional[str] = None
+    version: Optional[str] = None
+    platforms: Optional[Union[str, list[str]]] = empty_list()
+
+    def __post_init__(self, *_: str, **kwargs: Any):
+        if self.vendor is not None and not isinstance(self.vendor, str):
+            self.vendor = str(self.vendor)
+
+        if self.name is not None and not isinstance(self.name, str):
+            self.name = str(self.name)
+
+        if self.version is not None and not isinstance(self.version, str):
+            self.version = str(self.version)
+
+        if not isinstance(self.platforms, list):
+            self.platforms = [self.platforms] if self.platforms is not None else []
+        self.platforms = [v if isinstance(v, str) else str(v) for v in self.platforms]
+
+        super().__post_init__(**kwargs)
+
+
+@dataclass(repr=False)
+class Reference(YAMLRoot):
+    """
+    External reference such as an advisory or article.
+    """
+    _inherited_slots: ClassVar[list[str]] = []
+
+    class_class_uri: ClassVar[URIRef] = CORE["Reference"]
+    class_class_curie: ClassVar[str] = "core:Reference"
+    class_name: ClassVar[str] = "Reference"
+    class_model_uri: ClassVar[URIRef] = CVE.Reference
+
+    url: Optional[Union[str, URI]] = None
+    name: Optional[str] = None
+    source: Optional[str] = None
+
+    def __post_init__(self, *_: str, **kwargs: Any):
+        if self.url is not None and not isinstance(self.url, URI):
+            self.url = URI(self.url)
+
+        if self.name is not None and not isinstance(self.name, str):
+            self.name = str(self.name)
+
+        if self.source is not None and not isinstance(self.source, str):
+            self.source = str(self.source)
+
+        super().__post_init__(**kwargs)
+
+
+@dataclass(repr=False)
+class CveReference(Reference):
+    """
+    An external reference associated with a CVE Record. Extends the core Reference with optional descriptive tags
+    characterizing the resource.
+    """
+    _inherited_slots: ClassVar[list[str]] = []
+
+    class_class_uri: ClassVar[URIRef] = CVE["CveReference"]
+    class_class_curie: ClassVar[str] = "cve:CveReference"
+    class_name: ClassVar[str] = "CveReference"
+    class_model_uri: ClassVar[URIRef] = CVE.CveReference
+
+    url: Union[str, URI] = None
+    reference_tags: Optional[Union[Union[str, "ReferenceTag"], list[Union[str, "ReferenceTag"]]]] = empty_list()
+    name: Optional[str] = None
+
+    def __post_init__(self, *_: str, **kwargs: Any):
+        if self._is_empty(self.url):
+            self.MissingRequiredField("url")
+        if not isinstance(self.url, URI):
+            self.url = URI(self.url)
+
+        if not isinstance(self.reference_tags, list):
+            self.reference_tags = [self.reference_tags] if self.reference_tags is not None else []
+        self.reference_tags = [v if isinstance(v, ReferenceTag) else ReferenceTag(v) for v in self.reference_tags]
+
+        if self.name is not None and not isinstance(self.name, str):
+            self.name = str(self.name)
+
+        super().__post_init__(**kwargs)
+
+
+@dataclass(repr=False)
+class Weakness(YAMLRoot):
+    """
+    Weakness classification from CWE or a similar taxonomy.
+    """
+    _inherited_slots: ClassVar[list[str]] = []
+
+    class_class_uri: ClassVar[URIRef] = CORE["Weakness"]
+    class_class_curie: ClassVar[str] = "core:Weakness"
+    class_name: ClassVar[str] = "Weakness"
+    class_model_uri: ClassVar[URIRef] = CVE.Weakness
+
+    cwe_id: Optional[str] = None
+    name: Optional[str] = None
+    description: Optional[str] = None
+
+    def __post_init__(self, *_: str, **kwargs: Any):
+        if self.cwe_id is not None and not isinstance(self.cwe_id, str):
+            self.cwe_id = str(self.cwe_id)
+
+        if self.name is not None and not isinstance(self.name, str):
+            self.name = str(self.name)
+
+        if self.description is not None and not isinstance(self.description, str):
+            self.description = str(self.description)
+
+        super().__post_init__(**kwargs)
+
+
+@dataclass(repr=False)
+class Impact(YAMLRoot):
+    """
+    Assessment of the vulnerability's impact and severity.
+    """
+    _inherited_slots: ClassVar[list[str]] = []
+
+    class_class_uri: ClassVar[URIRef] = CORE["Impact"]
+    class_class_curie: ClassVar[str] = "core:Impact"
+    class_name: ClassVar[str] = "Impact"
+    class_model_uri: ClassVar[URIRef] = CVE.Impact
+
+    severity: Optional[Union[str, "ImpactSeverity"]] = None
+    vector: Optional[str] = None
+    score: Optional[float] = None
+
+    def __post_init__(self, *_: str, **kwargs: Any):
+        if self.severity is not None and not isinstance(self.severity, ImpactSeverity):
+            self.severity = ImpactSeverity(self.severity)
+
+        if self.vector is not None and not isinstance(self.vector, str):
+            self.vector = str(self.vector)
+
+        if self.score is not None and not isinstance(self.score, float):
+            self.score = float(self.score)
+
+        super().__post_init__(**kwargs)
+
+
+@dataclass(repr=False)
+class Configuration(YAMLRoot):
+    """
+    Logical grouping of CPE match expressions.
+    """
+    _inherited_slots: ClassVar[list[str]] = []
+
+    class_class_uri: ClassVar[URIRef] = CORE["Configuration"]
+    class_class_curie: ClassVar[str] = "core:Configuration"
+    class_name: ClassVar[str] = "Configuration"
+    class_model_uri: ClassVar[URIRef] = CVE.Configuration
+
+    cpe_uri: Optional[str] = None
+    operator: Optional[str] = None
+
+    def __post_init__(self, *_: str, **kwargs: Any):
+        if self.cpe_uri is not None and not isinstance(self.cpe_uri, str):
+            self.cpe_uri = str(self.cpe_uri)
+
+        if self.operator is not None and not isinstance(self.operator, str):
+            self.operator = str(self.operator)
+
+        super().__post_init__(**kwargs)
+
 # Slots
 class slots:
     pass
@@ -3655,14 +3701,11 @@ slots.cpe_uri = Slot(uri=CORE.cpe_uri, name="cpe_uri", curie=CORE.curie('cpe_uri
 slots.operator = Slot(uri=CORE.operator, name="operator", curie=CORE.curie('operator'),
                    model_uri=CVE.operator, domain=None, range=Optional[str])
 
-slots.CVERecord_cve_id = Slot(uri=DCT.identifier, name="CVERecord_cve_id", curie=DCT.curie('identifier'),
-                   model_uri=CVE.CVERecord_cve_id, domain=CVERecord, range=Union[str, CVERecordCveId])
-
 slots.CVERecord_cve_metadata = Slot(uri=CVE.cve_metadata, name="CVERecord_cve_metadata", curie=CVE.curie('cve_metadata'),
-                   model_uri=CVE.CVERecord_cve_metadata, domain=CVERecord, range=Union[dict, CveMetadata])
+                   model_uri=CVE.CVERecord_cve_metadata, domain=CVERecord, range=Union[dict, "CveMetadata"])
 
 slots.CVERecord_containers = Slot(uri=CVE.containers, name="CVERecord_containers", curie=CVE.curie('containers'),
-                   model_uri=CVE.CVERecord_containers, domain=CVERecord, range=Union[dict, Containers])
+                   model_uri=CVE.CVERecord_containers, domain=CVERecord, range=Union[dict, "Containers"])
 
 slots.CveMetadataPublished_record_cve_id = Slot(uri=CVE.record_cve_id, name="CveMetadataPublished_record_cve_id", curie=CVE.curie('record_cve_id'),
                    model_uri=CVE.CveMetadataPublished_record_cve_id, domain=CveMetadataPublished, range=str,
@@ -3702,6 +3745,9 @@ slots.CnaPublishedContainer_affected = Slot(uri=CVE.affected, name="CnaPublished
 slots.CnaPublishedContainer_cve_references = Slot(uri=CVE.cve_references, name="CnaPublishedContainer_cve_references", curie=CVE.curie('cve_references'),
                    model_uri=CVE.CnaPublishedContainer_cve_references, domain=CnaPublishedContainer, range=Union[Union[dict, "CveReference"], list[Union[dict, "CveReference"]]])
 
+slots.CnaPublishedContainer_title = Slot(uri=DCT.title, name="CnaPublishedContainer_title", curie=DCT.curie('title'),
+                   model_uri=CVE.CnaPublishedContainer_title, domain=CnaPublishedContainer, range=Optional[str])
+
 slots.CnaRejectedContainer_provider_metadata = Slot(uri=CVE.provider_metadata, name="CnaRejectedContainer_provider_metadata", curie=CVE.curie('provider_metadata'),
                    model_uri=CVE.CnaRejectedContainer_provider_metadata, domain=CnaRejectedContainer, range=Union[dict, ProviderMetadata])
 
@@ -3710,6 +3756,15 @@ slots.CnaRejectedContainer_rejected_reasons = Slot(uri=CVE.rejected_reasons, nam
 
 slots.AdpContainer_provider_metadata = Slot(uri=CVE.provider_metadata, name="AdpContainer_provider_metadata", curie=CVE.curie('provider_metadata'),
                    model_uri=CVE.AdpContainer_provider_metadata, domain=AdpContainer, range=Union[dict, ProviderMetadata])
+
+slots.AffectedProduct_vendor = Slot(uri=SCHEMA.name, name="AffectedProduct_vendor", curie=SCHEMA.curie('name'),
+                   model_uri=CVE.AffectedProduct_vendor, domain=AffectedProduct, range=Optional[str])
+
+slots.AffectedProduct_name = Slot(uri=RDFS.label, name="AffectedProduct_name", curie=RDFS.curie('label'),
+                   model_uri=CVE.AffectedProduct_name, domain=AffectedProduct, range=Optional[str])
+
+slots.AffectedProduct_platforms = Slot(uri=CORE.platforms, name="AffectedProduct_platforms", curie=CORE.curie('platforms'),
+                   model_uri=CVE.AffectedProduct_platforms, domain=AffectedProduct, range=Optional[Union[str, list[str]]])
 
 slots.ProgramRoutine_routine_name = Slot(uri=CVE.routine_name, name="ProgramRoutine_routine_name", curie=CVE.curie('routine_name'),
                    model_uri=CVE.ProgramRoutine_routine_name, domain=ProgramRoutine, range=str)
@@ -3753,6 +3808,9 @@ slots.ProblemTypeDescription_cwe_id = Slot(uri=DCT.identifier, name="ProblemType
 
 slots.CveReference_url = Slot(uri=SCHEMA.url, name="CveReference_url", curie=SCHEMA.curie('url'),
                    model_uri=CVE.CveReference_url, domain=CveReference, range=Union[str, URI])
+
+slots.CveReference_name = Slot(uri=RDFS.label, name="CveReference_name", curie=RDFS.curie('label'),
+                   model_uri=CVE.CveReference_name, domain=CveReference, range=Optional[str])
 
 slots.ImpactEntry_impact_descriptions = Slot(uri=CVE.impact_descriptions, name="ImpactEntry_impact_descriptions", curie=CVE.curie('impact_descriptions'),
                    model_uri=CVE.ImpactEntry_impact_descriptions, domain=ImpactEntry, range=Union[Union[dict, MultiLangDescription], list[Union[dict, MultiLangDescription]]])

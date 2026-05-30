@@ -1,8 +1,5 @@
 # Published CVE with all CVSS generations (v4.0, v3.1, v3.0, v2.0) in a single metrics list
 # This tests multi-format scoring support in a single record
-cve_id: CVE-2024-88888
-description: Remote code execution vulnerability in MultiScore Server allows unauthenticated
-  attackers to execute arbitrary commands via the admin API endpoint.
 cve_metadata:
   record_cve_id: CVE-2024-88888
   assigner_org_id: f7a8b9c0-d1e2-4f3a-8b5c-6d7e8f9a0b1c

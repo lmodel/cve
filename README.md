@@ -4,6 +4,8 @@
 
 CVE™ Program - LinkML Schema
 
+See [solution design](./docs/about.md).
+
 ## Documentation Website
 
 [https://lmodel.github.io/cve](https://lmodel.github.io/cve)

@@ -27,24 +27,23 @@ prefixes:
   kev_catalog: https://w3id.org/lmodel/kev-catalog/
   linkml: https://w3id.org/linkml/
   schema: http://schema.org/
-  dct: http://purl.org/dc/terms/
+  dcterms: http://purl.org/dc/terms/
   xsd: "http://www.w3.org/2001/XMLSchema#"
   rdfs: "http://www.w3.org/2000/01/rdf-schema#"
   skos: "http://www.w3.org/2004/02/skos/core#"
   WIKIDATA: https://www.wikidata.org/wiki/
 
+  schema_vulnerability_core: https://w3id.org/lmodel/vulnerability-core/schema/
+
 default_prefix: cve
 default_range: string
 
 imports:
-  - ./vulnerability_core
-
+  - schema_vulnerability_core:vulnerability_core
 
 # Subsets
 
-
 subsets:
-
   cve_record:
     description: Required CVE Record Format fields
 
@@ -54,12 +53,9 @@ subsets:
   cvss_metrics:
     description: CVSS scoring metric fields
 
-
 # Types
 
-
 types:
-
   UuidType:
     uri: xsd:string
     base: str
@@ -109,12 +105,9 @@ types:
     description: Common Platform Enumeration (CPE) Name in 2.3 format only.
     pattern: "(cpe:2\\.3:[aho*\\-](:(((\\?*|\\*?)([a-zA-Z0-9\\-._]|(\\\\[\\\\*?!\"#$%&'()+,/:;<=>@\\[\\]\\^`{|}~]))+(\\?*|\\*?))|[*\\-])){5}(:(([a-zA-Z]{2,3}(-([a-zA-Z]{2}|[0-9]{3}))?)|[*\\-]))(:(((\\?*|\\*?)([a-zA-Z0-9\\-._]|(\\\\[\\\\*?!\"#$%&'()+,/:;<=>@\\[\\]\\^`{|}~]))+(\\?*|\\*?))|[*\\-])){4})"
 
-
 # Enums
 
-
 enums:
-
   # --- Record-level ---
 
   DataType:
@@ -742,12 +735,9 @@ enums:
       HIGH:
       NOT_DEFINED:
 
-
 # Classes
 
-
 classes:
-
   Any:
     description: >-
       A linkml placeholder class accepting any JSON-compatible value (string, number,
@@ -757,28 +747,31 @@ classes:
   # --- Top-level record ---
 
   CVERecord:
-    is_a: Vulnerability
     tree_root: true
     description: >-
       Official CVE Record corresponding to a CVE ID. Represents either a
       Published or Rejected record in the CVE™ Program. The dataType
       field is always CVE_RECORD. Use cveMetadata.state to distinguish
       Published from Rejected records.
+
+      This class deliberately does NOT inherit from ``vulnerability_core.Vulnerability``:
+      the upstream CVE Record Format places the CVE ID inside
+      ``cveMetadata.cveId`` rather than at the record root. Semantic
+      equivalence with the broader ``Vulnerability`` concept is preserved via
+      ``exact_mappings``.
     slots:
       - data_type
       - data_version
       - cve_metadata
       - containers
     slot_usage:
-      cve_id:
-        required: false
-        identifier: false
       cve_metadata:
         required: true
       containers:
         required: true
     exact_mappings:
       - WIKIDATA:Q631425
+      - core:Vulnerability
     close_mappings:
       - nvd:NVDEntry
     related_mappings:
@@ -793,9 +786,10 @@ classes:
     description: >-
       Abstract base for CVE Record metadata. Represents either a Published
       or Rejected record's metadata. All fields are controlled by CVE Services.
-    union_of:
-      - CveMetadataPublished
-      - CveMetadataRejected
+      Polymorphism is provided via ``is_a`` on the two concrete subclasses
+      (``CveMetadataPublished``, ``CveMetadataRejected``); slot-level
+      ``any_of`` on the ``cve_metadata`` slot preserves the choice for
+      generators (e.g. JSON Schema ``anyOf``).
 
   CveMetadataPublished:
     is_a: CveMetadata
@@ -869,10 +863,11 @@ classes:
 
   CnaContainer:
     abstract: true
-    description: Abstract base for CNA containers (published and rejected).
-    union_of:
-      - CnaPublishedContainer
-      - CnaRejectedContainer
+    description: >-
+      Abstract base for CNA containers (published and rejected).
+      Polymorphism is provided via ``is_a`` on the two concrete subclasses
+      (``CnaPublishedContainer``, ``CnaRejectedContainer``); slot-level
+      ``any_of`` on the ``cna`` slot preserves the choice for generators.
 
   CnaPublishedContainer:
     is_a: CnaContainer
@@ -910,6 +905,10 @@ classes:
         required: true
       cve_references:
         required: true
+      title:
+        annotations:
+          min_length: 1
+          max_length: 256
 
   CnaRejectedContainer:
     is_a: CnaContainer
@@ -958,12 +957,22 @@ classes:
   # --- Affected products ---
 
   AffectedProduct:
-    is_a: Product
     description: >-
       Information about the set of products and services affected by a vulnerability.
       At least one of (vendor + product) or (collectionURL + packageName) is required,
       and at least one of versions or defaultStatus is required.
+
+      Note: this class deliberately does NOT inherit from
+      ``vulnerability_core.Product``. The upstream CVE ``product`` definition
+      uses a multivalued ``versions`` slot (range ``VersionEntry``), which
+      conflicts with ``Product.version`` (singular string). The ``vendor``,
+      ``name`` (= upstream ``product``), and ``platforms`` slots are reused
+      from the core schema directly. Semantic equivalence is preserved via
+      ``exact_mappings``.
     slots:
+      - vendor
+      - name
+      - platforms
       - collection_url
       - package_name
       - cpes
@@ -974,6 +983,25 @@ classes:
       - default_status
       - versions
       - package_url
+    slot_usage:
+      vendor:
+        annotations:
+          min_length: 1
+          max_length: 512
+      name:
+        description: Name of the affected product (upstream field ``product``).
+        aliases:
+          - product
+        annotations:
+          min_length: 1
+          max_length: 512
+      platforms:
+        annotations:
+          min_length: 1
+          max_length: 1024
+    exact_mappings:
+      - core:Product
+      - schema:SoftwareApplication
     all_of:
       - any_of:
           - slot_conditions:
@@ -1136,6 +1164,13 @@ classes:
     slot_usage:
       url:
         required: true
+        annotations:
+          min_length: 1
+          max_length: 2048
+      name:
+        annotations:
+          min_length: 1
+          max_length: 512
     close_mappings:
       - nvd:NVDReference
     related_mappings:
@@ -1494,12 +1529,9 @@ classes:
     exact_mappings:
       - nvd:CPEMatch
 
-
 # Slots
 
-
 slots:
-
   # -- Record-level --
 
   data_type:
@@ -1609,6 +1641,8 @@ slots:
     description: The date/time the CVE Record was first published in the CVE List.
     aliases:
       - datePublished
+    related_mappings:
+      - kev_catalog:date_added
     in_subset:
       - cna_metadata
 
@@ -1823,12 +1857,18 @@ slots:
     multivalued: true
     aliases:
       - defects
+    annotations:
+      min_length: 1
+      max_length: 4096
 
   source_advisory:
     range: string
     description: Advisory identifier associated with the vulnerability discovery.
     aliases:
       - advisory
+    annotations:
+      min_length: 1
+      max_length: 4096
 
   source_discovery:
     range: string
@@ -1836,6 +1876,9 @@ slots:
       How the vulnerability was discovered (e.g., INTERNAL, EXTERNAL, USER).
     aliases:
       - discovery
+    annotations:
+      min_length: 1
+      max_length: 4096
 
   cna_tags:
     range: string
@@ -1847,6 +1890,9 @@ slots:
         pattern: "^x_.*$"
     aliases:
       - tags
+    annotations:
+      min_length: 1
+      max_length: 128
 
   adp_tags:
     range: string
@@ -1858,6 +1904,9 @@ slots:
         pattern: "^x_.*$"
     aliases:
       - tags
+    annotations:
+      min_length: 1
+      max_length: 128
 
   taxonomy_mappings:
     range: TaxonomyMapping
@@ -1891,6 +1940,9 @@ slots:
     description: URL identifying a package collection (determines the meaning of packageName).
     aliases:
       - collectionURL
+    annotations:
+      min_length: 1
+      max_length: 2048
 
   package_name:
     range: string
@@ -1899,6 +1951,9 @@ slots:
       package collection.
     aliases:
       - packageName
+    annotations:
+      min_length: 1
+      max_length: 2048
 
   cpes:
     range: CpeNameType
@@ -1913,6 +1968,9 @@ slots:
       A list of the affected components, features, modules, sub-components,
       sub-products, APIs, commands, utilities, programs, or functionalities.
     multivalued: true
+    annotations:
+      min_length: 1
+      max_length: 4096
 
   program_files:
     range: string
@@ -1920,6 +1978,9 @@ slots:
     multivalued: true
     aliases:
       - programFiles
+    annotations:
+      min_length: 1
+      max_length: 1024
 
   program_routines:
     range: ProgramRoutine
@@ -1936,6 +1997,9 @@ slots:
     description: >-
       The URL of the source code repository, for informational purposes and/or
       to resolve git hash version ranges.
+    annotations:
+      min_length: 1
+      max_length: 2048
 
   default_status:
     range: VersionStatus
@@ -1961,6 +2025,9 @@ slots:
       hosted by known package hosts. The Package URL MUST NOT include a version.
     aliases:
       - packageURL
+    annotations:
+      min_length: 1
+      max_length: 2048
 
   # -- Version entry slots --
 
@@ -1987,6 +2054,9 @@ slots:
       git, maven, rpm, python, custom). Defines the semantics of comparison.
     aliases:
       - versionType
+    annotations:
+      min_length: 1
+      max_length: 128
 
   less_than:
     range: VersionString
@@ -2039,6 +2109,9 @@ slots:
       procedure.
     aliases:
       - name
+    annotations:
+      min_length: 1
+      max_length: 4096
 
   # -- Description slots --
 
@@ -2052,6 +2125,9 @@ slots:
     description: Plain text description (up to 4096 characters).
     aliases:
       - value
+    annotations:
+      min_length: 1
+      max_length: 4096
 
   supporting_media:
     range: SupportingMedia
@@ -2073,6 +2149,9 @@ slots:
       image/png, image/svg, audio/mp3).
     aliases:
       - type
+    annotations:
+      min_length: 1
+      max_length: 256
 
   base64_encoded:
     range: boolean
@@ -2090,6 +2169,9 @@ slots:
       this stores base64 encoded data.
     aliases:
       - value
+    annotations:
+      min_length: 1
+      max_length: 16384
 
   # -- Problem type slots --
 
@@ -2106,12 +2188,20 @@ slots:
     description: Text description of the problem type, or title from CWE or OWASP.
     aliases:
       - description
+    close_mappings:
+      - cwe:Weakness
+    annotations:
+      min_length: 1
+      max_length: 4096
 
   problem_source_type:
     range: string
     description: Problem type source format (e.g., text, OWASP, CWE).
     aliases:
       - type
+    annotations:
+      min_length: 1
+      max_length: 64
 
   problem_references:
     range: CveReference
@@ -2158,6 +2248,9 @@ slots:
       future-proofing and supports proprietary format inclusion.
     aliases:
       - format
+    annotations:
+      min_length: 1
+      max_length: 64
 
   metric_scenarios:
     range: MetricScenario
@@ -2175,6 +2268,9 @@ slots:
     ifabsent: string(GENERAL)
     aliases:
       - value
+    annotations:
+      min_length: 1
+      max_length: 4096
 
   cvss_v4_0:
     range: CvssV4_0
@@ -2213,6 +2309,9 @@ slots:
     description: Name of the non-standard impact metrics format used.
     aliases:
       - type
+    annotations:
+      min_length: 1
+      max_length: 128
 
   other_metric_content:
     range: Any
@@ -2620,6 +2719,9 @@ slots:
     description: A summary of the timeline event (up to 4096 characters).
     aliases:
       - value
+    annotations:
+      min_length: 1
+      max_length: 4096
 
   # -- Credit slots --
 
@@ -2628,6 +2730,9 @@ slots:
     description: The name or description of the credited party (up to 4096 characters).
     aliases:
       - value
+    annotations:
+      min_length: 1
+      max_length: 4096
 
   credit_user:
     range: UuidType
@@ -2651,12 +2756,18 @@ slots:
     description: The name of the taxonomy (e.g., ATT&CK, D3FEND, CWE, CVSS).
     aliases:
       - taxonomyName
+    annotations:
+      min_length: 1
+      max_length: 128
 
   taxonomy_version:
     range: string
     description: The version of the taxonomy the identifiers come from.
     aliases:
       - taxonomyVersion
+    annotations:
+      min_length: 1
+      max_length: 128
 
   taxonomy_relations:
     range: TaxonomyRelation
@@ -2673,12 +2784,18 @@ slots:
       relationship.
     aliases:
       - taxonomyId
+    annotations:
+      min_length: 1
+      max_length: 4096
 
   relationship_name:
     range: string
     description: A description of the relationship between the taxonomy item and the CVE.
     aliases:
       - relationshipName
+    annotations:
+      min_length: 1
+      max_length: 128
 
   relationship_value:
     range: string
@@ -2687,6 +2804,9 @@ slots:
       identifier.
     aliases:
       - relationshipValue
+    annotations:
+      min_length: 1
+      max_length: 4096
 
   # -- CPE applicability slots --
 

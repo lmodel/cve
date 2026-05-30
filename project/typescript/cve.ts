@@ -774,8 +774,9 @@ export interface Any {
 
 /**
  * Official CVE Record corresponding to a CVE ID. Represents either a Published or Rejected record in the CVE™ Program. The dataType field is always CVE_RECORD. Use cveMetadata.state to distinguish Published from Rejected records.
+This class deliberately does NOT inherit from ``vulnerability_core.Vulnerability``: the upstream CVE Record Format places the CVE ID inside ``cveMetadata.cveId`` rather than at the record root. Semantic equivalence with the broader ``Vulnerability`` concept is preserved via ``exact_mappings``.
  */
-export interface CVERecord extends Vulnerability {
+export interface CVERecord {
     /** Indicates the type of information represented in the JSON instance. */
     data_type?: string,
     /** The version of the CVE schema used for validating this record. Supports multiple versions of the format (e.g., '5.2.0'). */
@@ -788,7 +789,7 @@ export interface CVERecord extends Vulnerability {
 
 
 /**
- * Abstract base for CVE Record metadata. Represents either a Published or Rejected record's metadata. All fields are controlled by CVE Services.
+ * Abstract base for CVE Record metadata. Represents either a Published or Rejected record's metadata. All fields are controlled by CVE Services. Polymorphism is provided via ``is_a`` on the two concrete subclasses (``CveMetadataPublished``, ``CveMetadataRejected``); slot-level ``any_of`` on the ``cve_metadata`` slot preserves the choice for generators (e.g. JSON Schema ``anyOf``).
  */
 export interface CveMetadata {
 }
@@ -869,7 +870,7 @@ export interface ProviderMetadata {
 
 
 /**
- * Abstract base for CNA containers (published and rejected).
+ * Abstract base for CNA containers (published and rejected). Polymorphism is provided via ``is_a`` on the two concrete subclasses (``CnaPublishedContainer``, ``CnaRejectedContainer``); slot-level ``any_of`` on the ``cna`` slot preserves the choice for generators.
  */
 export interface CnaContainer {
 }
@@ -982,8 +983,15 @@ export interface AdpContainer {
 
 /**
  * Information about the set of products and services affected by a vulnerability. At least one of (vendor + product) or (collectionURL + packageName) is required, and at least one of versions or defaultStatus is required.
+Note: this class deliberately does NOT inherit from ``vulnerability_core.Product``. The upstream CVE ``product`` definition uses a multivalued ``versions`` slot (range ``VersionEntry``), which conflicts with ``Product.version`` (singular string). The ``vendor``, ``name`` (= upstream ``product``), and ``platforms`` slots are reused from the core schema directly. Semantic equivalence is preserved via ``exact_mappings``.
  */
-export interface AffectedProduct extends Product {
+export interface AffectedProduct {
+    /** Name of the vendor or organization responsible for the product. */
+    vendor?: string,
+    /** Name of the affected product (upstream field ``product``). */
+    name?: string,
+    /** Platforms or operating environments affected. */
+    platforms?: string[],
     /** URL identifying a package collection (determines the meaning of packageName). */
     collection_url?: string,
     /** Name or identifier of the affected software package as used in the package collection. */

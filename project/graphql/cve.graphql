@@ -1,4 +1,4 @@
-# metamodel_version: 1.7.0
+# metamodel_version: 1.11.0
 # version: 5.2.0
 enum ADPTag
   {
@@ -518,7 +518,6 @@ type AffectedProduct
   {
     vendor: String
     name: String
-    version: String
     platforms: [String]
     collectionUrl: String
     packageName: String
@@ -646,28 +645,18 @@ type CveMetadataRejected
 
 type CVERecord
   {
-    title: String
-    description: String
-    publishedDate: String
-    lastModifiedDate: String
-    products: [Product]
-    weaknesses: [Weakness]
-    references: [Reference]
-    impact: Impact
-    status: VulnerabilityStatus
     dataType: DataType
     dataVersion: String
     cveMetadata: CveMetadata!
     containers: Containers!
-    cveId: CveId!
   }
 
 type CveReference
   {
-    name: String
     source: String
     referenceTags: [ReferenceTag]
     url: String!
+    name: String
   }
 
 type CvssV20

@@ -1,19 +1,12 @@
 -- # Class: Any Description: A linkml placeholder class accepting any JSON-compatible value (string, number, boolean, object, or array). Use for slots that hold arbitrary or schema-less data.
 --     * Slot: id
--- # Class: CVERecord Description: Official CVE Record corresponding to a CVE ID. Represents either a Published or Rejected record in the CVE™ Program. The dataType field is always CVE_RECORD. Use cveMetadata.state to distinguish Published from Rejected records.
+-- # Class: CVERecord Description: Official CVE Record corresponding to a CVE ID. Represents either a Published or Rejected record in the CVE™ Program. The dataType field is always CVE_RECORD. Use cveMetadata.state to distinguish Published from Rejected records.This class deliberately does NOT inherit from ``vulnerability_core.Vulnerability``: the upstream CVE Record Format places the CVE ID inside ``cveMetadata.cveId`` rather than at the record root. Semantic equivalence with the broader ``Vulnerability`` concept is preserved via ``exact_mappings``.
 --     * Slot: id
 --     * Slot: data_type Description: Indicates the type of information represented in the JSON instance.
 --     * Slot: data_version Description: The version of the CVE schema used for validating this record. Supports multiple versions of the format (e.g., '5.2.0').
---     * Slot: cve_id Description: The CVE identifier assigned by a CVE Numbering Authority (CNA). Format: CVE-YYYY-NNNNN.
---     * Slot: title Description: Short human-readable title or name for this entity.
---     * Slot: description Description: Narrative description of the vulnerability.
---     * Slot: published_date Description: Date and time the vulnerability was first published.
---     * Slot: last_modified_date Description: Date and time the vulnerability record was last modified.
---     * Slot: status Description: Current lifecycle state of the vulnerability record.
 --     * Slot: cve_metadata_id Description: Metadata about the CVE ID. A Published record uses CveMetadataPublished; a Rejected record uses CveMetadataRejected.
 --     * Slot: containers_id Description: A set of containers (CNA and optionally ADP) holding vulnerability information related to the CVE ID.
---     * Slot: impact_id Description: Impact and severity assessment for this vulnerability.
--- # Abstract Class: CveMetadata Description: Abstract base for CVE Record metadata. Represents either a Published or Rejected record's metadata. All fields are controlled by CVE Services.
+-- # Abstract Class: CveMetadata Description: Abstract base for CVE Record metadata. Represents either a Published or Rejected record's metadata. All fields are controlled by CVE Services. Polymorphism is provided via ``is_a`` on the two concrete subclasses (``CveMetadataPublished``, ``CveMetadataRejected``); slot-level ``any_of`` on the ``cve_metadata`` slot preserves the choice for generators (e.g. JSON Schema ``anyOf``).
 --     * Slot: id
 -- # Class: CveMetadataPublished Description: Metadata for a CVE Record in the PUBLISHED state.
 --     * Slot: id
@@ -45,7 +38,7 @@
 --     * Slot: org_id Description: The container provider's organizational UUID.
 --     * Slot: short_name Description: The container provider's organizational short name (2-32 characters).
 --     * Slot: date_updated Description: The date/time the record was last updated.
--- # Abstract Class: CnaContainer Description: Abstract base for CNA containers (published and rejected).
+-- # Abstract Class: CnaContainer Description: Abstract base for CNA containers (published and rejected). Polymorphism is provided via ``is_a`` on the two concrete subclasses (``CnaPublishedContainer``, ``CnaRejectedContainer``); slot-level ``any_of`` on the ``cna`` slot preserves the choice for generators.
 --     * Slot: id
 -- # Class: CnaPublishedContainer Description: An object containing vulnerability information provided by a CVE Numbering Authority (CNA) for a published CVE ID. There can only be one CNA container per CVE record since there can only be one assigning CNA.
 --     * Slot: id
@@ -64,16 +57,15 @@
 --     * Slot: Containers_id Description: Autocreated FK slot
 --     * Slot: provider_metadata_id Description: Details related to the information container provider (CNA or ADP).
 --     * Slot: cna_source_id Description: Source information (who discovered it, who researched it, etc.) and optionally a chain of CNA information.
--- # Class: AffectedProduct Description: Information about the set of products and services affected by a vulnerability. At least one of (vendor + product) or (collectionURL + packageName) is required, and at least one of versions or defaultStatus is required.
+-- # Class: AffectedProduct Description: Information about the set of products and services affected by a vulnerability. At least one of (vendor + product) or (collectionURL + packageName) is required, and at least one of versions or defaultStatus is required.Note: this class deliberately does NOT inherit from ``vulnerability_core.Product``. The upstream CVE ``product`` definition uses a multivalued ``versions`` slot (range ``VersionEntry``), which conflicts with ``Product.version`` (singular string). The ``vendor``, ``name`` (= upstream ``product``), and ``platforms`` slots are reused from the core schema directly. Semantic equivalence is preserved via ``exact_mappings``.
 --     * Slot: id
+--     * Slot: vendor Description: Name of the vendor or organization responsible for the product.
+--     * Slot: name Description: Name of the affected product (upstream field ``product``).
 --     * Slot: collection_url Description: URL identifying a package collection (determines the meaning of packageName).
 --     * Slot: package_name Description: Name or identifier of the affected software package as used in the package collection.
 --     * Slot: repo Description: The URL of the source code repository, for informational purposes and/or to resolve git hash version ranges.
 --     * Slot: default_status Description: The default status for versions not otherwise listed in the versions list. Defaults to 'unknown' if not specified. Versions or defaultStatus may be omitted, but not both.
 --     * Slot: package_url Description: A Package URL (PURL), a unified URL specification for identifying packages hosted by known package hosts. The Package URL MUST NOT include a version.
---     * Slot: vendor Description: Name of the vendor or organization responsible for the product.
---     * Slot: name Description: Name of the entity (product, weakness, reference, etc.).
---     * Slot: version Description: Version string of the affected product.
 --     * Slot: CnaPublishedContainer_id Description: Autocreated FK slot
 --     * Slot: AdpContainer_id Description: Autocreated FK slot
 -- # Class: ProgramRoutine Description: An affected source code function, method, subroutine, or procedure.
@@ -305,21 +297,18 @@
 --     * Slot: vendor Description: Name of the vendor or organization responsible for the product.
 --     * Slot: name Description: Name of the entity (product, weakness, reference, etc.).
 --     * Slot: version Description: Version string of the affected product.
---     * Slot: CVERecord_id Description: Autocreated FK slot
 --     * Slot: Vulnerability_cve_id Description: Autocreated FK slot
 -- # Class: Reference Description: External reference such as an advisory or article.
 --     * Slot: id
 --     * Slot: url Description: URL pointing to the reference resource.
 --     * Slot: name Description: Name of the entity (product, weakness, reference, etc.).
 --     * Slot: source Description: Source or origin of the reference or data.
---     * Slot: CVERecord_id Description: Autocreated FK slot
 --     * Slot: Vulnerability_cve_id Description: Autocreated FK slot
 -- # Class: Weakness Description: Weakness classification from CWE or a similar taxonomy.
 --     * Slot: id
 --     * Slot: cwe_id Description: CWE identifier for the weakness classification (e.g. CWE-79).
 --     * Slot: name Description: Name of the entity (product, weakness, reference, etc.).
 --     * Slot: description Description: Narrative description of the vulnerability.
---     * Slot: CVERecord_id Description: Autocreated FK slot
 --     * Slot: Vulnerability_cve_id Description: Autocreated FK slot
 -- # Class: Impact Description: Assessment of the vulnerability's impact and severity.
 --     * Slot: id
@@ -339,6 +328,9 @@
 -- # Class: AdpContainer_adp_tags
 --     * Slot: AdpContainer_id Description: Autocreated FK slot
 --     * Slot: adp_tags Description: Tags provided by an ADP describing the CVE Record.
+-- # Class: AffectedProduct_platforms
+--     * Slot: AffectedProduct_id Description: Autocreated FK slot
+--     * Slot: platforms Description: Platforms or operating environments affected.
 -- # Class: AffectedProduct_cpes
 --     * Slot: AffectedProduct_id Description: Autocreated FK slot
 --     * Slot: cpes Description: Affected products defined by CPE (Common Platform Enumeration) names in either 2.2 or 2.3 format.
@@ -348,9 +340,6 @@
 -- # Class: AffectedProduct_program_files
 --     * Slot: AffectedProduct_id Description: Autocreated FK slot
 --     * Slot: program_files Description: A list of the affected source code files.
--- # Class: AffectedProduct_platforms
---     * Slot: AffectedProduct_id Description: Autocreated FK slot
---     * Slot: platforms Description: Platforms or operating environments affected.
 -- # Class: CveReference_reference_tags
 --     * Slot: CveReference_id Description: Autocreated FK slot
 --     * Slot: reference_tags Description: An array of tags describing the resource referenced by the URL.
@@ -610,19 +599,11 @@ CREATE TABLE "CVERecord" (
 	id INTEGER NOT NULL,
 	data_type VARCHAR(10),
 	data_version TEXT,
-	cve_id TEXT,
-	title TEXT,
-	description TEXT,
-	published_date DATETIME,
-	last_modified_date DATETIME,
-	status VARCHAR(10),
 	cve_metadata_id INTEGER NOT NULL,
 	containers_id INTEGER NOT NULL,
-	impact_id INTEGER,
 	PRIMARY KEY (id),
 	FOREIGN KEY(cve_metadata_id) REFERENCES "CveMetadata" (id),
-	FOREIGN KEY(containers_id) REFERENCES "Containers" (id),
-	FOREIGN KEY(impact_id) REFERENCES "Impact" (id)
+	FOREIGN KEY(containers_id) REFERENCES "Containers" (id)
 );
 CREATE INDEX "ix_CVERecord_id" ON "CVERecord" (id);
 
@@ -640,6 +621,39 @@ CREATE TABLE "AdpContainer" (
 );
 CREATE INDEX "ix_AdpContainer_id" ON "AdpContainer" (id);
 
+CREATE TABLE "Product" (
+	id INTEGER NOT NULL,
+	vendor TEXT,
+	name TEXT,
+	version TEXT,
+	"Vulnerability_cve_id" TEXT,
+	PRIMARY KEY (id),
+	FOREIGN KEY("Vulnerability_cve_id") REFERENCES "Vulnerability" (cve_id)
+);
+CREATE INDEX "ix_Product_id" ON "Product" (id);
+
+CREATE TABLE "Reference" (
+	id INTEGER NOT NULL,
+	url TEXT,
+	name TEXT,
+	source TEXT,
+	"Vulnerability_cve_id" TEXT,
+	PRIMARY KEY (id),
+	FOREIGN KEY("Vulnerability_cve_id") REFERENCES "Vulnerability" (cve_id)
+);
+CREATE INDEX "ix_Reference_id" ON "Reference" (id);
+
+CREATE TABLE "Weakness" (
+	id INTEGER NOT NULL,
+	cwe_id TEXT,
+	name TEXT,
+	description TEXT,
+	"Vulnerability_cve_id" TEXT,
+	PRIMARY KEY (id),
+	FOREIGN KEY("Vulnerability_cve_id") REFERENCES "Vulnerability" (cve_id)
+);
+CREATE INDEX "ix_Weakness_id" ON "Weakness" (id);
+
 CREATE TABLE "CnaPublishedContainer_cna_tags" (
 	"CnaPublishedContainer_id" INTEGER,
 	cna_tags TEXT,
@@ -655,19 +669,18 @@ CREATE TABLE "CnaRejectedContainer_replaced_by" (
 	PRIMARY KEY ("CnaRejectedContainer_id", replaced_by),
 	FOREIGN KEY("CnaRejectedContainer_id") REFERENCES "CnaRejectedContainer" (id)
 );
-CREATE INDEX "ix_CnaRejectedContainer_replaced_by_replaced_by" ON "CnaRejectedContainer_replaced_by" (replaced_by);
 CREATE INDEX "ix_CnaRejectedContainer_replaced_by_CnaRejectedContainer_id" ON "CnaRejectedContainer_replaced_by" ("CnaRejectedContainer_id");
+CREATE INDEX "ix_CnaRejectedContainer_replaced_by_replaced_by" ON "CnaRejectedContainer_replaced_by" (replaced_by);
 
 CREATE TABLE "AffectedProduct" (
 	id INTEGER NOT NULL,
+	vendor TEXT,
+	name TEXT,
 	collection_url TEXT,
 	package_name TEXT,
 	repo TEXT,
 	default_status VARCHAR(10),
 	package_url TEXT,
-	vendor TEXT,
-	name TEXT,
-	version TEXT,
 	"CnaPublishedContainer_id" INTEGER,
 	"AdpContainer_id" INTEGER,
 	PRIMARY KEY (id),
@@ -767,45 +780,6 @@ CREATE TABLE "CpeApplicabilityElement" (
 );
 CREATE INDEX "ix_CpeApplicabilityElement_id" ON "CpeApplicabilityElement" (id);
 
-CREATE TABLE "Product" (
-	id INTEGER NOT NULL,
-	vendor TEXT,
-	name TEXT,
-	version TEXT,
-	"CVERecord_id" INTEGER,
-	"Vulnerability_cve_id" TEXT,
-	PRIMARY KEY (id),
-	FOREIGN KEY("CVERecord_id") REFERENCES "CVERecord" (id),
-	FOREIGN KEY("Vulnerability_cve_id") REFERENCES "Vulnerability" (cve_id)
-);
-CREATE INDEX "ix_Product_id" ON "Product" (id);
-
-CREATE TABLE "Reference" (
-	id INTEGER NOT NULL,
-	url TEXT,
-	name TEXT,
-	source TEXT,
-	"CVERecord_id" INTEGER,
-	"Vulnerability_cve_id" TEXT,
-	PRIMARY KEY (id),
-	FOREIGN KEY("CVERecord_id") REFERENCES "CVERecord" (id),
-	FOREIGN KEY("Vulnerability_cve_id") REFERENCES "Vulnerability" (cve_id)
-);
-CREATE INDEX "ix_Reference_id" ON "Reference" (id);
-
-CREATE TABLE "Weakness" (
-	id INTEGER NOT NULL,
-	cwe_id TEXT,
-	name TEXT,
-	description TEXT,
-	"CVERecord_id" INTEGER,
-	"Vulnerability_cve_id" TEXT,
-	PRIMARY KEY (id),
-	FOREIGN KEY("CVERecord_id") REFERENCES "CVERecord" (id),
-	FOREIGN KEY("Vulnerability_cve_id") REFERENCES "Vulnerability" (cve_id)
-);
-CREATE INDEX "ix_Weakness_id" ON "Weakness" (id);
-
 CREATE TABLE "AdpContainer_adp_tags" (
 	"AdpContainer_id" INTEGER,
 	adp_tags TEXT,
@@ -814,6 +788,15 @@ CREATE TABLE "AdpContainer_adp_tags" (
 );
 CREATE INDEX "ix_AdpContainer_adp_tags_adp_tags" ON "AdpContainer_adp_tags" (adp_tags);
 CREATE INDEX "ix_AdpContainer_adp_tags_AdpContainer_id" ON "AdpContainer_adp_tags" ("AdpContainer_id");
+
+CREATE TABLE "Product_platforms" (
+	"Product_id" INTEGER,
+	platforms TEXT,
+	PRIMARY KEY ("Product_id", platforms),
+	FOREIGN KEY("Product_id") REFERENCES "Product" (id)
+);
+CREATE INDEX "ix_Product_platforms_Product_id" ON "Product_platforms" ("Product_id");
+CREATE INDEX "ix_Product_platforms_platforms" ON "Product_platforms" (platforms);
 
 CREATE TABLE "ProgramRoutine" (
 	id INTEGER NOT NULL,
@@ -896,6 +879,15 @@ CREATE TABLE "CpeNode" (
 );
 CREATE INDEX "ix_CpeNode_id" ON "CpeNode" (id);
 
+CREATE TABLE "AffectedProduct_platforms" (
+	"AffectedProduct_id" INTEGER,
+	platforms TEXT,
+	PRIMARY KEY ("AffectedProduct_id", platforms),
+	FOREIGN KEY("AffectedProduct_id") REFERENCES "AffectedProduct" (id)
+);
+CREATE INDEX "ix_AffectedProduct_platforms_AffectedProduct_id" ON "AffectedProduct_platforms" ("AffectedProduct_id");
+CREATE INDEX "ix_AffectedProduct_platforms_platforms" ON "AffectedProduct_platforms" (platforms);
+
 CREATE TABLE "AffectedProduct_cpes" (
 	"AffectedProduct_id" INTEGER,
 	cpes TEXT,
@@ -922,24 +914,6 @@ CREATE TABLE "AffectedProduct_program_files" (
 );
 CREATE INDEX "ix_AffectedProduct_program_files_AffectedProduct_id" ON "AffectedProduct_program_files" ("AffectedProduct_id");
 CREATE INDEX "ix_AffectedProduct_program_files_program_files" ON "AffectedProduct_program_files" (program_files);
-
-CREATE TABLE "AffectedProduct_platforms" (
-	"AffectedProduct_id" INTEGER,
-	platforms TEXT,
-	PRIMARY KEY ("AffectedProduct_id", platforms),
-	FOREIGN KEY("AffectedProduct_id") REFERENCES "AffectedProduct" (id)
-);
-CREATE INDEX "ix_AffectedProduct_platforms_AffectedProduct_id" ON "AffectedProduct_platforms" ("AffectedProduct_id");
-CREATE INDEX "ix_AffectedProduct_platforms_platforms" ON "AffectedProduct_platforms" (platforms);
-
-CREATE TABLE "Product_platforms" (
-	"Product_id" INTEGER,
-	platforms TEXT,
-	PRIMARY KEY ("Product_id", platforms),
-	FOREIGN KEY("Product_id") REFERENCES "Product" (id)
-);
-CREATE INDEX "ix_Product_platforms_Product_id" ON "Product_platforms" ("Product_id");
-CREATE INDEX "ix_Product_platforms_platforms" ON "Product_platforms" (platforms);
 
 CREATE TABLE "VersionChange" (
 	id INTEGER NOT NULL,
@@ -998,5 +972,5 @@ CREATE TABLE "CveReference_reference_tags" (
 	PRIMARY KEY ("CveReference_id", reference_tags),
 	FOREIGN KEY("CveReference_id") REFERENCES "CveReference" (id)
 );
-CREATE INDEX "ix_CveReference_reference_tags_reference_tags" ON "CveReference_reference_tags" (reference_tags);
 CREATE INDEX "ix_CveReference_reference_tags_CveReference_id" ON "CveReference_reference_tags" ("CveReference_id");
+CREATE INDEX "ix_CveReference_reference_tags_reference_tags" ON "CveReference_reference_tags" (reference_tags);

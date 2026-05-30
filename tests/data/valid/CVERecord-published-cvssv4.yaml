@@ -1,7 +1,4 @@
 # Published CVE Record with CVSS 4.0 metrics
-cve_id: CVE-2024-55001
-description: Improper input validation in AlphaService API endpoint allows a remote
-  attacker to cause a denial of service via a malformed JSON payload.
 cve_metadata:
   record_cve_id: CVE-2024-55001
   assigner_org_id: b2c3d4e5-f6a7-4b8c-9d0e-1f2a3b4c5d6e

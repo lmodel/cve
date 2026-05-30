@@ -1,8 +1,5 @@
 # Published CVE Record - package-centric (collectionURL + packageName)
 # Covers open-source package vulnerability with PURL, version ranges, and CWE
-cve_id: CVE-2024-77777
-description: Prototype pollution in npm package deep-merger before 2.0.1 allows an
-  attacker to modify Object.prototype properties via a crafted merge payload.
 cve_metadata:
   record_cve_id: CVE-2024-77777
   assigner_org_id: d4e5f6a7-b8c9-4d0e-8f2a-3b4c5d6e7f8a

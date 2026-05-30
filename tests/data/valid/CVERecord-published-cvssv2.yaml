@@ -1,7 +1,4 @@
 # Published CVE Record with CVSS 2.0 metrics (legacy scoring)
-cve_id: CVE-2011-44444
-description: SQL injection vulnerability in LegacyApp 1.x allows remote attackers
-  to execute arbitrary SQL commands via the 'id' parameter in the search module.
 cve_metadata:
   record_cve_id: CVE-2011-44444
   assigner_org_id: c3d4e5f6-a7b8-4c9d-8e1f-2a3b4c5d6e7f

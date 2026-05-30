@@ -212,10 +212,60 @@
         },
         "AffectedProduct": {
             "additionalProperties": false,
-            "description": "Information about the set of products and services affected by a vulnerability. At least one of (vendor + product) or (collectionURL + packageName) is required, and at least one of versions or defaultStatus is required.",
+            "allOf": [
+                {
+                    "anyOf": [
+                        {
+                            "properties": {
+                                "name": {},
+                                "vendor": {}
+                            },
+                            "required": [
+                                "vendor",
+                                "name"
+                            ]
+                        },
+                        {
+                            "properties": {
+                                "collection_url": {},
+                                "package_name": {}
+                            },
+                            "required": [
+                                "collection_url",
+                                "package_name"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "anyOf": [
+                        {
+                            "properties": {
+                                "versions": {
+                                    "items": {},
+                                    "type": "array"
+                                }
+                            },
+                            "required": [
+                                "versions"
+                            ]
+                        },
+                        {
+                            "properties": {
+                                "default_status": {}
+                            },
+                            "required": [
+                                "default_status"
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "description": "Information about the set of products and services affected by a vulnerability. At least one of (vendor + product) or (collectionURL + packageName) is required, and at least one of versions or defaultStatus is required.\nNote: this class deliberately does NOT inherit from ``vulnerability_core.Product``. The upstream CVE ``product`` definition uses a multivalued ``versions`` slot (range ``VersionEntry``), which conflicts with ``Product.version`` (singular string). The ``vendor``, ``name`` (= upstream ``product``), and ``platforms`` slots are reused from the core schema directly. Semantic equivalence is preserved via ``exact_mappings``.",
             "properties": {
                 "collection_url": {
                     "description": "URL identifying a package collection (determines the meaning of packageName).",
+                    "format": "uri",
                     "type": [
                         "string",
                         "null"
@@ -247,7 +297,7 @@
                     ]
                 },
                 "name": {
-                    "description": "Name of the entity (product, weakness, reference, etc.).",
+                    "description": "Name of the affected product (upstream field ``product``).",
                     "type": [
                         "string",
                         "null"
@@ -262,6 +312,7 @@
                 },
                 "package_url": {
                     "description": "A Package URL (PURL), a unified URL specification for identifying packages hosted by known package hosts. The Package URL MUST NOT include a version.",
+                    "format": "uri",
                     "type": [
                         "string",
                         "null"
@@ -299,6 +350,7 @@
                 },
                 "repo": {
                     "description": "The URL of the source code repository, for informational purposes and/or to resolve git hash version ranges.",
+                    "format": "uri",
                     "type": [
                         "string",
                         "null"
@@ -306,13 +358,6 @@
                 },
                 "vendor": {
                     "description": "Name of the vendor or organization responsible for the product.",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
-                },
-                "version": {
-                    "description": "Version string of the affected product.",
                     "type": [
                         "string",
                         "null"
@@ -356,19 +401,11 @@
         },
         "CVERecord": {
             "additionalProperties": false,
-            "description": "Official CVE Record corresponding to a CVE ID. Represents either a Published or Rejected record in the CVE\u2122 Program. The dataType field is always CVE_RECORD. Use cveMetadata.state to distinguish Published from Rejected records.",
+            "description": "Official CVE Record corresponding to a CVE ID. Represents either a Published or Rejected record in the CVE\u2122 Program. The dataType field is always CVE_RECORD. Use cveMetadata.state to distinguish Published from Rejected records.\nThis class deliberately does NOT inherit from ``vulnerability_core.Vulnerability``: the upstream CVE Record Format places the CVE ID inside ``cveMetadata.cveId`` rather than at the record root. Semantic equivalence with the broader ``Vulnerability`` concept is preserved via ``exact_mappings``.",
             "properties": {
                 "containers": {
                     "$ref": "#/$defs/Containers",
                     "description": "A set of containers (CNA and optionally ADP) holding vulnerability information related to the CVE ID."
-                },
-                "cve_id": {
-                    "description": "The CVE identifier assigned by a CVE Numbering Authority (CNA). Format: CVE-YYYY-NNNNN.",
-                    "pattern": "^CVE-[0-9]{4}-[0-9]+$",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
                 },
                 "cve_metadata": {
                     "$ref": "#/$defs/CveMetadata",
@@ -393,81 +430,6 @@
                         "string",
                         "null"
                     ]
-                },
-                "description": {
-                    "description": "Narrative description of the vulnerability.",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
-                },
-                "impact": {
-                    "anyOf": [
-                        {
-                            "$ref": "#/$defs/Impact"
-                        },
-                        {
-                            "type": "null"
-                        }
-                    ],
-                    "description": "Impact and severity assessment for this vulnerability."
-                },
-                "last_modified_date": {
-                    "description": "Date and time the vulnerability record was last modified.",
-                    "format": "date-time",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
-                },
-                "products": {
-                    "description": "Products affected by this vulnerability.",
-                    "items": {
-                        "$ref": "#/$defs/Product"
-                    },
-                    "type": [
-                        "array",
-                        "null"
-                    ]
-                },
-                "published_date": {
-                    "description": "Date and time the vulnerability was first published.",
-                    "format": "date-time",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
-                },
-                "references": {
-                    "description": "External references such as advisories and articles.",
-                    "items": {
-                        "$ref": "#/$defs/Reference"
-                    },
-                    "type": [
-                        "array",
-                        "null"
-                    ]
-                },
-                "status": {
-                    "$ref": "#/$defs/VulnerabilityStatus",
-                    "description": "Current lifecycle state of the vulnerability record."
-                },
-                "title": {
-                    "description": "Short human-readable title or name for this entity.",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
-                },
-                "weaknesses": {
-                    "description": "Weakness classifications (e.g. CWE) associated with this vulnerability.",
-                    "items": {
-                        "$ref": "#/$defs/Weakness"
-                    },
-                    "type": [
-                        "array",
-                        "null"
-                    ]
                 }
             },
             "required": [
@@ -475,6 +437,12 @@
                 "containers"
             ],
             "title": "CVERecord",
+            "type": "object"
+        },
+        "CnaContainer": {
+            "additionalProperties": false,
+            "description": "Abstract base for CNA containers (published and rejected). Polymorphism is provided via ``is_a`` on the two concrete subclasses (``CnaPublishedContainer``, ``CnaRejectedContainer``); slot-level ``any_of`` on the ``cna`` slot preserves the choice for generators.",
+            "title": "CnaContainer",
             "type": "object"
         },
         "CnaPublishedContainer": {
@@ -945,6 +913,12 @@
             "title": "CreditType",
             "type": "string"
         },
+        "CveMetadata": {
+            "additionalProperties": false,
+            "description": "Abstract base for CVE Record metadata. Represents either a Published or Rejected record's metadata. All fields are controlled by CVE Services. Polymorphism is provided via ``is_a`` on the two concrete subclasses (``CveMetadataPublished``, ``CveMetadataRejected``); slot-level ``any_of`` on the ``cve_metadata`` slot preserves the choice for generators (e.g. JSON Schema ``anyOf``).",
+            "title": "CveMetadata",
+            "type": "object"
+        },
         "CveMetadataPublished": {
             "additionalProperties": false,
             "description": "Metadata for a CVE Record in the PUBLISHED state.",
@@ -1125,6 +1099,7 @@
                 },
                 "url": {
                     "description": "URL pointing to the reference resource.",
+                    "format": "uri",
                     "type": "string"
                 }
             },
@@ -2102,6 +2077,40 @@
         },
         "MetricEntry": {
             "additionalProperties": false,
+            "anyOf": [
+                {
+                    "properties": {
+                        "cvss_v4_0": {}
+                    },
+                    "required": [
+                        "cvss_v4_0"
+                    ]
+                },
+                {
+                    "properties": {
+                        "cvss_v3": {}
+                    },
+                    "required": [
+                        "cvss_v3"
+                    ]
+                },
+                {
+                    "properties": {
+                        "cvss_v2_0": {}
+                    },
+                    "required": [
+                        "cvss_v2_0"
+                    ]
+                },
+                {
+                    "properties": {
+                        "other_metric": {}
+                    },
+                    "required": [
+                        "other_metric"
+                    ]
+                }
+            ],
             "description": "A metric entry containing scoring data in one of the CVSS formats (v4.0, v3.x, v2.0) or a custom format, with optional applicability scenarios. At least one of cvss_v4_0, cvss_v3, cvss_v2_0, or other_metric is required. CVSS 3.0 and 3.1 are both represented by CvssV3 (distinguished by the cvss3_version slot).",
             "properties": {
                 "cvss_v2_0": {
@@ -2420,6 +2429,7 @@
                 },
                 "url": {
                     "description": "URL pointing to the reference resource.",
+                    "format": "uri",
                     "type": [
                         "string",
                         "null"
@@ -2657,6 +2667,20 @@
                 }
             ],
             "description": "A single version or a range of versions of a product with associated vulnerability status. An entry with only version and status is a point version; an entry with versionType and a less-than limit describes a range.",
+            "not": {
+                "anyOf": [
+                    {
+                        "properties": {
+                            "less_than": {},
+                            "less_than_or_equal": {}
+                        },
+                        "required": [
+                            "less_than",
+                            "less_than_or_equal"
+                        ]
+                    }
+                ]
+            },
             "properties": {
                 "less_than": {
                     "description": "The non-inclusive upper limit of the range. This is the least version NOT in the range. Supports wildcard '*' suffix.",
@@ -2715,6 +2739,97 @@
             "title": "VersionStatus",
             "type": "string"
         },
+        "Vulnerability": {
+            "additionalProperties": false,
+            "description": "Abstract base representation of a security vulnerability. Extended by source-specific schemas (KEV, CVE, NVD).",
+            "properties": {
+                "cve_id": {
+                    "description": "The CVE identifier assigned by a CVE Numbering Authority (CNA). Format: CVE-YYYY-NNNNN.",
+                    "pattern": "^CVE-[0-9]{4}-[0-9]+$",
+                    "type": "string"
+                },
+                "description": {
+                    "description": "Narrative description of the vulnerability.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "impact": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/Impact"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "Impact and severity assessment for this vulnerability."
+                },
+                "last_modified_date": {
+                    "description": "Date and time the vulnerability record was last modified.",
+                    "format": "date-time",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "products": {
+                    "description": "Products affected by this vulnerability.",
+                    "items": {
+                        "$ref": "#/$defs/Product"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "published_date": {
+                    "description": "Date and time the vulnerability was first published.",
+                    "format": "date-time",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "references": {
+                    "description": "External references such as advisories and articles.",
+                    "items": {
+                        "$ref": "#/$defs/Reference"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "status": {
+                    "$ref": "#/$defs/VulnerabilityStatus",
+                    "description": "Current lifecycle state of the vulnerability record."
+                },
+                "title": {
+                    "description": "Short human-readable title or name for this entity.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "weaknesses": {
+                    "description": "Weakness classifications (e.g. CWE) associated with this vulnerability.",
+                    "items": {
+                        "$ref": "#/$defs/Weakness"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "cve_id"
+            ],
+            "title": "Vulnerability",
+            "type": "object"
+        },
         "VulnerabilityStatus": {
             "description": "Lifecycle state of a vulnerability record.",
             "enum": [
@@ -2761,20 +2876,12 @@
     "$id": "https://w3id.org/lmodel/cve",
     "$schema": "https://json-schema.org/draft/2019-09/schema",
     "additionalProperties": true,
-    "description": "Official CVE Record corresponding to a CVE ID. Represents either a Published or Rejected record in the CVE\u2122 Program. The dataType field is always CVE_RECORD. Use cveMetadata.state to distinguish Published from Rejected records.",
-    "metamodel_version": "1.7.0",
+    "description": "Official CVE Record corresponding to a CVE ID. Represents either a Published or Rejected record in the CVE\u2122 Program. The dataType field is always CVE_RECORD. Use cveMetadata.state to distinguish Published from Rejected records.\nThis class deliberately does NOT inherit from ``vulnerability_core.Vulnerability``: the upstream CVE Record Format places the CVE ID inside ``cveMetadata.cveId`` rather than at the record root. Semantic equivalence with the broader ``Vulnerability`` concept is preserved via ``exact_mappings``.",
+    "metamodel_version": "1.11.0",
     "properties": {
         "containers": {
             "$ref": "#/$defs/Containers",
             "description": "A set of containers (CNA and optionally ADP) holding vulnerability information related to the CVE ID."
-        },
-        "cve_id": {
-            "description": "The CVE identifier assigned by a CVE Numbering Authority (CNA). Format: CVE-YYYY-NNNNN.",
-            "pattern": "^CVE-[0-9]{4}-[0-9]+$",
-            "type": [
-                "string",
-                "null"
-            ]
         },
         "cve_metadata": {
             "$ref": "#/$defs/CveMetadata",
@@ -2797,81 +2904,6 @@
             "pattern": "^5\\.(0|[1-9][0-9]*)(\\.(0|[1-9][0-9]*))?$",
             "type": [
                 "string",
-                "null"
-            ]
-        },
-        "description": {
-            "description": "Narrative description of the vulnerability.",
-            "type": [
-                "string",
-                "null"
-            ]
-        },
-        "impact": {
-            "anyOf": [
-                {
-                    "$ref": "#/$defs/Impact"
-                },
-                {
-                    "type": "null"
-                }
-            ],
-            "description": "Impact and severity assessment for this vulnerability."
-        },
-        "last_modified_date": {
-            "description": "Date and time the vulnerability record was last modified.",
-            "format": "date-time",
-            "type": [
-                "string",
-                "null"
-            ]
-        },
-        "products": {
-            "description": "Products affected by this vulnerability.",
-            "items": {
-                "$ref": "#/$defs/Product"
-            },
-            "type": [
-                "array",
-                "null"
-            ]
-        },
-        "published_date": {
-            "description": "Date and time the vulnerability was first published.",
-            "format": "date-time",
-            "type": [
-                "string",
-                "null"
-            ]
-        },
-        "references": {
-            "description": "External references such as advisories and articles.",
-            "items": {
-                "$ref": "#/$defs/Reference"
-            },
-            "type": [
-                "array",
-                "null"
-            ]
-        },
-        "status": {
-            "$ref": "#/$defs/VulnerabilityStatus",
-            "description": "Current lifecycle state of the vulnerability record."
-        },
-        "title": {
-            "description": "Short human-readable title or name for this entity.",
-            "type": [
-                "string",
-                "null"
-            ]
-        },
-        "weaknesses": {
-            "description": "Weakness classifications (e.g. CWE) associated with this vulnerability.",
-            "items": {
-                "$ref": "#/$defs/Weakness"
-            },
-            "type": [
-                "array",
                 "null"
             ]
         }

@@ -1,11 +1,6 @@
 # Full published CVE Record exercising all optional fields:
 # CVSS 3.1 metrics, CPE applicability, taxonomy mapping, credits, timeline,
 # problem types, impacts, configurations, workarounds, solutions, exploits
-cve_id: CVE-2023-99999
-description: Use-after-free vulnerability in FooBar Web Server 4.x before 4.8.1 allows
-  a remote unauthenticated attacker to execute arbitrary code via a specially crafted
-  HTTP/2 request.
-title: FooBar Web Server Use-After-Free (CVE-2023-99999)
 cve_metadata:
   record_cve_id: CVE-2023-99999
   assigner_org_id: a341c0d1-ebf7-437e-a5a2-c53f8ced78f3

@@ -29,7 +29,7 @@ from pydantic import (
 )
 
 
-metamodel_version = "1.7.0"
+metamodel_version = "1.11.0"
 version = "5.2.0"
 
 
@@ -76,7 +76,7 @@ linkml_meta = LinkMLMeta({'default_prefix': 'cve',
                     'applicability, taxonomy mappings, credits, and timeline '
                     'entries.',
      'id': 'https://w3id.org/lmodel/cve',
-     'imports': ['./vulnerability_core'],
+     'imports': ['schema_vulnerability_core:vulnerability_core'],
      'license': 'https://creativecommons.org/publicdomain/zero/1.0/',
      'name': 'cve',
      'prefixes': {'WIKIDATA': {'prefix_prefix': 'WIKIDATA',
@@ -85,8 +85,8 @@ linkml_meta = LinkMLMeta({'default_prefix': 'cve',
                           'prefix_reference': 'https://w3id.org/lmodel/cve/'},
                   'cwe': {'prefix_prefix': 'cwe',
                           'prefix_reference': 'https://w3id.org/lmodel/cwe/'},
-                  'dct': {'prefix_prefix': 'dct',
-                          'prefix_reference': 'http://purl.org/dc/terms/'},
+                  'dcterms': {'prefix_prefix': 'dcterms',
+                              'prefix_reference': 'http://purl.org/dc/terms/'},
                   'kev_catalog': {'prefix_prefix': 'kev_catalog',
                                   'prefix_reference': 'https://w3id.org/lmodel/kev-catalog/'},
                   'linkml': {'prefix_prefix': 'linkml',
@@ -97,6 +97,8 @@ linkml_meta = LinkMLMeta({'default_prefix': 'cve',
                            'prefix_reference': 'http://www.w3.org/2000/01/rdf-schema#'},
                   'schema': {'prefix_prefix': 'schema',
                              'prefix_reference': 'http://schema.org/'},
+                  'schema_vulnerability_core': {'prefix_prefix': 'schema_vulnerability_core',
+                                                'prefix_reference': 'https://w3id.org/lmodel/vulnerability-core/schema/'},
                   'skos': {'prefix_prefix': 'skos',
                            'prefix_reference': 'http://www.w3.org/2004/02/skos/core#'},
                   'xsd': {'prefix_prefix': 'xsd',
@@ -978,7 +980,7 @@ class Vulnerability(ConfiguredBaseModel):
 
     cve_id: str = Field(default=..., description="""The CVE identifier assigned by a CVE Numbering Authority (CNA). Format: CVE-YYYY-NNNNN.""", json_schema_extra = { "linkml_meta": {'aliases': ['cveId'],
          'domain_of': ['Vulnerability'],
-         'exact_mappings': ['schema:identifier'],
+         'exact_mappings': ['schema:identifier', 'nvd:cve_id', 'kev_catalog:cve_id'],
          'in_subset': ['metadata'],
          'recommended': True,
          'slot_uri': 'dct:identifier'} })
@@ -1020,12 +1022,12 @@ class Product(ConfiguredBaseModel):
          'in_subset': ['core'],
          'related_mappings': ['kev_catalog:KevEntry']})
 
-    vendor: Optional[str] = Field(default=None, description="""Name of the vendor or organization responsible for the product.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Product'], 'slot_uri': 'schema:name'} })
+    vendor: Optional[str] = Field(default=None, description="""Name of the vendor or organization responsible for the product.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Product', 'AffectedProduct'], 'slot_uri': 'schema:name'} })
     name: Optional[str] = Field(default=None, description="""Name of the entity (product, weakness, reference, etc.).""", json_schema_extra = { "linkml_meta": {'aliases': ['label', 'product'],
-         'domain_of': ['Product', 'Reference', 'Weakness'],
+         'domain_of': ['Product', 'Reference', 'Weakness', 'AffectedProduct'],
          'slot_uri': 'rdfs:label'} })
     version: Optional[str] = Field(default=None, description="""Version string of the affected product.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Product'], 'slot_uri': 'schema:version'} })
-    platforms: Optional[list[str]] = Field(default=None, description="""Platforms or operating environments affected.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Product']} })
+    platforms: Optional[list[str]] = Field(default=None, description="""Platforms or operating environments affected.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Product', 'AffectedProduct']} })
 
 
 class Reference(ConfiguredBaseModel):
@@ -1035,11 +1037,12 @@ class Reference(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'close_mappings': ['cwe:ExternalReference', 'nvd:NVDReference'],
          'exact_mappings': ['schema:CreativeWork'],
          'from_schema': 'https://w3id.org/lmodel/vulnerability-core',
-         'in_subset': ['core']})
+         'in_subset': ['core'],
+         'related_mappings': ['kev_catalog:notes']})
 
     url: Optional[str] = Field(default=None, description="""URL pointing to the reference resource.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Reference'], 'slot_uri': 'schema:url'} })
     name: Optional[str] = Field(default=None, description="""Name of the entity (product, weakness, reference, etc.).""", json_schema_extra = { "linkml_meta": {'aliases': ['label', 'product'],
-         'domain_of': ['Product', 'Reference', 'Weakness'],
+         'domain_of': ['Product', 'Reference', 'Weakness', 'AffectedProduct'],
          'slot_uri': 'rdfs:label'} })
     source: Optional[str] = Field(default=None, description="""Source or origin of the reference or data.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Reference'], 'slot_uri': 'dct:source'} })
 
@@ -1057,7 +1060,7 @@ class Weakness(ConfiguredBaseModel):
          'related_mappings': ['cwe:Weakness'],
          'slot_uri': 'dct:identifier'} })
     name: Optional[str] = Field(default=None, description="""Name of the entity (product, weakness, reference, etc.).""", json_schema_extra = { "linkml_meta": {'aliases': ['label', 'product'],
-         'domain_of': ['Product', 'Reference', 'Weakness'],
+         'domain_of': ['Product', 'Reference', 'Weakness', 'AffectedProduct'],
          'slot_uri': 'rdfs:label'} })
     description: Optional[str] = Field(default=None, description="""Narrative description of the vulnerability.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['kev_catalog:short_description'],
          'domain_of': ['Vulnerability', 'Weakness'],
@@ -1106,19 +1109,17 @@ class Configuration(ConfiguredBaseModel):
     operator: Optional[str] = Field(default=None, description="""Logical operator (AND/OR) used in configuration node groupings.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Configuration']} })
 
 
-class CVERecord(Vulnerability):
+class CVERecord(ConfiguredBaseModel):
     """
     Official CVE Record corresponding to a CVE ID. Represents either a Published or Rejected record in the CVE™ Program. The dataType field is always CVE_RECORD. Use cveMetadata.state to distinguish Published from Rejected records.
+    This class deliberately does NOT inherit from ``vulnerability_core.Vulnerability``: the upstream CVE Record Format places the CVE ID inside ``cveMetadata.cveId`` rather than at the record root. Semantic equivalence with the broader ``Vulnerability`` concept is preserved via ``exact_mappings``.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'close_mappings': ['nvd:NVDEntry'],
-         'exact_mappings': ['WIKIDATA:Q631425'],
+         'exact_mappings': ['WIKIDATA:Q631425', 'core:Vulnerability'],
          'from_schema': 'https://w3id.org/lmodel/cve',
          'in_subset': ['cve_record'],
          'related_mappings': ['kev_catalog:KevEntry'],
          'slot_usage': {'containers': {'name': 'containers', 'required': True},
-                        'cve_id': {'identifier': False,
-                                   'name': 'cve_id',
-                                   'required': False},
                         'cve_metadata': {'name': 'cve_metadata', 'required': True}},
          'tree_root': True})
 
@@ -1136,39 +1137,6 @@ class CVERecord(Vulnerability):
          'domain_of': ['CVERecord'],
          'in_subset': ['cve_record']} })
     containers: Containers = Field(default=..., description="""A set of containers (CNA and optionally ADP) holding vulnerability information related to the CVE ID.""", json_schema_extra = { "linkml_meta": {'domain_of': ['CVERecord'], 'in_subset': ['cve_record']} })
-    cve_id: Optional[str] = Field(default=None, description="""The CVE identifier assigned by a CVE Numbering Authority (CNA). Format: CVE-YYYY-NNNNN.""", json_schema_extra = { "linkml_meta": {'aliases': ['cveId'],
-         'domain_of': ['Vulnerability'],
-         'exact_mappings': ['schema:identifier'],
-         'in_subset': ['metadata'],
-         'recommended': True,
-         'slot_uri': 'dct:identifier'} })
-    title: Optional[str] = Field(default=None, description="""Short human-readable title or name for this entity.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['kev_catalog:vulnerability_name'],
-         'domain_of': ['Vulnerability', 'CnaPublishedContainer', 'AdpContainer'],
-         'exact_mappings': ['schema:name'],
-         'in_subset': ['metadata'],
-         'slot_uri': 'dct:title'} })
-    description: Optional[str] = Field(default=None, description="""Narrative description of the vulnerability.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['kev_catalog:short_description'],
-         'domain_of': ['Vulnerability', 'Weakness'],
-         'exact_mappings': ['schema:description'],
-         'in_subset': ['core'],
-         'recommended': True,
-         'slot_uri': 'dct:description'} })
-    published_date: Optional[datetime ] = Field(default=None, description="""Date and time the vulnerability was first published.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Vulnerability'],
-         'in_subset': ['core'],
-         'related_mappings': ['kev_catalog:date_added'],
-         'slot_uri': 'dct:created'} })
-    last_modified_date: Optional[datetime ] = Field(default=None, description="""Date and time the vulnerability record was last modified.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Vulnerability'],
-         'in_subset': ['core'],
-         'slot_uri': 'dct:modified'} })
-    products: Optional[list[Product]] = Field(default=None, description="""Products affected by this vulnerability.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Vulnerability'], 'in_subset': ['core']} })
-    weaknesses: Optional[list[Weakness]] = Field(default=None, description="""Weakness classifications (e.g. CWE) associated with this vulnerability.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Vulnerability'],
-         'in_subset': ['core'],
-         'related_mappings': ['cwe:Weakness']} })
-    references: Optional[list[Reference]] = Field(default=None, description="""External references such as advisories and articles.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Vulnerability'], 'in_subset': ['core']} })
-    impact: Optional[Impact] = Field(default=None, description="""Impact and severity assessment for this vulnerability.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Vulnerability'], 'in_subset': ['core']} })
-    status: Optional[VulnerabilityStatus] = Field(default=None, description="""Current lifecycle state of the vulnerability record.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['nvd:NVDWorkflowStatus'],
-         'domain_of': ['Vulnerability'],
-         'in_subset': ['core']} })
 
     @field_validator('data_version')
     def pattern_data_version(cls, v):
@@ -1184,8 +1152,13 @@ class CVERecord(Vulnerability):
         return v
 
 
-# Abstract base for CVE Record metadata. Represents either a Published or Rejected record's metadata. All fields are controlled by CVE Services.
-CveMetadata = Union["CveMetadataPublished", "CveMetadataRejected"]
+class CveMetadata(ConfiguredBaseModel):
+    """
+    Abstract base for CVE Record metadata. Represents either a Published or Rejected record's metadata. All fields are controlled by CVE Services. Polymorphism is provided via ``is_a`` on the two concrete subclasses (``CveMetadataPublished``, ``CveMetadataRejected``); slot-level ``any_of`` on the ``cve_metadata`` slot preserves the choice for generators (e.g. JSON Schema ``anyOf``).
+    """
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'abstract': True, 'from_schema': 'https://w3id.org/lmodel/cve'})
+
+    pass
 
 
 class CveMetadataPublished(CveMetadata):
@@ -1223,7 +1196,8 @@ class CveMetadataPublished(CveMetadata):
          'in_subset': ['cna_metadata']} })
     date_published: Optional[str] = Field(default=None, description="""The date/time the CVE Record was first published in the CVE List.""", json_schema_extra = { "linkml_meta": {'aliases': ['datePublished'],
          'domain_of': ['CveMetadataPublished', 'CveMetadataRejected'],
-         'in_subset': ['cna_metadata']} })
+         'in_subset': ['cna_metadata'],
+         'related_mappings': ['kev_catalog:date_added']} })
     published_state: RecordState = Field(default=..., description="""State of the CVE Record. For published records, this is always PUBLISHED.""", json_schema_extra = { "linkml_meta": {'aliases': ['state'],
          'domain_of': ['CveMetadataPublished'],
          'in_subset': ['cna_metadata']} })
@@ -1286,7 +1260,8 @@ class CveMetadataRejected(CveMetadata):
          'in_subset': ['cna_metadata']} })
     date_published: Optional[str] = Field(default=None, description="""The date/time the CVE Record was first published in the CVE List.""", json_schema_extra = { "linkml_meta": {'aliases': ['datePublished'],
          'domain_of': ['CveMetadataPublished', 'CveMetadataRejected'],
-         'in_subset': ['cna_metadata']} })
+         'in_subset': ['cna_metadata'],
+         'related_mappings': ['kev_catalog:date_added']} })
     date_rejected: Optional[str] = Field(default=None, description="""The date/time the CVE ID was rejected.""", json_schema_extra = { "linkml_meta": {'aliases': ['dateRejected'],
          'domain_of': ['CveMetadataRejected'],
          'in_subset': ['cna_metadata']} })
@@ -1364,8 +1339,13 @@ class ProviderMetadata(ConfiguredBaseModel):
         return v
 
 
-# Abstract base for CNA containers (published and rejected).
-CnaContainer = Union["CnaPublishedContainer", "CnaRejectedContainer"]
+class CnaContainer(ConfiguredBaseModel):
+    """
+    Abstract base for CNA containers (published and rejected). Polymorphism is provided via ``is_a`` on the two concrete subclasses (``CnaPublishedContainer``, ``CnaRejectedContainer``); slot-level ``any_of`` on the ``cna`` slot preserves the choice for generators.
+    """
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'abstract': True, 'from_schema': 'https://w3id.org/lmodel/cve'})
+
+    pass
 
 
 class CnaPublishedContainer(CnaContainer):
@@ -1377,14 +1357,21 @@ class CnaPublishedContainer(CnaContainer):
                         'cve_references': {'name': 'cve_references', 'required': True},
                         'descriptions': {'name': 'descriptions', 'required': True},
                         'provider_metadata': {'name': 'provider_metadata',
-                                              'required': True}}})
+                                              'required': True},
+                        'title': {'annotations': {'max_length': {'tag': 'max_length',
+                                                                 'value': 256},
+                                                  'min_length': {'tag': 'min_length',
+                                                                 'value': 1}},
+                                  'name': 'title'}}})
 
     provider_metadata: ProviderMetadata = Field(default=..., description="""Details related to the information container provider (CNA or ADP).""", json_schema_extra = { "linkml_meta": {'aliases': ['providerMetadata'],
          'domain_of': ['CnaPublishedContainer', 'CnaRejectedContainer', 'AdpContainer']} })
     date_assigned: Optional[str] = Field(default=None, description="""The date/time this CVE ID was associated with a vulnerability by a CNA.""", json_schema_extra = { "linkml_meta": {'aliases': ['dateAssigned'], 'domain_of': ['CnaPublishedContainer']} })
     date_public: Optional[str] = Field(default=None, description="""If known, the date/time the vulnerability was disclosed publicly.""", json_schema_extra = { "linkml_meta": {'aliases': ['datePublic'],
          'domain_of': ['CnaPublishedContainer', 'AdpContainer']} })
-    title: Optional[str] = Field(default=None, description="""Short human-readable title or name for this entity.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['kev_catalog:vulnerability_name'],
+    title: Optional[str] = Field(default=None, description="""Short human-readable title or name for this entity.""", json_schema_extra = { "linkml_meta": {'annotations': {'max_length': {'tag': 'max_length', 'value': 256},
+                         'min_length': {'tag': 'min_length', 'value': 1}},
+         'close_mappings': ['kev_catalog:vulnerability_name'],
          'domain_of': ['Vulnerability', 'CnaPublishedContainer', 'AdpContainer'],
          'exact_mappings': ['schema:name'],
          'in_subset': ['metadata'],
@@ -1408,6 +1395,8 @@ class CnaPublishedContainer(CnaContainer):
     credits: Optional[list[CreditEntry]] = Field(default=None, description="""Statements acknowledging specific people, organizations, or tools for work related to research, discovery, remediation, or coordination of this CVE.""", json_schema_extra = { "linkml_meta": {'domain_of': ['CnaPublishedContainer', 'AdpContainer']} })
     cna_source: Optional[SourceInformation] = Field(default=None, description="""Source information (who discovered it, who researched it, etc.) and optionally a chain of CNA information.""", json_schema_extra = { "linkml_meta": {'aliases': ['source'], 'domain_of': ['CnaPublishedContainer', 'AdpContainer']} })
     cna_tags: Optional[list[Union[CNATag, str]]] = Field(default=None, description="""Tags provided by a CNA describing the CVE Record.""", json_schema_extra = { "linkml_meta": {'aliases': ['tags'],
+         'annotations': {'max_length': {'tag': 'max_length', 'value': 128},
+                         'min_length': {'tag': 'min_length', 'value': 1}},
          'any_of': [{'range': 'CNATag'}, {'pattern': '^x_.*$', 'range': 'string'}],
          'domain_of': ['CnaPublishedContainer']} })
     taxonomy_mappings: Optional[list[TaxonomyMapping]] = Field(default=None, description="""List of taxonomy items (e.g., ATT&CK, CWE) related to the vulnerability.""", json_schema_extra = { "linkml_meta": {'aliases': ['taxonomyMappings'],
@@ -1466,15 +1455,18 @@ class AdpContainer(ConfiguredBaseModel):
     credits: Optional[list[CreditEntry]] = Field(default=None, description="""Statements acknowledging specific people, organizations, or tools for work related to research, discovery, remediation, or coordination of this CVE.""", json_schema_extra = { "linkml_meta": {'domain_of': ['CnaPublishedContainer', 'AdpContainer']} })
     cna_source: Optional[SourceInformation] = Field(default=None, description="""Source information (who discovered it, who researched it, etc.) and optionally a chain of CNA information.""", json_schema_extra = { "linkml_meta": {'aliases': ['source'], 'domain_of': ['CnaPublishedContainer', 'AdpContainer']} })
     adp_tags: Optional[list[Union[ADPTag, str]]] = Field(default=None, description="""Tags provided by an ADP describing the CVE Record.""", json_schema_extra = { "linkml_meta": {'aliases': ['tags'],
+         'annotations': {'max_length': {'tag': 'max_length', 'value': 128},
+                         'min_length': {'tag': 'min_length', 'value': 1}},
          'any_of': [{'range': 'ADPTag'}, {'pattern': '^x_.*$', 'range': 'string'}],
          'domain_of': ['AdpContainer']} })
     taxonomy_mappings: Optional[list[TaxonomyMapping]] = Field(default=None, description="""List of taxonomy items (e.g., ATT&CK, CWE) related to the vulnerability.""", json_schema_extra = { "linkml_meta": {'aliases': ['taxonomyMappings'],
          'domain_of': ['CnaPublishedContainer', 'AdpContainer']} })
 
 
-class AffectedProduct(Product):
+class AffectedProduct(ConfiguredBaseModel):
     """
     Information about the set of products and services affected by a vulnerability. At least one of (vendor + product) or (collectionURL + packageName) is required, and at least one of versions or defaultStatus is required.
+    Note: this class deliberately does NOT inherit from ``vulnerability_core.Product``. The upstream CVE ``product`` definition uses a multivalued ``versions`` slot (range ``VersionEntry``), which conflicts with ``Product.version`` (singular string). The ``vendor``, ``name`` (= upstream ``product``), and ``platforms`` slots are reused from the core schema directly. Semantic equivalence is preserved via ``exact_mappings``.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'all_of': [{'any_of': [{'slot_conditions': {'name': {'name': 'name',
                                                               'required': True},
@@ -1488,25 +1480,66 @@ class AffectedProduct(Product):
                                                                   'required': True}}},
                                 {'slot_conditions': {'default_status': {'name': 'default_status',
                                                                         'required': True}}}]}],
+         'exact_mappings': ['core:Product', 'schema:SoftwareApplication'],
          'from_schema': 'https://w3id.org/lmodel/cve',
-         'related_mappings': ['kev_catalog:KevEntry']})
+         'related_mappings': ['kev_catalog:KevEntry'],
+         'slot_usage': {'name': {'aliases': ['product'],
+                                 'annotations': {'max_length': {'tag': 'max_length',
+                                                                'value': 512},
+                                                 'min_length': {'tag': 'min_length',
+                                                                'value': 1}},
+                                 'description': 'Name of the affected product '
+                                                '(upstream field ``product``).',
+                                 'name': 'name'},
+                        'platforms': {'annotations': {'max_length': {'tag': 'max_length',
+                                                                     'value': 1024},
+                                                      'min_length': {'tag': 'min_length',
+                                                                     'value': 1}},
+                                      'name': 'platforms'},
+                        'vendor': {'annotations': {'max_length': {'tag': 'max_length',
+                                                                  'value': 512},
+                                                   'min_length': {'tag': 'min_length',
+                                                                  'value': 1}},
+                                   'name': 'vendor'}}})
 
-    collection_url: Optional[str] = Field(default=None, description="""URL identifying a package collection (determines the meaning of packageName).""", json_schema_extra = { "linkml_meta": {'aliases': ['collectionURL'], 'domain_of': ['AffectedProduct']} })
-    package_name: Optional[str] = Field(default=None, description="""Name or identifier of the affected software package as used in the package collection.""", json_schema_extra = { "linkml_meta": {'aliases': ['packageName'], 'domain_of': ['AffectedProduct']} })
+    vendor: Optional[str] = Field(default=None, description="""Name of the vendor or organization responsible for the product.""", json_schema_extra = { "linkml_meta": {'annotations': {'max_length': {'tag': 'max_length', 'value': 512},
+                         'min_length': {'tag': 'min_length', 'value': 1}},
+         'domain_of': ['Product', 'AffectedProduct'],
+         'slot_uri': 'schema:name'} })
+    name: Optional[str] = Field(default=None, description="""Name of the affected product (upstream field ``product``).""", json_schema_extra = { "linkml_meta": {'aliases': ['product'],
+         'annotations': {'max_length': {'tag': 'max_length', 'value': 512},
+                         'min_length': {'tag': 'min_length', 'value': 1}},
+         'domain_of': ['Product', 'Reference', 'Weakness', 'AffectedProduct'],
+         'slot_uri': 'rdfs:label'} })
+    platforms: Optional[list[str]] = Field(default=None, description="""Platforms or operating environments affected.""", json_schema_extra = { "linkml_meta": {'annotations': {'max_length': {'tag': 'max_length', 'value': 1024},
+                         'min_length': {'tag': 'min_length', 'value': 1}},
+         'domain_of': ['Product', 'AffectedProduct']} })
+    collection_url: Optional[str] = Field(default=None, description="""URL identifying a package collection (determines the meaning of packageName).""", json_schema_extra = { "linkml_meta": {'aliases': ['collectionURL'],
+         'annotations': {'max_length': {'tag': 'max_length', 'value': 2048},
+                         'min_length': {'tag': 'min_length', 'value': 1}},
+         'domain_of': ['AffectedProduct']} })
+    package_name: Optional[str] = Field(default=None, description="""Name or identifier of the affected software package as used in the package collection.""", json_schema_extra = { "linkml_meta": {'aliases': ['packageName'],
+         'annotations': {'max_length': {'tag': 'max_length', 'value': 2048},
+                         'min_length': {'tag': 'min_length', 'value': 1}},
+         'domain_of': ['AffectedProduct']} })
     cpes: Optional[list[str]] = Field(default=None, description="""Affected products defined by CPE (Common Platform Enumeration) names in either 2.2 or 2.3 format.""", json_schema_extra = { "linkml_meta": {'domain_of': ['AffectedProduct']} })
-    modules: Optional[list[str]] = Field(default=None, description="""A list of the affected components, features, modules, sub-components, sub-products, APIs, commands, utilities, programs, or functionalities.""", json_schema_extra = { "linkml_meta": {'domain_of': ['AffectedProduct']} })
-    program_files: Optional[list[str]] = Field(default=None, description="""A list of the affected source code files.""", json_schema_extra = { "linkml_meta": {'aliases': ['programFiles'], 'domain_of': ['AffectedProduct']} })
+    modules: Optional[list[str]] = Field(default=None, description="""A list of the affected components, features, modules, sub-components, sub-products, APIs, commands, utilities, programs, or functionalities.""", json_schema_extra = { "linkml_meta": {'annotations': {'max_length': {'tag': 'max_length', 'value': 4096},
+                         'min_length': {'tag': 'min_length', 'value': 1}},
+         'domain_of': ['AffectedProduct']} })
+    program_files: Optional[list[str]] = Field(default=None, description="""A list of the affected source code files.""", json_schema_extra = { "linkml_meta": {'aliases': ['programFiles'],
+         'annotations': {'max_length': {'tag': 'max_length', 'value': 1024},
+                         'min_length': {'tag': 'min_length', 'value': 1}},
+         'domain_of': ['AffectedProduct']} })
     program_routines: Optional[list[ProgramRoutine]] = Field(default=None, description="""A list of the affected source code functions, methods, subroutines, or procedures.""", json_schema_extra = { "linkml_meta": {'aliases': ['programRoutines'], 'domain_of': ['AffectedProduct']} })
-    repo: Optional[str] = Field(default=None, description="""The URL of the source code repository, for informational purposes and/or to resolve git hash version ranges.""", json_schema_extra = { "linkml_meta": {'domain_of': ['AffectedProduct']} })
+    repo: Optional[str] = Field(default=None, description="""The URL of the source code repository, for informational purposes and/or to resolve git hash version ranges.""", json_schema_extra = { "linkml_meta": {'annotations': {'max_length': {'tag': 'max_length', 'value': 2048},
+                         'min_length': {'tag': 'min_length', 'value': 1}},
+         'domain_of': ['AffectedProduct']} })
     default_status: Optional[VersionStatus] = Field(default=None, description="""The default status for versions not otherwise listed in the versions list. Defaults to 'unknown' if not specified. Versions or defaultStatus may be omitted, but not both.""", json_schema_extra = { "linkml_meta": {'aliases': ['defaultStatus'], 'domain_of': ['AffectedProduct']} })
     versions: Optional[list[VersionEntry]] = Field(default=None, description="""Set of product versions or version ranges related to the vulnerability. Versions or defaultStatus may be omitted, but not both.""", json_schema_extra = { "linkml_meta": {'domain_of': ['AffectedProduct']} })
-    package_url: Optional[str] = Field(default=None, description="""A Package URL (PURL), a unified URL specification for identifying packages hosted by known package hosts. The Package URL MUST NOT include a version.""", json_schema_extra = { "linkml_meta": {'aliases': ['packageURL'], 'domain_of': ['AffectedProduct']} })
-    vendor: Optional[str] = Field(default=None, description="""Name of the vendor or organization responsible for the product.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Product'], 'slot_uri': 'schema:name'} })
-    name: Optional[str] = Field(default=None, description="""Name of the entity (product, weakness, reference, etc.).""", json_schema_extra = { "linkml_meta": {'aliases': ['label', 'product'],
-         'domain_of': ['Product', 'Reference', 'Weakness'],
-         'slot_uri': 'rdfs:label'} })
-    version: Optional[str] = Field(default=None, description="""Version string of the affected product.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Product'], 'slot_uri': 'schema:version'} })
-    platforms: Optional[list[str]] = Field(default=None, description="""Platforms or operating environments affected.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Product']} })
+    package_url: Optional[str] = Field(default=None, description="""A Package URL (PURL), a unified URL specification for identifying packages hosted by known package hosts. The Package URL MUST NOT include a version.""", json_schema_extra = { "linkml_meta": {'aliases': ['packageURL'],
+         'annotations': {'max_length': {'tag': 'max_length', 'value': 2048},
+                         'min_length': {'tag': 'min_length', 'value': 1}},
+         'domain_of': ['AffectedProduct']} })
 
 
 class ProgramRoutine(ConfiguredBaseModel):
@@ -1516,7 +1549,10 @@ class ProgramRoutine(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'https://w3id.org/lmodel/cve',
          'slot_usage': {'routine_name': {'name': 'routine_name', 'required': True}}})
 
-    routine_name: str = Field(default=..., description="""Name of the affected source code function, method, subroutine, or procedure.""", json_schema_extra = { "linkml_meta": {'aliases': ['name'], 'domain_of': ['ProgramRoutine']} })
+    routine_name: str = Field(default=..., description="""Name of the affected source code function, method, subroutine, or procedure.""", json_schema_extra = { "linkml_meta": {'aliases': ['name'],
+         'annotations': {'max_length': {'tag': 'max_length', 'value': 4096},
+                         'min_length': {'tag': 'min_length', 'value': 1}},
+         'domain_of': ['ProgramRoutine']} })
 
 
 class VersionEntry(ConfiguredBaseModel):
@@ -1541,7 +1577,10 @@ class VersionEntry(ConfiguredBaseModel):
 
     version_value: str = Field(default=..., description="""The single version being described, or the version at the start of the range. By convention, '0' denotes the earliest possible version.""", json_schema_extra = { "linkml_meta": {'aliases': ['version'], 'domain_of': ['VersionEntry']} })
     version_status: VersionStatus = Field(default=..., description="""The vulnerability status for the version or range of versions. For a range, the status may be refined by the 'changes' list.""", json_schema_extra = { "linkml_meta": {'aliases': ['status'], 'domain_of': ['VersionEntry']} })
-    version_type: Optional[str] = Field(default=None, description="""The version numbering system used for specifying the range (e.g., semver, git, maven, rpm, python, custom). Defines the semantics of comparison.""", json_schema_extra = { "linkml_meta": {'aliases': ['versionType'], 'domain_of': ['VersionEntry']} })
+    version_type: Optional[str] = Field(default=None, description="""The version numbering system used for specifying the range (e.g., semver, git, maven, rpm, python, custom). Defines the semantics of comparison.""", json_schema_extra = { "linkml_meta": {'aliases': ['versionType'],
+         'annotations': {'max_length': {'tag': 'max_length', 'value': 128},
+                         'min_length': {'tag': 'min_length', 'value': 1}},
+         'domain_of': ['VersionEntry']} })
     less_than: Optional[str] = Field(default=None, description="""The non-inclusive upper limit of the range. This is the least version NOT in the range. Supports wildcard '*' suffix.""", json_schema_extra = { "linkml_meta": {'aliases': ['lessThan'], 'domain_of': ['VersionEntry']} })
     less_than_or_equal: Optional[str] = Field(default=None, description="""The inclusive upper limit of the range. This is the greatest version contained in the range. Only one of lessThan and lessThanOrEqual should be specified.""", json_schema_extra = { "linkml_meta": {'aliases': ['lessThanOrEqual'], 'domain_of': ['VersionEntry']} })
     version_changes: Optional[list[VersionChange]] = Field(default=None, description="""A list of status changes that take place during the version range. The array should be sorted by 'at' field according to versionType, but clients must re-sort rather than assume ordering.""", json_schema_extra = { "linkml_meta": {'aliases': ['changes'], 'domain_of': ['VersionEntry']} })
@@ -1574,7 +1613,10 @@ class MultiLangDescription(ConfiguredBaseModel):
                        'TimelineEntry',
                        'CreditEntry'],
          'ifabsent': 'string(en)'} })
-    description_value: str = Field(default=..., description="""Plain text description (up to 4096 characters).""", json_schema_extra = { "linkml_meta": {'aliases': ['value'], 'domain_of': ['MultiLangDescription']} })
+    description_value: str = Field(default=..., description="""Plain text description (up to 4096 characters).""", json_schema_extra = { "linkml_meta": {'aliases': ['value'],
+         'annotations': {'max_length': {'tag': 'max_length', 'value': 4096},
+                         'min_length': {'tag': 'min_length', 'value': 1}},
+         'domain_of': ['MultiLangDescription']} })
     supporting_media: Optional[list[SupportingMedia]] = Field(default=None, description="""Supporting media data for the description such as markdown, diagrams, etc. Similar to RFC 2397, each object has a media type, data value, and optional base64 flag.""", json_schema_extra = { "linkml_meta": {'aliases': ['supportingMedia'], 'domain_of': ['MultiLangDescription']} })
 
 
@@ -1586,9 +1628,15 @@ class SupportingMedia(ConfiguredBaseModel):
          'slot_usage': {'media_type': {'name': 'media_type', 'required': True},
                         'media_value': {'name': 'media_value', 'required': True}}})
 
-    media_type: str = Field(default=..., description="""RFC2046 compliant IANA Media type (e.g., text/markdown, text/html, image/png, image/svg, audio/mp3).""", json_schema_extra = { "linkml_meta": {'aliases': ['type'], 'domain_of': ['SupportingMedia']} })
+    media_type: str = Field(default=..., description="""RFC2046 compliant IANA Media type (e.g., text/markdown, text/html, image/png, image/svg, audio/mp3).""", json_schema_extra = { "linkml_meta": {'aliases': ['type'],
+         'annotations': {'max_length': {'tag': 'max_length', 'value': 256},
+                         'min_length': {'tag': 'min_length', 'value': 1}},
+         'domain_of': ['SupportingMedia']} })
     base64_encoded: Optional[bool] = Field(default=False, description="""If true, the media_value field contains the media data encoded in base64. If false, the media_value field contains UTF-8 media content.""", json_schema_extra = { "linkml_meta": {'aliases': ['base64'], 'domain_of': ['SupportingMedia'], 'ifabsent': 'False'} })
-    media_value: str = Field(default=..., description="""Supporting media content, up to 16K characters. If base64_encoded is true, this stores base64 encoded data.""", json_schema_extra = { "linkml_meta": {'aliases': ['value'], 'domain_of': ['SupportingMedia']} })
+    media_value: str = Field(default=..., description="""Supporting media content, up to 16K characters. If base64_encoded is true, this stores base64 encoded data.""", json_schema_extra = { "linkml_meta": {'aliases': ['value'],
+         'annotations': {'max_length': {'tag': 'max_length', 'value': 16384},
+                         'min_length': {'tag': 'min_length', 'value': 1}},
+         'domain_of': ['SupportingMedia']} })
 
 
 class ProblemType(ConfiguredBaseModel):
@@ -1623,13 +1671,18 @@ class ProblemTypeDescription(ConfiguredBaseModel):
                        'CreditEntry'],
          'ifabsent': 'string(en)'} })
     problem_description: str = Field(default=..., description="""Text description of the problem type, or title from CWE or OWASP.""", json_schema_extra = { "linkml_meta": {'aliases': ['description'],
+         'annotations': {'max_length': {'tag': 'max_length', 'value': 4096},
+                         'min_length': {'tag': 'min_length', 'value': 1}},
          'close_mappings': ['cwe:Weakness'],
          'domain_of': ['ProblemTypeDescription']} })
     cwe_id: Optional[str] = Field(default=None, description="""CWE identifier for the weakness classification (e.g. CWE-79).""", json_schema_extra = { "linkml_meta": {'aliases': ['cweId'],
          'domain_of': ['Weakness', 'ProblemTypeDescription'],
          'related_mappings': ['cwe:Weakness'],
          'slot_uri': 'dct:identifier'} })
-    problem_source_type: Optional[str] = Field(default=None, description="""Problem type source format (e.g., text, OWASP, CWE).""", json_schema_extra = { "linkml_meta": {'aliases': ['type'], 'domain_of': ['ProblemTypeDescription']} })
+    problem_source_type: Optional[str] = Field(default=None, description="""Problem type source format (e.g., text, OWASP, CWE).""", json_schema_extra = { "linkml_meta": {'aliases': ['type'],
+         'annotations': {'max_length': {'tag': 'max_length', 'value': 64},
+                         'min_length': {'tag': 'min_length', 'value': 1}},
+         'domain_of': ['ProblemTypeDescription']} })
     problem_references: Optional[list[CveReference]] = Field(default=None, description="""References supporting this specific problem type.""", json_schema_extra = { "linkml_meta": {'aliases': ['references'], 'domain_of': ['ProblemTypeDescription']} })
 
     @field_validator('cwe_id')
@@ -1653,12 +1706,27 @@ class CveReference(Reference):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'close_mappings': ['nvd:NVDReference'],
          'from_schema': 'https://w3id.org/lmodel/cve',
          'related_mappings': ['cwe:ExternalReference'],
-         'slot_usage': {'url': {'name': 'url', 'required': True}}})
+         'slot_usage': {'name': {'annotations': {'max_length': {'tag': 'max_length',
+                                                                'value': 512},
+                                                 'min_length': {'tag': 'min_length',
+                                                                'value': 1}},
+                                 'name': 'name'},
+                        'url': {'annotations': {'max_length': {'tag': 'max_length',
+                                                               'value': 2048},
+                                                'min_length': {'tag': 'min_length',
+                                                               'value': 1}},
+                                'name': 'url',
+                                'required': True}}})
 
     reference_tags: Optional[list[ReferenceTag]] = Field(default=None, description="""An array of tags describing the resource referenced by the URL.""", json_schema_extra = { "linkml_meta": {'aliases': ['tags'], 'domain_of': ['CveReference']} })
-    url: str = Field(default=..., description="""URL pointing to the reference resource.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Reference'], 'slot_uri': 'schema:url'} })
+    url: str = Field(default=..., description="""URL pointing to the reference resource.""", json_schema_extra = { "linkml_meta": {'annotations': {'max_length': {'tag': 'max_length', 'value': 2048},
+                         'min_length': {'tag': 'min_length', 'value': 1}},
+         'domain_of': ['Reference'],
+         'slot_uri': 'schema:url'} })
     name: Optional[str] = Field(default=None, description="""Name of the entity (product, weakness, reference, etc.).""", json_schema_extra = { "linkml_meta": {'aliases': ['label', 'product'],
-         'domain_of': ['Product', 'Reference', 'Weakness'],
+         'annotations': {'max_length': {'tag': 'max_length', 'value': 512},
+                         'min_length': {'tag': 'min_length', 'value': 1}},
+         'domain_of': ['Product', 'Reference', 'Weakness', 'AffectedProduct'],
          'slot_uri': 'rdfs:label'} })
     source: Optional[str] = Field(default=None, description="""Source or origin of the reference or data.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Reference'], 'slot_uri': 'dct:source'} })
 
@@ -1703,7 +1771,10 @@ class MetricEntry(ConfiguredBaseModel):
          'close_mappings': ['nvd:MetricSet'],
          'from_schema': 'https://w3id.org/lmodel/cve'})
 
-    metric_format: Optional[str] = Field(default=None, description="""Name of the scoring format (e.g., cvssV4_0, cvssV3_1). Provides future-proofing and supports proprietary format inclusion.""", json_schema_extra = { "linkml_meta": {'aliases': ['format'], 'domain_of': ['MetricEntry']} })
+    metric_format: Optional[str] = Field(default=None, description="""Name of the scoring format (e.g., cvssV4_0, cvssV3_1). Provides future-proofing and supports proprietary format inclusion.""", json_schema_extra = { "linkml_meta": {'aliases': ['format'],
+         'annotations': {'max_length': {'tag': 'max_length', 'value': 64},
+                         'min_length': {'tag': 'min_length', 'value': 1}},
+         'domain_of': ['MetricEntry']} })
     metric_scenarios: Optional[list[MetricScenario]] = Field(default=None, description="""Scenarios this metrics object applies to. If no specific scenario is given, GENERAL applies when no more specific metric matches.""", json_schema_extra = { "linkml_meta": {'aliases': ['scenarios'], 'domain_of': ['MetricEntry']} })
     cvss_v4_0: Optional[CvssV40] = Field(default=None, description="""CVSS version 4.0 scoring data.""", json_schema_extra = { "linkml_meta": {'aliases': ['cvssV4_0'], 'domain_of': ['MetricEntry']} })
     cvss_v3: Optional[CvssV3] = Field(default=None, description="""CVSS version 3.x scoring data (covers both 3.0 and 3.1). The version is distinguished by the cvss3_version field within the CvssV3 object.""", json_schema_extra = { "linkml_meta": {'aliases': ['cvssV3', 'cvssV3_0', 'cvssV3_1'], 'domain_of': ['MetricEntry']} })
@@ -1726,6 +1797,8 @@ class MetricScenario(ConfiguredBaseModel):
                        'CreditEntry'],
          'ifabsent': 'string(en)'} })
     scenario_value: str = Field(default="GENERAL", description="""Description of the scenario this metrics object applies to.""", json_schema_extra = { "linkml_meta": {'aliases': ['value'],
+         'annotations': {'max_length': {'tag': 'max_length', 'value': 4096},
+                         'min_length': {'tag': 'min_length', 'value': 1}},
          'domain_of': ['MetricScenario'],
          'ifabsent': 'string(GENERAL)'} })
 
@@ -1902,7 +1975,10 @@ class OtherMetric(ConfiguredBaseModel):
                         'other_metric_type': {'name': 'other_metric_type',
                                               'required': True}}})
 
-    other_metric_type: str = Field(default=..., description="""Name of the non-standard impact metrics format used.""", json_schema_extra = { "linkml_meta": {'aliases': ['type'], 'domain_of': ['OtherMetric']} })
+    other_metric_type: str = Field(default=..., description="""Name of the non-standard impact metrics format used.""", json_schema_extra = { "linkml_meta": {'aliases': ['type'],
+         'annotations': {'max_length': {'tag': 'max_length', 'value': 128},
+                         'min_length': {'tag': 'min_length', 'value': 1}},
+         'domain_of': ['OtherMetric']} })
     other_metric_content: Any = Field(default=..., description="""Arbitrary JSON-compatible object (or prose string) containing non-standard metric data not covered by the CVSS formats. Upstream JSON Schema defines this as 'type: object, minProperties: 1'; range: Any allows any value.""", json_schema_extra = { "linkml_meta": {'aliases': ['content'], 'domain_of': ['OtherMetric']} })
 
 
@@ -1922,7 +1998,10 @@ class TimelineEntry(ConfiguredBaseModel):
                        'TimelineEntry',
                        'CreditEntry'],
          'ifabsent': 'string(en)'} })
-    event_value: str = Field(default=..., description="""A summary of the timeline event (up to 4096 characters).""", json_schema_extra = { "linkml_meta": {'aliases': ['value'], 'domain_of': ['TimelineEntry']} })
+    event_value: str = Field(default=..., description="""A summary of the timeline event (up to 4096 characters).""", json_schema_extra = { "linkml_meta": {'aliases': ['value'],
+         'annotations': {'max_length': {'tag': 'max_length', 'value': 4096},
+                         'min_length': {'tag': 'min_length', 'value': 1}},
+         'domain_of': ['TimelineEntry']} })
 
 
 class CreditEntry(ConfiguredBaseModel):
@@ -1939,7 +2018,10 @@ class CreditEntry(ConfiguredBaseModel):
                        'TimelineEntry',
                        'CreditEntry'],
          'ifabsent': 'string(en)'} })
-    credit_value: str = Field(default=..., description="""The name or description of the credited party (up to 4096 characters).""", json_schema_extra = { "linkml_meta": {'aliases': ['value'], 'domain_of': ['CreditEntry']} })
+    credit_value: str = Field(default=..., description="""The name or description of the credited party (up to 4096 characters).""", json_schema_extra = { "linkml_meta": {'aliases': ['value'],
+         'annotations': {'max_length': {'tag': 'max_length', 'value': 4096},
+                         'min_length': {'tag': 'min_length', 'value': 1}},
+         'domain_of': ['CreditEntry']} })
     credit_user: Optional[str] = Field(default=None, description="""UUID of the user being credited, if present in the CVE User Registry. This UUID can be used to lookup the user record in the user registry service.""", json_schema_extra = { "linkml_meta": {'aliases': ['user'], 'domain_of': ['CreditEntry']} })
     credit_type: Optional[CreditType] = Field(default=CreditType.finder, description="""Type or role of the entity being credited.""", json_schema_extra = { "linkml_meta": {'aliases': ['type'],
          'domain_of': ['CreditEntry'],
@@ -1952,9 +2034,18 @@ class SourceInformation(ConfiguredBaseModel):
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'https://w3id.org/lmodel/cve'})
 
-    source_defects: Optional[list[str]] = Field(default=None, description="""Bug tracking system IDs (e.g., JIRA ticket IDs) related to the vulnerability.""", json_schema_extra = { "linkml_meta": {'aliases': ['defects'], 'domain_of': ['SourceInformation']} })
-    source_advisory: Optional[str] = Field(default=None, description="""Advisory identifier associated with the vulnerability discovery.""", json_schema_extra = { "linkml_meta": {'aliases': ['advisory'], 'domain_of': ['SourceInformation']} })
-    source_discovery: Optional[str] = Field(default=None, description="""How the vulnerability was discovered (e.g., INTERNAL, EXTERNAL, USER).""", json_schema_extra = { "linkml_meta": {'aliases': ['discovery'], 'domain_of': ['SourceInformation']} })
+    source_defects: Optional[list[str]] = Field(default=None, description="""Bug tracking system IDs (e.g., JIRA ticket IDs) related to the vulnerability.""", json_schema_extra = { "linkml_meta": {'aliases': ['defects'],
+         'annotations': {'max_length': {'tag': 'max_length', 'value': 4096},
+                         'min_length': {'tag': 'min_length', 'value': 1}},
+         'domain_of': ['SourceInformation']} })
+    source_advisory: Optional[str] = Field(default=None, description="""Advisory identifier associated with the vulnerability discovery.""", json_schema_extra = { "linkml_meta": {'aliases': ['advisory'],
+         'annotations': {'max_length': {'tag': 'max_length', 'value': 4096},
+                         'min_length': {'tag': 'min_length', 'value': 1}},
+         'domain_of': ['SourceInformation']} })
+    source_discovery: Optional[str] = Field(default=None, description="""How the vulnerability was discovered (e.g., INTERNAL, EXTERNAL, USER).""", json_schema_extra = { "linkml_meta": {'aliases': ['discovery'],
+         'annotations': {'max_length': {'tag': 'max_length', 'value': 4096},
+                         'min_length': {'tag': 'min_length', 'value': 1}},
+         'domain_of': ['SourceInformation']} })
 
 
 class TaxonomyMapping(ConfiguredBaseModel):
@@ -1967,8 +2058,14 @@ class TaxonomyMapping(ConfiguredBaseModel):
                         'taxonomy_relations': {'name': 'taxonomy_relations',
                                                'required': True}}})
 
-    taxonomy_name: str = Field(default=..., description="""The name of the taxonomy (e.g., ATT&CK, D3FEND, CWE, CVSS).""", json_schema_extra = { "linkml_meta": {'aliases': ['taxonomyName'], 'domain_of': ['TaxonomyMapping']} })
-    taxonomy_version: Optional[str] = Field(default=None, description="""The version of the taxonomy the identifiers come from.""", json_schema_extra = { "linkml_meta": {'aliases': ['taxonomyVersion'], 'domain_of': ['TaxonomyMapping']} })
+    taxonomy_name: str = Field(default=..., description="""The name of the taxonomy (e.g., ATT&CK, D3FEND, CWE, CVSS).""", json_schema_extra = { "linkml_meta": {'aliases': ['taxonomyName'],
+         'annotations': {'max_length': {'tag': 'max_length', 'value': 128},
+                         'min_length': {'tag': 'min_length', 'value': 1}},
+         'domain_of': ['TaxonomyMapping']} })
+    taxonomy_version: Optional[str] = Field(default=None, description="""The version of the taxonomy the identifiers come from.""", json_schema_extra = { "linkml_meta": {'aliases': ['taxonomyVersion'],
+         'annotations': {'max_length': {'tag': 'max_length', 'value': 128},
+                         'min_length': {'tag': 'min_length', 'value': 1}},
+         'domain_of': ['TaxonomyMapping']} })
     taxonomy_relations: list[TaxonomyRelation] = Field(default=..., description="""List of relationships to the taxonomy for this vulnerability.""", json_schema_extra = { "linkml_meta": {'aliases': ['taxonomyRelations'], 'domain_of': ['TaxonomyMapping']} })
 
 
@@ -1984,9 +2081,18 @@ class TaxonomyRelation(ConfiguredBaseModel):
                                                'required': True},
                         'taxonomy_id': {'name': 'taxonomy_id', 'required': True}}})
 
-    taxonomy_id: str = Field(default=..., description="""Identifier of the item in the taxonomy. Used as the subject of the relationship.""", json_schema_extra = { "linkml_meta": {'aliases': ['taxonomyId'], 'domain_of': ['TaxonomyRelation']} })
-    relationship_name: str = Field(default=..., description="""A description of the relationship between the taxonomy item and the CVE.""", json_schema_extra = { "linkml_meta": {'aliases': ['relationshipName'], 'domain_of': ['TaxonomyRelation']} })
-    relationship_value: str = Field(default=..., description="""The target of the relationship. Can be the CVE ID or another taxonomy identifier.""", json_schema_extra = { "linkml_meta": {'aliases': ['relationshipValue'], 'domain_of': ['TaxonomyRelation']} })
+    taxonomy_id: str = Field(default=..., description="""Identifier of the item in the taxonomy. Used as the subject of the relationship.""", json_schema_extra = { "linkml_meta": {'aliases': ['taxonomyId'],
+         'annotations': {'max_length': {'tag': 'max_length', 'value': 4096},
+                         'min_length': {'tag': 'min_length', 'value': 1}},
+         'domain_of': ['TaxonomyRelation']} })
+    relationship_name: str = Field(default=..., description="""A description of the relationship between the taxonomy item and the CVE.""", json_schema_extra = { "linkml_meta": {'aliases': ['relationshipName'],
+         'annotations': {'max_length': {'tag': 'max_length', 'value': 128},
+                         'min_length': {'tag': 'min_length', 'value': 1}},
+         'domain_of': ['TaxonomyRelation']} })
+    relationship_value: str = Field(default=..., description="""The target of the relationship. Can be the CVE ID or another taxonomy identifier.""", json_schema_extra = { "linkml_meta": {'aliases': ['relationshipValue'],
+         'annotations': {'max_length': {'tag': 'max_length', 'value': 4096},
+                         'min_length': {'tag': 'min_length', 'value': 1}},
+         'domain_of': ['TaxonomyRelation']} })
 
 
 class CpeApplicabilityElement(ConfiguredBaseModel):
@@ -2043,10 +2149,12 @@ Weakness.model_rebuild()
 Impact.model_rebuild()
 Configuration.model_rebuild()
 CVERecord.model_rebuild()
+CveMetadata.model_rebuild()
 CveMetadataPublished.model_rebuild()
 CveMetadataRejected.model_rebuild()
 Containers.model_rebuild()
 ProviderMetadata.model_rebuild()
+CnaContainer.model_rebuild()
 CnaPublishedContainer.model_rebuild()
 CnaRejectedContainer.model_rebuild()
 AdpContainer.model_rebuild()
