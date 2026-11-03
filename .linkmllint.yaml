@@ -1,0 +1,16 @@
+# linkml-lint reads this file from the directory `just lint` runs in.
+# The recommended rules apply, with the naming rule fitted to the upstream's
+# keys and values, so that a real CVE record validates unchanged. The slots
+# keep the keys of the CVE Record Format and of FIRST's CVSS schemas:
+# lowerCamelCase in the main (cveMetadata, vectorString), with an underscore in
+# the versioned metric keys (cvssV3_1) and a capital in three CVSS 4.0 keys
+# (Safety, Automatable, Recovery). Permissible values keep the upstream's
+# spelling too: NETWORK, CVE_RECORD, vendor-advisory and 5.2.0-style versions.
+# Class, enum and type names keep the rule's usual form.
+extends: recommended
+rules:
+  standard_naming:
+    level: error
+    slot_pattern: "^[A-Za-z][A-Za-z0-9_]*$"
+    exclude_type:
+      - permissible_value

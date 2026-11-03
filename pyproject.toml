@@ -11,7 +11,7 @@ authors = [
   {name = "Noel McLoughlin", email = "noel.mcloughlin@gmail.com"},
 ]
 license = "Apache-2.0"
-license-files = ["LICENSE"]
+license-files = ["LICENSE", "NOTICE"]
 readme = "README.md"
 requires-python = ">=3.10"
 dynamic = ["version"]
@@ -26,8 +26,6 @@ dev = [
     "mkdocs-material>=8.2.8",
     "mkdocs-mermaid2-plugin>=1.1.1",
     "mkdocs-pymdownx-material-extras>=2.5.6",
-    "jupyter>=1.0.0",
-    "mknotebooks>= 0.8.0",
 ]
 
 [tool.hatch.build.targets.wheel]
@@ -61,11 +59,20 @@ target-version = "py310"
 [tool.codespell]
 skip = [
   "LICENSE",
+  "NOTICE",
   "pyproject.toml",
   "uv.lock",
   "project/*",
   "src/cve/datamodel/cve_pydantic.py",
   "src/cve/datamodel/cve.py",
+  # The upstream's files and real records, copied as published; the
+  # neighbours' adapt copies, copied as released; and files copied in by the
+  # KTL sidecar sync or written by npm, not by hand.
+  "upstream/*",
+  "tests/data/cvelist/extract/*",
+  "tests/neighbours/*",
+  ".lokf/scripts/*",
+  "website/package-lock.json",
 ]
 
 # Reminder: words have to be lowercased for the ignore-words-list
@@ -84,4 +91,9 @@ extend-exclude = [
   "project/*",
   "src/cve/datamodel/cve_pydantic.py",
   "src/cve/datamodel/cve.py",
+  "upstream/*",
+  "tests/data/cvelist/extract/*",
+  "tests/neighbours/*",
+  ".lokf/scripts/*",
+  "website/package-lock.json",
 ]
