@@ -1,6 +1,6 @@
 # Contributing to cve
 
-*This file is a checklist, not a design log. Each rule is a line or two that links to where its reasoning lives: a code comment, a workflow header, or a linked page. `lint-and-docs.yaml` holds the file to a word budget so it stays that way.*
+*This file is a checklist, not a design log. Each rule is a line or two that links to where its reasoning lives. `lint-and-docs.yaml` holds it to a word budget.*
 
 ## What this project is
 
@@ -40,10 +40,10 @@ npx skills add noelmcloughlin/knowledge-trust-ladder --skill ktl-curator --yes  
 - **Edit the schema, then regenerate.** Edit `src/cve/schema/`, run `just gen-project`, `just gen-doc` and `just lokf-adapt`, and commit the output. `project/`, `src/cve/datamodel/`, `docs/schema/` and `.lokf/cve.yaml` are generated.
 - **Keep the upstream's keys and values.** A real record must validate unchanged, so a slot or permissible value is spelled as the upstream spells it. `tests/test_coverage.py` walks the files in `upstream/` and fails on anything missing, added or of another cardinality; a departure is listed there with its reason.
 - **State only what the upstream states.** No bound or rule of your own. What LinkML 1.12.1's generators lose is checked in `tests/cve_rules.py`.
-- **A mapping is read at its source.** `tests/test_mappings.py` holds each one to the schema's prefixes and to a pinned term list or a neighbour copy. A term with no sure match stays unmapped. The schema is the one home for mappings.
-- **Render the pinned edition.** The schema header and `scripts/check_upstream_release.py` name the same edition, and `tests/test_upstream.py` holds them, and the files in `upstream/`, equal.
-- **`cve_cvss` has importers.** lmodel/nist-nvd vendors `src/cve/schema/cve_cvss.yaml` by its git object hash, so it imports only `linkml:types`, and a change to it is a change for them.
-- **Keep names apart.** A host imports this adapt copy beside the Linked Open Knowledge Format (LOKF) schema and the released neighbours' copies in `tests/neighbours/`, so a shared name carries one Internationalized Resource Identifier (IRI). `tests/test_schema_rules.py` checks this.
+- **A mapping is read at its source.** `tests/test_mappings.py` holds each one to a pinned term list or a neighbour copy. A term with no sure match stays unmapped.
+- **Render the pinned edition.** `tests/test_upstream.py` holds the schema header, `scripts/check_upstream_release.py` and `upstream/` equal.
+- **`cve_cvss` has importers.** lmodel/nist-nvd vendors it by its git object hash, so it imports only `linkml:types`.
+- **Keep names apart.** A host imports this adapt copy beside the Linked Open Knowledge Format (LOKF) schema and the released copies in `tests/neighbours/`. `tests/test_schema_rules.py` checks this.
 - **Run the tests**: `just test` (schema generation, `pytest` and the examples under `tests/data/`). Example data goes in `tests/data/valid/` and `tests/data/invalid/`, named `ClassName-suffix.yaml`; an invalid example's first line, `# Fails at: <pointer>`, names where it fails. `just test-cve-records` validates the pinned sample of real records.
 - **Follow the schema's conventions**: PascalCase classes with the `Cve` or `Cvss` prefix, the upstream's keys, a short description on every element, and the upstream's definition path in an `upstream_path` annotation. `just lint` checks, under `.linkmllint.yaml`.
 - **Run the pre-commit hooks** on what you staged (`uvx pre-commit run`), keep changes focused and fill in the pull request template.
