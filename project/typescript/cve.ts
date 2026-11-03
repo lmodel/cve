@@ -1,1403 +1,1444 @@
-export type VulnerabilityCveId = string;
 /**
-* Lifecycle state of a vulnerability record.
+* A CVSS rating in words.
 */
-export enum VulnerabilityStatus {
+export enum CvssSeverity {
     
-    /** Vulnerability is actively maintained and published. */
-    ACTIVE = "ACTIVE",
-    /** CVE ID was rejected and should not be used. */
-    REJECTED = "REJECTED",
-    /** The vulnerability details are disputed by a party. */
-    DISPUTED = "DISPUTED",
-    /** CVE ID is reserved but details are not yet published. */
-    RESERVED = "RESERVED",
-    /** Entry has been superseded or withdrawn. */
-    DEPRECATED = "DEPRECATED",
-};
-/**
-* CVSS qualitative severity rating.
-*/
-export enum ImpactSeverity {
-    
-    /** No measurable impact. */
+    /** No severity at all, for a score of 0. */
     NONE = "NONE",
-    /** Limited impact; exploitation requires specific conditions. */
+    /** The lowest rating above none. */
     LOW = "LOW",
-    /** Moderate impact; partial compromise of security properties. */
+    /** The middle rating. */
     MEDIUM = "MEDIUM",
-    /** High impact; significant compromise of security properties. */
+    /** The rating below critical. */
     HIGH = "HIGH",
-    /** Critical impact; complete compromise; remote exploitation likely. */
-    CRITICAL = "CRITICAL",
-    /** Severity has not been assessed or is unavailable. */
-    UNKNOWN = "UNKNOWN",
-};
-/**
-* Indicates the type of information represented in a CVE JSON instance.
-*/
-export enum DataType {
-    
-    /** The instance is a CVE Record. */
-    CVE_RECORD = "CVE_RECORD",
-};
-/**
-* Lifecycle state of a CVE Record (PUBLISHED or REJECTED).
-*/
-export enum RecordState {
-    
-    /** The CVE ID has associated vulnerability data published in the CVE List. */
-    PUBLISHED = "PUBLISHED",
-    /** The CVE ID has been rejected and should not be used. */
-    REJECTED = "REJECTED",
-};
-/**
-* The vulnerability status of a given version or range of versions of a product.
-*/
-export enum VersionStatus {
-    
-    /** The version is affected by the vulnerability. */
-    affected = "affected",
-    /** The version is not affected by the vulnerability. */
-    unaffected = "unaffected",
-    /** It is unknown or unspecified whether the version is affected. */
-    unknown = "unknown",
-};
-/**
-* A tag describing the type or nature of the resource referenced by a URL.
-*/
-export enum ReferenceTag {
-    
-    /** The reference link is returning a 404 error, or the site is no longer online. */
-    broken_link = "broken-link",
-    /** Similar to Privileges Required, but specific to references that require non-public or paid access for customers of the particular vendor. */
-    customer_entitlement = "customer-entitlement",
-    /** Reference contains an in-depth description of steps to exploit a vulnerability OR contains legitimate Proof of Concept (PoC) code or an exploit kit. */
-    exploit = "exploit",
-    /** All reference links that are from a government agency or organization. */
-    government_resource = "government-resource",
-    /** The reference is a post from a bug tracking tool such as MantisBT, Bugzilla, JIRA, GitHub Issues, etc. */
-    issue_tracking = "issue-tracking",
-    /** The reference is from a mailing list -- often specific to a product or vendor. */
-    mailing_list = "mailing-list",
-    /** The reference contains information on steps to mitigate against the vulnerability when a patch cannot be applied or is unavailable, or for EOL product situations. */
-    mitigation = "mitigation",
-    /** The reference link is not applicable to the vulnerability and was likely associated accidentally (should be used sparingly). */
-    not_applicable = "not-applicable",
-    /** The reference contains an update to the software that fixes the vulnerability. */
-    patch = "patch",
-    /** The reference link provided is blocked by a logon page. */
-    permissions_required = "permissions-required",
-    /** The reference is from a media outlet such as a newspaper, magazine, social media, or weblog. Not intended for individual personal social media accounts. */
-    media_coverage = "media-coverage",
-    /** A reference appropriate for describing a product for the purpose of CPE or SWID. */
-    product = "product",
-    /** A reference that is for a related (but not the same) vulnerability. */
-    related = "related",
-    /** The reference is in the format of a vendor or open source project's release notes or change log. */
-    release_notes = "release-notes",
-    /** The reference contains a method to detect or prevent the presence or exploitation of the vulnerability. */
-    signature = "signature",
-    /** The reference contains in-depth technical information about a vulnerability and its exploitation process, typically in the form of a presentation or whitepaper. */
-    technical_description = "technical-description",
-    /** Advisory is from an organization that is not the vulnerable product's vendor, publisher, or maintainer. */
-    third_party_advisory = "third-party-advisory",
-    /** Advisory is from the vendor, publisher, or maintainer of the product or the parent organization. */
-    vendor_advisory = "vendor-advisory",
-    /** VDBs are loosely defined as sites that provide information about this vulnerability, such as advisories, with identifiers. */
-    vdb_entry = "vdb-entry",
-};
-/**
-* Tags provided by a CNA describing the CVE Record.
-*/
-export enum CNATag {
-    
-    /** When a request for a CVE assignment was received, the product was already end-of-life (EOL) or a product or specific version was deemed not to be supported by the vendor. */
-    unsupported_when_assigned = "unsupported-when-assigned",
-    /** All known software and/or hardware affected by this CVE Record is known to exist only in the affected hosted service. */
-    exclusively_hosted_service = "exclusively-hosted-service",
-    /** One party disagrees with another party's assertion that a particular issue in software is a vulnerability. */
-    disputed = "disputed",
-};
-/**
-* Tags provided by an ADP describing the CVE Record.
-*/
-export enum ADPTag {
-    
-    /** One party disagrees with another party's assertion that a particular issue in software is a vulnerability. */
-    disputed = "disputed",
-};
-/**
-* Type or role of the entity being credited.
-*/
-export enum CreditType {
-    
-    /** Identifies the vulnerability. */
-    finder = "finder",
-    /** Notifies the vendor of the vulnerability to a CNA. */
-    reporter = "reporter",
-    /** Validates the vulnerability to ensure accuracy or severity. */
-    analyst = "analyst",
-    /** Facilitates the coordinated response process. */
-    coordinator = "coordinator",
-    /** Prepares a code change or other remediation plans. */
-    remediation_developer = "remediation developer",
-    /** Reviews vulnerability remediation plans or code changes for effectiveness and completeness. */
-    remediation_reviewer = "remediation reviewer",
-    /** Tests and verifies the vulnerability or its remediation. */
-    remediation_verifier = "remediation verifier",
-    /** Names of tools used in vulnerability discovery or identification. */
-    tool = "tool",
-    /** Supports the vulnerability identification or remediation activities. */
-    sponsor = "sponsor",
-    /** Other credit type not covered by the above categories. */
-    other = "other",
-};
-/**
-* Logical operator used in CPE applicability nodes.
-*/
-export enum CpeOperator {
-    
-    /** All CPE match criteria must be satisfied. */
-    AND = "AND",
-    /** Any one CPE match criterion must be satisfied. */
-    OR = "OR",
-};
-/**
-* CVSS 4.0 attack vector base metric.
-*/
-export enum Cvss4AttackVector {
-    
-    NETWORK = "NETWORK",
-    ADJACENT = "ADJACENT",
-    LOCAL = "LOCAL",
-    PHYSICAL = "PHYSICAL",
-};
-/**
-* CVSS 4.0 attack complexity base metric.
-*/
-export enum Cvss4AttackComplexity {
-    
-    HIGH = "HIGH",
-    LOW = "LOW",
-};
-/**
-* CVSS 4.0 attack requirements base metric.
-*/
-export enum Cvss4AttackRequirements {
-    
-    NONE = "NONE",
-    PRESENT = "PRESENT",
-};
-/**
-* CVSS 4.0 privileges required base metric.
-*/
-export enum Cvss4PrivilegesRequired {
-    
-    HIGH = "HIGH",
-    LOW = "LOW",
-    NONE = "NONE",
-};
-/**
-* CVSS 4.0 user interaction base metric.
-*/
-export enum Cvss4UserInteraction {
-    
-    NONE = "NONE",
-    PASSIVE = "PASSIVE",
-    ACTIVE = "ACTIVE",
-};
-/**
-* CVSS 4.0 vulnerable system confidentiality/integrity/availability impact base metric.
-*/
-export enum Cvss4VulnCia {
-    
-    NONE = "NONE",
-    LOW = "LOW",
-    HIGH = "HIGH",
-};
-/**
-* CVSS 4.0 subsequent system confidentiality/integrity/availability impact base metric.
-*/
-export enum Cvss4SubCia {
-    
-    NONE = "NONE",
-    LOW = "LOW",
-    HIGH = "HIGH",
-};
-/**
-* CVSS 4.0 exploit maturity supplemental metric.
-*/
-export enum Cvss4ExploitMaturity {
-    
-    UNREPORTED = "UNREPORTED",
-    PROOF_OF_CONCEPT = "PROOF_OF_CONCEPT",
-    ATTACKED = "ATTACKED",
-    NOT_DEFINED = "NOT_DEFINED",
-};
-/**
-* CVSS 4.0 confidentiality/integrity/availability requirement environmental metric.
-*/
-export enum Cvss4CiaRequirement {
-    
-    LOW = "LOW",
-    MEDIUM = "MEDIUM",
-    HIGH = "HIGH",
-    NOT_DEFINED = "NOT_DEFINED",
-};
-/**
-* CVSS 4.0 safety supplemental metric.
-*/
-export enum Cvss4Safety {
-    
-    NEGLIGIBLE = "NEGLIGIBLE",
-    PRESENT = "PRESENT",
-    NOT_DEFINED = "NOT_DEFINED",
-};
-/**
-* CVSS 4.0 automatable supplemental metric.
-*/
-export enum Cvss4Automatable {
-    
-    /** The attack cannot be automated. */
-    NO = "NO",
-    /** The attack can be automated. */
-    YES = "YES",
-    /** Automatable status is not defined. */
-    NOT_DEFINED = "NOT_DEFINED",
-};
-/**
-* CVSS 4.0 recovery supplemental metric.
-*/
-export enum Cvss4Recovery {
-    
-    AUTOMATIC = "AUTOMATIC",
-    USER = "USER",
-    IRRECOVERABLE = "IRRECOVERABLE",
-    NOT_DEFINED = "NOT_DEFINED",
-};
-/**
-* CVSS 4.0 value density supplemental metric.
-*/
-export enum Cvss4ValueDensity {
-    
-    DIFFUSE = "DIFFUSE",
-    CONCENTRATED = "CONCENTRATED",
-    NOT_DEFINED = "NOT_DEFINED",
-};
-/**
-* CVSS 4.0 vulnerability response effort supplemental metric.
-*/
-export enum Cvss4VulnerabilityResponseEffort {
-    
-    LOW = "LOW",
-    MODERATE = "MODERATE",
-    HIGH = "HIGH",
-    NOT_DEFINED = "NOT_DEFINED",
-};
-/**
-* CVSS 4.0 provider urgency supplemental metric.
-*/
-export enum Cvss4ProviderUrgency {
-    
-    CLEAR = "CLEAR",
-    GREEN = "GREEN",
-    AMBER = "AMBER",
-    RED = "RED",
-    NOT_DEFINED = "NOT_DEFINED",
-};
-/**
-* CVSS 4.0 qualitative severity rating.
-*/
-export enum Cvss4Severity {
-    
-    NONE = "NONE",
-    LOW = "LOW",
-    MEDIUM = "MEDIUM",
-    HIGH = "HIGH",
+    /** The highest rating. */
     CRITICAL = "CRITICAL",
 };
 /**
-* CVSS 4.0 modified attack vector environmental metric.
+* How far away an attacker can be, in CVSS 2.0's terms.
 */
-export enum Cvss4ModifiedAttackVector {
+export enum CvssV2AccessVector {
     
+    /** From anywhere that can route to the system. */
     NETWORK = "NETWORK",
-    ADJACENT = "ADJACENT",
-    LOCAL = "LOCAL",
-    PHYSICAL = "PHYSICAL",
-    NOT_DEFINED = "NOT_DEFINED",
-};
-/**
-* CVSS 4.0 modified attack complexity environmental metric.
-*/
-export enum Cvss4ModifiedAttackComplexity {
-    
-    HIGH = "HIGH",
-    LOW = "LOW",
-    NOT_DEFINED = "NOT_DEFINED",
-};
-/**
-* CVSS 4.0 modified attack requirements environmental metric.
-*/
-export enum Cvss4ModifiedAttackRequirements {
-    
-    NONE = "NONE",
-    PRESENT = "PRESENT",
-    NOT_DEFINED = "NOT_DEFINED",
-};
-/**
-* CVSS 4.0 modified privileges required environmental metric.
-*/
-export enum Cvss4ModifiedPrivilegesRequired {
-    
-    HIGH = "HIGH",
-    LOW = "LOW",
-    NONE = "NONE",
-    NOT_DEFINED = "NOT_DEFINED",
-};
-/**
-* CVSS 4.0 modified user interaction environmental metric.
-*/
-export enum Cvss4ModifiedUserInteraction {
-    
-    NONE = "NONE",
-    PASSIVE = "PASSIVE",
-    ACTIVE = "ACTIVE",
-    NOT_DEFINED = "NOT_DEFINED",
-};
-/**
-* CVSS 4.0 modified vulnerable system CIA environmental metric.
-*/
-export enum Cvss4ModifiedVulnCia {
-    
-    NONE = "NONE",
-    LOW = "LOW",
-    HIGH = "HIGH",
-    NOT_DEFINED = "NOT_DEFINED",
-};
-/**
-* CVSS 4.0 modified subsequent system confidentiality environmental metric.
-*/
-export enum Cvss4ModifiedSubC {
-    
-    NONE = "NONE",
-    LOW = "LOW",
-    HIGH = "HIGH",
-    NOT_DEFINED = "NOT_DEFINED",
-};
-/**
-* CVSS 4.0 modified subsequent system integrity/availability environmental metric (includes SAFETY value).
-*/
-export enum Cvss4ModifiedSubIa {
-    
-    NONE = "NONE",
-    LOW = "LOW",
-    HIGH = "HIGH",
-    SAFETY = "SAFETY",
-    NOT_DEFINED = "NOT_DEFINED",
-};
-/**
-* CVSS version 3.x identifier. CVSS 3.0 and 3.1 share an identical metric model; the 3.1 spec was a clarification, not a structural change. The consolidated CvssV3 class accepts either via this enum.
-*/
-export enum CvssV3Version {
-    
-    /** CVSS version 3.0 (2015-2019) */
-    number_3FULL_STOP0 = "3.0",
-    /** CVSS version 3.1 (2019-present) */
-    number_3FULL_STOP1 = "3.1",
-};
-/**
-* CVSS 3.x attack vector base metric.
-*/
-export enum Cvss3AttackVector {
-    
-    NETWORK = "NETWORK",
+    /** Only from the same local network segment. */
     ADJACENT_NETWORK = "ADJACENT_NETWORK",
-    LOCAL = "LOCAL",
-    PHYSICAL = "PHYSICAL",
-};
-/**
-* CVSS 3.x attack complexity base metric.
-*/
-export enum Cvss3AttackComplexity {
-    
-    HIGH = "HIGH",
-    LOW = "LOW",
-};
-/**
-* CVSS 3.x privileges required base metric.
-*/
-export enum Cvss3PrivilegesRequired {
-    
-    HIGH = "HIGH",
-    LOW = "LOW",
-    NONE = "NONE",
-};
-/**
-* CVSS 3.x user interaction base metric.
-*/
-export enum Cvss3UserInteraction {
-    
-    NONE = "NONE",
-    REQUIRED = "REQUIRED",
-};
-/**
-* CVSS 3.x scope base metric.
-*/
-export enum Cvss3Scope {
-    
-    UNCHANGED = "UNCHANGED",
-    CHANGED = "CHANGED",
-};
-/**
-* CVSS 3.x confidentiality/integrity/availability impact base metric.
-*/
-export enum Cvss3Cia {
-    
-    NONE = "NONE",
-    LOW = "LOW",
-    HIGH = "HIGH",
-};
-/**
-* CVSS 3.x qualitative severity rating.
-*/
-export enum Cvss3Severity {
-    
-    NONE = "NONE",
-    LOW = "LOW",
-    MEDIUM = "MEDIUM",
-    HIGH = "HIGH",
-    CRITICAL = "CRITICAL",
-};
-/**
-* CVSS 3.x exploit code maturity temporal metric.
-*/
-export enum Cvss3ExploitCodeMaturity {
-    
-    UNPROVEN = "UNPROVEN",
-    PROOF_OF_CONCEPT = "PROOF_OF_CONCEPT",
-    FUNCTIONAL = "FUNCTIONAL",
-    HIGH = "HIGH",
-    NOT_DEFINED = "NOT_DEFINED",
-};
-/**
-* CVSS 3.x remediation level temporal metric.
-*/
-export enum Cvss3RemediationLevel {
-    
-    OFFICIAL_FIX = "OFFICIAL_FIX",
-    TEMPORARY_FIX = "TEMPORARY_FIX",
-    WORKAROUND = "WORKAROUND",
-    UNAVAILABLE = "UNAVAILABLE",
-    NOT_DEFINED = "NOT_DEFINED",
-};
-/**
-* CVSS 3.x report confidence temporal metric.
-*/
-export enum Cvss3Confidence {
-    
-    UNKNOWN = "UNKNOWN",
-    REASONABLE = "REASONABLE",
-    CONFIRMED = "CONFIRMED",
-    NOT_DEFINED = "NOT_DEFINED",
-};
-/**
-* CVSS 3.x CIA requirement environmental metric.
-*/
-export enum Cvss3CiaRequirement {
-    
-    LOW = "LOW",
-    MEDIUM = "MEDIUM",
-    HIGH = "HIGH",
-    NOT_DEFINED = "NOT_DEFINED",
-};
-/**
-* CVSS 3.x modified attack vector environmental metric.
-*/
-export enum Cvss3ModifiedAttackVector {
-    
-    NETWORK = "NETWORK",
-    ADJACENT_NETWORK = "ADJACENT_NETWORK",
-    LOCAL = "LOCAL",
-    PHYSICAL = "PHYSICAL",
-    NOT_DEFINED = "NOT_DEFINED",
-};
-/**
-* CVSS 3.x modified attack complexity environmental metric.
-*/
-export enum Cvss3ModifiedAttackComplexity {
-    
-    HIGH = "HIGH",
-    LOW = "LOW",
-    NOT_DEFINED = "NOT_DEFINED",
-};
-/**
-* CVSS 3.x modified privileges required environmental metric.
-*/
-export enum Cvss3ModifiedPrivilegesRequired {
-    
-    HIGH = "HIGH",
-    LOW = "LOW",
-    NONE = "NONE",
-    NOT_DEFINED = "NOT_DEFINED",
-};
-/**
-* CVSS 3.x modified user interaction environmental metric.
-*/
-export enum Cvss3ModifiedUserInteraction {
-    
-    NONE = "NONE",
-    REQUIRED = "REQUIRED",
-    NOT_DEFINED = "NOT_DEFINED",
-};
-/**
-* CVSS 3.x modified scope environmental metric.
-*/
-export enum Cvss3ModifiedScope {
-    
-    UNCHANGED = "UNCHANGED",
-    CHANGED = "CHANGED",
-    NOT_DEFINED = "NOT_DEFINED",
-};
-/**
-* CVSS 3.x modified CIA environmental metric.
-*/
-export enum Cvss3ModifiedCia {
-    
-    NONE = "NONE",
-    LOW = "LOW",
-    HIGH = "HIGH",
-    NOT_DEFINED = "NOT_DEFINED",
-};
-/**
-* CVSS 2.0 access vector base metric.
-*/
-export enum Cvss2AccessVector {
-    
-    NETWORK = "NETWORK",
-    ADJACENT_NETWORK = "ADJACENT_NETWORK",
+    /** Only with an account on the system or hands on it. */
     LOCAL = "LOCAL",
 };
 /**
-* CVSS 2.0 access complexity base metric.
+* How hard the flaw is to use, in CVSS 2.0's terms.
 */
-export enum Cvss2AccessComplexity {
+export enum CvssV2AccessComplexity {
     
+    /** Only under unusual, hard-to-arrange conditions. */
     HIGH = "HIGH",
+    /** Under conditions that take some arranging. */
     MEDIUM = "MEDIUM",
+    /** With no special conditions. */
     LOW = "LOW",
 };
 /**
-* CVSS 2.0 authentication base metric.
+* How many logins an attacker needs, in CVSS 2.0's terms.
 */
-export enum Cvss2Authentication {
+export enum CvssV2Authentication {
     
+    /** More than one login. */
     MULTIPLE = "MULTIPLE",
+    /** One login. */
     SINGLE = "SINGLE",
+    /** No login at all. */
     NONE = "NONE",
 };
 /**
-* CVSS 2.0 confidentiality/integrity/availability impact base metric.
+* How much of one security property an attack could cost, in CVSS 2.0's terms.
 */
-export enum Cvss2Cia {
+export enum CvssV2Impact {
     
+    /** Nothing is lost. */
     NONE = "NONE",
+    /** Some is lost, and the attacker cannot choose all of it. */
     PARTIAL = "PARTIAL",
+    /** All of it is lost. */
     COMPLETE = "COMPLETE",
 };
 /**
-* CVSS 2.0 exploitability temporal metric.
+* How far working attack code has come.
 */
-export enum Cvss2Exploitability {
+export enum CvssExploitCodeMaturity {
     
+    /** No attack code is known, or the attack is only theory. */
     UNPROVEN = "UNPROVEN",
+    /** A demonstration exists that needs skilled work to use. */
     PROOF_OF_CONCEPT = "PROOF_OF_CONCEPT",
+    /** Working attack code exists for most situations. */
     FUNCTIONAL = "FUNCTIONAL",
+    /** Attack code is reliable and widely available, or no code is needed. */
     HIGH = "HIGH",
+    /** The scorer gave no value, so the metric does not change the score. */
     NOT_DEFINED = "NOT_DEFINED",
 };
 /**
-* CVSS 2.0 remediation level temporal metric.
+* What kind of fix is available.
 */
-export enum Cvss2RemediationLevel {
+export enum CvssRemediationLevel {
     
+    /** The vendor offers a complete fix. */
     OFFICIAL_FIX = "OFFICIAL_FIX",
+    /** The vendor offers a stopgap for now. */
     TEMPORARY_FIX = "TEMPORARY_FIX",
+    /** Others offer a way round the flaw that is not from the vendor. */
     WORKAROUND = "WORKAROUND",
+    /** No fix exists, or it cannot be applied. */
     UNAVAILABLE = "UNAVAILABLE",
+    /** The scorer gave no value, so the metric does not change the score. */
     NOT_DEFINED = "NOT_DEFINED",
 };
 /**
-* CVSS 2.0 report confidence temporal metric.
+* How far the flaw has been confirmed, in CVSS 2.0's terms.
 */
-export enum Cvss2ReportConfidence {
+export enum CvssV2ReportConfidence {
     
+    /** A single report or conflicting reports that nobody has checked. */
     UNCONFIRMED = "UNCONFIRMED",
+    /** Several unofficial sources agree, with some doubt remaining. */
     UNCORROBORATED = "UNCORROBORATED",
+    /** The vendor accepts it, or a working attack shows it. */
     CONFIRMED = "CONFIRMED",
+    /** The scorer gave no value, so the metric does not change the score. */
     NOT_DEFINED = "NOT_DEFINED",
 };
 /**
-* CVSS 2.0 collateral damage potential environmental metric.
+* How much loss could follow beyond the system itself.
 */
-export enum Cvss2CollateralDamagePotential {
+export enum CvssV2CollateralDamagePotential {
     
+    /** No such loss. */
     NONE = "NONE",
+    /** Slight loss. */
     LOW = "LOW",
+    /** Moderate loss. */
     LOW_MEDIUM = "LOW_MEDIUM",
+    /** Significant loss. */
     MEDIUM_HIGH = "MEDIUM_HIGH",
+    /** Catastrophic loss. */
     HIGH = "HIGH",
+    /** The scorer gave no value, so the metric does not change the score. */
     NOT_DEFINED = "NOT_DEFINED",
 };
 /**
-* CVSS 2.0 target distribution environmental metric.
+* How much of the environment the flaw exposes.
 */
-export enum Cvss2TargetDistribution {
+export enum CvssV2TargetDistribution {
     
+    /** No systems at all, or only in a lab. */
     NONE = "NONE",
+    /** Up to about a quarter of systems. */
     LOW = "LOW",
+    /** About a quarter to three quarters of systems. */
     MEDIUM = "MEDIUM",
+    /** More than about three quarters of systems. */
     HIGH = "HIGH",
+    /** The scorer gave no value, so the metric does not change the score. */
     NOT_DEFINED = "NOT_DEFINED",
 };
 /**
-* CVSS 2.0 CIA requirement environmental metric.
+* How much one security property matters to the scorer.
 */
-export enum Cvss2CiaRequirement {
+export enum CvssRequirement {
     
+    /** A loss would have limited effect. */
     LOW = "LOW",
+    /** A loss would have serious effect. */
     MEDIUM = "MEDIUM",
+    /** A loss would have catastrophic effect. */
     HIGH = "HIGH",
+    /** The scorer gave no value, so the metric does not change the score. */
     NOT_DEFINED = "NOT_DEFINED",
+};
+/**
+* How far away an attacker can be, in CVSS 3's terms.
+*/
+export enum CvssV3AttackVector {
+    
+    /** From anywhere that can route to the system. */
+    NETWORK = "NETWORK",
+    /** Only from a logically nearby network. */
+    ADJACENT_NETWORK = "ADJACENT_NETWORK",
+    /** Only by acting on the system itself, directly or through a user. */
+    LOCAL = "LOCAL",
+    /** Only by touching the hardware. */
+    PHYSICAL = "PHYSICAL",
+};
+/**
+* The attack vector as the scorer's environment changes it, in CVSS 3's terms.
+*/
+export enum CvssV3ModifiedAttackVector {
+    
+    /** From anywhere that can route to the system. */
+    NETWORK = "NETWORK",
+    /** Only from a logically nearby network. */
+    ADJACENT_NETWORK = "ADJACENT_NETWORK",
+    /** Only by acting on the system itself, directly or through a user. */
+    LOCAL = "LOCAL",
+    /** Only by touching the hardware. */
+    PHYSICAL = "PHYSICAL",
+    /** The scorer gave no value, so the base metric stands. */
+    NOT_DEFINED = "NOT_DEFINED",
+};
+/**
+* How much is outside the attacker's control.
+*/
+export enum CvssAttackComplexity {
+    
+    /** Success depends on conditions the attacker must overcome or wait for. */
+    HIGH = "HIGH",
+    /** The attacker can succeed again and again with no special effort. */
+    LOW = "LOW",
+};
+/**
+* The attack complexity as the scorer's environment changes it.
+*/
+export enum CvssModifiedAttackComplexity {
+    
+    /** Success depends on conditions the attacker must overcome or wait for. */
+    HIGH = "HIGH",
+    /** The attacker can succeed again and again with no special effort. */
+    LOW = "LOW",
+    /** The scorer gave no value, so the base metric stands. */
+    NOT_DEFINED = "NOT_DEFINED",
+};
+/**
+* What access an attacker needs beforehand.
+*/
+export enum CvssPrivilegesRequired {
+    
+    /** Administrator-level access. */
+    HIGH = "HIGH",
+    /** Ordinary user access. */
+    LOW = "LOW",
+    /** No access at all. */
+    NONE = "NONE",
+};
+/**
+* The access needed as the scorer's environment changes it.
+*/
+export enum CvssModifiedPrivilegesRequired {
+    
+    /** Administrator-level access. */
+    HIGH = "HIGH",
+    /** Ordinary user access. */
+    LOW = "LOW",
+    /** No access at all. */
+    NONE = "NONE",
+    /** The scorer gave no value, so the base metric stands. */
+    NOT_DEFINED = "NOT_DEFINED",
+};
+/**
+* Whether someone else has to take part, in CVSS 3's terms.
+*/
+export enum CvssV3UserInteraction {
+    
+    /** The attack needs nobody else. */
+    NONE = "NONE",
+    /** Someone other than the attacker has to do something. */
+    REQUIRED = "REQUIRED",
+};
+/**
+* The user interaction as the scorer's environment changes it, in CVSS 3's terms.
+*/
+export enum CvssV3ModifiedUserInteraction {
+    
+    /** The attack needs nobody else. */
+    NONE = "NONE",
+    /** Someone other than the attacker has to do something. */
+    REQUIRED = "REQUIRED",
+    /** The scorer gave no value, so the base metric stands. */
+    NOT_DEFINED = "NOT_DEFINED",
+};
+/**
+* Whether an attack can reach beyond the flawed component.
+*/
+export enum CvssV3Scope {
+    
+    /** The harm stays within the same security authority. */
+    UNCHANGED = "UNCHANGED",
+    /** The harm can reach something under another security authority. */
+    CHANGED = "CHANGED",
+};
+/**
+* The scope as the scorer's environment changes it.
+*/
+export enum CvssV3ModifiedScope {
+    
+    /** The harm stays within the same security authority. */
+    UNCHANGED = "UNCHANGED",
+    /** The harm can reach something under another security authority. */
+    CHANGED = "CHANGED",
+    /** The scorer gave no value, so the base metric stands. */
+    NOT_DEFINED = "NOT_DEFINED",
+};
+/**
+* How much of one security property an attack could cost.
+*/
+export enum CvssImpact {
+    
+    /** Nothing is lost. */
+    NONE = "NONE",
+    /** Some is lost, with limited consequences. */
+    LOW = "LOW",
+    /** All of it is lost, or the loss has serious consequences. */
+    HIGH = "HIGH",
+};
+/**
+* The impact on one security property as the scorer's environment changes it.
+*/
+export enum CvssModifiedImpact {
+    
+    /** Nothing is lost. */
+    NONE = "NONE",
+    /** Some is lost, with limited consequences. */
+    LOW = "LOW",
+    /** All of it is lost, or the loss has serious consequences. */
+    HIGH = "HIGH",
+    /** The scorer gave no value, so the base metric stands. */
+    NOT_DEFINED = "NOT_DEFINED",
+};
+/**
+* How far the flaw has been confirmed, in CVSS 3's terms.
+*/
+export enum CvssV3ReportConfidence {
+    
+    /** Reports say something is wrong, but the cause is not clear. */
+    UNKNOWN = "UNKNOWN",
+    /** Solid details exist, without full confirmation of the cause. */
+    REASONABLE = "REASONABLE",
+    /** The flaw is shown beyond doubt, or the vendor accepts it. */
+    CONFIRMED = "CONFIRMED",
+    /** The scorer gave no value, so the metric does not change the score. */
+    NOT_DEFINED = "NOT_DEFINED",
+};
+/**
+* How far away an attacker can be, in CVSS 4.0's terms.
+*/
+export enum CvssV4AttackVector {
+    
+    /** From anywhere that can route to the system. */
+    NETWORK = "NETWORK",
+    /** Only from something logically or physically nearby. */
+    ADJACENT = "ADJACENT",
+    /** Only by acting on the system itself, directly or through a user. */
+    LOCAL = "LOCAL",
+    /** Only by touching the hardware. */
+    PHYSICAL = "PHYSICAL",
+};
+/**
+* The attack vector as the scorer's environment changes it, in CVSS 4.0's terms.
+*/
+export enum CvssV4ModifiedAttackVector {
+    
+    /** From anywhere that can route to the system. */
+    NETWORK = "NETWORK",
+    /** Only from something logically or physically nearby. */
+    ADJACENT = "ADJACENT",
+    /** Only by acting on the system itself, directly or through a user. */
+    LOCAL = "LOCAL",
+    /** Only by touching the hardware. */
+    PHYSICAL = "PHYSICAL",
+    /** The scorer gave no value, so the base metric stands. */
+    NOT_DEFINED = "NOT_DEFINED",
+};
+/**
+* Whether the attack needs conditions in the target beyond the attacker's control.
+*/
+export enum CvssV4AttackRequirements {
+    
+    /** The attack works whatever the target's state. */
+    NONE = "NONE",
+    /** The attack works only when the target is in a certain state. */
+    PRESENT = "PRESENT",
+};
+/**
+* The attack requirements as the scorer's environment changes them.
+*/
+export enum CvssV4ModifiedAttackRequirements {
+    
+    /** The attack works whatever the target's state. */
+    NONE = "NONE",
+    /** The attack works only when the target is in a certain state. */
+    PRESENT = "PRESENT",
+    /** The scorer gave no value, so the base metric stands. */
+    NOT_DEFINED = "NOT_DEFINED",
+};
+/**
+* Whether someone else has to take part, in CVSS 4.0's terms.
+*/
+export enum CvssV4UserInteraction {
+    
+    /** The attack needs nobody else. */
+    NONE = "NONE",
+    /** Someone has to act only in the ordinary course of their work. */
+    PASSIVE = "PASSIVE",
+    /** Someone has to take a deliberate step. */
+    ACTIVE = "ACTIVE",
+};
+/**
+* The user interaction as the scorer's environment changes it, in CVSS 4.0's terms.
+*/
+export enum CvssV4ModifiedUserInteraction {
+    
+    /** The attack needs nobody else. */
+    NONE = "NONE",
+    /** Someone has to act only in the ordinary course of their work. */
+    PASSIVE = "PASSIVE",
+    /** Someone has to take a deliberate step. */
+    ACTIVE = "ACTIVE",
+    /** The scorer gave no value, so the base metric stands. */
+    NOT_DEFINED = "NOT_DEFINED",
+};
+/**
+* The integrity or availability impact on connected systems as the scorer's environment changes it, which may include a risk to safety.
+*/
+export enum CvssV4ModifiedSubsequentImpact {
+    
+    /** Nothing is lost. */
+    NONE = "NONE",
+    /** Some is lost, with limited consequences. */
+    LOW = "LOW",
+    /** All of it is lost, or the loss has serious consequences. */
+    HIGH = "HIGH",
+    /** The loss could injure people. */
+    SAFETY = "SAFETY",
+    /** The scorer gave no value, so the base metric stands. */
+    NOT_DEFINED = "NOT_DEFINED",
+};
+/**
+* How much is known about attacks on the flaw.
+*/
+export enum CvssV4ExploitMaturity {
+    
+    /** No demonstration or attack has been reported. */
+    UNREPORTED = "UNREPORTED",
+    /** A demonstration is public, with no reported attack. */
+    PROOF_OF_CONCEPT = "PROOF_OF_CONCEPT",
+    /** Attacks have been reported, or tools for them are public. */
+    ATTACKED = "ATTACKED",
+    /** The scorer gave no value, so the worst case is assumed. */
+    NOT_DEFINED = "NOT_DEFINED",
+};
+/**
+* Whether an attack could put people's safety at risk.
+*/
+export enum CvssV4Safety {
+    
+    /** Any harm to people would be slight at most. */
+    NEGLIGIBLE = "NEGLIGIBLE",
+    /** People could be seriously hurt. */
+    PRESENT = "PRESENT",
+    /** The scorer gave no value. */
+    NOT_DEFINED = "NOT_DEFINED",
+};
+/**
+* Whether every step of an attack could be automated across many targets.
+*/
+export enum CvssV4Automatable {
+    
+    /** At least one step resists automation. */
+    NO = "NO",
+    /** Every step can be automated. */
+    YES = "YES",
+    /** The scorer gave no value. */
+    NOT_DEFINED = "NOT_DEFINED",
+};
+/**
+* How the affected system comes back after an attack.
+*/
+export enum CvssV4Recovery {
+    
+    /** The system recovers by itself. */
+    AUTOMATIC = "AUTOMATIC",
+    /** Someone has to step in and restore it. */
+    USER = "USER",
+    /** The system cannot be restored. */
+    IRRECOVERABLE = "IRRECOVERABLE",
+    /** The scorer gave no value. */
+    NOT_DEFINED = "NOT_DEFINED",
+};
+/**
+* How much of a resource one successful attack gains the attacker.
+*/
+export enum CvssV4ValueDensity {
+    
+    /** Each target holds little, so an attacker must take many. */
+    DIFFUSE = "DIFFUSE",
+    /** A single target holds a lot. */
+    CONCENTRATED = "CONCENTRATED",
+    /** The scorer gave no value. */
+    NOT_DEFINED = "NOT_DEFINED",
+};
+/**
+* How much work it takes a consumer to respond to the flaw.
+*/
+export enum CvssV4ResponseEffort {
+    
+    /** Little work, such as reading advice or a small configuration change. */
+    LOW = "LOW",
+    /** Some work, with a noticeable effect on the service. */
+    MODERATE = "MODERATE",
+    /** Much work, or a long outage. */
+    HIGH = "HIGH",
+    /** The scorer gave no value. */
+    NOT_DEFINED = "NOT_DEFINED",
+};
+/**
+* How urgent the product's supplier says the flaw is, as a colour.
+*/
+export enum CvssV4ProviderUrgency {
+    
+    /** The supplier sees little or no urgency. */
+    CLEAR = "CLEAR",
+    /** The supplier says the flaw can wait for regular work. */
+    GREEN = "GREEN",
+    /** The supplier says the flaw matters soon. */
+    AMBER = "AMBER",
+    /** The supplier says the flaw is at the highest urgency. */
+    RED = "RED",
+    /** The scorer gave no value. */
+    NOT_DEFINED = "NOT_DEFINED",
+};
+/**
+* The kind of document a CVE record is.
+*/
+export enum CveDataType {
+    
+    /** A document in the CVE Record Format. */
+    CVE_RECORD = "CVE_RECORD",
+};
+/**
+* Whether a record is in use.
+*/
+export enum CveRecordState {
+    
+    /** The assigning authority has filled the record in and made it public. */
+    PUBLISHED = "PUBLISHED",
+    /** The identifier and its record are withdrawn from use. */
+    REJECTED = "REJECTED",
+};
+/**
+* The state of a published record.
+*/
+export enum CvePublishedState {
+    
+    /** The assigning authority has filled the record in and made it public. */
+    PUBLISHED = "PUBLISHED",
+};
+/**
+* The state of a rejected record.
+*/
+export enum CveRejectedState {
+    
+    /** The identifier and its record are withdrawn from use. */
+    REJECTED = "REJECTED",
+};
+/**
+* Whether a version is affected.
+*/
+export enum CveVersionStatus {
+    
+    /** The vulnerability is present in this version. */
+    affected = "affected",
+    /** The vulnerability is not present in this version. */
+    unaffected = "unaffected",
+    /** It is not known whether the vulnerability is present. */
+    unknown = "unknown",
+};
+/**
+* How the parts of a CPE statement combine.
+*/
+export enum CveCpeOperator {
+    
+    /** All of the parts must hold. */
+    AND = "AND",
+    /** At least one of the parts must hold. */
+    OR = "OR",
+};
+/**
+* The part a credited person or organisation played.
+*/
+export enum CveCreditType {
+    
+    /** Found the vulnerability. */
+    finder = "finder",
+    /** Told the vendor or a CVE Numbering Authority about it. */
+    reporter = "reporter",
+    /** Checked that it is accurate or how severe it is. */
+    analyst = "analyst",
+    /** Organised the response among those involved. */
+    coordinator = "coordinator",
+    /** Prepared the code change or plan that addresses it. */
+    remediation_developer = "remediation developer",
+    /** Reviewed that change or plan for how well it works. */
+    remediation_reviewer = "remediation reviewer",
+    /** Tested the vulnerability or the fix for it. */
+    remediation_verifier = "remediation verifier",
+    /** A tool used to find or identify it. */
+    tool = "tool",
+    /** Supported the work of finding or fixing it. */
+    sponsor = "sponsor",
+    /** Any other part. */
+    other = "other",
+};
+/**
+* A label the assigning authority can put on a record.
+*/
+export enum CveCnaTag {
+    
+    /** Everything affected was out of support when the identifier was requested. */
+    unsupported_when_assigned = "unsupported-when-assigned",
+    /** Everything affected exists only as a hosted service. */
+    exclusively_hosted_service = "exclusively-hosted-service",
+    /** Someone disagrees that this is a vulnerability at all. */
+    disputed = "disputed",
+};
+/**
+* A label an Authorized Data Publisher can put on a record.
+*/
+export enum CveAdpTag {
+    
+    /** Someone disagrees that this is a vulnerability at all. */
+    disputed = "disputed",
+};
+/**
+* A label that says what a reference is.
+*/
+export enum CveReferenceTag {
+    
+    /** The address no longer answers. */
+    broken_link = "broken-link",
+    /** Only paying customers of the vendor can read it. */
+    customer_entitlement = "customer-entitlement",
+    /** It shows how to attack the flaw, or holds working attack code. */
+    exploit = "exploit",
+    /** It comes from a government body. */
+    government_resource = "government-resource",
+    /** It is a post in a bug tracker. */
+    issue_tracking = "issue-tracking",
+    /** It comes from a mailing list. */
+    mailing_list = "mailing-list",
+    /** It says how to reduce the risk when no patch can be applied. */
+    mitigation = "mitigation",
+    /** It has nothing to do with this vulnerability and was linked by mistake. */
+    not_applicable = "not-applicable",
+    /** It holds an update that fixes the flaw. */
+    patch = "patch",
+    /** A login blocks the way to it. */
+    permissions_required = "permissions-required",
+    /** It is a news story or similar report. */
+    media_coverage = "media-coverage",
+    /** It identifies the affected product, for naming schemes such as CPE. */
+    product = "product",
+    /** It concerns a related flaw, not this one. */
+    related = "related",
+    /** It is a set of release notes. */
+    release_notes = "release-notes",
+    /** It holds a way to detect or block the flaw or attacks on it. */
+    signature = "signature",
+    /** It explains the flaw and how it is attacked, in technical depth. */
+    technical_description = "technical-description",
+    /** It is an advisory from someone other than the vendor. */
+    third_party_advisory = "third-party-advisory",
+    /** It is an advisory from the vendor. */
+    vendor_advisory = "vendor-advisory",
+    /** It is an entry in a vulnerability database. */
+    vdb_entry = "vdb-entry",
 };
 
 
 /**
- * Abstract base representation of a security vulnerability. Extended by source-specific schemas (KEV, CVE, NVD).
+ * The base score and base severity of a CVSS version with severity bands, and the bands that tie one to the other.
  */
-export interface Vulnerability {
-    /** The CVE identifier assigned by a CVE Numbering Authority (CNA). Format: CVE-YYYY-NNNNN. */
-    cve_id: string,
-    /** Short human-readable title or name for this entity. */
-    title?: string,
-    /** Narrative description of the vulnerability. */
-    description?: string,
-    /** Date and time the vulnerability was first published. */
-    published_date?: string,
-    /** Date and time the vulnerability record was last modified. */
-    last_modified_date?: string,
-    /** Products affected by this vulnerability. */
-    products?: Product[],
-    /** Weakness classifications (e.g. CWE) associated with this vulnerability. */
-    weaknesses?: Weakness[],
-    /** External references such as advisories and articles. */
-    references?: Reference[],
-    /** Impact and severity assessment for this vulnerability. */
-    impact?: Impact,
-    /** Current lifecycle state of the vulnerability record. */
-    status?: string,
+export interface CvssSeverityBandsMixin {
+    /** The score from 0 to 10 for what is inherent in the flaw. */
+    baseScore: number,
+    /** The rating in words that the base score falls under. */
+    baseSeverity: string,
 }
 
 
 /**
- * Software or hardware entity affected by the vulnerability.
- */
-export interface Product {
-    /** Name of the vendor or organization responsible for the product. */
-    vendor?: string,
-    /** Name of the entity (product, weakness, reference, etc.). */
-    name?: string,
-    /** Version string of the affected product. */
-    version?: string,
-    /** Platforms or operating environments affected. */
-    platforms?: string[],
-}
-
-
-/**
- * External reference such as an advisory or article.
- */
-export interface Reference {
-    /** URL pointing to the reference resource. */
-    url?: string,
-    /** Name of the entity (product, weakness, reference, etc.). */
-    name?: string,
-    /** Source or origin of the reference or data. */
-    source?: string,
-}
-
-
-/**
- * Weakness classification from CWE or a similar taxonomy.
- */
-export interface Weakness {
-    /** CWE identifier for the weakness classification (e.g. CWE-79). */
-    cwe_id?: string,
-    /** Name of the entity (product, weakness, reference, etc.). */
-    name?: string,
-    /** Narrative description of the vulnerability. */
-    description?: string,
-}
-
-
-/**
- * Assessment of the vulnerability's impact and severity.
- */
-export interface Impact {
-    /** Qualitative severity rating. */
-    severity?: string,
-    /** CVSS vector string or equivalent scoring vector expression. */
-    vector?: string,
-    /** Numeric vulnerability score (e.g. CVSS base score). */
-    score?: number,
-}
-
-
-/**
- * Logical grouping of CPE match expressions.
- */
-export interface Configuration {
-    /** CPE 2.2 URI identifying an affected product configuration. */
-    cpe_uri?: string,
-    /** Logical operator (AND/OR) used in configuration node groupings. */
-    operator?: string,
-}
-
-
-/**
- * A linkml placeholder class accepting any JSON-compatible value (string, number, boolean, object, or array). Use for slots that hold arbitrary or schema-less data.
- */
-export interface Any {
-}
-
-
-/**
- * Official CVE Record corresponding to a CVE ID. Represents either a Published or Rejected record in the CVE™ Program. The dataType field is always CVE_RECORD. Use cveMetadata.state to distinguish Published from Rejected records.
-This class deliberately does NOT inherit from ``vulnerability_core.Vulnerability``: the upstream CVE Record Format places the CVE ID inside ``cveMetadata.cveId`` rather than at the record root. Semantic equivalence with the broader ``Vulnerability`` concept is preserved via ``exact_mappings``.
- */
-export interface CVERecord {
-    /** Indicates the type of information represented in the JSON instance. */
-    data_type?: string,
-    /** The version of the CVE schema used for validating this record. Supports multiple versions of the format (e.g., '5.2.0'). */
-    data_version?: string,
-    /** Metadata about the CVE ID. A Published record uses CveMetadataPublished; a Rejected record uses CveMetadataRejected. */
-    cve_metadata: CveMetadata,
-    /** A set of containers (CNA and optionally ADP) holding vulnerability information related to the CVE ID. */
-    containers: Containers,
-}
-
-
-/**
- * Abstract base for CVE Record metadata. Represents either a Published or Rejected record's metadata. All fields are controlled by CVE Services. Polymorphism is provided via ``is_a`` on the two concrete subclasses (``CveMetadataPublished``, ``CveMetadataRejected``); slot-level ``any_of`` on the ``cve_metadata`` slot preserves the choice for generators (e.g. JSON Schema ``anyOf``).
- */
-export interface CveMetadata {
-}
-
-
-/**
- * Metadata for a CVE Record in the PUBLISHED state.
- */
-export interface CveMetadataPublished extends CveMetadata {
-    /** The CVE identifier that this record pertains to. */
-    record_cve_id: string,
-    /** The UUID for the organization to which the CVE ID was originally assigned. This UUID can be used to lookup the organization record in the user registry service. */
-    assigner_org_id: string,
-    /** The short name for the organization to which the CVE ID was originally assigned. */
-    assigner_short_name?: string,
-    /** Monotonically increasing integer, starting at 1, incremented each time a submission from a data provider changes this CVE Record. */
-    serial?: number,
-    /** The date/time the record was last updated. */
-    date_updated?: string,
-    /** The date/time this CVE ID was reserved in the CVE automation workgroup services system. This date does not necessarily indicate when the vulnerability was discovered, shared with the vendor, or publicly disclosed. */
-    date_reserved?: string,
-    /** The user that requested the CVE identifier. */
-    requester_user_id?: string,
-    /** The date/time the CVE Record was first published in the CVE List. */
-    date_published?: string,
-    /** State of the CVE Record. For published records, this is always PUBLISHED. */
-    published_state: string,
-}
-
-
-/**
- * Metadata for a CVE Record in the REJECTED state.
- */
-export interface CveMetadataRejected extends CveMetadata {
-    /** The CVE identifier that this record pertains to. */
-    record_cve_id: string,
-    /** The UUID for the organization to which the CVE ID was originally assigned. This UUID can be used to lookup the organization record in the user registry service. */
-    assigner_org_id: string,
-    /** The short name for the organization to which the CVE ID was originally assigned. */
-    assigner_short_name?: string,
-    /** Monotonically increasing integer, starting at 1, incremented each time a submission from a data provider changes this CVE Record. */
-    serial?: number,
-    /** The date/time the record was last updated. */
-    date_updated?: string,
-    /** The date/time this CVE ID was reserved in the CVE automation workgroup services system. This date does not necessarily indicate when the vulnerability was discovered, shared with the vendor, or publicly disclosed. */
-    date_reserved?: string,
-    /** The date/time the CVE Record was first published in the CVE List. */
-    date_published?: string,
-    /** The date/time the CVE ID was rejected. */
-    date_rejected?: string,
-    /** State of the CVE Record. For rejected records, this is always REJECTED. */
-    rejected_state: string,
-}
-
-
-/**
- * A set of structures (called containers) used to store vulnerability information related to a specific CVE ID. At minimum a 'cna' container is required.
- */
-export interface Containers {
-    /** The CNA container holding vulnerability information for this CVE ID. For published records, this is a CnaPublishedContainer. For rejected records, this is a CnaRejectedContainer. */
-    cna: CnaContainer,
-    /** One or more ADP containers providing additional vulnerability information. Multiple ADPs may contribute containers for the same CVE ID. */
-    adp?: AdpContainer[],
-}
-
-
-/**
- * Details related to the information container provider (CNA or ADP).
- */
-export interface ProviderMetadata {
-    /** The container provider's organizational UUID. */
-    org_id: string,
-    /** The container provider's organizational short name (2-32 characters). */
-    short_name?: string,
-    /** The date/time the record was last updated. */
-    date_updated?: string,
-}
-
-
-/**
- * Abstract base for CNA containers (published and rejected). Polymorphism is provided via ``is_a`` on the two concrete subclasses (``CnaPublishedContainer``, ``CnaRejectedContainer``); slot-level ``any_of`` on the ``cna`` slot preserves the choice for generators.
- */
-export interface CnaContainer {
-}
-
-
-/**
- * An object containing vulnerability information provided by a CVE Numbering Authority (CNA) for a published CVE ID. There can only be one CNA container per CVE record since there can only be one assigning CNA.
- */
-export interface CnaPublishedContainer extends CnaContainer {
-    /** Details related to the information container provider (CNA or ADP). */
-    provider_metadata: ProviderMetadata,
-    /** The date/time this CVE ID was associated with a vulnerability by a CNA. */
-    date_assigned?: string,
-    /** If known, the date/time the vulnerability was disclosed publicly. */
-    date_public?: string,
-    /** Short human-readable title or name for this entity. */
-    title?: string,
-    /** A list of multi-lingual descriptions of the vulnerability. Must contain at least one English language entry. E.g., [PROBLEMTYPE] in [COMPONENT] in [VENDOR] [PRODUCT] [VERSION] on [PLATFORMS] allows [ATTACKER] to [IMPACT] via [VECTOR]. */
-    descriptions: MultiLangDescription[],
-    /** List of affected products and services. */
-    affected: AffectedProduct[],
-    /** Affected products defined using the CPE Applicability Language. When defined, this block should align with the data in the affected block. */
-    cpe_applicability?: CpeApplicabilityElement[],
-    /** Problem type information such as CWE identifiers. Must contain at least one entry. Entries can be text, OWASP, or CWE identifiers. */
-    problem_types?: ProblemType[],
-    /** Reference data in the form of URLs describing the vulnerability, such as advisories, patches, and exploit details. Required by CNA rules. */
-    cve_references: CveReference[],
-    /** Collection of impacts of this vulnerability, optionally linked to CAPEC IDs. */
-    impacts?: ImpactEntry[],
-    /** Collection of impact scores with attribution (CVSSv2, CVSSv3.0, CVSSv3.1, CVSSv4.0, or custom format). */
-    metrics?: MetricEntry[],
-    /** Configurations required for exploiting this vulnerability. */
-    configurations_text?: MultiLangDescription[],
-    /** Workarounds and mitigations for this vulnerability. */
-    workarounds?: MultiLangDescription[],
-    /** Information about solutions or remediations available for this vulnerability. */
-    solutions?: MultiLangDescription[],
-    /** Information about known exploits of this vulnerability. */
-    exploits?: MultiLangDescription[],
-    /** Timeline information for significant events about the vulnerability or changes to the CVE Record. */
-    timeline?: TimelineEntry[],
-    /** Statements acknowledging specific people, organizations, or tools for work related to research, discovery, remediation, or coordination of this CVE. */
-    credits?: CreditEntry[],
-    /** Source information (who discovered it, who researched it, etc.) and optionally a chain of CNA information. */
-    cna_source?: SourceInformation,
-    /** Tags provided by a CNA describing the CVE Record. */
-    cna_tags?: string[],
-    /** List of taxonomy items (e.g., ATT&CK, CWE) related to the vulnerability. */
-    taxonomy_mappings?: TaxonomyMapping[],
-}
-
-
-/**
- * An object containing vulnerability information provided by a CVE Numbering Authority (CNA) for a rejected CVE ID. There can only be one CNA container per CVE record.
- */
-export interface CnaRejectedContainer extends CnaContainer {
-    /** Details related to the information container provider (CNA or ADP). */
-    provider_metadata: ProviderMetadata,
-    /** Reasons for rejecting this CVE Record. */
-    rejected_reasons: MultiLangDescription[],
-    /** CVE IDs that this CVE ID was rejected in favor of because this CVE ID was incorrectly assigned to the same vulnerabilities. */
-    replaced_by?: string[],
-}
-
-
-/**
- * An object containing vulnerability information provided by an Authorized Data Publisher (ADP). Multiple ADPs can provide containers for a single CVE ID.
- */
-export interface AdpContainer {
-    /** Details related to the information container provider (CNA or ADP). */
-    provider_metadata: ProviderMetadata,
-    /** If known, the date/time the vulnerability was disclosed publicly. */
-    date_public?: string,
-    /** Short human-readable title or name for this entity. */
-    title?: string,
-    /** A list of multi-lingual descriptions of the vulnerability. Must contain at least one English language entry. E.g., [PROBLEMTYPE] in [COMPONENT] in [VENDOR] [PRODUCT] [VERSION] on [PLATFORMS] allows [ATTACKER] to [IMPACT] via [VECTOR]. */
-    descriptions?: MultiLangDescription[],
-    /** List of affected products and services. */
-    affected?: AffectedProduct[],
-    /** Affected products defined using the CPE Applicability Language. When defined, this block should align with the data in the affected block. */
-    cpe_applicability?: CpeApplicabilityElement[],
-    /** Problem type information such as CWE identifiers. Must contain at least one entry. Entries can be text, OWASP, or CWE identifiers. */
-    problem_types?: ProblemType[],
-    /** Reference data in the form of URLs describing the vulnerability, such as advisories, patches, and exploit details. Required by CNA rules. */
-    cve_references?: CveReference[],
-    /** Collection of impacts of this vulnerability, optionally linked to CAPEC IDs. */
-    impacts?: ImpactEntry[],
-    /** Collection of impact scores with attribution (CVSSv2, CVSSv3.0, CVSSv3.1, CVSSv4.0, or custom format). */
-    metrics?: MetricEntry[],
-    /** Configurations required for exploiting this vulnerability. */
-    configurations_text?: MultiLangDescription[],
-    /** Workarounds and mitigations for this vulnerability. */
-    workarounds?: MultiLangDescription[],
-    /** Information about solutions or remediations available for this vulnerability. */
-    solutions?: MultiLangDescription[],
-    /** Information about known exploits of this vulnerability. */
-    exploits?: MultiLangDescription[],
-    /** Timeline information for significant events about the vulnerability or changes to the CVE Record. */
-    timeline?: TimelineEntry[],
-    /** Statements acknowledging specific people, organizations, or tools for work related to research, discovery, remediation, or coordination of this CVE. */
-    credits?: CreditEntry[],
-    /** Source information (who discovered it, who researched it, etc.) and optionally a chain of CNA information. */
-    cna_source?: SourceInformation,
-    /** Tags provided by an ADP describing the CVE Record. */
-    adp_tags?: string[],
-    /** List of taxonomy items (e.g., ATT&CK, CWE) related to the vulnerability. */
-    taxonomy_mappings?: TaxonomyMapping[],
-}
-
-
-/**
- * Information about the set of products and services affected by a vulnerability. At least one of (vendor + product) or (collectionURL + packageName) is required, and at least one of versions or defaultStatus is required.
-Note: this class deliberately does NOT inherit from ``vulnerability_core.Product``. The upstream CVE ``product`` definition uses a multivalued ``versions`` slot (range ``VersionEntry``), which conflicts with ``Product.version`` (singular string). The ``vendor``, ``name`` (= upstream ``product``), and ``platforms`` slots are reused from the core schema directly. Semantic equivalence is preserved via ``exact_mappings``.
- */
-export interface AffectedProduct {
-    /** Name of the vendor or organization responsible for the product. */
-    vendor?: string,
-    /** Name of the affected product (upstream field ``product``). */
-    name?: string,
-    /** Platforms or operating environments affected. */
-    platforms?: string[],
-    /** URL identifying a package collection (determines the meaning of packageName). */
-    collection_url?: string,
-    /** Name or identifier of the affected software package as used in the package collection. */
-    package_name?: string,
-    /** Affected products defined by CPE (Common Platform Enumeration) names in either 2.2 or 2.3 format. */
-    cpes?: string[],
-    /** A list of the affected components, features, modules, sub-components, sub-products, APIs, commands, utilities, programs, or functionalities. */
-    modules?: string[],
-    /** A list of the affected source code files. */
-    program_files?: string[],
-    /** A list of the affected source code functions, methods, subroutines, or procedures. */
-    program_routines?: ProgramRoutine[],
-    /** The URL of the source code repository, for informational purposes and/or to resolve git hash version ranges. */
-    repo?: string,
-    /** The default status for versions not otherwise listed in the versions list. Defaults to 'unknown' if not specified. Versions or defaultStatus may be omitted, but not both. */
-    default_status?: string,
-    /** Set of product versions or version ranges related to the vulnerability. Versions or defaultStatus may be omitted, but not both. */
-    versions?: VersionEntry[],
-    /** A Package URL (PURL), a unified URL specification for identifying packages hosted by known package hosts. The Package URL MUST NOT include a version. */
-    package_url?: string,
-}
-
-
-/**
- * An affected source code function, method, subroutine, or procedure.
- */
-export interface ProgramRoutine {
-    /** Name of the affected source code function, method, subroutine, or procedure. */
-    routine_name: string,
-}
-
-
-/**
- * A single version or a range of versions of a product with associated vulnerability status. An entry with only version and status is a point version; an entry with versionType and a less-than limit describes a range.
- */
-export interface VersionEntry {
-    /** The single version being described, or the version at the start of the range. By convention, '0' denotes the earliest possible version. */
-    version_value: string,
-    /** The vulnerability status for the version or range of versions. For a range, the status may be refined by the 'changes' list. */
-    version_status: string,
-    /** The version numbering system used for specifying the range (e.g., semver, git, maven, rpm, python, custom). Defines the semantics of comparison. */
-    version_type?: string,
-    /** The non-inclusive upper limit of the range. This is the least version NOT in the range. Supports wildcard '*' suffix. */
-    less_than?: string,
-    /** The inclusive upper limit of the range. This is the greatest version contained in the range. Only one of lessThan and lessThanOrEqual should be specified. */
-    less_than_or_equal?: string,
-    /** A list of status changes that take place during the version range. The array should be sorted by 'at' field according to versionType, but clients must re-sort rather than assume ordering. */
-    version_changes?: VersionChange[],
-}
-
-
-/**
- * A status change that takes place at a specific point within a version range.
- */
-export interface VersionChange {
-    /** The version at which a status change occurs within a range. */
-    change_at: string,
-    /** The new status in the range starting at the given version. */
-    change_status: string,
-}
-
-
-/**
- * Text in a particular language with optional alternate markup or formatted representation (e.g., Markdown) or embedded media. Used for vulnerability descriptions, rejected reasons, configurations, workarounds, solutions, and exploits.
- */
-export interface MultiLangDescription {
-    /** BCP 47 language code indicating the language of accompanying text. */
-    lang: string,
-    /** Plain text description (up to 4096 characters). */
-    description_value: string,
-    /** Supporting media data for the description such as markdown, diagrams, etc. Similar to RFC 2397, each object has a media type, data value, and optional base64 flag. */
-    supporting_media?: SupportingMedia[],
-}
-
-
-/**
- * Supporting media data for a description such as markdown, diagrams, etc. Similar to RFC 2397, each media object has a media type, data value, and an optional base64 flag.
- */
-export interface SupportingMedia {
-    /** RFC2046 compliant IANA Media type (e.g., text/markdown, text/html, image/png, image/svg, audio/mp3). */
-    media_type: string,
-    /** If true, the media_value field contains the media data encoded in base64. If false, the media_value field contains UTF-8 media content. */
-    base64_encoded?: boolean,
-    /** Supporting media content, up to 16K characters. If base64_encoded is true, this stores base64 encoded data. */
-    media_value: string,
-}
-
-
-/**
- * Problem type information (e.g., CWE identifier). Wraps one or more problem type descriptions. The CNA requirement is [PROBLEMTYPE].
- */
-export interface ProblemType {
-    /** One or more problem type descriptions (e.g., CWE IDs or OWASP categories). */
-    problem_type_descriptions: ProblemTypeDescription[],
-}
-
-
-/**
- * Individual problem type description entry.
- */
-export interface ProblemTypeDescription {
-    /** BCP 47 language code indicating the language of accompanying text. */
-    lang: string,
-    /** Text description of the problem type, or title from CWE or OWASP. */
-    problem_description: string,
-    /** CWE identifier for the weakness classification (e.g. CWE-79). */
-    cwe_id?: string,
-    /** Problem type source format (e.g., text, OWASP, CWE). */
-    problem_source_type?: string,
-    /** References supporting this specific problem type. */
-    problem_references?: CveReference[],
-}
-
-
-/**
- * An external reference associated with a CVE Record. Extends the core Reference with optional descriptive tags characterizing the resource.
- */
-export interface CveReference extends Reference {
-    /** An array of tags describing the resource referenced by the URL. */
-    reference_tags?: string,
-}
-
-
-/**
- * An impact entry linking an optional CAPEC attack pattern ID to one or more prose descriptions of the impact scenario.
- */
-export interface ImpactEntry {
-    /** CAPEC ID that best relates to this impact (e.g., CAPEC-123). */
-    capec_id?: string,
-    /** Prose description of the impact scenario. At a minimum, provide the description given by CAPEC. */
-    impact_descriptions: MultiLangDescription[],
-}
-
-
-/**
- * A metric entry containing scoring data in one of the CVSS formats (v4.0, v3.x, v2.0) or a custom format, with optional applicability scenarios. At least one of cvss_v4_0, cvss_v3, cvss_v2_0, or other_metric is required. CVSS 3.0 and 3.1 are both represented by CvssV3 (distinguished by the cvss3_version slot).
- */
-export interface MetricEntry {
-    /** Name of the scoring format (e.g., cvssV4_0, cvssV3_1). Provides future-proofing and supports proprietary format inclusion. */
-    metric_format?: string,
-    /** Scenarios this metrics object applies to. If no specific scenario is given, GENERAL applies when no more specific metric matches. */
-    metric_scenarios?: MetricScenario[],
-    /** CVSS version 4.0 scoring data. */
-    cvss_v4_0?: CvssV40,
-    /** CVSS version 3.x scoring data (covers both 3.0 and 3.1). The version is distinguished by the cvss3_version field within the CvssV3 object. */
-    cvss_v3?: CvssV3,
-    /** CVSS version 2.0 scoring data. */
-    cvss_v2_0?: CvssV20,
-    /** A non-standard impact description or score. */
-    other_metric?: OtherMetric,
-}
-
-
-/**
- * A scenario description indicating the context in which a metric applies. If no specific scenario is given, GENERAL is used as the default.
- */
-export interface MetricScenario {
-    /** BCP 47 language code indicating the language of accompanying text. */
-    lang: string,
-    /** Description of the scenario this metrics object applies to. */
-    scenario_value: string,
-}
-
-
-/**
- * CVSS version 4.0 scoring object. Requires version, vectorString, baseScore, and baseSeverity. All other fields are optional.
- */
-export interface CvssV40 {
-    /** CVSS version identifier. Must be '4.0' for CVSS v4.0 objects. */
-    cvss4_version: string,
-    /** CVSS 4.0 vector string encoding all base, threat, and environmental metrics. */
-    cvss4_vector_string: string,
-    /** CVSS 4.0 base score (0.0 – 10.0 in 0.1 increments). */
-    cvss4_base_score: number,
-    /** CVSS 4.0 qualitative base severity rating. */
-    cvss4_base_severity: string,
-    cvss4_attack_vector?: string,
-    cvss4_attack_complexity?: string,
-    cvss4_attack_requirements?: string,
-    cvss4_privileges_required?: string,
-    cvss4_user_interaction?: string,
-    cvss4_vuln_confidentiality_impact?: string,
-    cvss4_vuln_integrity_impact?: string,
-    cvss4_vuln_availability_impact?: string,
-    cvss4_sub_confidentiality_impact?: string,
-    cvss4_sub_integrity_impact?: string,
-    cvss4_sub_availability_impact?: string,
-    cvss4_exploit_maturity?: string,
-    cvss4_confidentiality_requirement?: string,
-    cvss4_integrity_requirement?: string,
-    cvss4_availability_requirement?: string,
-    cvss4_modified_attack_vector?: string,
-    cvss4_modified_attack_complexity?: string,
-    cvss4_modified_attack_requirements?: string,
-    cvss4_modified_privileges_required?: string,
-    cvss4_modified_user_interaction?: string,
-    cvss4_modified_vuln_confidentiality_impact?: string,
-    cvss4_modified_vuln_integrity_impact?: string,
-    cvss4_modified_vuln_availability_impact?: string,
-    cvss4_modified_sub_confidentiality_impact?: string,
-    cvss4_modified_sub_integrity_impact?: string,
-    cvss4_modified_sub_availability_impact?: string,
-    cvss4_safety?: string,
-    cvss4_automatable?: string,
-    cvss4_recovery?: string,
-    cvss4_value_density?: string,
-    cvss4_vulnerability_response_effort?: string,
-    cvss4_provider_urgency?: string,
-}
-
-
-/**
- * CVSS version 3.x scoring object covering both CVSS 3.0 and CVSS 3.1. The two versions share an identical metric model; the 3.1 spec was a clarification, not a structural change. The cvss3_version slot distinguishes between them. Requires version ('3.0' or '3.1'), vectorString, baseScore, and baseSeverity.
- */
-export interface CvssV3 {
-    /** CVSS version identifier ('3.0' or '3.1') within a CvssV3 object. */
-    cvss3_version: string,
-    /** CVSS 3.x vector string encoding all metric values. CVSS 3.1 strings begin with 'CVSS:3.1/'; CVSS 3.0 strings begin with 'CVSS:3.0/'. */
-    cvss3_vector_string: string,
-    cvss3_attack_vector?: string,
-    cvss3_attack_complexity?: string,
-    cvss3_privileges_required?: string,
-    cvss3_user_interaction?: string,
-    cvss3_scope?: string,
-    cvss3_confidentiality_impact?: string,
-    cvss3_integrity_impact?: string,
-    cvss3_availability_impact?: string,
-    /** CVSS 3.x base score (0.0 – 10.0 in 0.1 increments). */
-    cvss3_base_score: number,
-    cvss3_base_severity: string,
-    cvss3_exploit_code_maturity?: string,
-    cvss3_remediation_level?: string,
-    cvss3_report_confidence?: string,
-    /** CVSS 3.x temporal score. */
-    cvss3_temporal_score?: number,
-    cvss3_temporal_severity?: string,
-    cvss3_confidentiality_requirement?: string,
-    cvss3_integrity_requirement?: string,
-    cvss3_availability_requirement?: string,
-    cvss3_modified_attack_vector?: string,
-    cvss3_modified_attack_complexity?: string,
-    cvss3_modified_privileges_required?: string,
-    cvss3_modified_user_interaction?: string,
-    cvss3_modified_scope?: string,
-    cvss3_modified_confidentiality_impact?: string,
-    cvss3_modified_integrity_impact?: string,
-    cvss3_modified_availability_impact?: string,
-    /** CVSS 3.x environmental score. */
-    cvss3_environmental_score?: number,
-    cvss3_environmental_severity?: string,
-}
-
-
-/**
- * CVSS version 2.0 scoring object. Requires version ('2.0'), vectorString, and baseScore.
+ * A score under CVSS version 2.0, which has no severity bands.
  */
 export interface CvssV20 {
-    /** CVSS version identifier. Must be '2.0' for CVSS v2.0 objects. */
-    cvss2_version: string,
-    /** CVSS 2.0 vector string encoding all base, temporal, and environmental metrics. */
-    cvss2_vector_string: string,
-    cvss2_access_vector?: string,
-    cvss2_access_complexity?: string,
-    cvss2_authentication?: string,
-    cvss2_confidentiality_impact?: string,
-    cvss2_integrity_impact?: string,
-    cvss2_availability_impact?: string,
-    /** CVSS 2.0 base score (0.0 – 10.0). */
-    cvss2_base_score: number,
-    cvss2_exploitability?: string,
-    cvss2_remediation_level?: string,
-    cvss2_report_confidence?: string,
-    /** CVSS 2.0 temporal score. */
-    cvss2_temporal_score?: number,
-    cvss2_collateral_damage_potential?: string,
-    cvss2_target_distribution?: string,
-    cvss2_confidentiality_requirement?: string,
-    cvss2_integrity_requirement?: string,
-    cvss2_availability_requirement?: string,
-    /** CVSS 2.0 environmental score. */
-    cvss2_environmental_score?: number,
+    /** A version string. On a score it is the CVSS version; on a product entry, the product's. */
+    version: string,
+    /** The scores' metric values written as one compact string. */
+    vectorString: string,
+    /** The score from 0 to 10 for what is inherent in the flaw. */
+    baseScore: number,
+    /** How much information an attack could expose. */
+    confidentialityImpact?: string,
+    /** How much an attack could change that should not change. */
+    integrityImpact?: string,
+    /** How much an attack could disrupt the service. */
+    availabilityImpact?: string,
+    /** What kind of fix is available. */
+    remediationLevel?: string,
+    /** How far the flaw's existence and details have been confirmed. */
+    reportConfidence?: string,
+    /** The base score adjusted for what changes over time, such as a fix appearing. */
+    temporalScore?: number,
+    /** How much confidentiality matters to the scorer for the affected system. */
+    confidentialityRequirement?: string,
+    /** How much integrity matters to the scorer for the affected system. */
+    integrityRequirement?: string,
+    /** How much availability matters to the scorer for the affected system. */
+    availabilityRequirement?: string,
+    /** The score adjusted for the scorer's own environment. */
+    environmentalScore?: number,
+    /** How far away an attacker can be when using the flaw, in CVSS 2.0's terms. */
+    accessVector?: string,
+    /** How hard the flaw is to use once the attacker can reach it. */
+    accessComplexity?: string,
+    /** How many times an attacker must log in before using the flaw. */
+    authentication?: string,
+    /** How far working attack code has come, in CVSS 2.0's terms. */
+    exploitability?: string,
+    /** How much loss a successful attack could cause beyond the system itself. */
+    collateralDamagePotential?: string,
+    /** How much of the scorer's environment is exposed to the flaw. */
+    targetDistribution?: string,
 }
 
 
 /**
- * A non-standard impact description in a custom format. May be a prose description or an arbitrary JSON-compatible object.
+ * A score under CVSS version 3.0.
  */
-export interface OtherMetric {
-    /** Name of the non-standard impact metrics format used. */
-    other_metric_type: string,
-    /** Arbitrary JSON-compatible object (or prose string) containing non-standard metric data not covered by the CVSS formats. Upstream JSON Schema defines this as 'type: object, minProperties: 1'; range: Any allows any value. */
-    other_metric_content: Any,
+export interface CvssV30 extends CvssSeverityBandsMixin {
+    /** A version string. On a score it is the CVSS version; on a product entry, the product's. */
+    version: string,
+    /** The scores' metric values written as one compact string. */
+    vectorString: string,
+    /** How far away an attacker can be when using the flaw. */
+    attackVector?: string,
+    /** How much is outside the attacker's control when using the flaw. */
+    attackComplexity?: string,
+    /** What level of access an attacker needs before using the flaw. */
+    privilegesRequired?: string,
+    /** Whether someone other than the attacker has to take part. */
+    userInteraction?: string,
+    /** Whether an attack can reach beyond the component that holds the flaw. */
+    scope?: string,
+    /** How much information an attack could expose. */
+    confidentialityImpact?: string,
+    /** How much an attack could change that should not change. */
+    integrityImpact?: string,
+    /** How much an attack could disrupt the service. */
+    availabilityImpact?: string,
+    /** How far working attack code has come. */
+    exploitCodeMaturity?: string,
+    /** What kind of fix is available. */
+    remediationLevel?: string,
+    /** How far the flaw's existence and details have been confirmed. */
+    reportConfidence?: string,
+    /** The base score adjusted for what changes over time, such as a fix appearing. */
+    temporalScore?: number,
+    /** The rating in words for the temporal score. */
+    temporalSeverity?: string,
+    /** How much confidentiality matters to the scorer for the affected system. */
+    confidentialityRequirement?: string,
+    /** How much integrity matters to the scorer for the affected system. */
+    integrityRequirement?: string,
+    /** How much availability matters to the scorer for the affected system. */
+    availabilityRequirement?: string,
+    /** The attack vector as the scorer's own environment changes it. */
+    modifiedAttackVector?: string,
+    /** The attack complexity as the scorer's own environment changes it. */
+    modifiedAttackComplexity?: string,
+    /** The privileges needed as the scorer's own environment changes them. */
+    modifiedPrivilegesRequired?: string,
+    /** The user interaction as the scorer's own environment changes it. */
+    modifiedUserInteraction?: string,
+    /** The scope as the scorer's own environment changes it. */
+    modifiedScope?: string,
+    /** The confidentiality impact as the scorer's own environment changes it. */
+    modifiedConfidentialityImpact?: string,
+    /** The integrity impact as the scorer's own environment changes it. */
+    modifiedIntegrityImpact?: string,
+    /** The availability impact as the scorer's own environment changes it. */
+    modifiedAvailabilityImpact?: string,
+    /** The score adjusted for the scorer's own environment. */
+    environmentalScore?: number,
+    /** The rating in words for the environmental score. */
+    environmentalSeverity?: string,
 }
 
 
 /**
- * A timeline event recording a significant event about the vulnerability or changes to the CVE Record. Requires time, lang, and value.
+ * A score under CVSS version 3.1.
  */
-export interface TimelineEntry {
-    /** Timestamp representing when the event in the timeline occurred. Format is RFC3339 / ISO8601 with optional timezone. */
-    event_time: string,
-    /** BCP 47 language code indicating the language of accompanying text. */
+export interface CvssV31 extends CvssSeverityBandsMixin {
+    /** A version string. On a score it is the CVSS version; on a product entry, the product's. */
+    version: string,
+    /** The scores' metric values written as one compact string. */
+    vectorString: string,
+    /** How far away an attacker can be when using the flaw. */
+    attackVector?: string,
+    /** How much is outside the attacker's control when using the flaw. */
+    attackComplexity?: string,
+    /** What level of access an attacker needs before using the flaw. */
+    privilegesRequired?: string,
+    /** Whether someone other than the attacker has to take part. */
+    userInteraction?: string,
+    /** Whether an attack can reach beyond the component that holds the flaw. */
+    scope?: string,
+    /** How much information an attack could expose. */
+    confidentialityImpact?: string,
+    /** How much an attack could change that should not change. */
+    integrityImpact?: string,
+    /** How much an attack could disrupt the service. */
+    availabilityImpact?: string,
+    /** How far working attack code has come. */
+    exploitCodeMaturity?: string,
+    /** What kind of fix is available. */
+    remediationLevel?: string,
+    /** How far the flaw's existence and details have been confirmed. */
+    reportConfidence?: string,
+    /** The base score adjusted for what changes over time, such as a fix appearing. */
+    temporalScore?: number,
+    /** The rating in words for the temporal score. */
+    temporalSeverity?: string,
+    /** How much confidentiality matters to the scorer for the affected system. */
+    confidentialityRequirement?: string,
+    /** How much integrity matters to the scorer for the affected system. */
+    integrityRequirement?: string,
+    /** How much availability matters to the scorer for the affected system. */
+    availabilityRequirement?: string,
+    /** The attack vector as the scorer's own environment changes it. */
+    modifiedAttackVector?: string,
+    /** The attack complexity as the scorer's own environment changes it. */
+    modifiedAttackComplexity?: string,
+    /** The privileges needed as the scorer's own environment changes them. */
+    modifiedPrivilegesRequired?: string,
+    /** The user interaction as the scorer's own environment changes it. */
+    modifiedUserInteraction?: string,
+    /** The scope as the scorer's own environment changes it. */
+    modifiedScope?: string,
+    /** The confidentiality impact as the scorer's own environment changes it. */
+    modifiedConfidentialityImpact?: string,
+    /** The integrity impact as the scorer's own environment changes it. */
+    modifiedIntegrityImpact?: string,
+    /** The availability impact as the scorer's own environment changes it. */
+    modifiedAvailabilityImpact?: string,
+    /** The score adjusted for the scorer's own environment. */
+    environmentalScore?: number,
+    /** The rating in words for the environmental score. */
+    environmentalSeverity?: string,
+}
+
+
+/**
+ * A score under CVSS version 4.0.
+ */
+export interface CvssV40 extends CvssSeverityBandsMixin {
+    /** A version string. On a score it is the CVSS version; on a product entry, the product's. */
+    version: string,
+    /** The scores' metric values written as one compact string. */
+    vectorString: string,
+    /** How far away an attacker can be when using the flaw. */
+    attackVector?: string,
+    /** How much is outside the attacker's control when using the flaw. */
+    attackComplexity?: string,
+    /** What level of access an attacker needs before using the flaw. */
+    privilegesRequired?: string,
+    /** Whether someone other than the attacker has to take part. */
+    userInteraction?: string,
+    /** How much confidentiality matters to the scorer for the affected system. */
+    confidentialityRequirement?: string,
+    /** How much integrity matters to the scorer for the affected system. */
+    integrityRequirement?: string,
+    /** How much availability matters to the scorer for the affected system. */
+    availabilityRequirement?: string,
+    /** The attack vector as the scorer's own environment changes it. */
+    modifiedAttackVector?: string,
+    /** The attack complexity as the scorer's own environment changes it. */
+    modifiedAttackComplexity?: string,
+    /** The privileges needed as the scorer's own environment changes them. */
+    modifiedPrivilegesRequired?: string,
+    /** The user interaction as the scorer's own environment changes it. */
+    modifiedUserInteraction?: string,
+    /** Whether the attack needs conditions in the target that the attacker does not control. */
+    attackRequirements?: string,
+    /** How much information in the vulnerable system an attack could expose. */
+    vulnConfidentialityImpact?: string,
+    /** How much an attack could change in the vulnerable system. */
+    vulnIntegrityImpact?: string,
+    /** How much an attack could disrupt the vulnerable system. */
+    vulnAvailabilityImpact?: string,
+    /** How much information in other, connected systems an attack could expose. */
+    subConfidentialityImpact?: string,
+    /** How much an attack could change in other, connected systems. */
+    subIntegrityImpact?: string,
+    /** How much an attack could disrupt other, connected systems. */
+    subAvailabilityImpact?: string,
+    /** How much is known about attacks on this flaw, in CVSS 4.0's terms. */
+    exploitMaturity?: string,
+    /** The attack requirements as the scorer's own environment changes them. */
+    modifiedAttackRequirements?: string,
+    /** The confidentiality impact on the vulnerable system, in the scorer's environment. */
+    modifiedVulnConfidentialityImpact?: string,
+    /** The integrity impact on the vulnerable system, in the scorer's environment. */
+    modifiedVulnIntegrityImpact?: string,
+    /** The availability impact on the vulnerable system, in the scorer's environment. */
+    modifiedVulnAvailabilityImpact?: string,
+    /** The confidentiality impact on connected systems, in the scorer's environment. */
+    modifiedSubConfidentialityImpact?: string,
+    /** The integrity impact on connected systems, in the scorer's environment. */
+    modifiedSubIntegrityImpact?: string,
+    /** The availability impact on connected systems, in the scorer's environment. */
+    modifiedSubAvailabilityImpact?: string,
+    /** Whether an attack could put people's safety at risk. */
+    Safety?: string,
+    /** Whether an attacker could automate every step of an attack across many targets. */
+    Automatable?: string,
+    /** How the affected system comes back after an attack. */
+    Recovery?: string,
+    /** Whether one successful attack gains the attacker a little or a lot of a resource. */
+    valueDensity?: string,
+    /** How much work it takes a consumer to respond to the flaw. */
+    vulnerabilityResponseEffort?: string,
+    /** How urgent the product's supplier says the flaw is, as a colour. */
+    providerUrgency?: string,
+}
+
+
+/**
+ * A record of one vulnerability under one CVE identifier, in the CVE Program's format.
+ */
+export interface CveRecord {
+    /** The facts about the record itself. */
+    cveMetadata: CveMetadata,
+    /** The vulnerability information, grouped by who provided it. */
+    containers: CveContainers,
+    /** The kind of document this is, which is always a CVE record. */
+    dataType: string,
+    /** The version of the record format that this record follows. */
+    dataVersion: string,
+}
+
+
+/**
+ * A record whose assigning organisation has filled it in and made it public.
+ */
+export interface CvePublishedRecord extends CveRecord {
+}
+
+
+/**
+ * A record that should no longer be used, kept so that people can see it is invalid.
+ */
+export interface CveRejectedRecord extends CveRecord {
+}
+
+
+/**
+ * The facts about a record itself, as distinct from the vulnerability it describes.
+ */
+export interface CveMetadata {
+    /** When the record or container was last updated. */
+    dateUpdated?: string,
+    /** Whether the record is published or rejected. */
+    state: string,
+    /** The CVE identifier that the record belongs to. */
+    cveId: string,
+    /** The UUID of the organisation that was given the CVE identifier. */
+    assignerOrgId: string,
+    /** The short name of the organisation that was given the CVE identifier. */
+    assignerShortName?: string,
+    /** A counter that the system of record raises each time a provider changes the record. */
+    serial?: number,
+    /** When the CVE identifier was reserved. */
+    dateReserved?: string,
+    /** When the record first appeared in the CVE List. */
+    datePublished?: string,
+}
+
+
+/**
+ * The metadata of a published record.
+ */
+export interface CveMetadataPublished extends CveMetadata {
+    /** The UUID of the user who asked for the CVE identifier. */
+    requesterUserId?: string,
+}
+
+
+/**
+ * The metadata of a rejected record.
+ */
+export interface CveMetadataRejected extends CveMetadata {
+    /** When the CVE identifier was rejected. */
+    dateRejected?: string,
+}
+
+
+/**
+ * The sets of vulnerability information in a record, one per providing organisation.
+ */
+export interface CveContainers {
+    /** The container from the authority that assigned the identifier. */
+    cna: CveCnaContainer,
+}
+
+
+/**
+ * The containers of a published record, the assigning organisation's and any others'.
+ */
+export interface CvePublishedContainers extends CveContainers {
+    /** The containers added by Authorized Data Publishers. */
+    adp?: CveAdpContainer[],
+}
+
+
+/**
+ * The container of a rejected record, which only the assigning organisation provides.
+ */
+export interface CveRejectedContainers extends CveContainers {
+}
+
+
+/**
+ * Who provided a container, and when it was last updated.
+ */
+export interface CveProviderMetadata {
+    /** When the record or container was last updated. */
+    dateUpdated?: string,
+    /** The UUID of the organisation that provided the container. */
+    orgId: string,
+    /** The short name of the organisation that provided the container. */
+    shortName?: string,
+}
+
+
+/**
+ * The container from the CVE Numbering Authority that assigned the identifier.
+ */
+export interface CveCnaContainer {
+    /** Who provided the container. */
+    providerMetadata: CveProviderMetadata,
+}
+
+
+/**
+ * The assigning authority's account of a published vulnerability.
+ */
+export interface CveCnaPublishedContainer extends CveCnaContainer {
+    /** When the vulnerability was made public, if known. */
+    datePublic?: string,
+    /** A short headline for the record or for what the container adds. */
+    title?: string,
+    /** The same text in one or more languages. */
+    descriptions: CveDescription[],
+    /** The products or packages the vulnerability affects. */
+    affected: CveProduct[],
+    /** Statements in the CPE Applicability Language of which platforms are affected. */
+    cpeApplicability?: CveCpeApplicabilityElement[],
+    /** The kinds of problem the vulnerability is, such as a weakness type. */
+    problemTypes?: CveProblemType[],
+    /** Links to more about the vulnerability. */
+    references: CveReference[],
+    /** The consequences of the vulnerability, in words. */
+    impacts?: CveImpact[],
+    /** The scorings of the vulnerability. */
+    metrics?: CveMetric[],
+    /** What must be set up for the vulnerability to be exploitable. */
+    configurations?: CveDescription[],
+    /** Ways to reduce the risk without a full fix. */
+    workarounds?: CveDescription[],
+    /** Ways to fix the vulnerability. */
+    solutions?: CveDescription[],
+    /** What is known about attacks on the vulnerability. */
+    exploits?: CveDescription[],
+    /** The dated events in the vulnerability's history. */
+    timeline?: CveTimelineEvent[],
+    /** Thanks to those who helped. */
+    credits?: CveCredit[],
+    /** How the vulnerability came to light, in the provider's own shape. */
+    source?: CveSource,
+    /** Short labels from the upstream's list, or the publisher's own beginning x_. */
+    tags?: string[],
+    /** How the vulnerability relates to outside taxonomies. */
+    taxonomyMappings?: CveTaxonomyMapping[],
+    /** When the authority tied the CVE identifier to a vulnerability. */
+    dateAssigned?: string,
+}
+
+
+/**
+ * The assigning authority's account of why a record was rejected.
+ */
+export interface CveCnaRejectedContainer extends CveCnaContainer {
+    /** Why the record was rejected, in one or more languages. */
+    rejectedReasons: CveDescription[],
+    /** The CVE identifiers to use instead of this one. */
+    replacedBy?: string[],
+}
+
+
+/**
+ * What an Authorized Data Publisher adds to a record beside the assigning authority's account.
+ */
+export interface CveAdpContainer {
+    /** Who provided the container. */
+    providerMetadata: CveProviderMetadata,
+    /** When the vulnerability was made public, if known. */
+    datePublic?: string,
+    /** A short headline for the record or for what the container adds. */
+    title?: string,
+    /** The same text in one or more languages. */
+    descriptions?: CveDescription[],
+    /** The products or packages the vulnerability affects. */
+    affected?: CveProduct[],
+    /** Statements in the CPE Applicability Language of which platforms are affected. */
+    cpeApplicability?: CveCpeApplicabilityElement[],
+    /** The kinds of problem the vulnerability is, such as a weakness type. */
+    problemTypes?: CveProblemType[],
+    /** Links to more about the vulnerability. */
+    references?: CveReference[],
+    /** The consequences of the vulnerability, in words. */
+    impacts?: CveImpact[],
+    /** The scorings of the vulnerability. */
+    metrics?: CveMetric[],
+    /** What must be set up for the vulnerability to be exploitable. */
+    configurations?: CveDescription[],
+    /** Ways to reduce the risk without a full fix. */
+    workarounds?: CveDescription[],
+    /** Ways to fix the vulnerability. */
+    solutions?: CveDescription[],
+    /** What is known about attacks on the vulnerability. */
+    exploits?: CveDescription[],
+    /** The dated events in the vulnerability's history. */
+    timeline?: CveTimelineEvent[],
+    /** Thanks to those who helped. */
+    credits?: CveCredit[],
+    /** How the vulnerability came to light, in the provider's own shape. */
+    source?: CveSource,
+    /** Short labels from the upstream's list, or the publisher's own beginning x_. */
+    tags?: string[],
+    /** How the vulnerability relates to outside taxonomies. */
+    taxonomyMappings?: CveTaxonomyMapping[],
+}
+
+
+/**
+ * One affected product or package, and which of its versions are affected.
+ */
+export interface CveProduct {
+    /** Who makes or maintains the product. It can be N/A. */
+    vendor?: string,
+    /** The name of the affected product. */
+    product?: string,
+    /** The address of the package collection that gives packageName its meaning. */
+    collectionURL?: string,
+    /** The package's name or identifier within its collection. */
+    packageName?: string,
+    /** A Package URL for the package, with no version in it. */
+    packageURL?: string,
+    /** Common Platform Enumeration names for the product. */
+    cpes?: string[],
+    /** The affected parts of the product, such as components, commands or APIs. */
+    modules?: string[],
+    /** The affected source files. */
+    programFiles?: string[],
+    /** The affected functions or similar routines in the source. */
+    programRoutines?: CveProgramRoutine[],
+    /** The platforms the flaw is limited to. Without this, it applies to all of them. */
+    platforms?: string[],
+    /** The address of the product's source code repository. */
+    repo?: string,
+    /** The status of every version the versions list does not cover. */
+    defaultStatus?: string,
+    /** The versions or ranges of versions, each with its status. */
+    versions?: CveProductVersion[],
+}
+
+
+/**
+ * One affected function, method or similar routine in the source.
+ */
+export interface CveProgramRoutine {
+    /** A name, of a reference or of a routine. */
+    name: string,
+}
+
+
+/**
+ * A single version or a stretch of versions, and whether it is affected.
+ */
+export interface CveProductVersion {
+    /** A version string. On a score it is the CVSS version; on a product entry, the product's. */
+    version: string,
+    /** Whether a version is affected. */
+    status: string,
+    /** The numbering system that says how these versions compare, such as semver or git. */
+    versionType?: string,
+    /** The first version above the range, which is not itself in it. */
+    lessThan?: string,
+    /** The last version in the range. */
+    lessThanOrEqual?: string,
+    /** The points within the range where the status changes. */
+    changes?: CveVersionChange[],
+}
+
+
+/**
+ * A point in a range of versions from which the status changes.
+ */
+export interface CveVersionChange {
+    /** The version from which a new status starts. */
+    at: string,
+    /** Whether a version is affected. */
+    status: string,
+}
+
+
+/**
+ * A statement in the CPE Applicability Language of which platforms are affected.
+ */
+export interface CveCpeApplicabilityElement {
+    /** How the parts combine, all of them or any of them. */
+    operator?: string,
+    /** Whether the combined result is reversed. */
+    negate?: boolean,
+    /** The groups of matches that the statement combines. */
+    nodes: CveCpeNode[],
+}
+
+
+/**
+ * A group of CPE matches, combined by an operator.
+ */
+export interface CveCpeNode {
+    /** How the parts combine, all of them or any of them. */
+    operator: string,
+    /** Whether the combined result is reversed. */
+    negate?: boolean,
+    /** The CPE matches in the group. */
+    cpeMatch: CveCpeMatch[],
+}
+
+
+/**
+ * One CPE name, optionally bounded by versions, and whether it is vulnerable.
+ */
+export interface CveCpeMatch {
+    /** Whether what this match covers is vulnerable. */
+    vulnerable: boolean,
+    /** The CPE name to match. */
+    criteria: string,
+    /** A UUID for this match. */
+    matchCriteriaId?: string,
+    /** The version the match starts just above. */
+    versionStartExcluding?: string,
+    /** The version the match starts at. */
+    versionStartIncluding?: string,
+    /** The version the match ends just below. */
+    versionEndExcluding?: string,
+    /** The version the match ends at. */
+    versionEndIncluding?: string,
+}
+
+
+/**
+ * A piece of text in one language, with any media that support it.
+ */
+export interface CveDescription {
+    /** The language of the text beside it. */
     lang: string,
-    /** A summary of the timeline event (up to 4096 characters). */
-    event_value: string,
+    /** The text or content itself. */
+    value: string,
+    /** Richer forms of the text, such as Markdown or an image. */
+    supportingMedia?: CveSupportingMedia[],
 }
 
 
 /**
- * A credit acknowledging a specific person, organization, or tool for work related to the research, discovery, remediation, or coordination of the vulnerability.
+ * A richer form of a description, as a media type and its content.
  */
-export interface CreditEntry {
-    /** BCP 47 language code indicating the language of accompanying text. */
+export interface CveSupportingMedia {
+    /** What kind of thing this is. Each class that uses it says what the choices are. */
+    type: string,
+    /** The text or content itself. */
+    value: string,
+    /** Whether value is base64 encoded rather than plain UTF-8. */
+    base64?: boolean,
+}
+
+
+/**
+ * One kind of problem the vulnerability is, in one or more languages.
+ */
+export interface CveProblemType {
+    /** The same text in one or more languages. */
+    descriptions: CveProblemTypeDescription[],
+}
+
+
+/**
+ * A problem type described in one language, often by a weakness identifier and its title.
+ */
+export interface CveProblemTypeDescription {
+    /** The language of the text beside it. */
     lang: string,
-    /** The name or description of the credited party (up to 4096 characters). */
-    credit_value: string,
-    /** UUID of the user being credited, if present in the CVE User Registry. This UUID can be used to lookup the user record in the user registry service. */
-    credit_user?: string,
-    /** Type or role of the entity being credited. */
-    credit_type?: string,
+    /** The text of a problem type, or the title of a weakness. */
+    description: string,
+    /** What kind of thing this is. Each class that uses it says what the choices are. */
+    type?: string,
+    /** Links to more about the vulnerability. */
+    references?: CveReference[],
+    /** The Common Weakness Enumeration identifier that best fits, such as CWE-79. */
+    cweId?: string,
 }
 
 
 /**
- * Source information (who discovered it, who researched it, etc.) and optionally a chain of CNA information. This is an open object — at least one property must be present.
+ * A link to something about the vulnerability, such as an advisory or a patch.
  */
-export interface SourceInformation {
-    /** Bug tracking system IDs (e.g., JIRA ticket IDs) related to the vulnerability. */
-    source_defects?: string[],
-    /** Advisory identifier associated with the vulnerability discovery. */
-    source_advisory?: string,
-    /** How the vulnerability was discovered (e.g., INTERNAL, EXTERNAL, USER). */
-    source_discovery?: string,
+export interface CveReference {
+    /** The address the reference points to. */
+    url: string,
+    /** A name, of a reference or of a routine. */
+    name?: string,
+    /** Short labels from the upstream's list, or the publisher's own beginning x_. */
+    tags?: string[],
 }
 
 
 /**
- * A taxonomy mapping identifying the taxonomy by name and version, along with a list of relations relevant to the CVE (e.g., ATT&CK, D3FEND, CWE).
+ * A consequence of the vulnerability, in words.
  */
-export interface TaxonomyMapping {
-    /** The name of the taxonomy (e.g., ATT&CK, D3FEND, CWE, CVSS). */
-    taxonomy_name: string,
-    /** The version of the taxonomy the identifiers come from. */
-    taxonomy_version?: string,
-    /** List of relationships to the taxonomy for this vulnerability. */
-    taxonomy_relations: TaxonomyRelation[],
+export interface CveImpact {
+    /** The same text in one or more languages. */
+    descriptions: CveDescription[],
+    /** The Common Attack Pattern Enumeration identifier that best fits, such as CAPEC-63. */
+    capecId?: string,
 }
 
 
 /**
- * A relationship between a taxonomy item and a CVE or another taxonomy item. Provides subject (taxonomyId), predicate (relationshipName), and object (relationshipValue).
+ * One scoring of the vulnerability, in a CVSS version or another format, and where it applies.
  */
-export interface TaxonomyRelation {
-    /** Identifier of the item in the taxonomy. Used as the subject of the relationship. */
-    taxonomy_id: string,
-    /** A description of the relationship between the taxonomy item and the CVE. */
-    relationship_name: string,
-    /** The target of the relationship. Can be the CVE ID or another taxonomy identifier. */
-    relationship_value: string,
+export interface CveMetric {
+    /** The name of the scoring format. */
+    format?: string,
+    /** The situations this scoring applies to. */
+    scenarios?: CveMetricScenario[],
+    /** A score under CVSS version 4.0. */
+    cvssV4_0?: CvssV40,
+    /** A score under CVSS version 3.1. */
+    cvssV3_1?: CvssV31,
+    /** A score under CVSS version 3.0. */
+    cvssV3_0?: CvssV30,
+    /** A score under CVSS version 2.0. */
+    cvssV2_0?: CvssV20,
+    /** A score or impact statement in some other format. */
+    other?: CveOtherMetric,
 }
 
 
 /**
- * Affected products defined using an implementation of the CPE Applicability Language. An operator property allows AND or OR logic between CPEs or combinations of CPEs.
+ * A situation a scoring applies to, in one language.
  */
-export interface CpeApplicabilityElement {
-    /** Logical operator (AND/OR) used between CPE criteria in this node. */
-    cpe_operator?: string,
-    /** If true, negates the applicability of this element. */
-    cpe_negate?: boolean,
-    /** Array of CPE configuration nodes. */
-    cpe_nodes: CpeNode[],
+export interface CveMetricScenario {
+    /** The language of the text beside it. */
+    lang: string,
+    /** The text or content itself. */
+    value: string,
 }
 
 
 /**
- * Defines a CPE configuration node in an applicability statement.
+ * A score or impact statement in a format the record format does not name.
  */
-export interface CpeNode {
-    /** Logical operator (AND/OR) used between CPE criteria in this node. */
-    cpe_operator: string,
-    /** If true, negates the applicability of this element. */
-    cpe_negate?: boolean,
-    /** Array of CPE match criteria within this node. */
-    cpe_match_criteria: CpeMatch[],
+export interface CveOtherMetric {
+    /** What kind of thing this is. Each class that uses it says what the choices are. */
+    type: string,
+    /** The statement itself, as an object in whatever shape its format has. */
+    content: CveOtherMetricContent,
 }
 
 
 /**
- * CPE match string or range within a CPE applicability node.
+ * The free-form object inside a metric of another format.
  */
-export interface CpeMatch {
-    /** Whether this CPE match describes a vulnerable configuration. */
-    cpe_vulnerable: boolean,
-    /** CPE 2.3 formatted name match string or match criteria. */
-    cpe_criteria: string,
-    /** UUID identifying the CPE match criteria set. */
-    match_criteria_id?: string,
-    /** The start of a version range, exclusive (versions strictly greater than this). */
-    version_start_excluding?: string,
-    /** The start of a version range, inclusive (versions greater than or equal to this). */
-    version_start_including?: string,
-    /** The end of a version range, exclusive (versions strictly less than this). */
-    version_end_excluding?: string,
-    /** The end of a version range, inclusive (versions less than or equal to this). */
-    version_end_including?: string,
+export interface CveOtherMetricContent {
+}
+
+
+/**
+ * One dated event in the vulnerability's history.
+ */
+export interface CveTimelineEvent {
+    /** The language of the text beside it. */
+    lang: string,
+    /** The text or content itself. */
+    value: string,
+    /** When the event happened. */
+    time: string,
+}
+
+
+/**
+ * Thanks to someone who helped, in one language.
+ */
+export interface CveCredit {
+    /** The language of the text beside it. */
+    lang: string,
+    /** The text or content itself. */
+    value: string,
+    /** What kind of thing this is. Each class that uses it says what the choices are. */
+    type?: string,
+    /** The UUID of the credited person, when the CVE user registry holds them. */
+    user?: string,
+}
+
+
+/**
+ * How the vulnerability came to light, as an object the provider shapes as it likes.
+ */
+export interface CveSource {
+}
+
+
+/**
+ * How the vulnerability relates to one version of an outside taxonomy.
+ */
+export interface CveTaxonomyMapping {
+    /** The name of the taxonomy, such as ATT&CK or CWE. */
+    taxonomyName: string,
+    /** The version of the taxonomy. */
+    taxonomyVersion?: string,
+    /** The relationships to items in the taxonomy. */
+    taxonomyRelations: CveTaxonomyRelation[],
+}
+
+
+/**
+ * One relationship from an item in a taxonomy to this CVE or to another item.
+ */
+export interface CveTaxonomyRelation {
+    /** The item in the taxonomy, which is the relationship's subject. */
+    taxonomyId: string,
+    /** What the relationship is. */
+    relationshipName: string,
+    /** The relationship's target, which is this CVE identifier or another taxonomy item. */
+    relationshipValue: string,
+}
+
+
+/**
+ * Any one CVE record, published or rejected, as a file or an API answer holds it.
+ */
+export interface CveRecordRoot {
 }
 
 

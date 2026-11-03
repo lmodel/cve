@@ -1,6 +1,6 @@
-package None;
+package example;
 
-/* metamodel_version: 1.11.0 */
+/* metamodel_version: 1.12.0 */
 /* version: 5.2.0 */
 import java.net.URI;
 import java.time.LocalDate;
@@ -10,21 +10,13 @@ import java.util.List;
 import lombok.*;
 
 /**
-  Metadata for a CVE Record in the REJECTED state.
+  The metadata of a rejected record.
 **/
 @Data
 @EqualsAndHashCode(callSuper=false)
 public class CveMetadataRejected extends CveMetadata {
 
-  private String recordCveId;
-  private String assignerOrgId;
-  private String assignerShortName;
-  private Integer serial;
-  private String dateUpdated;
-  private String dateReserved;
-  private String datePublished;
-  private String dateRejected;
-  private String rejectedState;
+  private ZonedDateTime dateRejected;
 
 
 }

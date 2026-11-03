@@ -37,6 +37,12 @@ generator_args:
     mergeimports: true
   jsonschema:
     mergeimports: true
+    # A record's cveMetadata and containers range over abstract bases that each
+    # kind of record narrows, and the root is one of two closed classes. With
+    # this, a slot ranged over a base accepts its concrete classes, as
+    # linkml-validate does. CveRecordRoot is the one tree root, so the top class
+    # needs no naming.
+    include_range_class_descendants: true
   jsonldcontext:
     mergeimports: true
   # gen-pydantic is not yet supported by gen-project.

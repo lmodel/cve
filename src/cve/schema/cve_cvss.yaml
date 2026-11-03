@@ -22,6 +22,11 @@ comments:
   - >-
     The module imports only the LinkML types, so another schema can take it
     alone. lmodel/nist-nvd vendors this file by its git object hash.
+  - >-
+    SPDX's CVSS classes are relationships that tie a score to a vulnerability
+    and to what it affects. A class here is the score alone, so those mappings
+    are only related. The SEPSES classes are scores built from NVD's data, and
+    SEPSES has none for version 4.0, so that class takes its general one as broad.
 notes:
   - >-
     Keys and permissible values keep the upstream's spelling, so a real score
