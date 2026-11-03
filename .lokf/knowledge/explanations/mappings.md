@@ -25,9 +25,9 @@ status: draft
 
 # Mappings
 
-Each mapping names its target by a CURIE whose prefix its module binds, and `tests/test_mappings.py` holds it to a pinned term list or a released neighbour copy.[^test_mappings.py]
+Each mapping names its target by a CURIE whose prefix its module binds, and `tests/test_mappings.py` checks it against a pinned term list or a released neighbour copy.[^test_mappings.py]
 
-The hand-kept SSSOM files under `src/cve/mappings/` are gone. No source confirmed their rows.[^changelog]
+The hand-kept SSSOM files under `src/cve/mappings/` were deleted, because no source confirmed their rows.[^changelog]
 
 The targets are the SEPSES CVE and CVSS ontologies, SPDX 3.0.1, lmodel/stix, Dublin Core, schema.org and Wikidata. The README names each with its kind and its test.[^readme.md]
 

@@ -26,7 +26,7 @@ status: draft
 
 1. Read what changed in the new release.[^check_upstream_release.py]
 2. Replace the files in `upstream/`, and move `PINNED_EDITION`, `PINNED_TAG`, `PINNED_COMMIT`, `PINNED_SOURCE` and `PINNED_BLOBS` together.[^check_upstream_release.py]
-3. Move `version` and `source` in each module's header. `tests/test_upstream.py` holds them to the pins.[^test_upstream.py]
+3. Move `version` and `source` in each module's header. `tests/test_upstream.py` checks them against the pins.[^test_upstream.py]
 4. Run the tests. `tests/test_coverage.py` fails on each key, value or cardinality that moved.[^test_coverage.py]
 
 [^check_upstream_release.py]: scripts/check_upstream_release.py, the docstring and the pins

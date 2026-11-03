@@ -25,7 +25,7 @@ status: draft
 
 # Copy of the upstream
 
-`upstream/` holds fifteen files of the format's repository at the tag `v5.2.0`, commit `5533f6038cc0`. `PINNED_BLOBS` in `scripts/check_upstream_release.py` names each with its git object hash, and `tests/test_upstream.py` holds the folder to that list.[^check_upstream_release.py]
+`upstream/` holds fifteen files of the format's repository at the tag `v5.2.0`, commit `5533f6038cc0`. `PINNED_BLOBS` in `scripts/check_upstream_release.py` names each with its git object hash, and `tests/test_upstream.py` checks the folder against that list.[^check_upstream_release.py]
 
 Each file is unchanged. The CVSS files keep FIRST's licence as their first key.[^notice]
 

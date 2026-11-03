@@ -26,6 +26,6 @@ A CVE record is untrusted text from many publishers, and this repository treats 
 
 The watch's token can write issues, and the script sends it to `api.github.com` alone.[^security.md]
 
-A vulnerability that a record describes belongs with the publisher the record names, not here.[^security.md]
+Report a vulnerability that a record describes to the publisher the record names, not here.[^security.md]
 
 [^security.md]: SECURITY.md

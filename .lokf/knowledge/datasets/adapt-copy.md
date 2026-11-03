@@ -34,7 +34,7 @@ status: draft
 
 A concept may name `CvePublishedRecord` or `CveRejectedRecord` as its `type`. Containers, products and scores stay values inside a record.[^readme.md]
 
-The copy renames `at`, `description`, `name`, `references`, `source`, `status`, `tags`, `title`, `type`, `url` and `version` with a `cve_` prefix, and each keeps its IRI. The source makes each of them a top-level slot for this reason, since `lokf adapt` never renames an attribute.[^test_schema_rules.py]
+The copy renames `at`, `description`, `name`, `references`, `source`, `status`, `tags`, `title`, `type`, `url` and `version` with a `cve_` prefix, and each keeps its IRI. The source makes each of them a top-level slot, because `lokf adapt` never renames an attribute.[^test_schema_rules.py]
 
 A release attaches the copy as `schema-<tag>-cve.yaml`.[^readme.md]
 

@@ -33,9 +33,9 @@ status: draft
 
 `just gen-project` writes the projections in `project/` and the Python models in `src/cve/datamodel/`. `just gen-doc` writes the merged schema to `docs/schema/cve.yaml` and the element pages to `docs/elements/`, which git ignores.[^justfile]
 
-`project/jsonschema/cve.schema.json` is what a consumer without LinkML validates with. `tests/test_generated_json_schema.py` holds it to the generator's output.[^test_generated_json_schema.py]
+`project/jsonschema/cve.schema.json` is what a consumer without LinkML validates with. `tests/test_generated_json_schema.py` checks it against the generator's output.[^test_generated_json_schema.py]
 
-The generators' settings sit in `.linkml/generators.yaml`. `include_range_class_descendants` is on, so a slot ranged over an abstract base accepts its concrete classes.[^generators.yaml]
+The generators' settings are in `.linkml/generators.yaml`. `include_range_class_descendants` is on, so a slot ranged over an abstract base accepts its concrete classes.[^generators.yaml]
 
 The Python models refuse the extension keys and free-form objects most real records carry, because LinkML 1.12.1's generators for them ignore `extra_slots`.[^about.md]
 

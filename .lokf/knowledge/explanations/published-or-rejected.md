@@ -27,7 +27,7 @@ status: draft
 
 The upstream's top level is a `oneOf` of two titled records. The schema has one class for each, and `CveRecordRoot` takes exactly one of them.[^about.md]
 
-The two kinds are told apart by the state inside `cveMetadata`, so LinkML's type designator cannot choose between them. A reader picks the class from the state, or validates against the root.[^cve_record.yaml]
+The state inside `cveMetadata` tells the two kinds apart, so LinkML's type designator cannot choose between them. A reader picks the class from the state, or validates against the root.[^cve_record.yaml]
 
 Both are closed, so a record with one kind's state and the other kind's container fails at the root. `tests/test_generated_json_schema.py` checks this on the committed file.[^test_generated_json_schema.py]
 

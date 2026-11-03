@@ -26,7 +26,7 @@ Each file is the schema asset of a lmodel release, pinned in `tests/test_schema_
 
 The test fails on a new key shared with a neighbour, and on any shared class, enum or type. The shared keys it lists today include `value` and `descriptions`, which are the upstream's own, so they are not renamed.[^test_schema_rules.py]
 
-`tests/test_mappings.py` also reads these copies, to hold the mappings to SPDX and STIX.[^test_mappings.py]
+`tests/test_mappings.py` also reads these copies, to check the mappings to SPDX and STIX.[^test_mappings.py]
 
 [^test_schema_rules.py]: tests/test_schema_rules.py, NEIGHBOURS and SHARED_WITH_NEIGHBOURS
 [^test_mappings.py]: tests/test_mappings.py, neighbour_iris

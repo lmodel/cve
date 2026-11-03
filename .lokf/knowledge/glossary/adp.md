@@ -24,7 +24,7 @@ status: draft
 
 An Authorized Data Publisher adds an `adp` container to a published record, beside the assigning authority's.[^cve_record.yaml]
 
-The container must hold something beside its `providerMetadata`, which `tests/cve_rules.py` checks.[^cve_rules.py]
+The container must hold something besides its `providerMetadata`, which `tests/cve_rules.py` checks.[^cve_rules.py]
 
 [^cve_record.yaml]: src/cve/schema/cve_record.yaml, CveAdpContainer
 [^cve_rules.py]: tests/cve_rules.py, the docstring

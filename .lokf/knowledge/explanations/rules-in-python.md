@@ -31,7 +31,7 @@ These rules are the upstream's, and the generated JSON Schema does not carry the
 - a length beside a pattern, since LinkML has one pattern a slot;
 - null, which the generator allows on an optional key and the upstream never does.
 
-Nothing there changes or strips what it reads.[^cve_rules.py]
+`tests/cve_rules.py` changes and strips nothing it reads.[^cve_rules.py]
 
 `docs/index.md` lists these for a consumer who validates with the JSON Schema alone.[^index.md]
 

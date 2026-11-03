@@ -2,6 +2,7 @@
 
 ## 2026-11-03
 
+* **Prose**: reworded 18 concept bodies in plain English. No fact, link, number or frontmatter changed.
 * **Added**: cve LinkML schema.
 * **Added**: Record module.
 * **Added**: CVSS module.

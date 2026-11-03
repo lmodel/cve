@@ -34,7 +34,7 @@ status: draft
 
 Each counter-example's first line, `# Fails at: <pointer>`, names its one failing place.[^tests-data-readme.md]
 
-`tests/test_data.py` also asks the upstream's own schema about each file. So an example says nothing the upstream does not, and each counter-example is refused there as well.[^test_data.py]
+`tests/test_data.py` also validates each file against the upstream's own schema. So an example says nothing the upstream does not, and each counter-example is refused there as well.[^test_data.py]
 
 The same file tries every mix of the keys that decide a version entry and a product, and every score on the 0.1 grid with every severity, against both schemas.[^test_data.py]
 

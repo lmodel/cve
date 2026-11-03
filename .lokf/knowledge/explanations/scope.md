@@ -23,7 +23,7 @@ status: draft
 
 The schema describes a record's shape. It says nothing about whether what a record claims is true.[^about.md]
 
-The import of lmodel/vulnerability-core is gone, because its base classes fit none of the upstream's objects.[^changelog]
+The schema no longer imports lmodel/vulnerability-core, because its base classes fit none of the upstream's objects.[^changelog]
 
 CVSS 4.0's rules name threat and environmental scores that its list of properties leaves out, so a score object cannot carry them and the class has no such slots.[^about.md]
 

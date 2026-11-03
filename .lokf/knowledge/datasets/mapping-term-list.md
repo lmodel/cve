@@ -23,7 +23,7 @@ status: draft
 
 The list holds each class and property that a vocabulary's published file declares in its own namespace, and no label or comment.[^extract_mapping_terms.py]
 
-The script refuses a file unless its SHA-256 is the pinned one. Terms of SPDX and STIX are held to the neighbours' released copies instead. Wikidata's Q631425 is named by hand, since an entity there has no fixed file to pin.[^extract_mapping_terms.py]
+The script refuses a file unless its SHA-256 is the pinned one. Terms of SPDX and STIX are checked against the neighbours' released copies instead. Wikidata's Q631425 is named by hand, since an entity there has no fixed file to pin.[^extract_mapping_terms.py]
 
 `tests/test_mappings.py` pins the list's own checksum, and fails on a mapping whose prefix the module does not bind or whose target neither the list nor a neighbour copy declares. It also fails on a mapping into lmodel/nist-nvd or lmodel/kev-catalog, since this schema is upstream of them.[^test_mappings.py]
 

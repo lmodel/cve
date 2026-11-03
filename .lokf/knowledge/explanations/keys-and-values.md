@@ -28,7 +28,7 @@ A key or a value in a schema is what a record holds. So a real record validates 
 
 `.linkmllint.yaml` relaxes the naming rule for this, with a comment that says why. Class, enum and type names keep the rule's usual form.[^linkmllint]
 
-A class name never reaches a record, so classes carry a prefix to stay apart from those of other schemas. Two names that differed from a key only by case, one class and one type, took other names, because their pages would be one file on a case-insensitive disk. The one left is the key `time`, beside the page of LinkML's own `Time` type.[^test_schema_rules.py]
+A record never holds a class name, so classes carry a prefix to stay apart from those of other schemas. Two names that differed from a key only by case, one class and one type, were renamed, because their pages would be one file on a case-insensitive disk. One such name is left: the key `time`, beside the page of LinkML's own `Time` type.[^test_schema_rules.py]
 
 [^about.md]: docs/about.md, Keys
 [^linkmllint]: .linkmllint.yaml, the comment

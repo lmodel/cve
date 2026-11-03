@@ -26,8 +26,8 @@ status: draft
 # Release
 
 1. Write `## [Unreleased]` in `CHANGELOG.md` as you go. The release job refuses an empty one.[^contributing.md]
-2. Type each commit for what the change is. Only `feat:`, `fix:`, `security:` and a breaking `!` start a release.[^contributing.md]
-3. Before the first releasing merge, push the `v0.0.0` baseline tag on `main`, which then releases 0.1.0.[^contributing.md]
+2. Give each commit the type that says what the change is. Only `feat:`, `fix:`, `security:` and a breaking `!` start a release.[^contributing.md]
+3. Before the first releasing merge, push the `v0.0.0` baseline tag on `main`, so the first release is 0.1.0.[^contributing.md]
 4. On merge, `semantic-release.yml` retitles the section, commits `CHANGELOG.md`, tags and publishes the GitHub Release.[^contributing.md]
 
 Nothing is published to PyPI.[^security.md]

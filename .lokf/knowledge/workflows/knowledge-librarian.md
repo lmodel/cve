@@ -19,7 +19,7 @@ status: draft
 
 # Knowledge librarian (knowledge-librarian.yaml)
 
-The workflow runs on Mondays or by hand. It never pushes to the default branch and never merges. It stays inert until `KNOWLEDGE_LIBRARIAN_ENABLED` is `true`.[^knowledge-librarian.yaml]
+The workflow runs on Mondays or by hand. It never pushes to the default branch and never merges. It does nothing until `KNOWLEDGE_LIBRARIAN_ENABLED` is `true`.[^knowledge-librarian.yaml]
 
 Its `refresh` job runs the agent with a read-only token and no git credentials, and only its `publish` job, which runs no agent code, can push a branch and open the pull request.[^knowledge-librarian.yaml]
 
