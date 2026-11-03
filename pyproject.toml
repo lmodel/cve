@@ -72,13 +72,19 @@ skip = [
   "website/package-lock.json",
 ]
 
-# Reminder: words have to be lowercased for the ignore-words-list
-ignore-words-list = "linke"
+# Reminder: words have to be lowercased for the ignore-words-list. CNA is the
+# CVE Numbering Authority, and a record's key for its container.
+ignore-words-list = "linke,cna"
 quiet-level = 3
 
 # Ref.: https://github.com/crate-ci/typos (spell checker)
 [tool.typos.default.extend-words]
 linke = "linke"
+# The CVE Numbering Authority, CVSS 2.0's "not defined" in a vector, and the
+# misspelled key that one counter-example carries on purpose.
+cna = "cna"
+nd = "nd"
+titel = "titel"
 
 [tool.typos.files]
 extend-exclude = [

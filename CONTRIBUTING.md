@@ -4,7 +4,7 @@
 
 ## What this project is
 
-A LinkML schema of the CVE Record Format, version 5.2.0, and of the Common Vulnerability Scoring System (CVSS) schemas it imports. A real CVE record validates against it unchanged, and a knowledge bundle can type its concepts with its classes. [NOTICE](NOTICE) says whose work each part is.
+A LinkML schema of the CVE Record Format, version 5.2.0, and of the Common Vulnerability Scoring System (CVSS) schemas it imports. A real CVE record validates against it unchanged. [NOTICE](NOTICE) says whose work each part is.
 
 | Path | Holds |
 | --- | --- |
@@ -46,11 +46,11 @@ npx skills add noelmcloughlin/knowledge-trust-ladder --skill ktl-curator --yes  
 - **Keep names apart.** A host imports this adapt copy beside the Linked Open Knowledge Format (LOKF) schema and the released copies in `tests/neighbours/`. `tests/test_schema_rules.py` checks this.
 - **Run the tests**: `just test` (schema generation, `pytest` and the examples under `tests/data/`). Example data goes in `tests/data/valid/` and `tests/data/invalid/`, named `ClassName-suffix.yaml`; an invalid example's first line, `# Fails at: <pointer>`, names where it fails. `just test-cve-records` validates the pinned sample of real records.
 - **Follow the schema's conventions**: PascalCase classes with the `Cve` or `Cvss` prefix, the upstream's keys, a short description on every element, and the upstream's definition path in an `upstream_path` annotation. `just lint` checks, under `.linkmllint.yaml`.
-- **Run the pre-commit hooks** on what you staged (`uvx pre-commit run`), keep changes focused and fill in the pull request template.
+- **Run the pre-commit hooks** on what you staged (`uvx pre-commit run`).
 - **Lock files are part of the change.** CI installs with `uv sync --locked`, so an edit without its `uv.lock` (or `.lokf/uv.lock`) fails.
 - **Knowledge-bundle changes**: `cd .lokf && just lokf-validate` must pass, and `knowledge-registrar.yaml` runs on any `.lokf/**` change.
-- **`lint-and-docs.yaml` is easy to trip locally**: ShellCheck, actionlint, markdownlint, lychee and codespell, under the configs in the root.
-- **Actions are pinned to commit hashes**, with the version in a trailing comment; Dependabot bumps them.
+- **`lint-and-docs.yaml`** runs ShellCheck, actionlint, markdownlint, lychee and codespell.
+- **Actions are pinned to commit hashes**; Dependabot bumps them.
 - **The skills pin moves with the sidecar copies.** When moving `TRUST_LADDER_SKILLS_REF` in `.github/workflows/knowledge-librarian.yaml`, copy the other `knowledge-*.yaml` workflows and `.lokf/scripts/` and `.lokf/m365/` from that release's `skills/ktl-sidecar/templates/` in the same pull request.
 - **If your change alters behaviour**, add an entry under `## [Unreleased]` in [CHANGELOG.md](CHANGELOG.md).
 

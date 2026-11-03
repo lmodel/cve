@@ -35,7 +35,7 @@ SAMPLE = sorted(MANIFEST["fetched"])
 RECORD = f"{upstream_schemas.RECORD_FORMAT}#/"
 
 # Records of the pinned sample that do not validate unchanged, by path, each with
-# its reason and its count of failures. There are none: all 421 pass all three
+# its reason and its count of failures. There are none: all of them pass all three
 # checks. A new sample that breaks a rule is listed here, not loosened for.
 KNOWN_RECORD_DEPARTURES: dict[str, str] = {}
 
@@ -102,6 +102,13 @@ def test_the_upstream_examples_validate_unchanged():
     for name in ("full-record-basic-example", "full-record-advanced-example"):
         record = json.loads((docs / f"{name}.json").read_text(encoding="utf-8"))
         assert not problems(record), name
+
+
+def test_the_docs_state_the_samples_size():
+    """The README and the docs page count the sample, so a new sample moves them."""
+    count = f"{len(SAMPLE)} real records"
+    for name in ("README.md", "docs/index.md", "CHANGELOG.md"):
+        assert count in (ROOT / name).read_text(encoding="utf-8"), name
 
 
 def test_no_departure_is_stale():

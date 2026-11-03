@@ -18,6 +18,8 @@ exclude = [
   # The documentation site, which answers once the knowledge-website
   # workflow first deploys it to Pages. Drop this then.
   '^https://lmodel\.github\.io/cve',
+  # Made-up addresses in the upstream's example record, which one concept holds.
+  '^https://example\.org/',
   # Development-only addresses printed in setup instructions.
   '^http://localhost',
   '^http://127\.0\.0\.1',
