@@ -606,7 +606,7 @@ classes:
         description: The CVE identifier that the record belongs to.
         range: cve_identifier
         required: true
-        narrow_mappings:
+        broad_mappings:
         - dcterms:identifier
         - schema:identifier
         annotations:

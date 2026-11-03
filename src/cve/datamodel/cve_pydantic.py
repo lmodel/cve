@@ -2161,8 +2161,8 @@ class CveRecordMetadata(ConfiguredBaseModel):
          'domain_of': ['CveRecordMetadata']} })
     cveId: str = Field(default=..., description="""The CVE identifier that the record belongs to.""", json_schema_extra = { "linkml_meta": {'annotations': {'upstream_path': {'tag': 'upstream_path',
                                            'value': 'CVE_Record_Format.json#/definitions/cveMetadataPublished/properties/cveId'}},
-         'domain_of': ['CveRecordMetadata'],
-         'narrow_mappings': ['dcterms:identifier', 'schema:identifier']} })
+         'broad_mappings': ['dcterms:identifier', 'schema:identifier'],
+         'domain_of': ['CveRecordMetadata']} })
     assignerOrgId: str = Field(default=..., description="""The UUID of the organisation that was given the CVE identifier.""", json_schema_extra = { "linkml_meta": {'annotations': {'upstream_path': {'tag': 'upstream_path',
                                            'value': 'CVE_Record_Format.json#/definitions/cveMetadataPublished/properties/assignerOrgId'}},
          'domain_of': ['CveRecordMetadata']} })
@@ -2211,8 +2211,8 @@ class CveMetadataPublished(CveRecordMetadata):
          'domain_of': ['CveRecordMetadata']} })
     cveId: str = Field(default=..., description="""The CVE identifier that the record belongs to.""", json_schema_extra = { "linkml_meta": {'annotations': {'upstream_path': {'tag': 'upstream_path',
                                            'value': 'CVE_Record_Format.json#/definitions/cveMetadataPublished/properties/cveId'}},
-         'domain_of': ['CveRecordMetadata'],
-         'narrow_mappings': ['dcterms:identifier', 'schema:identifier']} })
+         'broad_mappings': ['dcterms:identifier', 'schema:identifier'],
+         'domain_of': ['CveRecordMetadata']} })
     assignerOrgId: str = Field(default=..., description="""The UUID of the organisation that was given the CVE identifier.""", json_schema_extra = { "linkml_meta": {'annotations': {'upstream_path': {'tag': 'upstream_path',
                                            'value': 'CVE_Record_Format.json#/definitions/cveMetadataPublished/properties/assignerOrgId'}},
          'domain_of': ['CveRecordMetadata']} })
@@ -2262,8 +2262,8 @@ class CveMetadataRejected(CveRecordMetadata):
          'domain_of': ['CveRecordMetadata']} })
     cveId: str = Field(default=..., description="""The CVE identifier that the record belongs to.""", json_schema_extra = { "linkml_meta": {'annotations': {'upstream_path': {'tag': 'upstream_path',
                                            'value': 'CVE_Record_Format.json#/definitions/cveMetadataPublished/properties/cveId'}},
-         'domain_of': ['CveRecordMetadata'],
-         'narrow_mappings': ['dcterms:identifier', 'schema:identifier']} })
+         'broad_mappings': ['dcterms:identifier', 'schema:identifier'],
+         'domain_of': ['CveRecordMetadata']} })
     assignerOrgId: str = Field(default=..., description="""The UUID of the organisation that was given the CVE identifier.""", json_schema_extra = { "linkml_meta": {'annotations': {'upstream_path': {'tag': 'upstream_path',
                                            'value': 'CVE_Record_Format.json#/definitions/cveMetadataPublished/properties/assignerOrgId'}},
          'domain_of': ['CveRecordMetadata']} })

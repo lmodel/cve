@@ -1563,9 +1563,9 @@ cve:criteria a owl:DatatypeProperty ;
 	cve:upstream_path "CVE_Record_Format.json#/definitions/cpe_match/properties/criteria" .
 cve:cveId a owl:DatatypeProperty ;
 	rdfs:label "cveId" ;
+	skos:broadMatch dcterms:identifier , <http://schema.org/identifier> ;
 	skos:definition "The CVE identifier that the record belongs to." ;
 	skos:inScheme cve:cve_record ;
-	skos:narrowMatch dcterms:identifier , <http://schema.org/identifier> ;
 	cve:upstream_path "CVE_Record_Format.json#/definitions/cveMetadataPublished/properties/cveId" .
 cve:cveMetadata a owl:ObjectProperty ;
 	rdfs:label "cveMetadata" ;

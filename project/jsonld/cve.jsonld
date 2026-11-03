@@ -4298,7 +4298,7 @@
       ],
       "description": "The CVE identifier that the record belongs to.",
       "from_schema": "https://w3id.org/lmodel/cve/cve_record",
-      "narrow_mappings": [
+      "broad_mappings": [
         "http://purl.org/dc/terms/identifier",
         "http://schema.org/identifier"
       ],
@@ -9688,7 +9688,7 @@
             }
           ],
           "description": "The CVE identifier that the record belongs to.",
-          "narrow_mappings": [
+          "broad_mappings": [
             "dcterms:identifier",
             "schema:identifier"
           ],
