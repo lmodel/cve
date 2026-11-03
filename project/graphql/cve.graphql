@@ -563,7 +563,7 @@ type CveProduct
     modules: [CveText4096]
     programFiles: [CveText1024]
     programRoutines: [CveProgramRoutine]
-    platforms: [CveShortText1024]
+    platforms: [CveTextUpTo1024]
     repo: CveUri
     defaultStatus: CveVersionStatus
     versions: [CveProductVersion]

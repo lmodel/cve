@@ -667,8 +667,8 @@ CREATE TABLE "CveCnaRejectedContainer_replacedBy" (
 	PRIMARY KEY ("CveCnaRejectedContainer_id", "replacedBy"),
 	FOREIGN KEY("CveCnaRejectedContainer_id") REFERENCES "CveCnaRejectedContainer" (id)
 );
-CREATE INDEX "ix_CveCnaRejectedContainer_replacedBy_replacedBy" ON "CveCnaRejectedContainer_replacedBy" ("replacedBy");
 CREATE INDEX "ix_CveCnaRejectedContainer_replacedBy_CveCnaRejectedContainer_id" ON "CveCnaRejectedContainer_replacedBy" ("CveCnaRejectedContainer_id");
+CREATE INDEX "ix_CveCnaRejectedContainer_replacedBy_replacedBy" ON "CveCnaRejectedContainer_replacedBy" ("replacedBy");
 
 CREATE TABLE "CveRecord" (
 	id INTEGER NOT NULL,
@@ -926,8 +926,8 @@ CREATE TABLE "CveProduct_cpes" (
 	PRIMARY KEY ("CveProduct_id", cpes),
 	FOREIGN KEY("CveProduct_id") REFERENCES "CveProduct" (id)
 );
-CREATE INDEX "ix_CveProduct_cpes_cpes" ON "CveProduct_cpes" (cpes);
 CREATE INDEX "ix_CveProduct_cpes_CveProduct_id" ON "CveProduct_cpes" ("CveProduct_id");
+CREATE INDEX "ix_CveProduct_cpes_cpes" ON "CveProduct_cpes" (cpes);
 
 CREATE TABLE "CveProduct_modules" (
 	"CveProduct_id" INTEGER,
@@ -935,8 +935,8 @@ CREATE TABLE "CveProduct_modules" (
 	PRIMARY KEY ("CveProduct_id", modules),
 	FOREIGN KEY("CveProduct_id") REFERENCES "CveProduct" (id)
 );
-CREATE INDEX "ix_CveProduct_modules_CveProduct_id" ON "CveProduct_modules" ("CveProduct_id");
 CREATE INDEX "ix_CveProduct_modules_modules" ON "CveProduct_modules" (modules);
+CREATE INDEX "ix_CveProduct_modules_CveProduct_id" ON "CveProduct_modules" ("CveProduct_id");
 
 CREATE TABLE "CveProduct_programFiles" (
 	"CveProduct_id" INTEGER,
@@ -944,8 +944,8 @@ CREATE TABLE "CveProduct_programFiles" (
 	PRIMARY KEY ("CveProduct_id", "programFiles"),
 	FOREIGN KEY("CveProduct_id") REFERENCES "CveProduct" (id)
 );
-CREATE INDEX "ix_CveProduct_programFiles_programFiles" ON "CveProduct_programFiles" ("programFiles");
 CREATE INDEX "ix_CveProduct_programFiles_CveProduct_id" ON "CveProduct_programFiles" ("CveProduct_id");
+CREATE INDEX "ix_CveProduct_programFiles_programFiles" ON "CveProduct_programFiles" ("programFiles");
 
 CREATE TABLE "CveProduct_platforms" (
 	"CveProduct_id" INTEGER,
@@ -953,8 +953,8 @@ CREATE TABLE "CveProduct_platforms" (
 	PRIMARY KEY ("CveProduct_id", platforms),
 	FOREIGN KEY("CveProduct_id") REFERENCES "CveProduct" (id)
 );
-CREATE INDEX "ix_CveProduct_platforms_CveProduct_id" ON "CveProduct_platforms" ("CveProduct_id");
 CREATE INDEX "ix_CveProduct_platforms_platforms" ON "CveProduct_platforms" (platforms);
+CREATE INDEX "ix_CveProduct_platforms_CveProduct_id" ON "CveProduct_platforms" ("CveProduct_id");
 
 CREATE TABLE "CveVersionChange" (
 	id INTEGER NOT NULL,
@@ -1012,5 +1012,5 @@ CREATE TABLE "CveReference_tags" (
 	PRIMARY KEY ("CveReference_id", tags),
 	FOREIGN KEY("CveReference_id") REFERENCES "CveReference" (id)
 );
-CREATE INDEX "ix_CveReference_tags_tags" ON "CveReference_tags" (tags);
 CREATE INDEX "ix_CveReference_tags_CveReference_id" ON "CveReference_tags" ("CveReference_id");
+CREATE INDEX "ix_CveReference_tags_tags" ON "CveReference_tags" (tags);

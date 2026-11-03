@@ -221,12 +221,12 @@ class CveText1024(String):
     type_model_uri = CVE.CveText1024
 
 
-class CveShortText1024(String):
+class CveTextUpTo1024(String):
     """ Text of at most 1024 characters, which may be empty. """
     type_class_uri = XSD["string"]
     type_class_curie = "xsd:string"
-    type_name = "cve_short_text_1024"
-    type_model_uri = CVE.CveShortText1024
+    type_name = "cve_text_up_to_1024"
+    type_model_uri = CVE.CveTextUpTo1024
 
 
 class CveText2048(String):
@@ -1438,7 +1438,7 @@ class CveProduct(YAMLRoot):
     modules: Optional[Union[Union[str, CveText4096], list[Union[str, CveText4096]]]] = empty_list()
     programFiles: Optional[Union[Union[str, CveText1024], list[Union[str, CveText1024]]]] = empty_list()
     programRoutines: Optional[Union[Union[dict, "CveProgramRoutine"], list[Union[dict, "CveProgramRoutine"]]]] = empty_list()
-    platforms: Optional[Union[Union[str, CveShortText1024], list[Union[str, CveShortText1024]]]] = empty_list()
+    platforms: Optional[Union[Union[str, CveTextUpTo1024], list[Union[str, CveTextUpTo1024]]]] = empty_list()
     repo: Optional[Union[str, CveUri]] = None
     defaultStatus: Optional[Union[str, "CveVersionStatus"]] = None
     versions: Optional[Union[Union[dict, "CveProductVersion"], list[Union[dict, "CveProductVersion"]]]] = empty_list()
@@ -1475,7 +1475,7 @@ class CveProduct(YAMLRoot):
 
         if not isinstance(self.platforms, list):
             self.platforms = [self.platforms] if self.platforms is not None else []
-        self.platforms = [v if isinstance(v, CveShortText1024) else CveShortText1024(v) for v in self.platforms]
+        self.platforms = [v if isinstance(v, CveTextUpTo1024) else CveTextUpTo1024(v) for v in self.platforms]
 
         if self.repo is not None and not isinstance(self.repo, CveUri):
             self.repo = CveUri(self.repo)
@@ -3564,7 +3564,7 @@ slots.cveProduct__programRoutines = Slot(uri=CVE.programRoutines, name="cveProdu
                    model_uri=CVE.cveProduct__programRoutines, domain=None, range=Optional[Union[Union[dict, CveProgramRoutine], list[Union[dict, CveProgramRoutine]]]])
 
 slots.cveProduct__platforms = Slot(uri=CVE.platforms, name="cveProduct__platforms", curie=CVE.curie('platforms'),
-                   model_uri=CVE.cveProduct__platforms, domain=None, range=Optional[Union[Union[str, CveShortText1024], list[Union[str, CveShortText1024]]]])
+                   model_uri=CVE.cveProduct__platforms, domain=None, range=Optional[Union[Union[str, CveTextUpTo1024], list[Union[str, CveTextUpTo1024]]]])
 
 slots.cveProduct__repo = Slot(uri=CVE.repo, name="cveProduct__repo", curie=CVE.curie('repo'),
                    model_uri=CVE.cveProduct__repo, domain=None, range=Optional[Union[str, CveUri]])

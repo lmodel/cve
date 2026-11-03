@@ -80,7 +80,7 @@ linkml:Sparqlpath xsd:string
 
 <CveText1024> xsd:string
 
-<CveShortText1024> xsd:string
+<CveTextUpTo1024> xsd:string
 
 <CveText2048> xsd:string
 
@@ -317,7 +317,7 @@ linkml:Sparqlpath xsd:string
           <modules> @<CveText4096> * ;
           <programFiles> @<CveText1024> * ;
           <programRoutines> @<CveProgramRoutine> * ;
-          <platforms> @<CveShortText1024> * ;
+          <platforms> @<CveTextUpTo1024> * ;
           <repo> @<CveUri> ? ;
           <defaultStatus> [ <https://w3id.org/lmodel/cve/CveVersionStatus#affected>
              <https://w3id.org/lmodel/cve/CveVersionStatus#unaffected> <https://w3id.org/lmodel/cve/CveVersionStatus#unknown> ] ? ;
