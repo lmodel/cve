@@ -20,6 +20,8 @@
     "docs/elements/**",
     "docs/templates-linkml/**",
     "project/**",
+    // The upstream's files, copied unchanged and pinned by hash.
+    "upstream/**",
     // What website/ generates from the files above, which are linted where they are.
     "website/dist/**",
     "website/public/**",

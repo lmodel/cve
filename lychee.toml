@@ -47,6 +47,8 @@ exclude_path = [
   "(^|/)docs/templates-linkml/",
   "(^|/)project/",
   "(^|/)docs/elements/",
+  # The upstream's files, copied unchanged and pinned by hash.
+  "(^|/)upstream/",
   # The site's build writes these from the repository's own Markdown, with
   # links that only resolve once the site is served. website/'s own link check
   # covers them, and the files they come from are checked where they are.
