@@ -68,13 +68,15 @@ skip = [
   "upstream/*",
   "tests/data/cvelist/extract/*",
   "tests/neighbours/*",
+  "tests/upstream/*",
   ".lokf/scripts/*",
   "website/package-lock.json",
 ]
 
 # Reminder: words have to be lowercased for the ignore-words-list. CNA is the
-# CVE Numbering Authority, and a record's key for its container.
-ignore-words-list = "linke,cna"
+# CVE Numbering Authority, ND is CVSS 2.0's "not defined" in a vector, and one
+# counter-example carries a misspelled key on purpose.
+ignore-words-list = "linke,cna,nd,titel"
 quiet-level = 3
 
 # Ref.: https://github.com/crate-ci/typos (spell checker)
@@ -97,6 +99,7 @@ extend-exclude = [
   "upstream/*",
   "tests/data/cvelist/extract/*",
   "tests/neighbours/*",
+  "tests/upstream/*",
   ".lokf/scripts/*",
   "website/package-lock.json",
 ]
