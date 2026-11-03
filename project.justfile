@@ -4,9 +4,16 @@
 # name in this file is not possible until a known issue in just is fixed,
 # https://github.com/casey/just/issues/2540
 
-# Validate upstream CVE schema JSON examples against the bundled JSON Schema
-test-third-party:
-    uv run python -m pytest tests/test_third_party.py -v
+# ============ Real CVE records ============
 
-# Run Python unit tests and upstream JSON validation
-test-all: test test-third-party
+# Download the pinned sample of real records into tmp/cvelist/, checking each
+# against the size and hashes in tests/data/cvelist/manifest.json
+[group('model development')]
+fetch-cve-records:
+  uv run scripts/fetch_cve_records.py
+
+# Validate every record of the pinned sample unchanged, after fetching any that
+# tmp/cvelist/ lacks
+[group('model development')]
+test-cve-records: fetch-cve-records
+  CVE_RECORDS=1 uv run python -m pytest tests/test_cve_records.py
