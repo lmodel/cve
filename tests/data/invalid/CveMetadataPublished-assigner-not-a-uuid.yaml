@@ -1,0 +1,4 @@
+# Fails at: /assignerOrgId
+cveId: CVE-1900-1234
+assignerOrgId: example
+state: PUBLISHED

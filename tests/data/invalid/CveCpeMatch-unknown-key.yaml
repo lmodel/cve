@@ -1,0 +1,4 @@
+# Fails at: /
+vulnerable: true
+criteria: cpe:2.3:o:example:os:1.0:*:*:*:*:*:*:*
+versionEnd: '2'

@@ -1,0 +1,18 @@
+# Fails at: /vectorString
+version: '2.0'
+vectorString: CVSS:2.0/AV:N/AC:M/Au:S/C:P/I:P/A:C
+baseScore: 7.5
+accessVector: NETWORK
+accessComplexity: MEDIUM
+authentication: SINGLE
+confidentialityImpact: PARTIAL
+integrityImpact: PARTIAL
+availabilityImpact: COMPLETE
+exploitability: PROOF_OF_CONCEPT
+remediationLevel: TEMPORARY_FIX
+reportConfidence: CONFIRMED
+temporalScore: 6.0
+collateralDamagePotential: LOW_MEDIUM
+targetDistribution: HIGH
+availabilityRequirement: MEDIUM
+environmentalScore: 5.5

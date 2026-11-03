@@ -1,0 +1,5 @@
+# Fails at: /
+vendor: Example Corp
+versions:
+  - version: '1.0'
+    status: affected

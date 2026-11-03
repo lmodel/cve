@@ -1,0 +1,8 @@
+providerMetadata:
+  orgId: 00000000-0000-4000-8000-000000000001
+  shortName: example
+rejectedReasons:
+  - lang: en
+    value: This record duplicates another and should not be used.
+x_legacyRecord:
+  note: carried over

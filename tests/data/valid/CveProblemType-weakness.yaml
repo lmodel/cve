@@ -1,0 +1,7 @@
+descriptions:
+  - lang: en
+    description: Stack-based buffer overflow
+    cweId: CWE-121
+    type: CWE
+    references:
+      - url: https://example.org/weakness

@@ -1,0 +1,3 @@
+# Fails at: /criteria
+vulnerable: true
+criteria: cpe:/a:example:widget

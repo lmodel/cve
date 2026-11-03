@@ -1,0 +1,5 @@
+# Fails at: /capecId
+capecId: CAPEC-0
+descriptions:
+  - lang: en
+    value: Text.

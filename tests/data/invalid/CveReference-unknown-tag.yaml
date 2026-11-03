@@ -1,0 +1,4 @@
+# Fails at: /tags/0
+url: https://example.org/1
+tags:
+  - advisory

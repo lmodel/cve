@@ -1,0 +1,2 @@
+# Fails at: /
+criteria: cpe:2.3:o:example:os:1.0:*:*:*:*:*:*:*

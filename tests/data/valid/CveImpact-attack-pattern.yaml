@@ -1,0 +1,4 @@
+capecId: CAPEC-100
+descriptions:
+  - lang: en
+    value: An attacker can run code with the rights of the service.

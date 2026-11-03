@@ -1,0 +1,4 @@
+# Fails at: /descriptions
+descriptions:
+  - lang: it
+    value: Testo.

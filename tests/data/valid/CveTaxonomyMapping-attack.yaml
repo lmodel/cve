@@ -1,0 +1,6 @@
+taxonomyName: ATT&CK
+taxonomyVersion: v13.1
+taxonomyRelations:
+  - taxonomyId: T1190
+    relationshipName: mitigated by
+    relationshipValue: CVE-1900-1234

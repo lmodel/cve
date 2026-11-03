@@ -1,0 +1,5 @@
+# Fails at: /dateReserved
+cveId: CVE-1900-1234
+assignerOrgId: 00000000-0000-4000-8000-000000000001
+state: PUBLISHED
+dateReserved: '2023-02-29T00:00:00Z'

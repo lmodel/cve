@@ -1,0 +1,27 @@
+vendor: Example Corp
+product: Example Widget
+collectionURL: https://example.org/packages
+packageName: example-widget
+packageURL: pkg:generic/example-widget
+cpes:
+  - cpe:2.3:a:example:widget:*:*:*:*:*:*:*:*
+  - cpe:/a:example:widget
+modules:
+  - parser
+programFiles:
+  - src/parser.c
+programRoutines:
+  - name: parse_header
+platforms:
+  - Linux
+  - x86
+repo: https://example.org/git/widget
+defaultStatus: unaffected
+versions:
+  - version: '1.0'
+    status: affected
+    lessThan: '1.4'
+    versionType: semver
+    changes:
+      - at: '1.2'
+        status: unaffected

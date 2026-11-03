@@ -1,0 +1,7 @@
+# Fails at: /
+vendor: Example Corp
+product: Example Widget
+versions:
+  - version: '1.0'
+    status: affected
+severity: HIGH

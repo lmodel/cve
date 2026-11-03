@@ -1,0 +1,15 @@
+# Fails at: /descriptions
+providerMetadata:
+  orgId: 00000000-0000-4000-8000-000000000001
+  shortName: example
+descriptions:
+  - lang: fr
+    value: Un dépassement de tampon.
+affected:
+  - vendor: Example Corp
+    product: Example Widget
+    versions:
+      - version: '1.0'
+        status: affected
+references:
+  - url: https://example.org/advisories/1234

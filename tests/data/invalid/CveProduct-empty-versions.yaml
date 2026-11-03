@@ -1,0 +1,5 @@
+# Fails at: /versions
+vendor: Example Corp
+product: Example Widget
+defaultStatus: unknown
+versions: []

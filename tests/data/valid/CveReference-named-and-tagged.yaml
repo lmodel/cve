@@ -1,0 +1,5 @@
+url: https://example.org/advisories/1234
+name: Advisory 1234
+tags:
+  - vendor-advisory
+  - x_example-tag

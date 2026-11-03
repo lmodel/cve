@@ -1,0 +1,187 @@
+dataType: CVE_RECORD
+dataVersion: '5.2'
+cveMetadata:
+  cveId: CVE-1900-1234
+  assignerOrgId: 00000000-0000-4000-8000-000000000001
+  state: PUBLISHED
+  assignerShortName: example
+  requesterUserId: 00000000-0000-4000-8000-000000000003
+  dateUpdated: '2024-03-01T10:00:00Z'
+  serial: 3
+  dateReserved: '2024-03-01T10:00:00Z'
+  datePublished: '2024-03-01T10:00:00Z'
+containers:
+  cna:
+    providerMetadata:
+      orgId: 00000000-0000-4000-8000-000000000001
+      shortName: example
+    descriptions:
+      - lang: en
+        value: A buffer overflow in the parser of Example Widget lets a remote attacker run
+          code.
+    affected:
+      - vendor: Example Corp
+        product: Example Widget
+        collectionURL: https://example.org/packages
+        packageName: example-widget
+        packageURL: pkg:generic/example-widget
+        cpes:
+          - cpe:2.3:a:example:widget:*:*:*:*:*:*:*:*
+          - cpe:/a:example:widget
+        modules:
+          - parser
+        programFiles:
+          - src/parser.c
+        programRoutines:
+          - name: parse_header
+        platforms:
+          - Linux
+          - x86
+        repo: https://example.org/git/widget
+        defaultStatus: unaffected
+        versions:
+          - version: '1.0'
+            status: affected
+            lessThan: '1.4'
+            versionType: semver
+            changes:
+              - at: '1.2'
+                status: unaffected
+    references:
+      - url: https://example.org/advisories/1234
+        name: Advisory 1234
+        tags:
+          - vendor-advisory
+          - x_example-tag
+    dateAssigned: '2024-02-01T00:00:00Z'
+    datePublic: '2024-03-01T00:00:00+01:00'
+    title: Buffer overflow in Example Widget
+    cpeApplicability:
+      - operator: AND
+        negate: false
+        nodes:
+          - operator: OR
+            negate: false
+            cpeMatch:
+              - vulnerable: true
+                criteria: cpe:2.3:a:example:widget:*:*:*:*:*:*:*:*
+                matchCriteriaId: 00000000-0000-4000-8000-000000000003
+                versionStartIncluding: '1.0'
+                versionEndExcluding: '1.4'
+    problemTypes:
+      - descriptions:
+          - lang: en
+            description: Stack-based buffer overflow
+            cweId: CWE-121
+            type: CWE
+            references:
+              - url: https://example.org/weakness
+    impacts:
+      - capecId: CAPEC-100
+        descriptions:
+          - lang: en
+            value: An attacker can run code with the rights of the service.
+    metrics:
+      - format: CVSS
+        scenarios:
+          - lang: en
+            value: GENERAL
+        cvssV4_0:
+          version: '4.0'
+          vectorString: CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N
+          baseScore: 9.3
+          baseSeverity: CRITICAL
+        cvssV3_1:
+          version: '3.1'
+          vectorString: CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H
+          baseScore: 9.8
+          baseSeverity: CRITICAL
+      - cvssV3_0:
+          version: '3.0'
+          vectorString: CVSS:3.0/AV:L/AC:H/PR:L/UI:R/S:C/C:L/I:N/A:N
+          baseScore: 3.1
+          baseSeverity: LOW
+          attackVector: LOCAL
+          attackComplexity: HIGH
+          privilegesRequired: LOW
+          userInteraction: REQUIRED
+          scope: CHANGED
+          confidentialityImpact: LOW
+          integrityImpact: NONE
+          availabilityImpact: NONE
+          exploitCodeMaturity: FUNCTIONAL
+          remediationLevel: OFFICIAL_FIX
+          reportConfidence: REASONABLE
+          temporalScore: 2.8
+          temporalSeverity: LOW
+          confidentialityRequirement: HIGH
+          modifiedAttackVector: ADJACENT_NETWORK
+          modifiedScope: UNCHANGED
+          modifiedConfidentialityImpact: HIGH
+          environmentalScore: 5.0
+          environmentalSeverity: MEDIUM
+      - cvssV2_0:
+          version: '2.0'
+          vectorString: AV:N/AC:M/Au:S/C:P/I:P/A:C/E:POC/RL:TF/RC:C
+          baseScore: 7.5
+          accessVector: NETWORK
+          accessComplexity: MEDIUM
+          authentication: SINGLE
+          confidentialityImpact: PARTIAL
+          integrityImpact: PARTIAL
+          availabilityImpact: COMPLETE
+          exploitability: PROOF_OF_CONCEPT
+          remediationLevel: TEMPORARY_FIX
+          reportConfidence: CONFIRMED
+          temporalScore: 6.0
+          collateralDamagePotential: LOW_MEDIUM
+          targetDistribution: HIGH
+          availabilityRequirement: MEDIUM
+          environmentalScore: 5.5
+    configurations:
+      - lang: en
+        value: Only systems with the header parser turned on are exposed.
+    workarounds:
+      - lang: en
+        value: Turn the header parser off.
+    solutions:
+      - lang: en
+        value: Upgrade to version 1.4.
+    exploits:
+      - lang: en
+        value: No attacks are known.
+    timeline:
+      - time: '2024-03-01T10:00:00Z'
+        lang: en
+        value: The vendor released a fix.
+    credits:
+      - lang: en
+        value: Example Research Team
+        type: finder
+        user: 00000000-0000-4000-8000-000000000003
+    tags:
+      - disputed
+      - x_example-tag
+    taxonomyMappings:
+      - taxonomyName: ATT&CK
+        taxonomyVersion: v13.1
+        taxonomyRelations:
+          - taxonomyId: T1190
+            relationshipName: mitigated by
+            relationshipValue: CVE-1900-1234
+    source:
+      discovery: EXTERNAL
+      advisory: ADV-1
+    x_generator:
+      engine: example 1.0
+  adp:
+    - providerMetadata:
+        orgId: 00000000-0000-4000-8000-000000000002
+      title: Added scoring
+      metrics:
+        - cvssV3_1:
+            version: '3.1'
+            vectorString: CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H
+            baseScore: 9.8
+            baseSeverity: CRITICAL
+      x_adpNote: kept by the publisher

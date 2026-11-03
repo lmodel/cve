@@ -1,0 +1,5 @@
+format: ssvc
+other:
+  type: ssvc
+  content:
+    exploitation: none

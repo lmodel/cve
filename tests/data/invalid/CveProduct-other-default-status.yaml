@@ -1,0 +1,7 @@
+# Fails at: /defaultStatus
+vendor: Example Corp
+product: Example Widget
+versions:
+  - version: '1.0'
+    status: affected
+defaultStatus: vulnerable

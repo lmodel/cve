@@ -1,0 +1,13 @@
+# Fails at: /affected
+providerMetadata:
+  orgId: 00000000-0000-4000-8000-000000000001
+  shortName: example
+rejectedReasons:
+  - lang: en
+    value: This record duplicates another and should not be used.
+affected:
+  - vendor: Example Corp
+    product: Example Widget
+    versions:
+      - version: '1.0'
+        status: affected
