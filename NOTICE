@@ -76,13 +76,13 @@ content is used under the CVE Program's Terms of Use,
 https://www.cve.org/Legal/TermsOfUse, which authorise such copies provided
 that each reproduces MITRE's copyright designation and this licence:
 
-  Copyright (c) 1999-2026, The MITRE Corporation. CVE and the CVE logo are
-  marks of The MITRE Corporation.
+  Copyright (c) 1999-2026, The MITRE Corporation. CVE is a trademark and the
+  CVE logo is a registered trademark of The MITRE Corporation.
 
   CVE Usage: MITRE hereby grants you a perpetual, worldwide, non-exclusive,
   no-charge, royalty-free, irrevocable copyright license to reproduce, prepare
   derivative works of, publicly display, publicly perform, sublicense, and
-  distribute Common Vulnerabilities and Exposures (CVE). Any copy you make for
+  distribute Common Vulnerabilities and Exposures (CVE™). Any copy you make for
   such purposes is authorized provided that you reproduce MITRE's copyright
   designation and this license in any such copy.
 
@@ -96,7 +96,8 @@ that each reproduces MITRE's copyright designation and this licence:
 
 tests/data/cvelist/TERMS.txt holds the same text beside the copies. The
 website's page is written by script, so the watch reads its source,
-src/views/Legal/TermsOfUse.vue in https://github.com/CVEProject/cve-website.
+src/views/Legal/TermsOfUse.vue in https://github.com/CVEProject/cve-website. The
+designation is the one the website's footer gives.
 
 linkml-project-copier
 ---------------------

@@ -4,13 +4,13 @@ That repository says its content is used under the CVE Program's Terms of Use,
 https://www.cve.org/Legal/TermsOfUse, which authorise such copies provided that
 each reproduces MITRE's copyright designation and this licence:
 
-Copyright (c) 1999-2026, The MITRE Corporation. CVE and the CVE logo are marks of
-The MITRE Corporation.
+Copyright (c) 1999-2026, The MITRE Corporation. CVE is a trademark and the CVE logo
+is a registered trademark of The MITRE Corporation.
 
 CVE Usage: MITRE hereby grants you a perpetual, worldwide, non-exclusive,
 no-charge, royalty-free, irrevocable copyright license to reproduce, prepare
 derivative works of, publicly display, publicly perform, sublicense, and
-distribute Common Vulnerabilities and Exposures (CVE). Any copy you make for such
+distribute Common Vulnerabilities and Exposures (CVE™). Any copy you make for such
 purposes is authorized provided that you reproduce MITRE's copyright designation
 and this license in any such copy.
 
