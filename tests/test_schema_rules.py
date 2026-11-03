@@ -1,6 +1,7 @@
 """Checks that the adapt copy can sit beside LOKF and the neighbours' copies."""
 
 import hashlib
+import keyword
 from pathlib import Path
 
 import yaml
@@ -291,3 +292,42 @@ def test_each_mapping_into_a_neighbour_names_a_term_it_declares():
                 assert iri in terms, (mapping, name)
                 mapped_into += 1
     assert mapped_into >= 2
+
+
+def _page_names(source):
+    """The name of each page gen-doc writes for an element of the source."""
+    names = set(source["classes"]) | set(source["enums"]) | set(source["slots"])
+    names |= {
+        "".join(part.title() for part in name.split("_")) for name in source["types"]
+    }
+    for cls in source["classes"].values():
+        names |= set(cls.get("attributes") or {})
+    return names
+
+
+def test_no_two_pages_differ_only_by_case():
+    """gen-doc writes a page per element, and two names that differ only by case
+    are one file on a case-insensitive disk. A slot keeps the upstream's key, so a
+    class or type gives way. The one left is `time`, a key of the upstream's, beside
+    the `Time` page of LinkML's own types, which a schema cannot rename."""
+    source = _source()
+    names = _page_names(source) | {"Time"}
+    lowered = {}
+    for name in names:
+        lowered.setdefault(name.lower(), set()).add(name)
+    collisions = {key: found for key, found in lowered.items() if len(found) > 1}
+    assert collisions == {"time": {"time", "Time"}}
+
+
+def test_no_page_overwrites_the_index():
+    """A slot named index would overwrite the docs site's index page."""
+    assert "index" not in {name.lower() for name in _page_names(_source())}
+
+
+def test_no_slot_is_a_python_keyword():
+    """A slot named after a Python keyword breaks the generated dataclasses."""
+    source = _source()
+    slots = set(source["slots"])
+    for cls in source["classes"].values():
+        slots |= set(cls.get("attributes") or {})
+    assert not {name for name in slots if keyword.iskeyword(name)}

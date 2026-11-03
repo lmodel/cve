@@ -335,9 +335,9 @@ types:
     base: str
     uri: xsd:string
     pattern: ^[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-4[0-9A-Fa-f]{3}-[89ABab][0-9A-Fa-f]{3}-[0-9A-Fa-f]{12}$
-  cve_id:
-    name: cve_id
-    definition_uri: https://w3id.org/lmodel/cve/CveId
+  cve_identifier:
+    name: cve_identifier
+    definition_uri: https://w3id.org/lmodel/cve/CveIdentifier
     annotations:
       upstream_path:
         tag: upstream_path
@@ -2191,7 +2191,7 @@ slots:
     owner: CveRecord
     domain_of:
     - CveRecord
-    range: CveMetadata
+    range: CveRecordMetadata
     required: true
     inlined: true
     inlined_as_list: true
@@ -2223,9 +2223,9 @@ slots:
     description: Whether the record is published or rejected.
     from_schema: https://w3id.org/lmodel/cve/cve_record
     slot_uri: cve:state
-    owner: CveMetadata
+    owner: CveRecordMetadata
     domain_of:
-    - CveMetadata
+    - CveRecordMetadata
     range: CveRecordState
     required: true
   dateUpdated:
@@ -2246,7 +2246,7 @@ slots:
     slot_uri: cve:dateUpdated
     owner: CveProviderMetadata
     domain_of:
-    - CveMetadata
+    - CveRecordMetadata
     - CveProviderMetadata
     range: cve_timestamp
   cna:
@@ -3279,8 +3279,8 @@ slots:
     - CveRecord
     range: cve_data_version
     required: true
-  cveMetadata__cveId:
-    name: cveMetadata__cveId
+  cveRecordMetadata__cveId:
+    name: cveRecordMetadata__cveId
     annotations:
       upstream_path:
         tag: upstream_path
@@ -3292,13 +3292,13 @@ slots:
     - schema:identifier
     slot_uri: cve:cveId
     alias: cveId
-    owner: CveMetadata
+    owner: CveRecordMetadata
     domain_of:
-    - CveMetadata
-    range: cve_id
+    - CveRecordMetadata
+    range: cve_identifier
     required: true
-  cveMetadata__assignerOrgId:
-    name: cveMetadata__assignerOrgId
+  cveRecordMetadata__assignerOrgId:
+    name: cveRecordMetadata__assignerOrgId
     annotations:
       upstream_path:
         tag: upstream_path
@@ -3307,13 +3307,13 @@ slots:
     from_schema: https://w3id.org/lmodel/cve/cve_record
     slot_uri: cve:assignerOrgId
     alias: assignerOrgId
-    owner: CveMetadata
+    owner: CveRecordMetadata
     domain_of:
-    - CveMetadata
+    - CveRecordMetadata
     range: cve_uuid
     required: true
-  cveMetadata__assignerShortName:
-    name: cveMetadata__assignerShortName
+  cveRecordMetadata__assignerShortName:
+    name: cveRecordMetadata__assignerShortName
     annotations:
       upstream_path:
         tag: upstream_path
@@ -3322,12 +3322,12 @@ slots:
     from_schema: https://w3id.org/lmodel/cve/cve_record
     slot_uri: cve:assignerShortName
     alias: assignerShortName
-    owner: CveMetadata
+    owner: CveRecordMetadata
     domain_of:
-    - CveMetadata
+    - CveRecordMetadata
     range: cve_short_name
-  cveMetadata__serial:
-    name: cveMetadata__serial
+  cveRecordMetadata__serial:
+    name: cveRecordMetadata__serial
     annotations:
       upstream_path:
         tag: upstream_path
@@ -3337,13 +3337,13 @@ slots:
     from_schema: https://w3id.org/lmodel/cve/cve_record
     slot_uri: cve:serial
     alias: serial
-    owner: CveMetadata
+    owner: CveRecordMetadata
     domain_of:
-    - CveMetadata
+    - CveRecordMetadata
     range: integer
     minimum_value: 1
-  cveMetadata__dateReserved:
-    name: cveMetadata__dateReserved
+  cveRecordMetadata__dateReserved:
+    name: cveRecordMetadata__dateReserved
     annotations:
       upstream_path:
         tag: upstream_path
@@ -3354,12 +3354,12 @@ slots:
     from_schema: https://w3id.org/lmodel/cve/cve_record
     slot_uri: cve:dateReserved
     alias: dateReserved
-    owner: CveMetadata
+    owner: CveRecordMetadata
     domain_of:
-    - CveMetadata
+    - CveRecordMetadata
     range: cve_timestamp
-  cveMetadata__datePublished:
-    name: cveMetadata__datePublished
+  cveRecordMetadata__datePublished:
+    name: cveRecordMetadata__datePublished
     annotations:
       upstream_path:
         tag: upstream_path
@@ -3372,9 +3372,9 @@ slots:
     - spdx_security:publishedTime
     slot_uri: cve:datePublished
     alias: datePublished
-    owner: CveMetadata
+    owner: CveRecordMetadata
     domain_of:
-    - CveMetadata
+    - CveRecordMetadata
     range: cve_timestamp
   cveMetadataPublished__requesterUserId:
     name: cveMetadataPublished__requesterUserId
@@ -3509,7 +3509,7 @@ slots:
     owner: CveCnaRejectedContainer
     domain_of:
     - CveCnaRejectedContainer
-    range: cve_id
+    range: cve_identifier
     multivalued: true
     minimum_cardinality: 1
   cveProduct__vendor:
@@ -7504,9 +7504,9 @@ classes:
         name: containers
         range: CveRejectedContainers
     class_uri: cve:CveRejectedRecord
-  CveMetadata:
-    name: CveMetadata
-    definition_uri: https://w3id.org/lmodel/cve/CveMetadata
+  CveRecordMetadata:
+    name: CveRecordMetadata
+    definition_uri: https://w3id.org/lmodel/cve/CveRecordMetadata
     annotations:
       upstream_path:
         tag: upstream_path
@@ -7518,12 +7518,12 @@ classes:
     slots:
     - dateUpdated
     - state
-    - cveMetadata__cveId
-    - cveMetadata__assignerOrgId
-    - cveMetadata__assignerShortName
-    - cveMetadata__serial
-    - cveMetadata__dateReserved
-    - cveMetadata__datePublished
+    - cveRecordMetadata__cveId
+    - cveRecordMetadata__assignerOrgId
+    - cveRecordMetadata__assignerShortName
+    - cveRecordMetadata__serial
+    - cveRecordMetadata__dateReserved
+    - cveRecordMetadata__datePublished
     attributes:
       cveId:
         name: cveId
@@ -7535,7 +7535,7 @@ classes:
         narrow_mappings:
         - dcterms:identifier
         - schema:identifier
-        range: cve_id
+        range: cve_identifier
         required: true
       assignerOrgId:
         name: assignerOrgId
@@ -7586,7 +7586,7 @@ classes:
         - schema:datePublished
         - spdx_security:publishedTime
         range: cve_timestamp
-    class_uri: cve:CveMetadata
+    class_uri: cve:CveRecordMetadata
   CveMetadataPublished:
     name: CveMetadataPublished
     definition_uri: https://w3id.org/lmodel/cve/CveMetadataPublished
@@ -7596,15 +7596,15 @@ classes:
         value: CVE_Record_Format.json#/definitions/cveMetadataPublished
     description: The metadata of a published record.
     from_schema: https://w3id.org/lmodel/cve/cve_record
-    is_a: CveMetadata
+    is_a: CveRecordMetadata
     slots:
     - dateUpdated
-    - cveMetadata__cveId
-    - cveMetadata__assignerOrgId
-    - cveMetadata__assignerShortName
-    - cveMetadata__serial
-    - cveMetadata__dateReserved
-    - cveMetadata__datePublished
+    - cveRecordMetadata__cveId
+    - cveRecordMetadata__assignerOrgId
+    - cveRecordMetadata__assignerShortName
+    - cveRecordMetadata__serial
+    - cveRecordMetadata__dateReserved
+    - cveRecordMetadata__datePublished
     - cveMetadataPublished__requesterUserId
     - CveMetadataPublished_state
     slot_usage:
@@ -7630,15 +7630,15 @@ classes:
         value: CVE_Record_Format.json#/definitions/cveMetadataRejected
     description: The metadata of a rejected record.
     from_schema: https://w3id.org/lmodel/cve/cve_record
-    is_a: CveMetadata
+    is_a: CveRecordMetadata
     slots:
     - dateUpdated
-    - cveMetadata__cveId
-    - cveMetadata__assignerOrgId
-    - cveMetadata__assignerShortName
-    - cveMetadata__serial
-    - cveMetadata__dateReserved
-    - cveMetadata__datePublished
+    - cveRecordMetadata__cveId
+    - cveRecordMetadata__assignerOrgId
+    - cveRecordMetadata__assignerShortName
+    - cveRecordMetadata__serial
+    - cveRecordMetadata__dateReserved
+    - cveRecordMetadata__datePublished
     - cveMetadataRejected__dateRejected
     - CveMetadataRejected_state
     slot_usage:
@@ -7880,7 +7880,7 @@ classes:
             value: CVE_Record_Format.json#/definitions/cnaRejectedContainer/properties/replacedBy
         description: The CVE identifiers to use instead of this one.
         list_elements_unique: true
-        range: cve_id
+        range: cve_identifier
         multivalued: true
         minimum_cardinality: 1
     class_uri: cve:CveCnaRejectedContainer

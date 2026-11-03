@@ -48,7 +48,7 @@ linkml:Sparqlpath xsd:string
 
 <CveUuid> xsd:string
 
-<CveId> xsd:string
+<CveIdentifier> xsd:string
 
 <CveCpe22and23> xsd:string
 
@@ -154,7 +154,7 @@ linkml:Sparqlpath xsd:string
     (  $<CveCnaRejectedContainer_tes> (  &<CveCnaContainer_tes> ;
           rdf:type [ <CveCnaContainer> ] ? ;
           <rejectedReasons> @<CveDescription> + ;
-          <replacedBy> @<CveId> *
+          <replacedBy> @<CveIdentifier> *
        ) ;
        rdf:type [ <CveCnaRejectedContainer> ] ?
     )
@@ -235,28 +235,9 @@ linkml:Sparqlpath xsd:string
     )
 }
 
-<CveMetadata>  (
-    @<CveMetadataPublished> OR @<CveMetadataRejected>
-)
-
-<CveMetadata_struct> {
-    (  $<CveMetadata_tes> (  <dateUpdated> @<CveTimestamp> ? ;
-          <state> [ <https://w3id.org/lmodel/cve/CveRecordState#PUBLISHED> <https://w3id.org/lmodel/cve/CveRecordState#REJECTED> ]
-          ;
-          <cveId> @<CveId> ;
-          <assignerOrgId> @<CveUuid> ;
-          <assignerShortName> @<CveShortName> ? ;
-          <serial> @linkml:Integer ? ;
-          <dateReserved> @<CveTimestamp> ? ;
-          <datePublished> @<CveTimestamp> ?
-       ) ;
-       rdf:type [ <CveMetadata> ] ?
-    )
-}
-
 <CveMetadataPublished> CLOSED {
-    (  $<CveMetadataPublished_tes> (  &<CveMetadata_tes> ;
-          rdf:type [ <CveMetadata> ] ? ;
+    (  $<CveMetadataPublished_tes> (  &<CveRecordMetadata_tes> ;
+          rdf:type [ <CveRecordMetadata> ] ? ;
           <requesterUserId> @<CveUuid> ? ;
           <state> [ <https://w3id.org/lmodel/cve/CvePublishedState#PUBLISHED> ]
        ) ;
@@ -265,8 +246,8 @@ linkml:Sparqlpath xsd:string
 }
 
 <CveMetadataRejected> CLOSED {
-    (  $<CveMetadataRejected_tes> (  &<CveMetadata_tes> ;
-          rdf:type [ <CveMetadata> ] ? ;
+    (  $<CveMetadataRejected_tes> (  &<CveRecordMetadata_tes> ;
+          rdf:type [ <CveRecordMetadata> ] ? ;
           <dateRejected> @<CveTimestamp> ? ;
           <state> [ <https://w3id.org/lmodel/cve/CveRejectedState#REJECTED> ]
        ) ;
@@ -399,12 +380,31 @@ linkml:Sparqlpath xsd:string
 )
 
 <CveRecord_struct> {
-    (  $<CveRecord_tes> (  <cveMetadata> @<CveMetadata> ;
+    (  $<CveRecord_tes> (  <cveMetadata> @<CveRecordMetadata> ;
           <containers> @<CveContainers> ;
           <dataType> [ <https://w3id.org/lmodel/cve/CveDataType#CVE_RECORD> ] ;
           <dataVersion> @<CveDataVersion>
        ) ;
        rdf:type [ <CveRecord> ] ?
+    )
+}
+
+<CveRecordMetadata>  (
+    @<CveMetadataPublished> OR @<CveMetadataRejected>
+)
+
+<CveRecordMetadata_struct> {
+    (  $<CveRecordMetadata_tes> (  <dateUpdated> @<CveTimestamp> ? ;
+          <state> [ <https://w3id.org/lmodel/cve/CveRecordState#PUBLISHED> <https://w3id.org/lmodel/cve/CveRecordState#REJECTED> ]
+          ;
+          <cveId> @<CveIdentifier> ;
+          <assignerOrgId> @<CveUuid> ;
+          <assignerShortName> @<CveShortName> ? ;
+          <serial> @linkml:Integer ? ;
+          <dateReserved> @<CveTimestamp> ? ;
+          <datePublished> @<CveTimestamp> ?
+       ) ;
+       rdf:type [ <CveRecordMetadata> ] ?
     )
 }
 

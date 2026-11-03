@@ -125,27 +125,6 @@
          "@type": "@id",
          "@id": "cveMetadata"
       },
-      "assignerOrgId": {
-         "@id": "assignerOrgId"
-      },
-      "assignerShortName": {
-         "@id": "assignerShortName"
-      },
-      "cveId": {
-         "@id": "cveId"
-      },
-      "datePublished": {
-         "@type": "xsd:dateTime",
-         "@id": "datePublished"
-      },
-      "dateReserved": {
-         "@type": "xsd:dateTime",
-         "@id": "dateReserved"
-      },
-      "serial": {
-         "@type": "xsd:integer",
-         "@id": "serial"
-      },
       "requesterUserId": {
          "@id": "requesterUserId"
       },
@@ -269,6 +248,27 @@
       },
       "dataVersion": {
          "@id": "dataVersion"
+      },
+      "assignerOrgId": {
+         "@id": "assignerOrgId"
+      },
+      "assignerShortName": {
+         "@id": "assignerShortName"
+      },
+      "cveId": {
+         "@id": "cveId"
+      },
+      "datePublished": {
+         "@type": "xsd:dateTime",
+         "@id": "datePublished"
+      },
+      "dateReserved": {
+         "@type": "xsd:dateTime",
+         "@id": "dateReserved"
+      },
+      "serial": {
+         "@type": "xsd:integer",
+         "@id": "serial"
       },
       "base64": {
          "@type": "xsd:boolean",
@@ -749,9 +749,6 @@
       "CveImpact": {
          "@id": "CveImpact"
       },
-      "CveMetadata": {
-         "@id": "CveMetadata"
-      },
       "CveMetadataPublished": {
          "@id": "CveMetadataPublished"
       },
@@ -796,6 +793,9 @@
       },
       "CveRecord": {
          "@id": "CveRecord"
+      },
+      "CveRecordMetadata": {
+         "@id": "CveRecordMetadata"
       },
       "CveRecordRoot": {
          "@id": "CveRecordRoot"

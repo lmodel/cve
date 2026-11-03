@@ -14,7 +14,7 @@ import lombok.*;
 **/
 @Data
 @EqualsAndHashCode(callSuper=false)
-public class CveMetadataRejected extends CveMetadata {
+public class CveMetadataRejected extends CveRecordMetadata {
 
   private ZonedDateTime dateRejected;
 

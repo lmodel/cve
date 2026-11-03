@@ -14,7 +14,7 @@ import lombok.*;
 **/
 @Data
 @EqualsAndHashCode(callSuper=false)
-public class CveMetadataPublished extends CveMetadata {
+public class CveMetadataPublished extends CveRecordMetadata {
 
   private String requesterUserId;
 

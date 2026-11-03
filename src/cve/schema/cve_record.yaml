@@ -29,8 +29,8 @@ notes:
   - >-
     The record has no identifier slot. cveId identifies a record, but it sits
     inside cveMetadata, and an identifier there would make the metadata the thing
-    lokf adapt must root on, which drops the key a real record needs. The type cve_id
-    holds its pattern.
+    lokf adapt must root on, which drops the key a real record needs. The type
+    cve_identifier holds its pattern.
 
 prefixes:
   cve: https://w3id.org/lmodel/cve/
@@ -75,7 +75,7 @@ types:
         CVE_Record_Format.json#/definitions/orgId
         CVE_Record_Format.json#/definitions/userId
 
-  cve_id:
+  cve_identifier:
     typeof: string
     base: str
     uri: xsd:string
@@ -314,7 +314,7 @@ classes:
       containers:
         range: CveRejectedContainers
 
-  CveMetadata:
+  CveRecordMetadata:
     abstract: true
     description: The facts about a record itself, as distinct from the vulnerability it describes.
     annotations:
@@ -327,7 +327,7 @@ classes:
     attributes:
       cveId:
         description: The CVE identifier that the record belongs to.
-        range: cve_id
+        range: cve_identifier
         required: true
         narrow_mappings:
           - dcterms:identifier
@@ -369,7 +369,7 @@ classes:
           upstream_path: CVE_Record_Format.json#/definitions/cveMetadataPublished/properties/datePublished
 
   CveMetadataPublished:
-    is_a: CveMetadata
+    is_a: CveRecordMetadata
     description: The metadata of a published record.
     annotations:
       upstream_path: CVE_Record_Format.json#/definitions/cveMetadataPublished
@@ -384,7 +384,7 @@ classes:
           upstream_path: CVE_Record_Format.json#/definitions/cveMetadataPublished/properties/requesterUserId
 
   CveMetadataRejected:
-    is_a: CveMetadata
+    is_a: CveRecordMetadata
     description: The metadata of a rejected record.
     annotations:
       upstream_path: CVE_Record_Format.json#/definitions/cveMetadataRejected
@@ -554,7 +554,7 @@ classes:
           upstream_path: CVE_Record_Format.json#/definitions/cnaRejectedContainer/properties/rejectedReasons
       replacedBy:
         description: The CVE identifiers to use instead of this one.
-        range: cve_id
+        range: cve_identifier
         multivalued: true
         minimum_cardinality: 1
         list_elements_unique: true
@@ -1268,7 +1268,7 @@ slots:
 
   cveMetadata:
     description: The facts about the record itself.
-    range: CveMetadata
+    range: CveRecordMetadata
     required: true
     inlined: true
     annotations:

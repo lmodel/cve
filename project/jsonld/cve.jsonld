@@ -391,8 +391,8 @@
       "@type": "TypeDefinition"
     },
     {
-      "name": "cve_id",
-      "definition_uri": "https://w3id.org/lmodel/cve/CveId",
+      "name": "cve_identifier",
+      "definition_uri": "https://w3id.org/lmodel/cve/CveIdentifier",
       "annotations": [
         {
           "tag": "upstream_path",
@@ -2832,7 +2832,7 @@
       "domain_of": [
         "CveRecord"
       ],
-      "range": "CveMetadata",
+      "range": "CveRecordMetadata",
       "required": true,
       "inlined": true,
       "inlined_as_list": true,
@@ -2874,9 +2874,9 @@
       "description": "Whether the record is published or rejected.",
       "from_schema": "https://w3id.org/lmodel/cve/cve_record",
       "slot_uri": "https://w3id.org/lmodel/cve/state",
-      "owner": "CveMetadata",
+      "owner": "CveRecordMetadata",
       "domain_of": [
-        "CveMetadata"
+        "CveRecordMetadata"
       ],
       "range": "CveRecordState",
       "required": true,
@@ -2902,7 +2902,7 @@
       "slot_uri": "https://w3id.org/lmodel/cve/dateUpdated",
       "owner": "CveProviderMetadata",
       "domain_of": [
-        "CveMetadata",
+        "CveRecordMetadata",
         "CveProviderMetadata"
       ],
       "range": "cve_timestamp",
@@ -4288,7 +4288,7 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "cveMetadata__cveId",
+      "name": "cveRecordMetadata__cveId",
       "annotations": [
         {
           "tag": "upstream_path",
@@ -4304,16 +4304,16 @@
       ],
       "slot_uri": "https://w3id.org/lmodel/cve/cveId",
       "alias": "cveId",
-      "owner": "CveMetadata",
+      "owner": "CveRecordMetadata",
       "domain_of": [
-        "CveMetadata"
+        "CveRecordMetadata"
       ],
-      "range": "cve_id",
+      "range": "cve_identifier",
       "required": true,
       "@type": "SlotDefinition"
     },
     {
-      "name": "cveMetadata__assignerOrgId",
+      "name": "cveRecordMetadata__assignerOrgId",
       "annotations": [
         {
           "tag": "upstream_path",
@@ -4325,16 +4325,16 @@
       "from_schema": "https://w3id.org/lmodel/cve/cve_record",
       "slot_uri": "https://w3id.org/lmodel/cve/assignerOrgId",
       "alias": "assignerOrgId",
-      "owner": "CveMetadata",
+      "owner": "CveRecordMetadata",
       "domain_of": [
-        "CveMetadata"
+        "CveRecordMetadata"
       ],
       "range": "cve_uuid",
       "required": true,
       "@type": "SlotDefinition"
     },
     {
-      "name": "cveMetadata__assignerShortName",
+      "name": "cveRecordMetadata__assignerShortName",
       "annotations": [
         {
           "tag": "upstream_path",
@@ -4346,15 +4346,15 @@
       "from_schema": "https://w3id.org/lmodel/cve/cve_record",
       "slot_uri": "https://w3id.org/lmodel/cve/assignerShortName",
       "alias": "assignerShortName",
-      "owner": "CveMetadata",
+      "owner": "CveRecordMetadata",
       "domain_of": [
-        "CveMetadata"
+        "CveRecordMetadata"
       ],
       "range": "cve_short_name",
       "@type": "SlotDefinition"
     },
     {
-      "name": "cveMetadata__serial",
+      "name": "cveRecordMetadata__serial",
       "annotations": [
         {
           "tag": "upstream_path",
@@ -4366,16 +4366,16 @@
       "from_schema": "https://w3id.org/lmodel/cve/cve_record",
       "slot_uri": "https://w3id.org/lmodel/cve/serial",
       "alias": "serial",
-      "owner": "CveMetadata",
+      "owner": "CveRecordMetadata",
       "domain_of": [
-        "CveMetadata"
+        "CveRecordMetadata"
       ],
       "range": "integer",
       "minimum_value": 1,
       "@type": "SlotDefinition"
     },
     {
-      "name": "cveMetadata__dateReserved",
+      "name": "cveRecordMetadata__dateReserved",
       "annotations": [
         {
           "tag": "upstream_path",
@@ -4390,15 +4390,15 @@
       "from_schema": "https://w3id.org/lmodel/cve/cve_record",
       "slot_uri": "https://w3id.org/lmodel/cve/dateReserved",
       "alias": "dateReserved",
-      "owner": "CveMetadata",
+      "owner": "CveRecordMetadata",
       "domain_of": [
-        "CveMetadata"
+        "CveRecordMetadata"
       ],
       "range": "cve_timestamp",
       "@type": "SlotDefinition"
     },
     {
-      "name": "cveMetadata__datePublished",
+      "name": "cveRecordMetadata__datePublished",
       "annotations": [
         {
           "tag": "upstream_path",
@@ -4415,9 +4415,9 @@
       ],
       "slot_uri": "https://w3id.org/lmodel/cve/datePublished",
       "alias": "datePublished",
-      "owner": "CveMetadata",
+      "owner": "CveRecordMetadata",
       "domain_of": [
-        "CveMetadata"
+        "CveRecordMetadata"
       ],
       "range": "cve_timestamp",
       "@type": "SlotDefinition"
@@ -4609,7 +4609,7 @@
       "domain_of": [
         "CveCnaRejectedContainer"
       ],
-      "range": "cve_id",
+      "range": "cve_identifier",
       "multivalued": true,
       "minimum_cardinality": 1,
       "@type": "SlotDefinition"
@@ -9654,8 +9654,8 @@
       "@type": "ClassDefinition"
     },
     {
-      "name": "CveMetadata",
-      "definition_uri": "https://w3id.org/lmodel/cve/CveMetadata",
+      "name": "CveRecordMetadata",
+      "definition_uri": "https://w3id.org/lmodel/cve/CveRecordMetadata",
       "annotations": [
         {
           "tag": "upstream_path",
@@ -9669,12 +9669,12 @@
       "slots": [
         "dateUpdated",
         "state",
-        "cveMetadata__cveId",
-        "cveMetadata__assignerOrgId",
-        "cveMetadata__assignerShortName",
-        "cveMetadata__serial",
-        "cveMetadata__dateReserved",
-        "cveMetadata__datePublished"
+        "cveRecordMetadata__cveId",
+        "cveRecordMetadata__assignerOrgId",
+        "cveRecordMetadata__assignerShortName",
+        "cveRecordMetadata__serial",
+        "cveRecordMetadata__dateReserved",
+        "cveRecordMetadata__datePublished"
       ],
       "slot_usage": {},
       "attributes": [
@@ -9692,7 +9692,7 @@
             "dcterms:identifier",
             "schema:identifier"
           ],
-          "range": "cve_id",
+          "range": "cve_identifier",
           "required": true,
           "@type": "SlotDefinition"
         },
@@ -9772,7 +9772,7 @@
           "@type": "SlotDefinition"
         }
       ],
-      "class_uri": "https://w3id.org/lmodel/cve/CveMetadata",
+      "class_uri": "https://w3id.org/lmodel/cve/CveRecordMetadata",
       "@type": "ClassDefinition"
     },
     {
@@ -9787,15 +9787,15 @@
       ],
       "description": "The metadata of a published record.",
       "from_schema": "https://w3id.org/lmodel/cve/cve_record",
-      "is_a": "CveMetadata",
+      "is_a": "CveRecordMetadata",
       "slots": [
         "dateUpdated",
-        "cveMetadata__cveId",
-        "cveMetadata__assignerOrgId",
-        "cveMetadata__assignerShortName",
-        "cveMetadata__serial",
-        "cveMetadata__dateReserved",
-        "cveMetadata__datePublished",
+        "cveRecordMetadata__cveId",
+        "cveRecordMetadata__assignerOrgId",
+        "cveRecordMetadata__assignerShortName",
+        "cveRecordMetadata__serial",
+        "cveRecordMetadata__dateReserved",
+        "cveRecordMetadata__datePublished",
         "cveMetadataPublished__requesterUserId",
         "CveMetadataPublished_state"
       ],
@@ -9830,15 +9830,15 @@
       ],
       "description": "The metadata of a rejected record.",
       "from_schema": "https://w3id.org/lmodel/cve/cve_record",
-      "is_a": "CveMetadata",
+      "is_a": "CveRecordMetadata",
       "slots": [
         "dateUpdated",
-        "cveMetadata__cveId",
-        "cveMetadata__assignerOrgId",
-        "cveMetadata__assignerShortName",
-        "cveMetadata__serial",
-        "cveMetadata__dateReserved",
-        "cveMetadata__datePublished",
+        "cveRecordMetadata__cveId",
+        "cveRecordMetadata__assignerOrgId",
+        "cveRecordMetadata__assignerShortName",
+        "cveRecordMetadata__serial",
+        "cveRecordMetadata__dateReserved",
+        "cveRecordMetadata__datePublished",
         "cveMetadataRejected__dateRejected",
         "CveMetadataRejected_state"
       ],
@@ -10141,7 +10141,7 @@
           ],
           "description": "The CVE identifiers to use instead of this one.",
           "list_elements_unique": true,
-          "range": "cve_id",
+          "range": "cve_identifier",
           "multivalued": true,
           "minimum_cardinality": 1,
           "@type": "SlotDefinition"

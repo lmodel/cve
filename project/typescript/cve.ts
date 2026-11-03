@@ -916,7 +916,7 @@ export interface CvssV40 extends CvssSeverityBandsMixin {
  */
 export interface CveRecord {
     /** The facts about the record itself. */
-    cveMetadata: CveMetadata,
+    cveMetadata: CveRecordMetadata,
     /** The vulnerability information, grouped by who provided it. */
     containers: CveContainers,
     /** The kind of document this is, which is always a CVE record. */
@@ -943,7 +943,7 @@ export interface CveRejectedRecord extends CveRecord {
 /**
  * The facts about a record itself, as distinct from the vulnerability it describes.
  */
-export interface CveMetadata {
+export interface CveRecordMetadata {
     /** When the record or container was last updated. */
     dateUpdated?: string,
     /** Whether the record is published or rejected. */
@@ -966,7 +966,7 @@ export interface CveMetadata {
 /**
  * The metadata of a published record.
  */
-export interface CveMetadataPublished extends CveMetadata {
+export interface CveMetadataPublished extends CveRecordMetadata {
     /** The UUID of the user who asked for the CVE identifier. */
     requesterUserId?: string,
 }
@@ -975,7 +975,7 @@ export interface CveMetadataPublished extends CveMetadata {
 /**
  * The metadata of a rejected record.
  */
-export interface CveMetadataRejected extends CveMetadata {
+export interface CveMetadataRejected extends CveRecordMetadata {
     /** When the CVE identifier was rejected. */
     dateRejected?: string,
 }

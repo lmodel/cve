@@ -69,7 +69,9 @@ def test_the_two_records_are_closed_and_typed_per_state():
         assert record["additionalProperties"] is False
         assert metadata in json.dumps(record["properties"]["cveMetadata"])
         assert containers in json.dumps(record["properties"]["containers"])
-        assert 'CveMetadata"' not in json.dumps(record["properties"]["cveMetadata"])
+        assert 'CveRecordMetadata"' not in json.dumps(
+            record["properties"]["cveMetadata"]
+        )
 
 
 @pytest.mark.parametrize("name", ["CveRecordRoot-published", "CveRecordRoot-rejected"])

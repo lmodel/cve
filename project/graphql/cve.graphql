@@ -431,7 +431,7 @@ type CveCnaRejectedContainer
   {
     providerMetadata: CveProviderMetadata!
     rejectedReasons: [CveDescription]!
-    replacedBy: [CveId]
+    replacedBy: [CveIdentifier]
   }
 
 interface CveContainers
@@ -485,22 +485,10 @@ type CveImpact
     capecId: String
   }
 
-interface CveMetadata
-  {
-    dateUpdated: CveTimestamp
-    state: CveRecordState!
-    cveId: CveId!
-    assignerOrgId: CveUuid!
-    assignerShortName: CveShortName
-    serial: Int
-    dateReserved: CveTimestamp
-    datePublished: CveTimestamp
-  }
-
 type CveMetadataPublished
   {
     dateUpdated: CveTimestamp
-    cveId: CveId!
+    cveId: CveIdentifier!
     assignerOrgId: CveUuid!
     assignerShortName: CveShortName
     serial: Int
@@ -513,7 +501,7 @@ type CveMetadataPublished
 type CveMetadataRejected
   {
     dateUpdated: CveTimestamp
-    cveId: CveId!
+    cveId: CveIdentifier!
     assignerOrgId: CveUuid!
     assignerShortName: CveShortName
     serial: Int
@@ -619,10 +607,22 @@ type CvePublishedRecord
 
 interface CveRecord
   {
-    cveMetadata: CveMetadata!
+    cveMetadata: CveRecordMetadata!
     containers: CveContainers!
     dataType: CveDataType!
     dataVersion: CveDataVersion!
+  }
+
+interface CveRecordMetadata
+  {
+    dateUpdated: CveTimestamp
+    state: CveRecordState!
+    cveId: CveIdentifier!
+    assignerOrgId: CveUuid!
+    assignerShortName: CveShortName
+    serial: Int
+    dateReserved: CveTimestamp
+    datePublished: CveTimestamp
   }
 
 type CveRecordRoot

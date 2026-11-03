@@ -16,7 +16,7 @@ import lombok.*;
 @EqualsAndHashCode(callSuper=false)
 public abstract class CveRecord  {
 
-  private CveMetadata cveMetadata;
+  private CveRecordMetadata cveMetadata;
   private CveContainers containers;
   private String dataType;
   private String dataVersion;

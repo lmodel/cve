@@ -167,25 +167,6 @@ message CveImpact {
   // The Common Attack Pattern Enumeration identifier that best fits, such as CAPEC-63.
   string capecId = 2;
 }
-// The facts about a record itself, as distinct from the vulnerability it describes.
-message CveMetadata {
-  // When the record or container was last updated.
-  string dateUpdated = 1;
-  // Whether the record is published or rejected.
-  CveRecordState state = 2;
-  // The CVE identifier that the record belongs to.
-  string cveId = 3;
-  // The UUID of the organisation that was given the CVE identifier.
-  string assignerOrgId = 4;
-  // The short name of the organisation that was given the CVE identifier.
-  string assignerShortName = 5;
-  // A counter that the system of record raises each time a provider changes the record.
-  int32 serial = 6;
-  // When the CVE identifier was reserved.
-  string dateReserved = 7;
-  // When the record first appeared in the CVE List.
-  string datePublished = 8;
-}
 // The metadata of a published record.
 message CveMetadataPublished {
   // When the record or container was last updated.
@@ -359,13 +340,32 @@ message CvePublishedRecord {
 // A record of one vulnerability under one CVE identifier, in the CVE Program's format.
 message CveRecord {
   // The facts about the record itself.
-  CveMetadata cveMetadata = 1;
+  CveRecordMetadata cveMetadata = 1;
   // The vulnerability information, grouped by who provided it.
   CveContainers containers = 2;
   // The kind of document this is, which is always a CVE record.
   CveDataType dataType = 3;
   // The version of the record format that this record follows.
   string dataVersion = 4;
+}
+// The facts about a record itself, as distinct from the vulnerability it describes.
+message CveRecordMetadata {
+  // When the record or container was last updated.
+  string dateUpdated = 1;
+  // Whether the record is published or rejected.
+  CveRecordState state = 2;
+  // The CVE identifier that the record belongs to.
+  string cveId = 3;
+  // The UUID of the organisation that was given the CVE identifier.
+  string assignerOrgId = 4;
+  // The short name of the organisation that was given the CVE identifier.
+  string assignerShortName = 5;
+  // A counter that the system of record raises each time a provider changes the record.
+  int32 serial = 6;
+  // When the CVE identifier was reserved.
+  string dateReserved = 7;
+  // When the record first appeared in the CVE List.
+  string datePublished = 8;
 }
 // Any one CVE record, published or rejected, as a file or an API answer holds it.
 message CveRecordRoot {

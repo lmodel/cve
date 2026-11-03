@@ -145,7 +145,7 @@
 --     * Slot: dataVersion Description: The version of the record format that this record follows.
 --     * Slot: cveMetadata_id Description: The facts about the record itself.
 --     * Slot: containers_id Description: The vulnerability information, grouped by who provided it.
--- # Abstract Class: CveMetadata Description: The facts about a record itself, as distinct from the vulnerability it describes.
+-- # Abstract Class: CveRecordMetadata Description: The facts about a record itself, as distinct from the vulnerability it describes.
 --     * Slot: id
 --     * Slot: dateUpdated Description: When the record or container was last updated.
 --     * Slot: state Description: Whether the record is published or rejected.
@@ -525,7 +525,7 @@ CREATE TABLE "CvssV40" (
 );
 CREATE INDEX "ix_CvssV40_id" ON "CvssV40" (id);
 
-CREATE TABLE "CveMetadata" (
+CREATE TABLE "CveRecordMetadata" (
 	id INTEGER NOT NULL,
 	"dateUpdated" TEXT,
 	state VARCHAR(9) NOT NULL,
@@ -537,7 +537,7 @@ CREATE TABLE "CveMetadata" (
 	"datePublished" TEXT,
 	PRIMARY KEY (id)
 );
-CREATE INDEX "ix_CveMetadata_id" ON "CveMetadata" (id);
+CREATE INDEX "ix_CveRecordMetadata_id" ON "CveRecordMetadata" (id);
 
 CREATE TABLE "CveMetadataPublished" (
 	id INTEGER NOT NULL,
@@ -658,8 +658,8 @@ CREATE TABLE "CveCnaPublishedContainer_tags" (
 	PRIMARY KEY ("CveCnaPublishedContainer_id", tags),
 	FOREIGN KEY("CveCnaPublishedContainer_id") REFERENCES "CveCnaPublishedContainer" (id)
 );
-CREATE INDEX "ix_CveCnaPublishedContainer_tags_tags" ON "CveCnaPublishedContainer_tags" (tags);
 CREATE INDEX "ix_CveCnaPublishedContainer_tags_CveCnaPublishedContainer_id" ON "CveCnaPublishedContainer_tags" ("CveCnaPublishedContainer_id");
+CREATE INDEX "ix_CveCnaPublishedContainer_tags_tags" ON "CveCnaPublishedContainer_tags" (tags);
 
 CREATE TABLE "CveCnaRejectedContainer_replacedBy" (
 	"CveCnaRejectedContainer_id" INTEGER,
@@ -667,8 +667,8 @@ CREATE TABLE "CveCnaRejectedContainer_replacedBy" (
 	PRIMARY KEY ("CveCnaRejectedContainer_id", "replacedBy"),
 	FOREIGN KEY("CveCnaRejectedContainer_id") REFERENCES "CveCnaRejectedContainer" (id)
 );
-CREATE INDEX "ix_CveCnaRejectedContainer_replacedBy_CveCnaRejectedContainer_id" ON "CveCnaRejectedContainer_replacedBy" ("CveCnaRejectedContainer_id");
 CREATE INDEX "ix_CveCnaRejectedContainer_replacedBy_replacedBy" ON "CveCnaRejectedContainer_replacedBy" ("replacedBy");
+CREATE INDEX "ix_CveCnaRejectedContainer_replacedBy_CveCnaRejectedContainer_id" ON "CveCnaRejectedContainer_replacedBy" ("CveCnaRejectedContainer_id");
 
 CREATE TABLE "CveRecord" (
 	id INTEGER NOT NULL,
@@ -677,7 +677,7 @@ CREATE TABLE "CveRecord" (
 	"cveMetadata_id" INTEGER NOT NULL,
 	containers_id INTEGER NOT NULL,
 	PRIMARY KEY (id),
-	FOREIGN KEY("cveMetadata_id") REFERENCES "CveMetadata" (id),
+	FOREIGN KEY("cveMetadata_id") REFERENCES "CveRecordMetadata" (id),
 	FOREIGN KEY(containers_id) REFERENCES "CveContainers" (id)
 );
 CREATE INDEX "ix_CveRecord_id" ON "CveRecord" (id);
@@ -836,8 +836,8 @@ CREATE TABLE "CveAdpContainer_tags" (
 	PRIMARY KEY ("CveAdpContainer_id", tags),
 	FOREIGN KEY("CveAdpContainer_id") REFERENCES "CveAdpContainer" (id)
 );
-CREATE INDEX "ix_CveAdpContainer_tags_CveAdpContainer_id" ON "CveAdpContainer_tags" ("CveAdpContainer_id");
 CREATE INDEX "ix_CveAdpContainer_tags_tags" ON "CveAdpContainer_tags" (tags);
+CREATE INDEX "ix_CveAdpContainer_tags_CveAdpContainer_id" ON "CveAdpContainer_tags" ("CveAdpContainer_id");
 
 CREATE TABLE "CveProgramRoutine" (
 	id INTEGER NOT NULL,
@@ -926,8 +926,8 @@ CREATE TABLE "CveProduct_cpes" (
 	PRIMARY KEY ("CveProduct_id", cpes),
 	FOREIGN KEY("CveProduct_id") REFERENCES "CveProduct" (id)
 );
-CREATE INDEX "ix_CveProduct_cpes_CveProduct_id" ON "CveProduct_cpes" ("CveProduct_id");
 CREATE INDEX "ix_CveProduct_cpes_cpes" ON "CveProduct_cpes" (cpes);
+CREATE INDEX "ix_CveProduct_cpes_CveProduct_id" ON "CveProduct_cpes" ("CveProduct_id");
 
 CREATE TABLE "CveProduct_modules" (
 	"CveProduct_id" INTEGER,
@@ -935,8 +935,8 @@ CREATE TABLE "CveProduct_modules" (
 	PRIMARY KEY ("CveProduct_id", modules),
 	FOREIGN KEY("CveProduct_id") REFERENCES "CveProduct" (id)
 );
-CREATE INDEX "ix_CveProduct_modules_modules" ON "CveProduct_modules" (modules);
 CREATE INDEX "ix_CveProduct_modules_CveProduct_id" ON "CveProduct_modules" ("CveProduct_id");
+CREATE INDEX "ix_CveProduct_modules_modules" ON "CveProduct_modules" (modules);
 
 CREATE TABLE "CveProduct_programFiles" (
 	"CveProduct_id" INTEGER,
@@ -944,8 +944,8 @@ CREATE TABLE "CveProduct_programFiles" (
 	PRIMARY KEY ("CveProduct_id", "programFiles"),
 	FOREIGN KEY("CveProduct_id") REFERENCES "CveProduct" (id)
 );
-CREATE INDEX "ix_CveProduct_programFiles_CveProduct_id" ON "CveProduct_programFiles" ("CveProduct_id");
 CREATE INDEX "ix_CveProduct_programFiles_programFiles" ON "CveProduct_programFiles" ("programFiles");
+CREATE INDEX "ix_CveProduct_programFiles_CveProduct_id" ON "CveProduct_programFiles" ("CveProduct_id");
 
 CREATE TABLE "CveProduct_platforms" (
 	"CveProduct_id" INTEGER,

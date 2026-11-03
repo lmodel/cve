@@ -2059,7 +2059,7 @@ class CveRecord(ConfiguredBaseModel):
          'from_schema': 'https://w3id.org/lmodel/cve/cve_record',
          'related_mappings': ['wd:Q631425']})
 
-    cveMetadata: CveMetadata = Field(default=..., description="""The facts about the record itself.""", json_schema_extra = { "linkml_meta": {'annotations': {'upstream_path': {'tag': 'upstream_path',
+    cveMetadata: CveRecordMetadata = Field(default=..., description="""The facts about the record itself.""", json_schema_extra = { "linkml_meta": {'annotations': {'upstream_path': {'tag': 'upstream_path',
                                            'value': 'CVE_Record_Format.json#/oneOf/0/properties/cveMetadata '
                                                     'CVE_Record_Format.json#/oneOf/1/properties/cveMetadata'}},
          'domain_of': ['CveRecord']} })
@@ -2137,7 +2137,7 @@ class CveRejectedRecord(CveRecord):
          'domain_of': ['CveRecord']} })
 
 
-class CveMetadata(ConfiguredBaseModel):
+class CveRecordMetadata(ConfiguredBaseModel):
     """
     The facts about a record itself, as distinct from the vulnerability it describes.
     """
@@ -2154,38 +2154,38 @@ class CveMetadata(ConfiguredBaseModel):
          'close_mappings': ['dcterms:modified',
                             'schema:dateModified',
                             'spdx_security:modifiedTime'],
-         'domain_of': ['CveMetadata', 'CveProviderMetadata']} })
+         'domain_of': ['CveRecordMetadata', 'CveProviderMetadata']} })
     state: CveRecordState = Field(default=..., description="""Whether the record is published or rejected.""", json_schema_extra = { "linkml_meta": {'annotations': {'upstream_path': {'tag': 'upstream_path',
                                            'value': 'CVE_Record_Format.json#/definitions/cveMetadataPublished/properties/state '
                                                     'CVE_Record_Format.json#/definitions/cveMetadataRejected/properties/state'}},
-         'domain_of': ['CveMetadata']} })
+         'domain_of': ['CveRecordMetadata']} })
     cveId: str = Field(default=..., description="""The CVE identifier that the record belongs to.""", json_schema_extra = { "linkml_meta": {'annotations': {'upstream_path': {'tag': 'upstream_path',
                                            'value': 'CVE_Record_Format.json#/definitions/cveMetadataPublished/properties/cveId'}},
-         'domain_of': ['CveMetadata'],
+         'domain_of': ['CveRecordMetadata'],
          'narrow_mappings': ['dcterms:identifier', 'schema:identifier']} })
     assignerOrgId: str = Field(default=..., description="""The UUID of the organisation that was given the CVE identifier.""", json_schema_extra = { "linkml_meta": {'annotations': {'upstream_path': {'tag': 'upstream_path',
                                            'value': 'CVE_Record_Format.json#/definitions/cveMetadataPublished/properties/assignerOrgId'}},
-         'domain_of': ['CveMetadata']} })
+         'domain_of': ['CveRecordMetadata']} })
     assignerShortName: Optional[str] = Field(default=None, description="""The short name of the organisation that was given the CVE identifier.""", json_schema_extra = { "linkml_meta": {'annotations': {'upstream_path': {'tag': 'upstream_path',
                                            'value': 'CVE_Record_Format.json#/definitions/cveMetadataPublished/properties/assignerShortName'}},
-         'domain_of': ['CveMetadata']} })
+         'domain_of': ['CveRecordMetadata']} })
     serial: Optional[int] = Field(default=None, description="""A counter that the system of record raises each time a provider changes the record.""", ge=1, json_schema_extra = { "linkml_meta": {'annotations': {'upstream_path': {'tag': 'upstream_path',
                                            'value': 'CVE_Record_Format.json#/definitions/cveMetadataPublished/properties/serial'}},
-         'domain_of': ['CveMetadata']} })
+         'domain_of': ['CveRecordMetadata']} })
     dateReserved: Optional[str] = Field(default=None, description="""When the CVE identifier was reserved.""", json_schema_extra = { "linkml_meta": {'annotations': {'upstream_path': {'tag': 'upstream_path',
                                            'value': 'CVE_Record_Format.json#/definitions/cveMetadataPublished/properties/dateReserved'}},
          'comments': ['This says nothing about when the flaw was found, reported or '
                       'disclosed.'],
-         'domain_of': ['CveMetadata']} })
+         'domain_of': ['CveRecordMetadata']} })
     datePublished: Optional[str] = Field(default=None, description="""When the record first appeared in the CVE List.""", json_schema_extra = { "linkml_meta": {'annotations': {'upstream_path': {'tag': 'upstream_path',
                                            'value': 'CVE_Record_Format.json#/definitions/cveMetadataPublished/properties/datePublished'}},
          'close_mappings': ['dcterms:issued',
                             'schema:datePublished',
                             'spdx_security:publishedTime'],
-         'domain_of': ['CveMetadata']} })
+         'domain_of': ['CveRecordMetadata']} })
 
 
-class CveMetadataPublished(CveMetadata):
+class CveMetadataPublished(CveRecordMetadata):
     """
     The metadata of a published record.
     """
@@ -2204,38 +2204,38 @@ class CveMetadataPublished(CveMetadata):
          'close_mappings': ['dcterms:modified',
                             'schema:dateModified',
                             'spdx_security:modifiedTime'],
-         'domain_of': ['CveMetadata', 'CveProviderMetadata']} })
+         'domain_of': ['CveRecordMetadata', 'CveProviderMetadata']} })
     state: CvePublishedState = Field(default=..., description="""Whether the record is published or rejected.""", json_schema_extra = { "linkml_meta": {'annotations': {'upstream_path': {'tag': 'upstream_path',
                                            'value': 'CVE_Record_Format.json#/definitions/cveMetadataPublished/properties/state '
                                                     'CVE_Record_Format.json#/definitions/cveMetadataRejected/properties/state'}},
-         'domain_of': ['CveMetadata']} })
+         'domain_of': ['CveRecordMetadata']} })
     cveId: str = Field(default=..., description="""The CVE identifier that the record belongs to.""", json_schema_extra = { "linkml_meta": {'annotations': {'upstream_path': {'tag': 'upstream_path',
                                            'value': 'CVE_Record_Format.json#/definitions/cveMetadataPublished/properties/cveId'}},
-         'domain_of': ['CveMetadata'],
+         'domain_of': ['CveRecordMetadata'],
          'narrow_mappings': ['dcterms:identifier', 'schema:identifier']} })
     assignerOrgId: str = Field(default=..., description="""The UUID of the organisation that was given the CVE identifier.""", json_schema_extra = { "linkml_meta": {'annotations': {'upstream_path': {'tag': 'upstream_path',
                                            'value': 'CVE_Record_Format.json#/definitions/cveMetadataPublished/properties/assignerOrgId'}},
-         'domain_of': ['CveMetadata']} })
+         'domain_of': ['CveRecordMetadata']} })
     assignerShortName: Optional[str] = Field(default=None, description="""The short name of the organisation that was given the CVE identifier.""", json_schema_extra = { "linkml_meta": {'annotations': {'upstream_path': {'tag': 'upstream_path',
                                            'value': 'CVE_Record_Format.json#/definitions/cveMetadataPublished/properties/assignerShortName'}},
-         'domain_of': ['CveMetadata']} })
+         'domain_of': ['CveRecordMetadata']} })
     serial: Optional[int] = Field(default=None, description="""A counter that the system of record raises each time a provider changes the record.""", ge=1, json_schema_extra = { "linkml_meta": {'annotations': {'upstream_path': {'tag': 'upstream_path',
                                            'value': 'CVE_Record_Format.json#/definitions/cveMetadataPublished/properties/serial'}},
-         'domain_of': ['CveMetadata']} })
+         'domain_of': ['CveRecordMetadata']} })
     dateReserved: Optional[str] = Field(default=None, description="""When the CVE identifier was reserved.""", json_schema_extra = { "linkml_meta": {'annotations': {'upstream_path': {'tag': 'upstream_path',
                                            'value': 'CVE_Record_Format.json#/definitions/cveMetadataPublished/properties/dateReserved'}},
          'comments': ['This says nothing about when the flaw was found, reported or '
                       'disclosed.'],
-         'domain_of': ['CveMetadata']} })
+         'domain_of': ['CveRecordMetadata']} })
     datePublished: Optional[str] = Field(default=None, description="""When the record first appeared in the CVE List.""", json_schema_extra = { "linkml_meta": {'annotations': {'upstream_path': {'tag': 'upstream_path',
                                            'value': 'CVE_Record_Format.json#/definitions/cveMetadataPublished/properties/datePublished'}},
          'close_mappings': ['dcterms:issued',
                             'schema:datePublished',
                             'spdx_security:publishedTime'],
-         'domain_of': ['CveMetadata']} })
+         'domain_of': ['CveRecordMetadata']} })
 
 
-class CveMetadataRejected(CveMetadata):
+class CveMetadataRejected(CveRecordMetadata):
     """
     The metadata of a rejected record.
     """
@@ -2255,35 +2255,35 @@ class CveMetadataRejected(CveMetadata):
          'close_mappings': ['dcterms:modified',
                             'schema:dateModified',
                             'spdx_security:modifiedTime'],
-         'domain_of': ['CveMetadata', 'CveProviderMetadata']} })
+         'domain_of': ['CveRecordMetadata', 'CveProviderMetadata']} })
     state: CveRejectedState = Field(default=..., description="""Whether the record is published or rejected.""", json_schema_extra = { "linkml_meta": {'annotations': {'upstream_path': {'tag': 'upstream_path',
                                            'value': 'CVE_Record_Format.json#/definitions/cveMetadataPublished/properties/state '
                                                     'CVE_Record_Format.json#/definitions/cveMetadataRejected/properties/state'}},
-         'domain_of': ['CveMetadata']} })
+         'domain_of': ['CveRecordMetadata']} })
     cveId: str = Field(default=..., description="""The CVE identifier that the record belongs to.""", json_schema_extra = { "linkml_meta": {'annotations': {'upstream_path': {'tag': 'upstream_path',
                                            'value': 'CVE_Record_Format.json#/definitions/cveMetadataPublished/properties/cveId'}},
-         'domain_of': ['CveMetadata'],
+         'domain_of': ['CveRecordMetadata'],
          'narrow_mappings': ['dcterms:identifier', 'schema:identifier']} })
     assignerOrgId: str = Field(default=..., description="""The UUID of the organisation that was given the CVE identifier.""", json_schema_extra = { "linkml_meta": {'annotations': {'upstream_path': {'tag': 'upstream_path',
                                            'value': 'CVE_Record_Format.json#/definitions/cveMetadataPublished/properties/assignerOrgId'}},
-         'domain_of': ['CveMetadata']} })
+         'domain_of': ['CveRecordMetadata']} })
     assignerShortName: Optional[str] = Field(default=None, description="""The short name of the organisation that was given the CVE identifier.""", json_schema_extra = { "linkml_meta": {'annotations': {'upstream_path': {'tag': 'upstream_path',
                                            'value': 'CVE_Record_Format.json#/definitions/cveMetadataPublished/properties/assignerShortName'}},
-         'domain_of': ['CveMetadata']} })
+         'domain_of': ['CveRecordMetadata']} })
     serial: Optional[int] = Field(default=None, description="""A counter that the system of record raises each time a provider changes the record.""", ge=1, json_schema_extra = { "linkml_meta": {'annotations': {'upstream_path': {'tag': 'upstream_path',
                                            'value': 'CVE_Record_Format.json#/definitions/cveMetadataPublished/properties/serial'}},
-         'domain_of': ['CveMetadata']} })
+         'domain_of': ['CveRecordMetadata']} })
     dateReserved: Optional[str] = Field(default=None, description="""When the CVE identifier was reserved.""", json_schema_extra = { "linkml_meta": {'annotations': {'upstream_path': {'tag': 'upstream_path',
                                            'value': 'CVE_Record_Format.json#/definitions/cveMetadataPublished/properties/dateReserved'}},
          'comments': ['This says nothing about when the flaw was found, reported or '
                       'disclosed.'],
-         'domain_of': ['CveMetadata']} })
+         'domain_of': ['CveRecordMetadata']} })
     datePublished: Optional[str] = Field(default=None, description="""When the record first appeared in the CVE List.""", json_schema_extra = { "linkml_meta": {'annotations': {'upstream_path': {'tag': 'upstream_path',
                                            'value': 'CVE_Record_Format.json#/definitions/cveMetadataPublished/properties/datePublished'}},
          'close_mappings': ['dcterms:issued',
                             'schema:datePublished',
                             'spdx_security:publishedTime'],
-         'domain_of': ['CveMetadata']} })
+         'domain_of': ['CveRecordMetadata']} })
 
 
 class CveContainers(ConfiguredBaseModel):
@@ -2351,7 +2351,7 @@ class CveProviderMetadata(ConfiguredBaseModel):
          'close_mappings': ['dcterms:modified',
                             'schema:dateModified',
                             'spdx_security:modifiedTime'],
-         'domain_of': ['CveMetadata', 'CveProviderMetadata']} })
+         'domain_of': ['CveRecordMetadata', 'CveProviderMetadata']} })
     orgId: str = Field(default=..., description="""The UUID of the organisation that provided the container.""", json_schema_extra = { "linkml_meta": {'annotations': {'upstream_path': {'tag': 'upstream_path',
                                            'value': 'CVE_Record_Format.json#/definitions/providerMetadata/properties/orgId'}},
          'domain_of': ['CveProviderMetadata']} })
@@ -3458,7 +3458,7 @@ CvssV40.model_rebuild()
 CveRecord.model_rebuild()
 CvePublishedRecord.model_rebuild()
 CveRejectedRecord.model_rebuild()
-CveMetadata.model_rebuild()
+CveRecordMetadata.model_rebuild()
 CveMetadataPublished.model_rebuild()
 CveMetadataRejected.model_rebuild()
 CveContainers.model_rebuild()

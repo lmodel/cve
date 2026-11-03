@@ -93,12 +93,12 @@ class CveUuid(String):
     type_model_uri = CVE.CveUuid
 
 
-class CveId(String):
+class CveIdentifier(String):
     """ A CVE identifier, such as CVE-2021-44228. """
     type_class_uri = XSD["string"]
     type_class_curie = "xsd:string"
-    type_name = "cve_id"
-    type_model_uri = CVE.CveId
+    type_name = "cve_identifier"
+    type_model_uri = CVE.CveIdentifier
 
 
 class CveCpe22and23(String):
@@ -868,7 +868,7 @@ class CveRecord(YAMLRoot):
     class_name: ClassVar[str] = "CveRecord"
     class_model_uri: ClassVar[URIRef] = CVE.CveRecord
 
-    cveMetadata: Union[dict, "CveMetadata"] = None
+    cveMetadata: Union[dict, "CveRecordMetadata"] = None
     containers: Union[dict, "CveContainers"] = None
     dataType: Union[str, "CveDataType"] = None
     dataVersion: Union[str, CveDataVersion] = None
@@ -876,8 +876,8 @@ class CveRecord(YAMLRoot):
     def __post_init__(self, *_: str, **kwargs: Any):
         if self._is_empty(self.cveMetadata):
             self.MissingRequiredField("cveMetadata")
-        if not isinstance(self.cveMetadata, CveMetadata):
-            self.cveMetadata = CveMetadata(**as_dict(self.cveMetadata))
+        if not isinstance(self.cveMetadata, CveRecordMetadata):
+            self.cveMetadata = CveRecordMetadata(**as_dict(self.cveMetadata))
 
         if self._is_empty(self.containers):
             self.MissingRequiredField("containers")
@@ -960,19 +960,19 @@ class CveRejectedRecord(CveRecord):
 
 
 @dataclass(repr=False)
-class CveMetadata(YAMLRoot):
+class CveRecordMetadata(YAMLRoot):
     """
     The facts about a record itself, as distinct from the vulnerability it describes.
     """
     _inherited_slots: ClassVar[list[str]] = []
 
-    class_class_uri: ClassVar[URIRef] = CVE["CveMetadata"]
-    class_class_curie: ClassVar[str] = "cve:CveMetadata"
-    class_name: ClassVar[str] = "CveMetadata"
-    class_model_uri: ClassVar[URIRef] = CVE.CveMetadata
+    class_class_uri: ClassVar[URIRef] = CVE["CveRecordMetadata"]
+    class_class_curie: ClassVar[str] = "cve:CveRecordMetadata"
+    class_name: ClassVar[str] = "CveRecordMetadata"
+    class_model_uri: ClassVar[URIRef] = CVE.CveRecordMetadata
 
     state: Union[str, "CveRecordState"] = None
-    cveId: Union[str, CveId] = None
+    cveId: Union[str, CveIdentifier] = None
     assignerOrgId: Union[str, CveUuid] = None
     dateUpdated: Optional[Union[str, CveTimestamp]] = None
     assignerShortName: Optional[Union[str, CveShortName]] = None
@@ -988,8 +988,8 @@ class CveMetadata(YAMLRoot):
 
         if self._is_empty(self.cveId):
             self.MissingRequiredField("cveId")
-        if not isinstance(self.cveId, CveId):
-            self.cveId = CveId(self.cveId)
+        if not isinstance(self.cveId, CveIdentifier):
+            self.cveId = CveIdentifier(self.cveId)
 
         if self._is_empty(self.assignerOrgId):
             self.MissingRequiredField("assignerOrgId")
@@ -1015,7 +1015,7 @@ class CveMetadata(YAMLRoot):
 
 
 @dataclass(repr=False)
-class CveMetadataPublished(CveMetadata):
+class CveMetadataPublished(CveRecordMetadata):
     """
     The metadata of a published record.
     """
@@ -1026,7 +1026,7 @@ class CveMetadataPublished(CveMetadata):
     class_name: ClassVar[str] = "CveMetadataPublished"
     class_model_uri: ClassVar[URIRef] = CVE.CveMetadataPublished
 
-    cveId: Union[str, CveId] = None
+    cveId: Union[str, CveIdentifier] = None
     assignerOrgId: Union[str, CveUuid] = None
     state: Union[str, "CvePublishedState"] = None
     requesterUserId: Optional[Union[str, CveUuid]] = None
@@ -1044,7 +1044,7 @@ class CveMetadataPublished(CveMetadata):
 
 
 @dataclass(repr=False)
-class CveMetadataRejected(CveMetadata):
+class CveMetadataRejected(CveRecordMetadata):
     """
     The metadata of a rejected record.
     """
@@ -1055,7 +1055,7 @@ class CveMetadataRejected(CveMetadata):
     class_name: ClassVar[str] = "CveMetadataRejected"
     class_model_uri: ClassVar[URIRef] = CVE.CveMetadataRejected
 
-    cveId: Union[str, CveId] = None
+    cveId: Union[str, CveIdentifier] = None
     assignerOrgId: Union[str, CveUuid] = None
     state: Union[str, "CveRejectedState"] = None
     dateRejected: Optional[Union[str, CveTimestamp]] = None
@@ -1311,7 +1311,7 @@ class CveCnaRejectedContainer(CveCnaContainer):
 
     providerMetadata: Union[dict, CveProviderMetadata] = None
     rejectedReasons: Union[Union[dict, "CveDescription"], list[Union[dict, "CveDescription"]]] = None
-    replacedBy: Optional[Union[Union[str, CveId], list[Union[str, CveId]]]] = empty_list()
+    replacedBy: Optional[Union[Union[str, CveIdentifier], list[Union[str, CveIdentifier]]]] = empty_list()
 
     def __post_init__(self, *_: str, **kwargs: Any):
         if self._is_empty(self.rejectedReasons):
@@ -1320,7 +1320,7 @@ class CveCnaRejectedContainer(CveCnaContainer):
 
         if not isinstance(self.replacedBy, list):
             self.replacedBy = [self.replacedBy] if self.replacedBy is not None else []
-        self.replacedBy = [v if isinstance(v, CveId) else CveId(v) for v in self.replacedBy]
+        self.replacedBy = [v if isinstance(v, CveIdentifier) else CveIdentifier(v) for v in self.replacedBy]
 
         super().__post_init__(**kwargs)
 
@@ -3306,7 +3306,7 @@ slots.modifiedAvailabilityImpact = Slot(uri=CVE.modifiedAvailabilityImpact, name
                    model_uri=CVE.modifiedAvailabilityImpact, domain=None, range=Optional[str])
 
 slots.cveMetadata = Slot(uri=CVE.cveMetadata, name="cveMetadata", curie=CVE.curie('cveMetadata'),
-                   model_uri=CVE.cveMetadata, domain=None, range=Union[dict, CveMetadata])
+                   model_uri=CVE.cveMetadata, domain=None, range=Union[dict, CveRecordMetadata])
 
 slots.containers = Slot(uri=CVE.containers, name="containers", curie=CVE.curie('containers'),
                    model_uri=CVE.containers, domain=None, range=Union[dict, CveContainers])
@@ -3494,23 +3494,23 @@ slots.cveRecord__dataType = Slot(uri=CVE.dataType, name="cveRecord__dataType", c
 slots.cveRecord__dataVersion = Slot(uri=CVE.dataVersion, name="cveRecord__dataVersion", curie=CVE.curie('dataVersion'),
                    model_uri=CVE.cveRecord__dataVersion, domain=None, range=Union[str, CveDataVersion])
 
-slots.cveMetadata__cveId = Slot(uri=CVE.cveId, name="cveMetadata__cveId", curie=CVE.curie('cveId'),
-                   model_uri=CVE.cveMetadata__cveId, domain=None, range=Union[str, CveId])
+slots.cveRecordMetadata__cveId = Slot(uri=CVE.cveId, name="cveRecordMetadata__cveId", curie=CVE.curie('cveId'),
+                   model_uri=CVE.cveRecordMetadata__cveId, domain=None, range=Union[str, CveIdentifier])
 
-slots.cveMetadata__assignerOrgId = Slot(uri=CVE.assignerOrgId, name="cveMetadata__assignerOrgId", curie=CVE.curie('assignerOrgId'),
-                   model_uri=CVE.cveMetadata__assignerOrgId, domain=None, range=Union[str, CveUuid])
+slots.cveRecordMetadata__assignerOrgId = Slot(uri=CVE.assignerOrgId, name="cveRecordMetadata__assignerOrgId", curie=CVE.curie('assignerOrgId'),
+                   model_uri=CVE.cveRecordMetadata__assignerOrgId, domain=None, range=Union[str, CveUuid])
 
-slots.cveMetadata__assignerShortName = Slot(uri=CVE.assignerShortName, name="cveMetadata__assignerShortName", curie=CVE.curie('assignerShortName'),
-                   model_uri=CVE.cveMetadata__assignerShortName, domain=None, range=Optional[Union[str, CveShortName]])
+slots.cveRecordMetadata__assignerShortName = Slot(uri=CVE.assignerShortName, name="cveRecordMetadata__assignerShortName", curie=CVE.curie('assignerShortName'),
+                   model_uri=CVE.cveRecordMetadata__assignerShortName, domain=None, range=Optional[Union[str, CveShortName]])
 
-slots.cveMetadata__serial = Slot(uri=CVE.serial, name="cveMetadata__serial", curie=CVE.curie('serial'),
-                   model_uri=CVE.cveMetadata__serial, domain=None, range=Optional[int])
+slots.cveRecordMetadata__serial = Slot(uri=CVE.serial, name="cveRecordMetadata__serial", curie=CVE.curie('serial'),
+                   model_uri=CVE.cveRecordMetadata__serial, domain=None, range=Optional[int])
 
-slots.cveMetadata__dateReserved = Slot(uri=CVE.dateReserved, name="cveMetadata__dateReserved", curie=CVE.curie('dateReserved'),
-                   model_uri=CVE.cveMetadata__dateReserved, domain=None, range=Optional[Union[str, CveTimestamp]])
+slots.cveRecordMetadata__dateReserved = Slot(uri=CVE.dateReserved, name="cveRecordMetadata__dateReserved", curie=CVE.curie('dateReserved'),
+                   model_uri=CVE.cveRecordMetadata__dateReserved, domain=None, range=Optional[Union[str, CveTimestamp]])
 
-slots.cveMetadata__datePublished = Slot(uri=CVE.datePublished, name="cveMetadata__datePublished", curie=CVE.curie('datePublished'),
-                   model_uri=CVE.cveMetadata__datePublished, domain=None, range=Optional[Union[str, CveTimestamp]])
+slots.cveRecordMetadata__datePublished = Slot(uri=CVE.datePublished, name="cveRecordMetadata__datePublished", curie=CVE.curie('datePublished'),
+                   model_uri=CVE.cveRecordMetadata__datePublished, domain=None, range=Optional[Union[str, CveTimestamp]])
 
 slots.cveMetadataPublished__requesterUserId = Slot(uri=CVE.requesterUserId, name="cveMetadataPublished__requesterUserId", curie=CVE.curie('requesterUserId'),
                    model_uri=CVE.cveMetadataPublished__requesterUserId, domain=None, range=Optional[Union[str, CveUuid]])
@@ -3534,7 +3534,7 @@ slots.cveCnaRejectedContainer__rejectedReasons = Slot(uri=CVE.rejectedReasons, n
                    model_uri=CVE.cveCnaRejectedContainer__rejectedReasons, domain=None, range=Union[Union[dict, CveDescription], list[Union[dict, CveDescription]]])
 
 slots.cveCnaRejectedContainer__replacedBy = Slot(uri=CVE.replacedBy, name="cveCnaRejectedContainer__replacedBy", curie=CVE.curie('replacedBy'),
-                   model_uri=CVE.cveCnaRejectedContainer__replacedBy, domain=None, range=Optional[Union[Union[str, CveId], list[Union[str, CveId]]]])
+                   model_uri=CVE.cveCnaRejectedContainer__replacedBy, domain=None, range=Optional[Union[Union[str, CveIdentifier], list[Union[str, CveIdentifier]]]])
 
 slots.cveProduct__vendor = Slot(uri=CVE.vendor, name="cveProduct__vendor", curie=CVE.curie('vendor'),
                    model_uri=CVE.cveProduct__vendor, domain=None, range=Optional[Union[str, CveText512]])
