@@ -3,7 +3,7 @@
 # schema http://schema.org/ from https://raw.githubusercontent.com/schemaorg/schemaorg/main/data/releases/30.1/schemaorg-current-http.ttl, SHA-256 62f11b228082fd5cad332734ae9566c9c93dfe2491aa8048c2954851687390db.
 # sepses_cve http://w3id.org/sepses/vocab/ref/cve# from https://www.sepses.org/vocab/ref/cve/ontology.ttl, SHA-256 6cca0194e7dc81b1877b7434482b0dd04e99ae02bf2a0ae64e7176bfb9ac01aa.
 # sepses_cvss http://w3id.org/sepses/vocab/ref/cvss# from https://www.sepses.org/vocab/ref/cvss/ontology.ttl, SHA-256 e96cc72b47a229a12f9e9c92f6f052a215d6d87f12adb7e4c3156e883fa86f65.
-# Q631425 is named by hand in scripts/extract_mapping_terms.py.
+# Q631425, P3587 and P3624 are named by hand in scripts/extract_mapping_terms.py.
 http://purl.org/dc/terms/Agent
 http://purl.org/dc/terms/AgentClass
 http://purl.org/dc/terms/BibliographicResource
@@ -2599,3 +2599,5 @@ http://w3id.org/sepses/vocab/ref/cvss#userInteraction
 http://w3id.org/sepses/vocab/ref/cvss#vectorString
 http://w3id.org/sepses/vocab/ref/cvss#version
 http://www.wikidata.org/entity/Q631425
+http://www.wikidata.org/prop/direct/P3587
+http://www.wikidata.org/prop/direct/P3624

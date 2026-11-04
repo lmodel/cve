@@ -39,10 +39,12 @@ prefixes:
   schema: http://schema.org/
   sepses_cve: http://w3id.org/sepses/vocab/ref/cve#
   sepses_cvss: http://w3id.org/sepses/vocab/ref/cvss#
+  spdx_core: https://spdx.org/rdf/3.0.1/terms/Core/
   spdx_security: https://spdx.org/rdf/3.0.1/terms/Security/
   spdx_software: https://spdx.org/rdf/3.0.1/terms/Software/
   stix: https://w3id.org/lmodel/stix/
   wd: http://www.wikidata.org/entity/
+  wdt: http://www.wikidata.org/prop/direct/
   xsd: http://www.w3.org/2001/XMLSchema#
 default_prefix: cve
 default_range: string
@@ -253,6 +255,7 @@ classes:
 
   CveRecord:
     abstract: true
+    children_are_mutually_disjoint: true
     description: >-
       A record of one vulnerability under one CVE identifier, in the CVE
       Program's format.
@@ -316,6 +319,7 @@ classes:
 
   CveRecordMetadata:
     abstract: true
+    children_are_mutually_disjoint: true
     description: The facts about a record itself, as distinct from the vulnerability it describes.
     annotations:
       upstream_path: >-
@@ -329,6 +333,13 @@ classes:
         description: The CVE identifier that the record belongs to.
         range: cve_identifier
         required: true
+        comments:
+          - >-
+            Wikidata's P3587 holds the same identifier in the same form, on the
+            item for the vulnerability, so it is exact. The Dublin Core and
+            schema.org terms are any identifier, so they are broader.
+        exact_mappings:
+          - wdt:P3587
         broad_mappings:
           - dcterms:identifier
           - schema:identifier
@@ -402,6 +413,7 @@ classes:
 
   CveContainers:
     abstract: true
+    children_are_mutually_disjoint: true
     description: The sets of vulnerability information in a record, one per providing organisation.
     annotations:
       upstream_path: >-
@@ -459,6 +471,7 @@ classes:
 
   CveCnaContainer:
     abstract: true
+    children_are_mutually_disjoint: true
     description: The container from the CVE Numbering Authority that assigned the identifier.
     annotations:
       upstream_path: >-
@@ -665,8 +678,13 @@ classes:
         list_elements_unique: true
         close_mappings:
           - sepses_cve:hasCPE
+        related_mappings:
+          - spdx_core:ExternalIdentifierType/cpe23
         comments:
           - The upstream suggests cpeApplicability for new records.
+          - >-
+            SPDX 3.0.1 names CPE 2.3 as one kind of external identifier, and this
+            field also admits the 2.2 form, so that term is only related.
         annotations:
           upstream_path: CVE_Record_Format.json#/definitions/product/properties/cpes
       modules:
@@ -1007,6 +1025,11 @@ classes:
         pattern: '^CWE-[1-9][0-9]*$'
         comments:
           - The upstream also allows it 5 to 9 characters. tests/cve_rules.py checks the length.
+          - >-
+            Wikidata's P3624 holds the CWE number alone, without the CWE- prefix
+            the format writes, so it is close.
+        close_mappings:
+          - wdt:P3624
         annotations:
           upstream_path: CVE_Record_Format.json#/definitions/problemTypes/items/properties/descriptions/items/properties/cweId
 

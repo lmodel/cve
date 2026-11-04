@@ -24,6 +24,13 @@
     "https://lmodel.github.io/cve",
     "https://www.cve.org/"
   ],
+  "keywords": [
+    "vulnerability",
+    "CVE",
+    "CVSS",
+    "CVE Numbering Authority",
+    "vulnerability record"
+  ],
   "id": "https://w3id.org/lmodel/cve",
   "version": "5.2.0",
   "imports": [
@@ -4297,7 +4304,13 @@
         }
       ],
       "description": "The CVE identifier that the record belongs to.",
+      "comments": [
+        "Wikidata's P3587 holds the same identifier in the same form, on the item for the vulnerability, so it is exact. The Dublin Core and schema.org terms are any identifier, so they are broader."
+      ],
       "from_schema": "https://w3id.org/lmodel/cve/cve_record",
+      "exact_mappings": [
+        "http://www.wikidata.org/prop/direct/P3587"
+      ],
       "broad_mappings": [
         "http://purl.org/dc/terms/identifier",
         "http://schema.org/identifier"
@@ -4728,11 +4741,15 @@
       ],
       "description": "Common Platform Enumeration names for the product.",
       "comments": [
-        "The upstream suggests cpeApplicability for new records."
+        "The upstream suggests cpeApplicability for new records.",
+        "SPDX 3.0.1 names CPE 2.3 as one kind of external identifier, and this field also admits the 2.2 form, so that term is only related."
       ],
       "from_schema": "https://w3id.org/lmodel/cve/cve_record",
       "close_mappings": [
         "http://w3id.org/sepses/vocab/ref/cve#hasCPE"
+      ],
+      "related_mappings": [
+        "https://spdx.org/rdf/3.0.1/terms/Core/ExternalIdentifierType/cpe23"
       ],
       "slot_uri": "https://w3id.org/lmodel/cve/cpes",
       "list_elements_unique": true,
@@ -5245,9 +5262,13 @@
       ],
       "description": "The Common Weakness Enumeration identifier that best fits, such as CWE-79.",
       "comments": [
-        "The upstream also allows it 5 to 9 characters. tests/cve_rules.py checks the length."
+        "The upstream also allows it 5 to 9 characters. tests/cve_rules.py checks the length.",
+        "Wikidata's P3624 holds the CWE number alone, without the CWE- prefix the format writes, so it is close."
       ],
       "from_schema": "https://w3id.org/lmodel/cve/cve_record",
+      "close_mappings": [
+        "http://www.wikidata.org/prop/direct/P3624"
+      ],
       "slot_uri": "https://w3id.org/lmodel/cve/cweId",
       "alias": "cweId",
       "owner": "CveProblemTypeDescription",
@@ -9605,6 +9626,7 @@
         }
       ],
       "class_uri": "https://w3id.org/lmodel/cve/CveRecord",
+      "children_are_mutually_disjoint": true,
       "@type": "ClassDefinition"
     },
     {
@@ -9688,6 +9710,12 @@
             }
           ],
           "description": "The CVE identifier that the record belongs to.",
+          "comments": [
+            "Wikidata's P3587 holds the same identifier in the same form, on the item for the vulnerability, so it is exact. The Dublin Core and schema.org terms are any identifier, so they are broader."
+          ],
+          "exact_mappings": [
+            "wdt:P3587"
+          ],
           "broad_mappings": [
             "dcterms:identifier",
             "schema:identifier"
@@ -9773,6 +9801,7 @@
         }
       ],
       "class_uri": "https://w3id.org/lmodel/cve/CveRecordMetadata",
+      "children_are_mutually_disjoint": true,
       "@type": "ClassDefinition"
     },
     {
@@ -9882,6 +9911,7 @@
       ],
       "slot_usage": {},
       "class_uri": "https://w3id.org/lmodel/cve/CveContainers",
+      "children_are_mutually_disjoint": true,
       "@type": "ClassDefinition"
     },
     {
@@ -10012,6 +10042,7 @@
       ],
       "slot_usage": {},
       "class_uri": "https://w3id.org/lmodel/cve/CveCnaContainer",
+      "children_are_mutually_disjoint": true,
       "@type": "ClassDefinition"
     },
     {
@@ -10306,10 +10337,14 @@
           ],
           "description": "Common Platform Enumeration names for the product.",
           "comments": [
-            "The upstream suggests cpeApplicability for new records."
+            "The upstream suggests cpeApplicability for new records.",
+            "SPDX 3.0.1 names CPE 2.3 as one kind of external identifier, and this field also admits the 2.2 form, so that term is only related."
           ],
           "close_mappings": [
             "sepses_cve:hasCPE"
+          ],
+          "related_mappings": [
+            "spdx_core:ExternalIdentifierType/cpe23"
           ],
           "list_elements_unique": true,
           "range": "cve_cpe22and23",
@@ -11080,7 +11115,11 @@
           ],
           "description": "The Common Weakness Enumeration identifier that best fits, such as CWE-79.",
           "comments": [
-            "The upstream also allows it 5 to 9 characters. tests/cve_rules.py checks the length."
+            "The upstream also allows it 5 to 9 characters. tests/cve_rules.py checks the length.",
+            "Wikidata's P3624 holds the CWE number alone, without the CWE- prefix the format writes, so it is close."
+          ],
+          "close_mappings": [
+            "wdt:P3624"
           ],
           "pattern": "^CWE-[1-9][0-9]*$",
           "@type": "SlotDefinition"
@@ -11638,8 +11677,8 @@
   ],
   "metamodel_version": "1.12.0",
   "source_file": "cve.yaml",
-  "source_file_date": "2026-11-03T22:02:38",
-  "source_file_size": 1650,
+  "source_file_date": "2026-11-04T00:01:51",
+  "source_file_size": 1748,
   "@type": "SchemaDefinition",
   "@context": [
     "project/jsonld/cve.context.jsonld",

@@ -9,6 +9,12 @@ description: >-
 version: "5.2.0"
 source: https://github.com/CVEProject/cve-schema/blob/v5.2.0/schema/CVE_Record_Format.json
 license: Apache-2.0
+keywords:
+  - vulnerability
+  - CVE
+  - CVSS
+  - CVE Numbering Authority
+  - vulnerability record
 see_also:
   - https://lmodel.github.io/cve
   - https://www.cve.org/

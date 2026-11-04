@@ -68,10 +68,12 @@ LINKML = CurieNamespace('linkml', 'https://w3id.org/linkml/')
 SCHEMA = CurieNamespace('schema', 'http://schema.org/')
 SEPSES_CVE = CurieNamespace('sepses_cve', 'http://w3id.org/sepses/vocab/ref/cve#')
 SEPSES_CVSS = CurieNamespace('sepses_cvss', 'http://w3id.org/sepses/vocab/ref/cvss#')
+SPDX_CORE = CurieNamespace('spdx_core', 'https://spdx.org/rdf/3.0.1/terms/Core/')
 SPDX_SECURITY = CurieNamespace('spdx_security', 'https://spdx.org/rdf/3.0.1/terms/Security/')
 SPDX_SOFTWARE = CurieNamespace('spdx_software', 'https://spdx.org/rdf/3.0.1/terms/Software/')
 STIX = CurieNamespace('stix', 'https://w3id.org/lmodel/stix/')
 WD = CurieNamespace('wd', 'http://www.wikidata.org/entity/')
+WDT = CurieNamespace('wdt', 'http://www.wikidata.org/prop/direct/')
 XSD = CurieNamespace('xsd', 'http://www.w3.org/2001/XMLSchema#')
 DEFAULT_ = CVE
 

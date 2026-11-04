@@ -26,7 +26,8 @@ The schema is the one home for mappings. The hand-kept SSSOM files that sat unde
 * **[SPDX](https://spdx.github.io/spdx-spec/v3.0.1/) 3.0.1 Security and Software profiles**: `close_mappings` for a record, its dates, score, severity, vector and package address, `related_mappings` for its CVSS relationships, and `meaning` on each CVSS severity. `tests/test_mappings.py` checks each against lmodel/spdx's released copy.
 * **[lmodel/stix](https://github.com/lmodel/stix)**: `close_mappings` for a record and a reference. `tests/test_mappings.py` checks each against its released copy.
 * **[Dublin Core](https://www.dublincore.org/specifications/dublin-core/dcmi-terms/) and [schema.org](https://schema.org/)**: `close_mappings` for dates, titles, descriptions, references, languages and the repository address, and `broad_mappings` for the CVE identifier, which is one kind of identifier. `tests/test_mappings.py` checks each against the term list from their pinned files.
-* **[Wikidata](https://www.wikidata.org/wiki/Q631425) Q631425**, the idea of a vulnerability: `related_mappings` on a record. The term list names it by hand, as read on 3 November 2026.
+* **[Wikidata](https://www.wikidata.org/wiki/Q631425)**: `related_mappings` on a record to Q631425, the idea of a vulnerability; `exact_mappings` on the CVE identifier to the property P3587, which holds it in the same form; and `close_mappings` on the CWE identifier to P3624, which holds the number without its prefix. The term list names the three by hand, as read on 3 November 2026.
+* **SPDX 3.0.1 Core**: `related_mappings` on a product's CPE names to `ExternalIdentifierType/cpe23`, since the field also admits the 2.2 form. `tests/test_mappings.py` checks it against lmodel/spdx's released copy.
 
 ## Repository Structure
 

@@ -21,7 +21,7 @@ SCHEMA_DIR = ROOT / "src" / "cve" / "schema"
 SCHEMA = SCHEMA_DIR / "cve.yaml"
 NEIGHBOURS = ROOT / "tests" / "neighbours"
 TERMS = ROOT / "tests" / "upstream" / "mapping-terms.txt"
-TERMS_SHA256 = "a35817fce5f2314c17cd9bbee75c9ce655482d7ed3c30de0c04d13409175cba5"
+TERMS_SHA256 = "a68bec28104a176d74fa42d2aef89064ef5b0ad48595e97164bc10d19cbde62d"
 MAPPING_KEYS = (
     "exact_mappings",
     "close_mappings",

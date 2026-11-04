@@ -8,10 +8,12 @@
       "sepses_cve": "http://w3id.org/sepses/vocab/ref/cve#",
       "sepses_cvss": "http://w3id.org/sepses/vocab/ref/cvss#",
       "skos": "http://www.w3.org/2004/02/skos/core#",
+      "spdx_core": "https://spdx.org/rdf/3.0.1/terms/Core/",
       "spdx_security": "https://spdx.org/rdf/3.0.1/terms/Security/",
       "spdx_software": "https://spdx.org/rdf/3.0.1/terms/Software/",
       "stix": "https://w3id.org/lmodel/stix/",
       "wd": "http://www.wikidata.org/entity/",
+      "wdt": "http://www.wikidata.org/prop/direct/",
       "@vocab": "https://w3id.org/lmodel/cve/",
       "affected": {
          "@type": "@id",

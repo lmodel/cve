@@ -85,6 +85,11 @@ linkml_meta = LinkMLMeta({'annotations': {'upstream_commit': {'tag': 'upstream_c
                     'record validates unchanged.',
      'id': 'https://w3id.org/lmodel/cve',
      'imports': ['linkml:types', './cve_cvss', './cve_record'],
+     'keywords': ['vulnerability',
+                  'CVE',
+                  'CVSS',
+                  'CVE Numbering Authority',
+                  'vulnerability record'],
      'license': 'Apache-2.0',
      'name': 'cve',
      'prefixes': {'cve': {'prefix_prefix': 'cve',
@@ -2045,6 +2050,7 @@ class CveRecord(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'abstract': True,
          'annotations': {'upstream_path': {'tag': 'upstream_path',
                                            'value': 'CVE_Record_Format.json#/oneOf'}},
+         'children_are_mutually_disjoint': True,
          'close_mappings': ['sepses_cve:CVE',
                             'spdx_security:Vulnerability',
                             'stix:StixVulnerability'],
@@ -2145,6 +2151,7 @@ class CveRecordMetadata(ConfiguredBaseModel):
          'annotations': {'upstream_path': {'tag': 'upstream_path',
                                            'value': 'CVE_Record_Format.json#/definitions/cveMetadataPublished '
                                                     'CVE_Record_Format.json#/definitions/cveMetadataRejected'}},
+         'children_are_mutually_disjoint': True,
          'from_schema': 'https://w3id.org/lmodel/cve/cve_record'})
 
     dateUpdated: Optional[str] = Field(default=None, description="""When the record or container was last updated.""", json_schema_extra = { "linkml_meta": {'annotations': {'upstream_path': {'tag': 'upstream_path',
@@ -2162,7 +2169,11 @@ class CveRecordMetadata(ConfiguredBaseModel):
     cveId: str = Field(default=..., description="""The CVE identifier that the record belongs to.""", json_schema_extra = { "linkml_meta": {'annotations': {'upstream_path': {'tag': 'upstream_path',
                                            'value': 'CVE_Record_Format.json#/definitions/cveMetadataPublished/properties/cveId'}},
          'broad_mappings': ['dcterms:identifier', 'schema:identifier'],
-         'domain_of': ['CveRecordMetadata']} })
+         'comments': ["Wikidata's P3587 holds the same identifier in the same form, on "
+                      'the item for the vulnerability, so it is exact. The Dublin Core '
+                      'and schema.org terms are any identifier, so they are broader.'],
+         'domain_of': ['CveRecordMetadata'],
+         'exact_mappings': ['wdt:P3587']} })
     assignerOrgId: str = Field(default=..., description="""The UUID of the organisation that was given the CVE identifier.""", json_schema_extra = { "linkml_meta": {'annotations': {'upstream_path': {'tag': 'upstream_path',
                                            'value': 'CVE_Record_Format.json#/definitions/cveMetadataPublished/properties/assignerOrgId'}},
          'domain_of': ['CveRecordMetadata']} })
@@ -2212,7 +2223,11 @@ class CveMetadataPublished(CveRecordMetadata):
     cveId: str = Field(default=..., description="""The CVE identifier that the record belongs to.""", json_schema_extra = { "linkml_meta": {'annotations': {'upstream_path': {'tag': 'upstream_path',
                                            'value': 'CVE_Record_Format.json#/definitions/cveMetadataPublished/properties/cveId'}},
          'broad_mappings': ['dcterms:identifier', 'schema:identifier'],
-         'domain_of': ['CveRecordMetadata']} })
+         'comments': ["Wikidata's P3587 holds the same identifier in the same form, on "
+                      'the item for the vulnerability, so it is exact. The Dublin Core '
+                      'and schema.org terms are any identifier, so they are broader.'],
+         'domain_of': ['CveRecordMetadata'],
+         'exact_mappings': ['wdt:P3587']} })
     assignerOrgId: str = Field(default=..., description="""The UUID of the organisation that was given the CVE identifier.""", json_schema_extra = { "linkml_meta": {'annotations': {'upstream_path': {'tag': 'upstream_path',
                                            'value': 'CVE_Record_Format.json#/definitions/cveMetadataPublished/properties/assignerOrgId'}},
          'domain_of': ['CveRecordMetadata']} })
@@ -2263,7 +2278,11 @@ class CveMetadataRejected(CveRecordMetadata):
     cveId: str = Field(default=..., description="""The CVE identifier that the record belongs to.""", json_schema_extra = { "linkml_meta": {'annotations': {'upstream_path': {'tag': 'upstream_path',
                                            'value': 'CVE_Record_Format.json#/definitions/cveMetadataPublished/properties/cveId'}},
          'broad_mappings': ['dcterms:identifier', 'schema:identifier'],
-         'domain_of': ['CveRecordMetadata']} })
+         'comments': ["Wikidata's P3587 holds the same identifier in the same form, on "
+                      'the item for the vulnerability, so it is exact. The Dublin Core '
+                      'and schema.org terms are any identifier, so they are broader.'],
+         'domain_of': ['CveRecordMetadata'],
+         'exact_mappings': ['wdt:P3587']} })
     assignerOrgId: str = Field(default=..., description="""The UUID of the organisation that was given the CVE identifier.""", json_schema_extra = { "linkml_meta": {'annotations': {'upstream_path': {'tag': 'upstream_path',
                                            'value': 'CVE_Record_Format.json#/definitions/cveMetadataPublished/properties/assignerOrgId'}},
          'domain_of': ['CveRecordMetadata']} })
@@ -2294,6 +2313,7 @@ class CveContainers(ConfiguredBaseModel):
          'annotations': {'upstream_path': {'tag': 'upstream_path',
                                            'value': 'CVE_Record_Format.json#/oneOf/0/properties/containers '
                                                     'CVE_Record_Format.json#/oneOf/1/properties/containers'}},
+         'children_are_mutually_disjoint': True,
          'from_schema': 'https://w3id.org/lmodel/cve/cve_record'})
 
     cna: CveCnaContainer = Field(default=..., description="""The container from the authority that assigned the identifier.""", json_schema_extra = { "linkml_meta": {'annotations': {'upstream_path': {'tag': 'upstream_path',
@@ -2368,6 +2388,7 @@ class CveCnaContainer(ConfiguredBaseModel):
          'annotations': {'upstream_path': {'tag': 'upstream_path',
                                            'value': 'CVE_Record_Format.json#/definitions/cnaPublishedContainer '
                                                     'CVE_Record_Format.json#/definitions/cnaRejectedContainer'}},
+         'children_are_mutually_disjoint': True,
          'from_schema': 'https://w3id.org/lmodel/cve/cve_record'})
 
     providerMetadata: CveProviderMetadata = Field(default=..., description="""Who provided the container.""", json_schema_extra = { "linkml_meta": {'annotations': {'upstream_path': {'tag': 'upstream_path',
@@ -2698,9 +2719,13 @@ class CveProduct(ConfiguredBaseModel):
     cpes: Optional[list[str]] = Field(default=None, description="""Common Platform Enumeration names for the product.""", json_schema_extra = { "linkml_meta": {'annotations': {'upstream_path': {'tag': 'upstream_path',
                                            'value': 'CVE_Record_Format.json#/definitions/product/properties/cpes'}},
          'close_mappings': ['sepses_cve:hasCPE'],
-         'comments': ['The upstream suggests cpeApplicability for new records.'],
+         'comments': ['The upstream suggests cpeApplicability for new records.',
+                      'SPDX 3.0.1 names CPE 2.3 as one kind of external identifier, '
+                      'and this field also admits the 2.2 form, so that term is only '
+                      'related.'],
          'domain_of': ['CveProduct'],
-         'list_elements_unique': True} })
+         'list_elements_unique': True,
+         'related_mappings': ['spdx_core:ExternalIdentifierType/cpe23']} })
     modules: Optional[list[str]] = Field(default=None, description="""The affected parts of the product, such as components, commands or APIs.""", json_schema_extra = { "linkml_meta": {'annotations': {'upstream_path': {'tag': 'upstream_path',
                                            'value': 'CVE_Record_Format.json#/definitions/product/properties/modules'}},
          'domain_of': ['CveProduct'],
@@ -3074,8 +3099,11 @@ class CveProblemTypeDescription(ConfiguredBaseModel):
          'slot_uri': 'cve:references'} })
     cweId: Optional[str] = Field(default=None, description="""The Common Weakness Enumeration identifier that best fits, such as CWE-79.""", json_schema_extra = { "linkml_meta": {'annotations': {'upstream_path': {'tag': 'upstream_path',
                                            'value': 'CVE_Record_Format.json#/definitions/problemTypes/items/properties/descriptions/items/properties/cweId'}},
+         'close_mappings': ['wdt:P3624'],
          'comments': ['The upstream also allows it 5 to 9 characters. '
-                      'tests/cve_rules.py checks the length.'],
+                      'tests/cve_rules.py checks the length.',
+                      "Wikidata's P3624 holds the CWE number alone, without the CWE- "
+                      'prefix the format writes, so it is close.'],
          'domain_of': ['CveProblemTypeDescription']} })
 
     @field_validator('cweId')

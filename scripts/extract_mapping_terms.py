@@ -14,8 +14,8 @@ declares in its own namespace, and no label or comment.
 The script downloads each file into memory, refuses it unless its SHA-256 is the
 pinned one, and writes the list, sorted. Nothing else is written. Terms of SPDX
 and STIX are checked against the neighbours' released copies in tests/neighbours/
-instead, and Q631425 is named by hand below, since an entity on Wikidata has no
-fixed file to pin. Usage::
+instead, and the Wikidata entities are named by hand below, since an entity on
+Wikidata has no fixed file to pin. Usage::
 
     uv run scripts/extract_mapping_terms.py [OUTPUT_FILE]
 
@@ -71,9 +71,15 @@ VOCABULARIES = (
     ),
 )
 
-# Read at https://www.wikidata.org/wiki/Special:EntityData/Q631425.json on
-# 2026-11-03: its English label is "vulnerability".
-BY_HAND = ("http://www.wikidata.org/entity/Q631425",)
+# Each read at https://www.wikidata.org/wiki/Special:EntityData/<id>.json on
+# 2026-11-03: Q631425 is "vulnerability"; P3587 is "Common Vulnerabilities and
+# Exposures ID", whose format is CVE-(19|20)\d{2}-\d+; P3624 is "CWE ID", whose
+# format is [1-9]\d{1,4}.
+BY_HAND = (
+    "http://www.wikidata.org/entity/Q631425",
+    "http://www.wikidata.org/prop/direct/P3587",
+    "http://www.wikidata.org/prop/direct/P3624",
+)
 
 TERM_TYPES = {
     RDFS.Class,
@@ -115,7 +121,9 @@ def main(argv: list[str]) -> int:
             and str(subject).startswith(namespace)
         }
         header.append(f"# {prefix} {namespace} from {url}, SHA-256 {sha256}.")
-    header.append("# Q631425 is named by hand in scripts/extract_mapping_terms.py.")
+    header.append(
+        "# Q631425, P3587 and P3624 are named by hand in scripts/extract_mapping_terms.py."
+    )
     output.write_text("\n".join([*header, *sorted(terms)]) + "\n", encoding="utf-8")
     return 0
 
