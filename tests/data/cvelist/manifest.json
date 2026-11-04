@@ -1,0 +1,2123 @@
+{
+ "repository": "CVEProject/cvelistV5",
+ "commit": "b4845b91eb2b7362f501563f853d0b5ad5145890",
+ "read": "2026-11-03",
+ "selection": "A spread of the list at this commit: up to six folders a year and up to nine records a folder, then the fewest records that show each year, state, data version, metric format, publisher, key and tag at least four times, filled to 420 evenly across the years, with CVE-2021-44228.",
+ "copied": {
+  "CVE-2011-10005.json": "cves/2011/10xxx/CVE-2011-10005.json",
+  "CVE-2016-10784.json": "cves/2016/10xxx/CVE-2016-10784.json",
+  "CVE-2023-50170.json": "cves/2023/50xxx/CVE-2023-50170.json",
+  "CVE-2024-55542.json": "cves/2024/55xxx/CVE-2024-55542.json",
+  "CVE-2025-23001.json": "cves/2025/23xxx/CVE-2025-23001.json",
+  "CVE-2025-64486.json": "cves/2025/64xxx/CVE-2025-64486.json",
+  "CVE-2026-118309.json": "cves/2026/118xxx/CVE-2026-118309.json",
+  "CVE-2026-26116.json": "cves/2026/26xxx/CVE-2026-26116.json"
+ },
+ "fetched": {
+  "cves/1999/0xxx/CVE-1999-0218.json": {
+   "size": 5047,
+   "sha256": "406e07c05ae9705ff2742d6d211ab16ec41ef6902c0a71be0fd7ef7b28c04759",
+   "git_blob": "3e263eae66b32c73bac0d9f44fdd7cce456f8b7b"
+  },
+  "cves/1999/0xxx/CVE-1999-0436.json": {
+   "size": 5235,
+   "sha256": "69be4e3e33dd739ba37f7776c26f17fd212305a2da2e50b6ba099d079871c7db",
+   "git_blob": "5d3e39f7ab5780653de4185ef21311484c264985"
+  },
+  "cves/1999/0xxx/CVE-1999-0782.json": {
+   "size": 5354,
+   "sha256": "aa178daa1b9c5773817dd814ae9405f7b9fcd1d7f36e717bc3ca1183ba7c28d8",
+   "git_blob": "af8013c4b981ae54450b16aca8262ed407e0e10e"
+  },
+  "cves/1999/1xxx/CVE-1999-1000.json": {
+   "size": 5175,
+   "sha256": "ad62b35c17c7a238de7796ad87f336cca592fd49fcd44c65d60b99c67ffb1eaf",
+   "git_blob": "d1dda2712911e033c5776bb533b96438e21f3f8d"
+  },
+  "cves/1999/1xxx/CVE-1999-1133.json": {
+   "size": 6290,
+   "sha256": "4eec83404276375ddd0e8d7b58697533cf6e0a74bba123f766f97b42ceb0b9bc",
+   "git_blob": "d04e9b10541d644461bc3687a4822104d4524cfe"
+  },
+  "cves/1999/1xxx/CVE-1999-1332.json": {
+   "size": 9734,
+   "sha256": "74961fd1d88b8317a3c09463e20303eef5b3c9953f379fdddb0e9ab6e9046be4",
+   "git_blob": "474919572b3c3eb1cef6af4415d74951f3743766"
+  },
+  "cves/2000/0xxx/CVE-2000-0001.json": {
+   "size": 5141,
+   "sha256": "5d26b76b0c23f52e869fe4f28e87a95fd9f5d8e63a2756f0d1d805011b65a7aa",
+   "git_blob": "ae186e428f292e3117d5817a4f070b6f76ea8e38"
+  },
+  "cves/2000/0xxx/CVE-2000-0331.json": {
+   "size": 7453,
+   "sha256": "cb68c3847e1d117a7c6be1d1f616c1b3bba755baf5e833df81d6bc9f76e48ef1",
+   "git_blob": "e7237b3abc3455a183be33b7c08ae8fcf1362935"
+  },
+  "cves/2000/0xxx/CVE-2000-0773.json": {
+   "size": 7331,
+   "sha256": "56e39688fcc6ac840c67004caaff54f590ed7a75154af5680c16181860cb768e",
+   "git_blob": "3d7e8243c35010643a28fd2977df865d8364689a"
+  },
+  "cves/2000/1xxx/CVE-2000-1056.json": {
+   "size": 7410,
+   "sha256": "fdaa54779d9df49bfdc3609499d20997b7bf0056c1baf74bb0a9cfb384cc5f76",
+   "git_blob": "917913098ad01ba63156da52c24ebc2fdba9d309"
+  },
+  "cves/2000/1xxx/CVE-2000-1170.json": {
+   "size": 7910,
+   "sha256": "7a5b2c8aa203b7d4477205b6556ac6c4ef6580837996281837c814616fe99658",
+   "git_blob": "50a3dfa8c0ef3d9215b9682b4c959753bc6ceafb"
+  },
+  "cves/2001/0xxx/CVE-2001-0217.json": {
+   "size": 7456,
+   "sha256": "592148ab40771fdc9c71d54a73e699d3aff1cab3f7095cbdadbb94e30ab615bb",
+   "git_blob": "dc157d77722507612d5fddbf0cdcd81a842279bf"
+  },
+  "cves/2001/0xxx/CVE-2001-0325.json": {
+   "size": 6345,
+   "sha256": "2f0d3fcfd2be279a180d6082502f4cefdf8f2f1e5f50bd28a2280c842660f126",
+   "git_blob": "b09e41a8a453ca57160fda390073f6a6da75b803"
+  },
+  "cves/2001/0xxx/CVE-2001-0552.json": {
+   "size": 8177,
+   "sha256": "b7a665a239e9ab9a7c7e2f7e3bea44900980b26b10049270b081d33d2feca5c8",
+   "git_blob": "44bcbea3f7a0c8c83211ad2516985a734050a136"
+  },
+  "cves/2001/0xxx/CVE-2001-0777.json": {
+   "size": 7272,
+   "sha256": "77ec95786b99d0e3b4d8b07c98e3998d1a37f3bd7d36014a48acb751897dd7a5",
+   "git_blob": "d43458aeca128b1aca35f554a258a49fad9e011e"
+  },
+  "cves/2001/1xxx/CVE-2001-1197.json": {
+   "size": 8243,
+   "sha256": "32e2296e394a517a4a6ada3c948f238323fe34bb9afba1cbe35ca0617264b2e9",
+   "git_blob": "029a9eb0fdc8c633d4c4a9ca485948ed1654509d"
+  },
+  "cves/2001/1xxx/CVE-2001-1328.json": {
+   "size": 9346,
+   "sha256": "32196aae4741d556b4074c83d3843e0f68e5cecde77e4accf4bf8bd29e5ab7b2",
+   "git_blob": "ac9a258effc645c9f1620a7e3ff0e551a165747a"
+  },
+  "cves/2001/1xxx/CVE-2001-1460.json": {
+   "size": 9420,
+   "sha256": "f4544fd3cc67f34ee1475555c7daf79b6d5e12eda43a29aa62ff3bb5b6ce3019",
+   "git_blob": "37a1d37ab2bd6262391872d881e39152abc1d58c"
+  },
+  "cves/2001/1xxx/CVE-2001-1529.json": {
+   "size": 5473,
+   "sha256": "a645ac82ee556f724f49eee0f5571782d9ff356e11ceee1509e4605aaf820015",
+   "git_blob": "f3cdec748f1b64c4b7593bcf90abdb4df5519907"
+  },
+  "cves/2002/0xxx/CVE-2002-0112.json": {
+   "size": 10684,
+   "sha256": "7ece3f2d335315b3faddf74b9878a13d83c5357be447dff53d0aa82586b5a615",
+   "git_blob": "6bc55bd7061840d2569c59829e49caea32cddb30"
+  },
+  "cves/2002/1xxx/CVE-2002-1000.json": {
+   "size": 9066,
+   "sha256": "9e1338f0265e572faea72eed086d1291dec03c5a9aa1d2b36c56a6dcf7237923",
+   "git_blob": "c7f448684de3d78aa479c1a1203af6df6764f801"
+  },
+  "cves/2002/1xxx/CVE-2002-1108.json": {
+   "size": 7447,
+   "sha256": "ea26eb1a754df8af67ba41eded8d6d0a3136bff55b7f2e4e73a94785d9af9856",
+   "git_blob": "a6e52ec7a3da38f38d6ec7d6f140d36eed7e85a6"
+  },
+  "cves/2002/1xxx/CVE-2002-1229.json": {
+   "size": 9351,
+   "sha256": "0ba67f990edfeb7a2b12c5ba215cd1a181544f4fb4ff7d89763770ae985b39ce",
+   "git_blob": "884c8dce4d4ee8209a49d2c9b9e821223ea8a55e"
+  },
+  "cves/2002/1xxx/CVE-2002-1569.json": {
+   "size": 9073,
+   "sha256": "893589cd2a1a8122c1a470427bb2522aa8597eda8fc16c765152f102dcbe9d0b",
+   "git_blob": "9ade581cab1935dacecc3a315cbd77af11b41094"
+  },
+  "cves/2002/1xxx/CVE-2002-1676.json": {
+   "size": 8781,
+   "sha256": "39c3da70badfa0b12fc4e1942e9d0ab44371f70d4a86c9ccc2c0544e7d80edfb",
+   "git_blob": "31b1a3d26f1e833e0d24f0ba50103ae24034fb7e"
+  },
+  "cves/2002/1xxx/CVE-2002-1785.json": {
+   "size": 8424,
+   "sha256": "19cb2ed7de6c6184a0911875b85b33fd5d8f54f6962a4959680024f627fe5e03",
+   "git_blob": "cfc9a40b9d134e44efbec0d0ef7174d70a04f534"
+  },
+  "cves/2002/2xxx/CVE-2002-2099.json": {
+   "size": 6462,
+   "sha256": "fba7de20c8e86c31296452a9a7e1519e5b355604f5532160e2eb35f97773de7c",
+   "git_blob": "c09e8a8b31b173a14ddb3b48b915e128d4c2ce8f"
+  },
+  "cves/2002/2xxx/CVE-2002-2198.json": {
+   "size": 7246,
+   "sha256": "69dff7df73df73d2d4e4f67d7a5fcbf38bd2eae29329b5119db869393e0b0d00",
+   "git_blob": "f3a62a983e68b2b570d06e1bc8dee65be26f10b0"
+  },
+  "cves/2003/0xxx/CVE-2003-0001.json": {
+   "size": 18986,
+   "sha256": "4cf543cd6bb14d180ef3adbddb0c577dc0f0166167a2b82d5509f8dbeb3672d8",
+   "git_blob": "ddd2d676436d26d98ee785ca1ed1f5ed94373214"
+  },
+  "cves/2003/0xxx/CVE-2003-0222.json": {
+   "size": 10458,
+   "sha256": "19299d50977cf5a0ce3cd1304e516e5a887161e28db98a7539ee2ef39b5d386f",
+   "git_blob": "33be650cab96f773bad98106086ba6b76758538a"
+  },
+  "cves/2003/0xxx/CVE-2003-0331.json": {
+   "size": 5570,
+   "sha256": "45ee776a1e43ba94e32a5d333386cbbd56724f8362da15316eff1c39b1929143",
+   "git_blob": "6b47a8271caf2447c5ec1e7dfe85305bb8091112"
+  },
+  "cves/2003/0xxx/CVE-2003-0440.json": {
+   "size": 8405,
+   "sha256": "3f38a038f708605dae840b9b989fe9eeec6afec2adb2ebbd251e3a8a72eb5a39",
+   "git_blob": "eb68c9f55873c96edc6ad4671784eb4d73fe6944"
+  },
+  "cves/2003/0xxx/CVE-2003-0772.json": {
+   "size": 10028,
+   "sha256": "88d186bb265ac515bdf2cbc69394b7561c039204a272e982c786e127c7448f35",
+   "git_blob": "f2edecc29a120de8afddb3965984880d82371e22"
+  },
+  "cves/2003/0xxx/CVE-2003-0881.json": {
+   "size": 6182,
+   "sha256": "c40c025b962308065e791d561f91d5936cd01c82da9ebb1ead18cd6825aa36e4",
+   "git_blob": "d4fa794049ae496e20e6d088b0c46a0da75d4ff2"
+  },
+  "cves/2003/1xxx/CVE-2003-1135.json": {
+   "size": 6332,
+   "sha256": "6e678a13c3a1082767b276fbab3e219726704f4ee3eb5582a953737536548a65",
+   "git_blob": "c49e9c79e0364503eb01b1c0b91ab7f68ce1b6ac"
+  },
+  "cves/2003/1xxx/CVE-2003-1403.json": {
+   "size": 8017,
+   "sha256": "28ea3c6a5b287c4096a8961e2348c63768ba49adfa14710367f632c04d8985db",
+   "git_blob": "28bd70cf0989fea7dfbf5f7645702fd581f8fe7b"
+  },
+  "cves/2003/1xxx/CVE-2003-1537.json": {
+   "size": 5528,
+   "sha256": "39445add2100d6aa32986a8b600fd0b87668593c359b3cbbd0970e896bfb88b1",
+   "git_blob": "9df52274270c1a4f2f288494e72dce0605a72250"
+  },
+  "cves/2003/5xxx/CVE-2003-5004.json": {
+   "size": 1021,
+   "sha256": "31d69d30ba39130f66e50559148cf2545811c7105bd2d70592b289dfdf92967e",
+   "git_blob": "9a2f27e1b41362f6ce3271719f8a70c28c572ed9"
+  },
+  "cves/2004/0xxx/CVE-2004-0890.json": {
+   "size": 1102,
+   "sha256": "59040ad2c1a8b0c7c5cc877762af32b3a4bff1b34b8d27655c56cafa1b5ee340",
+   "git_blob": "d9079472db0b0e3920c8389babe159f5a8862670"
+  },
+  "cves/2004/1xxx/CVE-2004-1346.json": {
+   "size": 11089,
+   "sha256": "1a982f085ca3b9e6350f974352d704974b466220b2e97cee1b6c1ca8f3d4808f",
+   "git_blob": "70b0a8dd77c503fe55cb744914f0c2a14d258ae7"
+  },
+  "cves/2004/1xxx/CVE-2004-1563.json": {
+   "size": 10360,
+   "sha256": "a4357696b5cf415cde76ca8e0193a0aaf7984c90fdb17393ef24a13c2e7efe53",
+   "git_blob": "190c5233ddb7bda2be303427bfdff97993ad532e"
+  },
+  "cves/2004/2xxx/CVE-2004-2086.json": {
+   "size": 9787,
+   "sha256": "f983ebb0860c7909fc655de3f79c3fc35eee9f70f6ecb1068054bd1c397b0fe9",
+   "git_blob": "10826a95e0726c38b796a18ca6ac042148a40bae"
+  },
+  "cves/2004/2xxx/CVE-2004-2173.json": {
+   "size": 14229,
+   "sha256": "4dbb92a204f2c317c36e0d399a2456fc4dbc0ee3fbce2aeb09441be0d2d2c419",
+   "git_blob": "68b08844fed40d025028c3e17783e1cf191182df"
+  },
+  "cves/2004/2xxx/CVE-2004-2260.json": {
+   "size": 8808,
+   "sha256": "e93d6bf59f852c75ab73fe3963d7efc59f94922e4f608fb06a66e868235f204c",
+   "git_blob": "c22c97222bde79f04bb9ec7c0318ee2bb6ba9e54"
+  },
+  "cves/2004/2xxx/CVE-2004-2606.json": {
+   "size": 17333,
+   "sha256": "b7c466666cc27628b7cf322dba75dbd81c16ed0aff0f02231d9510b5d6cced46",
+   "git_blob": "03d75957369d126291cb96e999ddaea5feecdd53"
+  },
+  "cves/2005/0xxx/CVE-2005-0455.json": {
+   "size": 9740,
+   "sha256": "eed1f88fa538a57c2c9951352810bf13cb35f02c0e08ae9d8ae6814d064cadf6",
+   "git_blob": "bc43d13eef7cbfc69ad78dadace54b6fce7ed099"
+  },
+  "cves/2005/0xxx/CVE-2005-0568.json": {
+   "size": 8908,
+   "sha256": "a35f5c703da238146c9e49f1ef4ded77afe849f9fadd25caee8d74da770f6fe6",
+   "git_blob": "3acda54b271d73101622e3416f0120012fd0df4a"
+  },
+  "cves/2005/10xxx/CVE-2005-10003.json": {
+   "size": 8345,
+   "sha256": "7c049a05cadb68fed3bc6762c31a4470e416f0e3f900e7c31fb8555db8d62971",
+   "git_blob": "41e0a3087af2e38a8358374c53f65641b4ed6ea2"
+  },
+  "cves/2005/1xxx/CVE-2005-1000.json": {
+   "size": 8231,
+   "sha256": "0ba1c00759e0cc2d38ae4cd303da5bca22bdf38fa10b37d9750543794e204cc7",
+   "git_blob": "7fa458a94c7c50b57e037cfbb939a62c008a5eae"
+  },
+  "cves/2005/1xxx/CVE-2005-1107.json": {
+   "size": 5643,
+   "sha256": "ff024c3ae106330a95202fd36046b19210f44d7acb8a7fcb0390ca0834ddbcaa",
+   "git_blob": "4f7667f65098fbcb059a5818838f926589d1f20f"
+  },
+  "cves/2005/1xxx/CVE-2005-1333.json": {
+   "size": 8088,
+   "sha256": "f7a75b9d20bea9cb6bea15b34b7b7cfe0eb289f3fdb525421958bb17459c409a",
+   "git_blob": "979252ddd44713e9a39490e194b5e35ed1aa8652"
+  },
+  "cves/2005/1xxx/CVE-2005-1778.json": {
+   "size": 6240,
+   "sha256": "01866b12e44a26beb2d7330bf4f52474d206cc51cf507381bba7ce652dbf3772",
+   "git_blob": "c9ca4bbf03734d3e92469145a2c50771312dc068"
+  },
+  "cves/2005/2xxx/CVE-2005-2000.json": {
+   "size": 8014,
+   "sha256": "b18eff1e9b319f24fb449f23c774b10b0aed958e0e79387a07f4b29cf535a4ca",
+   "git_blob": "205c7e62db3a61a8aa7af8be60fde3a7fca95467"
+  },
+  "cves/2005/2xxx/CVE-2005-2110.json": {
+   "size": 9408,
+   "sha256": "b71bbda3c1e363a71c432714b78103dd1367bd774fc3a26242df5064277181a3",
+   "git_blob": "9ed373c955bb0fb2ca053d20867412b3f59ac9b4"
+  },
+  "cves/2005/2xxx/CVE-2005-2224.json": {
+   "size": 7016,
+   "sha256": "011addc0f0126a21469e59fd0c645f9d6926c1e8f7ea63516d2990ea3a86f207",
+   "git_blob": "7081096b830729d0e28ab212468dff0b9b50aa9f"
+  },
+  "cves/2005/2xxx/CVE-2005-2440.json": {
+   "size": 8988,
+   "sha256": "b6565758b196e7f117d76be47b6e8b97a86f50a544a24b720797d41f19a80b1a",
+   "git_blob": "1b6e47f0bd09bb8cf8a8272a6f0fcf89f853d259"
+  },
+  "cves/2005/2xxx/CVE-2005-2548.json": {
+   "size": 11595,
+   "sha256": "17b7fe180917ebec112c9061afea374e14272e0dc70204c118d2e0c7aea606fe",
+   "git_blob": "46ab96c252f386bf1bbb0a325666909016253509"
+  },
+  "cves/2005/2xxx/CVE-2005-2655.json": {
+   "size": 5271,
+   "sha256": "52b33745c68c72bc0730ee1b643f238d2aaa749fe96faa083df06e3ec8165865",
+   "git_blob": "84adcda867c46ea763e6126ce1b16ec61f3d32a2"
+  },
+  "cves/2005/2xxx/CVE-2005-2881.json": {
+   "size": 7401,
+   "sha256": "5895122ba552450552cc0f12ee8d651ccaed62cfd3644e91512bcc3a5bf46224",
+   "git_blob": "3bf8053742dafe3b72e070b0dbb9df68be7ff61f"
+  },
+  "cves/2005/3xxx/CVE-2005-3108.json": {
+   "size": 12978,
+   "sha256": "28cc98552cf914337009caabd906b93c7c186916270ef1798629dbaaae2e6b61",
+   "git_blob": "5b20ed321ba9fb962e4a525776c2674e019c2fdd"
+  },
+  "cves/2005/3xxx/CVE-2005-3782.json": {
+   "size": 5521,
+   "sha256": "27adb67922a34d63e90a4b69bb0f209afe6a78f7b6b6b0951467f8cabd9d51b5",
+   "git_blob": "6193fc07323ac81a3abc54236089ae4b8733aef0"
+  },
+  "cves/2006/0xxx/CVE-2006-0001.json": {
+   "size": 17822,
+   "sha256": "9928fb60691db044d70f3ea5cc986f21cd76a2d0300abbececbd5372ceb45dbb",
+   "git_blob": "1edc36c38b6860b40c0b935f441f37b68a6c3356"
+  },
+  "cves/2006/0xxx/CVE-2006-0442.json": {
+   "size": 10146,
+   "sha256": "c3dd131eb44dc70c5a3e2be87bdeaa60e7e903d8ddd758d0e56cfeb26bc9ab4d",
+   "git_blob": "1d1eb57de2522c338fe92e51a26127193a5f1c82"
+  },
+  "cves/2006/0xxx/CVE-2006-0885.json": {
+   "size": 10920,
+   "sha256": "934b1a19fe3cfe34110df23a3d82dbf71a40dea464aaae7ed1893a5339f1f23b",
+   "git_blob": "7d62e1484da0199c779694492bcb0059f97d9068"
+  },
+  "cves/2006/10xxx/CVE-2006-10002.json": {
+   "size": 8575,
+   "sha256": "fb017324ed634864316930cbabe4e41942480d4af181cec1357d1300f0fad7e3",
+   "git_blob": "751c51e89e9a3629b8ea7a5e57462de2110d04c3"
+  },
+  "cves/2006/10xxx/CVE-2006-10003.json": {
+   "size": 34124,
+   "sha256": "295460fd4c4c1c0ad4d897407653fefce815f14f83baf9d2bdc59a5637caf3e2",
+   "git_blob": "1a8d12d51d3af9448736ede4bb21a1da590ed47c"
+  },
+  "cves/2006/20xxx/CVE-2006-20001.json": {
+   "size": 6302,
+   "sha256": "d2af4efe8cf1070e83dc6c0d1c13ffa389786a9b9fbc7163d08654927c37396f",
+   "git_blob": "895bff6703b61cf9addc0620f2b93c244b98dff8"
+  },
+  "cves/2006/3xxx/CVE-2006-3000.json": {
+   "size": 9070,
+   "sha256": "b4ba2b44052002579fe73e39701fcd2349522af6f73e934cb76848e2e00ae740",
+   "git_blob": "867252c48c4ca2b0ced9aecc3e72d997028111b0"
+  },
+  "cves/2006/3xxx/CVE-2006-3224.json": {
+   "size": 6869,
+   "sha256": "909cb9f4d7f7b2d5006defa26aca0a34c9124dd4828ccefd75de0a82477c05a9",
+   "git_blob": "9c65e4e2cf60cc03c534054235e4b635db90300c"
+  },
+  "cves/2006/3xxx/CVE-2006-3665.json": {
+   "size": 8170,
+   "sha256": "81fd35fd001624373aac96a1eff0aa1d7b1aac2e08ac413d25b53e659eb21e44",
+   "git_blob": "b6a310e0dca28007cac93dc36192368d80018a21"
+  },
+  "cves/2006/3xxx/CVE-2006-3775.json": {
+   "size": 10923,
+   "sha256": "fef346a3d3cb51b4909d5921cd591a4eec7294f4abfc7cb8acf52193a4a6ef8f",
+   "git_blob": "9d5f91598c0f85bbb7af634828bdbb90fdf48a7c"
+  },
+  "cves/2006/4xxx/CVE-2006-4110.json": {
+   "size": 12378,
+   "sha256": "5be1acc88176333bd0f4e663144c85455cae799c36d96144c3ae484ebb03a28a",
+   "git_blob": "aba84343d2281d487fbd05bbd3737399b721b481"
+  },
+  "cves/2006/4xxx/CVE-2006-4445.json": {
+   "size": 11036,
+   "sha256": "ffa29ec6f7aa944f86ecc25ad1f0526db975e3b985737d225f06434ecf59af1f",
+   "git_blob": "94eba0b9b5ef44cd63d6c1a48dd280d41157e224"
+  },
+  "cves/2006/6xxx/CVE-2006-6218.json": {
+   "size": 8389,
+   "sha256": "69f5fe4701d6d9ae2b6294c7fd563f93b45ceecd4b1b4bce6abce8869e0993d3",
+   "git_blob": "d55143de51a94dfeb33d3018b986569b65d4e4ad"
+  },
+  "cves/2006/6xxx/CVE-2006-6671.json": {
+   "size": 9028,
+   "sha256": "54900b1764598d4891fedcd1118f5903fae11250b810a8b065f73b1607fffc54",
+   "git_blob": "f75f701163727a8b795228c005a3cbcc495ffd8d"
+  },
+  "cves/2006/6xxx/CVE-2006-6780.json": {
+   "size": 9879,
+   "sha256": "d680baf119072d18d031ce44675e6028dcb163242120950305c038907b09507b",
+   "git_blob": "fc3a6fc6eb5b2a1493838e05b668fef7be681d9b"
+  },
+  "cves/2007/0xxx/CVE-2007-0112.json": {
+   "size": 9066,
+   "sha256": "89975f098fe105b39c32f4db0544e1b0bfb30da89746f4eb6318b516417e2a3c",
+   "git_blob": "8a92c0997d76696208dfda4742131e49c3a85978"
+  },
+  "cves/2007/0xxx/CVE-2007-0221.json": {
+   "size": 16100,
+   "sha256": "6c41eb4c197e6aa8148ecb5869ba45b9d829070ea3d2a80e97eb221132ef8838",
+   "git_blob": "a225b258396e9ebeb6c5376dd62172e3908eb8d3"
+  },
+  "cves/2007/0xxx/CVE-2007-0445.json": {
+   "size": 13617,
+   "sha256": "4817e49af66c914e5601550a7a6da17f69791eecea982fb9ad969e4338fedd69",
+   "git_blob": "7c3e027f969cbe90f2c83d05f9dc1396ced4c708"
+  },
+  "cves/2007/0xxx/CVE-2007-0777.json": {
+   "size": 43923,
+   "sha256": "8ffbe80aa5245260a177c453df0877e5cea41cc89eb39b150f5a125874524647",
+   "git_blob": "95cb0e1b83ab9712fdd6a5ae14ad9c6e07669357"
+  },
+  "cves/2007/10xxx/CVE-2007-10001.json": {
+   "size": 7616,
+   "sha256": "04175d571470e329facb7345fe28219a4a7342aeb544455fb57585d6dd135fd1",
+   "git_blob": "15559096b51831595639248d98098baa35da81a9"
+  },
+  "cves/2007/2xxx/CVE-2007-2110.json": {
+   "size": 16264,
+   "sha256": "a00440ebd973fed8dcc08b9a7496f5f5f7f4eb8f099a0c88198e6b43e1d9de21",
+   "git_blob": "fbe7cca4bcf29c106909ef37d8d57e977d47451a"
+  },
+  "cves/2007/2xxx/CVE-2007-2665.json": {
+   "size": 6957,
+   "sha256": "7b682b907e10bb54fcd607906fc736c0496780c1ff4d77840f217bf23f49f08b",
+   "git_blob": "5277fd0659fce2bdade0592ba479764485a3e8ee"
+  },
+  "cves/2007/4xxx/CVE-2007-4328.json": {
+   "size": 12909,
+   "sha256": "b6c6b9993b23b72f9e21e08d541efd099a00027d6fbe7fbf47fb574d1a099b49",
+   "git_blob": "9066177417a5113ff1d03394d5cceb1deff68481"
+  },
+  "cves/2007/5xxx/CVE-2007-5221.json": {
+   "size": 9764,
+   "sha256": "ea6197b5d5c0f5624f3a605dbf65d9a563f55633446c05b40fdcb47da3610115",
+   "git_blob": "32fac0269fadc2ca34e9036144798ef19ec4005a"
+  },
+  "cves/2007/5xxx/CVE-2007-5327.json": {
+   "size": 15817,
+   "sha256": "34846d16150e9dcde07e61e9aad4fb334fd25c4591d676e4f56ed74ef997fe30",
+   "git_blob": "a8adb815e27d274d5517ead12f334f85d8c69536"
+  },
+  "cves/2007/5xxx/CVE-2007-5647.json": {
+   "size": 8051,
+   "sha256": "b18ffd93b3e6093454a8b7e701d7ac762d9660cb4e751ca6f92b56c99f67af2a",
+   "git_blob": "19e6daf389b3c1214b4ce56745d4aa726ecacfdf"
+  },
+  "cves/2007/5xxx/CVE-2007-5892.json": {
+   "size": 8874,
+   "sha256": "9a71d73cfb588a3c9d1dd4cc3a14a37405b32bc61e377942b8f3a82c69fa4971",
+   "git_blob": "3b4ac228d3ce1e60661daffdca98dd83b805aaa2"
+  },
+  "cves/2008/0xxx/CVE-2008-0228.json": {
+   "size": 9372,
+   "sha256": "65393d252c6542639ed9fb46facfff06710adaf0016f6967b7bb30f254fc0527",
+   "git_blob": "c35b175ad082a626fe317734522a184b99aeeff7"
+  },
+  "cves/2008/0xxx/CVE-2008-0343.json": {
+   "size": 13359,
+   "sha256": "b30f3195dea899679f0199fd2b17a5a8063186f0b3cc0d5a90caee09c395d338",
+   "git_blob": "7e5ae86fdbf4f177f3c8c1014f27fbaea78ecd9b"
+  },
+  "cves/2008/0xxx/CVE-2008-0560.json": {
+   "size": 9025,
+   "sha256": "348ed09b8e8c0899be9d6d39ed503d99697f2ad316ba58ed25109026ae6c561a",
+   "git_blob": "e4c1688db1fb2ba96a2eab32cda18ed52d5b992a"
+  },
+  "cves/2008/10xxx/CVE-2008-10004.json": {
+   "size": 7407,
+   "sha256": "223d6cdcb14f6266dd33edb6e9a8519fe05adea15568d2876faef68a3d7ceb69",
+   "git_blob": "96819b05af7ef85a548a8ab476fcb57a3d082497"
+  },
+  "cves/2008/20xxx/CVE-2008-20001.json": {
+   "size": 9053,
+   "sha256": "b679648f2155db1db8d228018d5fcb2c76e365249b2548d76f8dccb7264094b2",
+   "git_blob": "d644a6204aad1964dedc11d596446aebca5bd0c0"
+  },
+  "cves/2008/20xxx/CVE-2008-20002.json": {
+   "size": 896,
+   "sha256": "79655bc81fd5d5fce5be73bce6a589f53403068d63f478dbfc86889ca6a7f0a4",
+   "git_blob": "7f76ab4891609db8c1e67fa2f3b622822ac7b8a7"
+  },
+  "cves/2008/20xxx/CVE-2008-20003.json": {
+   "size": 896,
+   "sha256": "943c871af317ba828cc7b536a172850cb350aad2d4ef1e00ea1289a5661b26e2",
+   "git_blob": "4cf2046fe2a26c74e2ff32d4b0e70848dd429918"
+  },
+  "cves/2008/3xxx/CVE-2008-3333.json": {
+   "size": 12296,
+   "sha256": "84c8daa92ef73322242c2a8a75b9108e8ba83141c6da476fff8247a8af80be7c",
+   "git_blob": "b127a11b7fa778b97756c8414f2dd9f45aff8330"
+  },
+  "cves/2008/3xxx/CVE-2008-3890.json": {
+   "size": 9255,
+   "sha256": "f6049dbf1839285b4e098efb5b65785588801ca6b4ba1aec4d30e44836d1b8b7",
+   "git_blob": "b5fc83366d4963b26578ca1c1a45b7085d56d823"
+  },
+  "cves/2008/4xxx/CVE-2008-4000.json": {
+   "size": 10865,
+   "sha256": "1b44d0be55c7afddf094dcb570ce3a349aca6300bbced62fcb670dd855372354",
+   "git_blob": "fcee15e3419f8f4aa9fc5d5feb927ec83f839006"
+  },
+  "cves/2008/4xxx/CVE-2008-4219.json": {
+   "size": 11658,
+   "sha256": "9e6aee49ff00055e0d8e91c1a7341dd60da1d4729611e921555be8f8a9708312",
+   "git_blob": "3a93d814dd882d58ae6d32a6c0d9de6566dcc723"
+  },
+  "cves/2008/4xxx/CVE-2008-4339.json": {
+   "size": 10194,
+   "sha256": "291b88cfae315af0b7ec345ca17bc5e658465e22d7dfe974a47ea272ef2c259c",
+   "git_blob": "1bccd96a42ab8f3b30ee03d285a8951294651e18"
+  },
+  "cves/2008/4xxx/CVE-2008-4451.json": {
+   "size": 8912,
+   "sha256": "3359b49da28406124fe6c65d1451553ac97fde6f63add07872ab08da5ef13f1b",
+   "git_blob": "e845d368c9a07c4afc4ba95d345cb5ad53b71b45"
+  },
+  "cves/2008/6xxx/CVE-2008-6555.json": {
+   "size": 8196,
+   "sha256": "9e7f36c09a525c3d7fba66169f1b99630450c5909d386df12b356a3a6b93198b",
+   "git_blob": "f237730575ccde990fe75b64e5568a8854b17ae4"
+  },
+  "cves/2009/0xxx/CVE-2009-0001.json": {
+   "size": 11914,
+   "sha256": "5ea083ad73515fc21228ee100b7b8056632d8335bfa72f499a4e0a92db2b7a64",
+   "git_blob": "33c6193d569cfa3efb1c78406c55b04a92657fbd"
+  },
+  "cves/2009/0xxx/CVE-2009-0443.json": {
+   "size": 7831,
+   "sha256": "301f29542d3fb7e07aa4847dfc373552cb7ef2c917f01642beb13b5942c69e1e",
+   "git_blob": "f5cbcc30d465050794561b58902ac91daa1a9096"
+  },
+  "cves/2009/0xxx/CVE-2009-0889.json": {
+   "size": 13702,
+   "sha256": "1dcff6143642686e1373ea666344f7c575f8d94264e659a53a400c73c8a7e060",
+   "git_blob": "138943e4b33512bc7acf7b4dee4b0f06a17bf8f5"
+  },
+  "cves/2009/10xxx/CVE-2009-10003.json": {
+   "size": 9331,
+   "sha256": "549d7fc825340579aaf1c2525ee65e7e6c2b5309ef0d58a535af4e3cdadc6ec4",
+   "git_blob": "abb556ea89bcad66c373ad97e61674651bd789db"
+  },
+  "cves/2009/10xxx/CVE-2009-10007.json": {
+   "size": 7949,
+   "sha256": "ec23931c86c32890e1fbb31234ecd215c638d5806353745dea3d1705acdd9572",
+   "git_blob": "184aba591a69bee76001a3ed32a33a67592a51b6"
+  },
+  "cves/2009/1xxx/CVE-2009-1000.json": {
+   "size": 9758,
+   "sha256": "db84fd314910525cd5c2a0e6b509af5f23d561a397d69336b948bf94e4b72a4d",
+   "git_blob": "0b262cbde25f083c914291b138dc2749392ea1c2"
+  },
+  "cves/2009/1xxx/CVE-2009-1107.json": {
+   "size": 33836,
+   "sha256": "905e1b8a54ce3ba37cadc81fbe6b5f4dd2c6daa05a953493a2fa68f33b4bb5da",
+   "git_blob": "a4dd9432216a8c58a00ccc0f6110f88d5fe2bbbf"
+  },
+  "cves/2009/1xxx/CVE-2009-1567.json": {
+   "size": 11103,
+   "sha256": "9b163f4c33b403f6ea5d6fab8a08b918e6abb64de3bf76c8e27d698e54bed9a5",
+   "git_blob": "16fcdad0681861b3b3e4c8dcb50ad83084957c34"
+  },
+  "cves/2009/2xxx/CVE-2009-2000.json": {
+   "size": 8831,
+   "sha256": "f59de41eddeda0e9b37c2ea09dec68fd50f65b8b62a864c9980b68cae40d8ed3",
+   "git_blob": "eccc0a036ad0e387f639b651b3303e159efa2227"
+  },
+  "cves/2009/2xxx/CVE-2009-2551.json": {
+   "size": 8903,
+   "sha256": "9c7116b31cf33a62143b7cbd134d64adb59c6d0d21e2f3f8b10c19757fc11492",
+   "git_blob": "1bbf405e74c870c1231ab11ca53988457bf58718"
+  },
+  "cves/2009/3xxx/CVE-2009-3000.json": {
+   "size": 6598,
+   "sha256": "033603514cf14a74d6211b0da79226eb0d98e36fc367098d4f8ffac9e5e544ed",
+   "git_blob": "35a17df9e14ed24ba4e7314bcabd92c8e4b14dda"
+  },
+  "cves/2009/3xxx/CVE-2009-3442.json": {
+   "size": 9487,
+   "sha256": "9fc66a7c7158b31c529a83f7b9f52be0bb317b8d9233a85dc0d0d28f539bc499",
+   "git_blob": "7518a384e80e35aee35ab530d03c232acac16fed"
+  },
+  "cves/2009/3xxx/CVE-2009-3777.json": {
+   "size": 855,
+   "sha256": "fcd6d669daa50a4ce00eb9edc27e8bf4b57e64c913236ce8d04ef987416c9280",
+   "git_blob": "9658ed9853e018d2e26313ec1be3001ebd1a6549"
+  },
+  "cves/2009/4xxx/CVE-2009-4000.json": {
+   "size": 9704,
+   "sha256": "61ae848aa333897d03e6de3dffa634fb6f80dbd1cfbe6cbf3f2ea018acb724af",
+   "git_blob": "5c2b790bd18988ee422a6bbf8117953ebd9342af"
+  },
+  "cves/2009/4xxx/CVE-2009-4337.json": {
+   "size": 7331,
+   "sha256": "642cc7a49a7239944efca37835b7795d9f8ad7268dceaa89e5f08beddb151091",
+   "git_blob": "8a3bdc4ea3a8974122384aad73e6dae5a01fb56e"
+  },
+  "cves/2009/4xxx/CVE-2009-4890.json": {
+   "size": 7502,
+   "sha256": "9c44fa30ad3942bc74664fc5da1d8edbd9932500fdb3f86a0bf9668490d7ec6d",
+   "git_blob": "ca24b19827e3b1cfce688c4339e52b2a7e5eedda"
+  },
+  "cves/2010/0xxx/CVE-2010-0222.json": {
+   "size": 12472,
+   "sha256": "3b3aac945444589032315dbe29ea4722bd55c03e36e9ac552dc387f3112366b3",
+   "git_blob": "92b11273c947e53a38e912a7225d51dce3e3db4b"
+  },
+  "cves/2010/0xxx/CVE-2010-0891.json": {
+   "size": 10433,
+   "sha256": "3941c7c0a22b9f78a261dd4ce98fa5cb077ad4784f8e5c686984e3a5e8d9e0ff",
+   "git_blob": "e93607026b022dcd22dedaa282491e1d825d734a"
+  },
+  "cves/2010/10xxx/CVE-2010-10004.json": {
+   "size": 7261,
+   "sha256": "426d2313c3edae160949365aabecbec73fb50a36a182fbe040eb9f7b560c68d1",
+   "git_blob": "c18ded82bdbd67f92c85f888a5918074592d0074"
+  },
+  "cves/2010/10xxx/CVE-2010-10010.json": {
+   "size": 7785,
+   "sha256": "f777e0fbec3e13de1fa6166bae547eeb66f573d1bd85eb893c17117105264a14",
+   "git_blob": "f8b1ac8dcaae920a050ed347c6abe9cd7e78f404"
+  },
+  "cves/2010/10xxx/CVE-2010-10014.json": {
+   "size": 8718,
+   "sha256": "404e69d109dc57200a1f7ac2cec7ef71dcddb80908070d023acc933b06c4d627",
+   "git_blob": "9cc91c6ed5a7bc32efb76b069da861e94695827e"
+  },
+  "cves/2010/1xxx/CVE-2010-1111.json": {
+   "size": 7279,
+   "sha256": "637992548a0d75d767eac5bc73f5445c2f638603ec947b72766fc88a835e6cbc",
+   "git_blob": "408d6c267e640c0fca24eb705bd881a1f5d719a6"
+  },
+  "cves/2010/1xxx/CVE-2010-1553.json": {
+   "size": 10131,
+   "sha256": "7c545d61e7c23cb360ae125058a9b5b4a6c6f5bec340677e111ad0c1bb6c9aba",
+   "git_blob": "19b96d9aab5b93bad8a9720d594c113d6e30a42a"
+  },
+  "cves/2010/1xxx/CVE-2010-1666.json": {
+   "size": 9071,
+   "sha256": "313341768a92fa2176393b14a8ff24959e44a5c7b76d24c11a5fb9bf7f61e28b",
+   "git_blob": "d8fd9901e2879b57c1038d952953f8527177275b"
+  },
+  "cves/2010/2xxx/CVE-2010-2549.json": {
+   "size": 12709,
+   "sha256": "0b706db921a00870c015e64cf6204857802efe96e347414978bfbdbbc4f0d030",
+   "git_blob": "16733cf3e4951598c22117a29179eb783f347153"
+  },
+  "cves/2010/2xxx/CVE-2010-2772.json": {
+   "size": 17547,
+   "sha256": "6a48fa48e847939355821f716cacc1e7326b85e6b9273a2ba45e2cfd260a4cb6",
+   "git_blob": "11870bc2e9038c05259b47b6dbf2e0aac87072c8"
+  },
+  "cves/2010/3xxx/CVE-2010-3000.json": {
+   "size": 13255,
+   "sha256": "bfc66315c0dccc292bb3a2c3d38cba879996b209433c68cbd5e79875a1fc1c60",
+   "git_blob": "cb27e7dc1080788803be0f1207cbc6500ad25c06"
+  },
+  "cves/2010/3xxx/CVE-2010-3113.json": {
+   "size": 17259,
+   "sha256": "320efd40e62c9ee23bc85c3c22dc61577758e524290ca16a73f7a6da9cfa92f9",
+   "git_blob": "e4c4047e240be31df321507dc2e1d24911943ce3"
+  },
+  "cves/2010/3xxx/CVE-2010-3890.json": {
+   "size": 8333,
+   "sha256": "8ece978be94cf0aa4d4067f8714bb201b5979540fca4e30e831a481ba5bdfea0",
+   "git_blob": "e00141f53e9e31c7ad39834c1b7f5cce31903050"
+  },
+  "cves/2010/4xxx/CVE-2010-4233.json": {
+   "size": 7606,
+   "sha256": "38441fd5e3566153ed1beecee4ef03cec0ccfc491c3b3bd56f870f526af29023",
+   "git_blob": "954dc0003a0269d434f257b09976c85605af719e"
+  },
+  "cves/2010/4xxx/CVE-2010-4565.json": {
+   "size": 16164,
+   "sha256": "02df61ecef811d87e059df6fa591ba7c66d06300d0ef590e2179e87c3a4b930a",
+   "git_blob": "3081e5a26ff7ba0391ce6e7353e089cd19946a00"
+  },
+  "cves/2011/0xxx/CVE-2011-0101.json": {
+   "size": 14150,
+   "sha256": "0f54bee53ccfb9c674c3207d87046e361f19350c510f56e5ea24840133febac6",
+   "git_blob": "8c67aa9882cced72e10c41352e7e1a92a75c8543"
+  },
+  "cves/2011/0xxx/CVE-2011-0200.json": {
+   "size": 11606,
+   "sha256": "795b5f14bdefeabca56f21f0b0276bb31dcb8ea2a8b76620cfa2e894cb298486",
+   "git_blob": "4299c8eb60be17064f2f17ed39d0dbb5a431cdd6"
+  },
+  "cves/2011/0xxx/CVE-2011-0762.json": {
+   "size": 28702,
+   "sha256": "d55962535b12a38bc7650d2e43b4934209fcfbedc98b9e9e68b8c4ebdaad6f16",
+   "git_blob": "c7899ad818e9049419973a2a0fb57d4a7ba444ef"
+  },
+  "cves/2011/10xxx/CVE-2011-10005.json": {
+   "size": 7251,
+   "sha256": "190a32f0e9be11e8b73ac777f7c545def53e7088ec3e064247bb6e487b021afe",
+   "git_blob": "7e692bfb579dd62170a55c205dc07b41d403e95e"
+  },
+  "cves/2011/10xxx/CVE-2011-10019.json": {
+   "size": 9032,
+   "sha256": "462531dcb641d97282cb88b78283e2293bbf02529b3e575763955b91a744c5cd",
+   "git_blob": "1afda0134b5d84644da01f55463c6c49a85f99b2"
+  },
+  "cves/2011/10xxx/CVE-2011-10024.json": {
+   "size": 8539,
+   "sha256": "fdf5a706622443df25fefd4f0e31378238c96b0e65e7918b66db53d90e8438d2",
+   "git_blob": "5d4a1be2ce82ee1b8f1a00a6a8c79629fa710c6f"
+  },
+  "cves/2011/1xxx/CVE-2011-1000.json": {
+   "size": 17115,
+   "sha256": "533e07d7a76fe7f34ce49fba7ba180dabb8274ae723fad0e45f169c0ceb10f67",
+   "git_blob": "150cb5d4dedaac53fd72ba07001551a714192361"
+  },
+  "cves/2011/1xxx/CVE-2011-1209.json": {
+   "size": 7491,
+   "sha256": "7d210fc3af021b3b75c01361a98ec04098e1cd2feea418b17717e9b9f8589e7b",
+   "git_blob": "44e47babbf8e4291da3a4bc245433775da4eb2a3"
+  },
+  "cves/2011/1xxx/CVE-2011-1544.json": {
+   "size": 8885,
+   "sha256": "94c40d8c2ede3ee98996cd66bc2ba438f196e8d798a58aaa168d43ce9e17c99f",
+   "git_blob": "db0f5fe453d11407ffd7655208f87743d3de3db3"
+  },
+  "cves/2011/2xxx/CVE-2011-2345.json": {
+   "size": 9137,
+   "sha256": "f5b1e50651a7810b60a2d9969554a93565a95fb66450ebb32e96b07f85248089",
+   "git_blob": "7fc56890d23a468efd5860965e7b79804a35b82a"
+  },
+  "cves/2011/2xxx/CVE-2011-2588.json": {
+   "size": 10233,
+   "sha256": "d6d1270dd8508f1728de44ed67173218821143133675c41767a024ebb43e10de",
+   "git_blob": "d85ea1b1c3855d49b65eb58cb3333161cbcf1c27"
+  },
+  "cves/2011/2xxx/CVE-2011-2794.json": {
+   "size": 9114,
+   "sha256": "ea59cfcb30fd2d98a14769c1d91e9666746688e56ac9053106d6f2a2a3fdf24b",
+   "git_blob": "5a6521d32c8b81d1eba9640e0876bb2f9a59d73d"
+  },
+  "cves/2011/3xxx/CVE-2011-3000.json": {
+   "size": 17956,
+   "sha256": "003d927bd2254481f7597c83c69ad325fd3f14ffb11d927e4874efcfc3c12f2d",
+   "git_blob": "79c62f1c0a1fc6af67f339dde98be17fa8ec2393"
+  },
+  "cves/2011/3xxx/CVE-2011-3340.json": {
+   "size": 7212,
+   "sha256": "f500abafafe7b02b220987df45b1f47f07f2883c35e5666c30be17d0bf0b3a16",
+   "git_blob": "418dc5b667586d1dd2c55c41371c4150e8d05201"
+  },
+  "cves/2011/4xxx/CVE-2011-4448.json": {
+   "size": 5980,
+   "sha256": "008a117f9c99523596f0c39cfeb8d0226fb4d8ab22e02755240766df23a0ad24",
+   "git_blob": "f86f353aab81468934333b7c69743f4dbf3104dc"
+  },
+  "cves/2011/4xxx/CVE-2011-4798.json": {
+   "size": 1045,
+   "sha256": "c8bfa413fa3dabc89273059ba841ba3bdbf6da1e98ddac0025e80956bf913f6e",
+   "git_blob": "8c3734b26888799940594c901eb37934f9c9a063"
+  },
+  "cves/2012/0xxx/CVE-2012-0211.json": {
+   "size": 12900,
+   "sha256": "40f16b4e8022db907ceeb2c0a33ba5c0585d427d3f06c44c8356cec80372cd35",
+   "git_blob": "0a7ac622721d63bddfd52086a7b389923904ac62"
+  },
+  "cves/2012/0xxx/CVE-2012-0779.json": {
+   "size": 13848,
+   "sha256": "b49f7ef79c664b1711283b3b7b89012a1df8ed7496fcb8b432f83c9da4c7cf92",
+   "git_blob": "2c1b9ccb81514f2e3d335df9261601f31c3fd0c8"
+  },
+  "cves/2012/10xxx/CVE-2012-10015.json": {
+   "size": 9262,
+   "sha256": "c798510ae03dd231aca15670ca370d357bd948b879964468e78f26658f0f947c",
+   "git_blob": "c1ea118d40bb2af6f382522ed683893d6d80d3b5"
+  },
+  "cves/2012/10xxx/CVE-2012-10022.json": {
+   "size": 8834,
+   "sha256": "6a79e70acf9f59e18e64fb5c63d814c6d372713c9ec31b9baafcf4c4a387a63e",
+   "git_blob": "33a732140188fc6b303df1f2a60fd1eb12fc9543"
+  },
+  "cves/2012/10xxx/CVE-2012-10050.json": {
+   "size": 8710,
+   "sha256": "21b19a557465eb2eed061119a1c3734440388303cc61776401b4eebd0d7cffb5",
+   "git_blob": "25ce3fef8aab38ca4a1b908e1117358316260653"
+  },
+  "cves/2012/10xxx/CVE-2012-10057.json": {
+   "size": 8637,
+   "sha256": "4bce872726e6b36a4dffbab9e510d9afb9b1a7944a0fbdeb014999196f506029",
+   "git_blob": "44b773a45a3e273f5f369ac2bba771da516da793"
+  },
+  "cves/2012/20xxx/CVE-2012-20002.json": {
+   "size": 8829,
+   "sha256": "d2d09f6305a433d3ff18129cc20da2010e3c56a6331104efee8c1bf71f77e1d1",
+   "git_blob": "e074b159adc2aca643b2f195617c2927129be430"
+  },
+  "cves/2012/20xxx/CVE-2012-20003.json": {
+   "size": 8887,
+   "sha256": "f346a31b092a87f5f015cbae1ac779124e111717d8ae9ac28d075b30599336a8",
+   "git_blob": "b5b6b8a334c3fedf2f327d455f1c53b55f2419f2"
+  },
+  "cves/2012/20xxx/CVE-2012-20004.json": {
+   "size": 8959,
+   "sha256": "e6de143a5186d1f9b0240a0eb20b54a5cc3cffe0fff8edbacd1d5d0868bfb8be",
+   "git_blob": "5b7b8bfee370f6f7119952ebdcff5383669a7f43"
+  },
+  "cves/2012/20xxx/CVE-2012-20005.json": {
+   "size": 8259,
+   "sha256": "3b7c96de97360a1ec84ba6b3aceafac6a7dff9baa3441d18fab5fb123fe3ccb5",
+   "git_blob": "7f8da6138aa0e4d26f466baa331a65fcce435eca"
+  },
+  "cves/2012/2xxx/CVE-2012-2098.json": {
+   "size": 12470,
+   "sha256": "4097e732e9d67e8c7d2c04f48cd1ffeddf5267001e6a7673a3f39c83e369089b",
+   "git_blob": "dd12a57e22b28d6fc5eab041c2efefddaa1b0856"
+  },
+  "cves/2012/2xxx/CVE-2012-2314.json": {
+   "size": 6667,
+   "sha256": "4d3fe5d049ec00dc1e6dfe40fb9a2f485aa5546c060a32c650c157402a9479b4",
+   "git_blob": "9568fc814679aed9d893f5c4123cc6ad8ced8e08"
+  },
+  "cves/2012/2xxx/CVE-2012-2561.json": {
+   "size": 10734,
+   "sha256": "bef510ceba8ecc38dc68d13d6625e24bbb9c450327803dfdc5ecc16e93153898",
+   "git_blob": "58c2e4f4bc9816b107639672f631c8a8acb0d9b4"
+  },
+  "cves/2012/4xxx/CVE-2012-4000.json": {
+   "size": 9165,
+   "sha256": "a92fbb36a72b2448005f83fe62f18c24855b44b2bca09ce04075e0408ae4ad5f",
+   "git_blob": "0cd94905af680c1e54920026d4d1c5b9d3c5498a"
+  },
+  "cves/2012/5xxx/CVE-2012-5450.json": {
+   "size": 11364,
+   "sha256": "455cb65059bf5bce089aff0db37462b85ef2ac965c0dd42d3d3de287a3e4e055",
+   "git_blob": "db45f1b42a0ce0bc44698ec32a7fcf334a78de03"
+  },
+  "cves/2012/5xxx/CVE-2012-5638.json": {
+   "size": 3408,
+   "sha256": "98a7d1c9f0323ca8a316eb62a24d82d01dbd5a9e00bef82ed917d10f5c4dc2cb",
+   "git_blob": "187d90c22fcf0b67f618c1a0a2d579c795b498ff"
+  },
+  "cves/2013/0xxx/CVE-2013-0327.json": {
+   "size": 5314,
+   "sha256": "3ae19af34d535b5321a5ff44e2c2a0e67fab9e77aef09b7aa59caaba4233993f",
+   "git_blob": "20a5fbfe688f7220ebd13d102ffc791ff33f20b0"
+  },
+  "cves/2013/0xxx/CVE-2013-0670.json": {
+   "size": 6281,
+   "sha256": "b4c40a967c53ddda3d0038135f9a15fd97578493f9aeda55c14bd3504d236d7b",
+   "git_blob": "499443d5cb639ef7749ad54adc18444ccfe76961"
+  },
+  "cves/2013/10xxx/CVE-2013-10052.json": {
+   "size": 9577,
+   "sha256": "9399f542a2258ea0f6dacf753b65fc83ecdee3907ac7129b297680df94507ff0",
+   "git_blob": "80ecb3639e7b0481b8aa0d8ef106611bfed1aac7"
+  },
+  "cves/2013/10xxx/CVE-2013-10060.json": {
+   "size": 9944,
+   "sha256": "012e88dbec7833d423e82654a284c9414dc7eb745543b5044f0f898073de8676",
+   "git_blob": "0b35e38d7bcae5d81209c9707c22a3590d2db23f"
+  },
+  "cves/2013/20xxx/CVE-2013-20003.json": {
+   "size": 9568,
+   "sha256": "b5a087beb150e5cd6d329c32a7b439181ba806c4ecb448fbccbc0bb60ddd9ad8",
+   "git_blob": "0b778eb3340e24fddefe19cb92121d9db8ac1553"
+  },
+  "cves/2013/20xxx/CVE-2013-20006.json": {
+   "size": 6861,
+   "sha256": "ef9c3564138707d6fde3b4aa03616d1639db5d5b626a23f77fdd7b2c622ef2e0",
+   "git_blob": "7031af9a15d7cb9f9de2b61cad7be72a58a39f79"
+  },
+  "cves/2013/3xxx/CVE-2013-3000.json": {
+   "size": 6745,
+   "sha256": "e7c7d628c3b681fb90395f3f8934a0dd25cbc7b81da5f41a88f7f6f25fd50d1c",
+   "git_blob": "7a380cd8a3d559f5b774dfb7a5bd2c6230b4de67"
+  },
+  "cves/2013/3xxx/CVE-2013-3120.json": {
+   "size": 9350,
+   "sha256": "ef00cf00ba6f2bbdf40dd2fee99ddeeeaa63edb13571ae5b725a31322bc2eb8c",
+   "git_blob": "6fb5382f5c2a3a68332de86fba6361a223e2d8c4"
+  },
+  "cves/2013/3xxx/CVE-2013-3445.json": {
+   "size": 10164,
+   "sha256": "874524d13e1eb0bb89b8134bde07da31f5af4b2a370300a267ea313db822e49d",
+   "git_blob": "47a31c45d78db2c27716a97909441d68ab1d4c30"
+  },
+  "cves/2013/3xxx/CVE-2013-3558.json": {
+   "size": 16793,
+   "sha256": "6b7ceed7294c6bfd473d28fc452cf34292119dd48faa1de7bad009b627a6e01f",
+   "git_blob": "12022b0810e00cfc87d4734ab5b3e05a5ac9593f"
+  },
+  "cves/2013/3xxx/CVE-2013-3890.json": {
+   "size": 7607,
+   "sha256": "7253377a24f6ac105ea6197676c5e00d0e7ea213cd264b2b13ecc827eca90270",
+   "git_blob": "211b301ce4c8fcbce1c7b9a04ef595f375f76be8"
+  },
+  "cves/2013/4xxx/CVE-2013-4422.json": {
+   "size": 7236,
+   "sha256": "30b52d003fd7efe8ed86e90dd1788a9aec3d308e9a34ed5aac76c2943f9b329f",
+   "git_blob": "de88a8d5d221ed5b2e2cf4c3cc39c50260c63651"
+  },
+  "cves/2013/4xxx/CVE-2013-4632.json": {
+   "size": 5422,
+   "sha256": "4803671602c329a1669af8288c5ca1e65e4e201dc213aaa106177998fc5f0b9f",
+   "git_blob": "08821e066f5b40eba3d61fbdbba507540c455df3"
+  },
+  "cves/2013/4xxx/CVE-2013-4751.json": {
+   "size": 9256,
+   "sha256": "1e58923fc1f68d3bda0ea9badbfe9a85616b670320189a26889bc70985c65e0c",
+   "git_blob": "079a0f8bb0d272a35dc44efe5a5f34e572902bc4"
+  },
+  "cves/2013/4xxx/CVE-2013-4866.json": {
+   "size": 10315,
+   "sha256": "4645aa69cc3a16468eeb06f3e47e23a3ae4663559cc6dbd5cf73456a38d1a3c0",
+   "git_blob": "f38505fabcc9667154e9bedf871c840fd1040b8e"
+  },
+  "cves/2013/6xxx/CVE-2013-6364.json": {
+   "size": 8972,
+   "sha256": "65b45831a0078c1abd387a936e359107a6cd7a4b158258611b5a590a6e04b825",
+   "git_blob": "10c93ecac3a67827b561da3283e4b9defb22096c"
+  },
+  "cves/2014/0xxx/CVE-2014-0105.json": {
+   "size": 8742,
+   "sha256": "4d577484e6e2faa68627c6bd20adcf14a8acd6a5264d85199bbe1cd45afed464",
+   "git_blob": "a5ac84bdc7ff81a046810aa8369ef0d5d53ab737"
+  },
+  "cves/2014/0xxx/CVE-2014-0315.json": {
+   "size": 8242,
+   "sha256": "a29b6776949f55fb000fcaf97b3882d4ba23f189d8b0d84feb80f4197d0848dc",
+   "git_blob": "8897c5701290f68d6b0e7a3a82a178ebaa9f7002"
+  },
+  "cves/2014/0xxx/CVE-2014-0423.json": {
+   "size": 38538,
+   "sha256": "b41901f9cdc3b6f9f70ba90cf19e3afea3ebfe8c43fcbe3b15f3e485220677c2",
+   "git_blob": "2aa0f0de83b4540d3b3ebac358435401a1ae3666"
+  },
+  "cves/2014/0xxx/CVE-2014-0528.json": {
+   "size": 5318,
+   "sha256": "0e590cf3a360433649994999bd0a2e31444affeaee5a733cec1e110fc74dc2c5",
+   "git_blob": "22868e19fc7f2bf9c06346648a52e11761fe3b71"
+  },
+  "cves/2014/0xxx/CVE-2014-0762.json": {
+   "size": 8497,
+   "sha256": "2b758968939e9398c42a6885ac4cd7dc027c893637fcf048b7017828644ed5af",
+   "git_blob": "d30cb66a19e0dca429eb9289327784f8f9b202f6"
+  },
+  "cves/2014/0xxx/CVE-2014-0880.json": {
+   "size": 6543,
+   "sha256": "3779abaf54945e0168d28448fd769c9b5419fc19029b83d67c5f82db0547027e",
+   "git_blob": "d121681f0af8dcd164dcc785b5468b36a0536c21"
+  },
+  "cves/2014/10xxx/CVE-2014-10000.json": {
+   "size": 1087,
+   "sha256": "8693a32c2d5439b3e9d05a2d55df0c7fdb320bd0651d6a2ea4d2741d86a49e5c",
+   "git_blob": "ebfd3a5397b98c3c528f782c964c28836d91b67a"
+  },
+  "cves/2014/10xxx/CVE-2014-10011.json": {
+   "size": 9253,
+   "sha256": "4e6414103b89ee0a48828d3e7565383ce0011d76a6114b549362e4e8a3984283",
+   "git_blob": "cc6c619364298f4cd45954671a48a7dd8440783e"
+  },
+  "cves/2014/10xxx/CVE-2014-10061.json": {
+   "size": 1032,
+   "sha256": "8aac0d007737d015a5f1a6573ec035ac031bafcce6a566e68bd89f0e82c3f93a",
+   "git_blob": "b957a2c6f3f3b70ab476b4f300673bc597842e12"
+  },
+  "cves/2014/10xxx/CVE-2014-10391.json": {
+   "size": 5169,
+   "sha256": "1cc5a291a92762e9646d3dd9b628b44359b6e6e0463a8a6419dd9341e90dc891",
+   "git_blob": "5f6e9e95a300e6fb36a256663bcce589c5a1b2fb"
+  },
+  "cves/2014/2xxx/CVE-2014-2213.json": {
+   "size": 6903,
+   "sha256": "f455b1e3114a50ff80e86b9eccda331196e983ead344ca840b451d29b6b64abf",
+   "git_blob": "778a684b1f819932b9e239d3389bf2093e120b3b"
+  },
+  "cves/2014/2xxx/CVE-2014-2429.json": {
+   "size": 5455,
+   "sha256": "392060fc18228b64a9837b1b7570eb737d675bf5172bbebf60df83dd09cf8d63",
+   "git_blob": "0ce96c0e2932f0832de441db77a6e8f053d490f8"
+  },
+  "cves/2014/2xxx/CVE-2014-2644.json": {
+   "size": 8224,
+   "sha256": "7608e8b6243fa812e1fa71a34beced418c69ae53e87d47cca73fe092418fd9b6",
+   "git_blob": "4e1b6947d081e29cfab625c774ddd46fd3751c0a"
+  },
+  "cves/2014/4xxx/CVE-2014-4000.json": {
+   "size": 7789,
+   "sha256": "6341afb18df09f90f6a94fb226fb34c24b43f94e283d4fa6b4418fb59076d548",
+   "git_blob": "acbf1b8c105929c3b0680b50f28fb7120c25f678"
+  },
+  "cves/2014/4xxx/CVE-2014-4326.json": {
+   "size": 7199,
+   "sha256": "d9ca95729242ddc20c568d34065b831c8f32d574b979a408ba8a64343f665d2b",
+   "git_blob": "72f3037a6088792fd429c939823cd68f3a3720da"
+  },
+  "cves/2014/4xxx/CVE-2014-4632.json": {
+   "size": 8803,
+   "sha256": "d4165f9055ad5d4cd315e9af63d1088bf66112e3f09280fea7e48f83bc7b9fe4",
+   "git_blob": "581f2086ea8134eebfc9457a5b34f248f283501b"
+  },
+  "cves/2015/0xxx/CVE-2015-0541.json": {
+   "size": 6441,
+   "sha256": "f47841a606433a334fc3021ea391c4270065fedaef861d26d4a96bbca7de6b80",
+   "git_blob": "44b7f1cb7d4ea9608651f32b94f6dfbf711edd30"
+  },
+  "cves/2015/0xxx/CVE-2015-0655.json": {
+   "size": 7563,
+   "sha256": "4627302d89bbae14b633bd0b98e9a1e8d4fc73fb134602d98f53e51647b2d99a",
+   "git_blob": "ea5d50875a96e43e4295047c27d3681ad14785f9"
+  },
+  "cves/2015/10xxx/CVE-2015-10050.json": {
+   "size": 6629,
+   "sha256": "7a70db51c9f65a2fee732502dd8dcd6836245a2d2616ddfca922f4c323cc91cc",
+   "git_blob": "07d6f44d60a55824a29800b625f600e1c918f54b"
+  },
+  "cves/2015/1xxx/CVE-2015-1333.json": {
+   "size": 18926,
+   "sha256": "4be1e573ffd094d7e3ef70f2cec8e74a08f6da46e7034e79c604e8b45016128f",
+   "git_blob": "a0f4892b0b04b702a0b28e4d5889c872e1d1dd1f"
+  },
+  "cves/2015/1xxx/CVE-2015-1685.json": {
+   "size": 7161,
+   "sha256": "7d45a270ef6a0a945ec7ca39d1e9c429a313fdeb44cab0873490bffba32c7bf1",
+   "git_blob": "aad4cedb9a0f8d52e68012df7eae9fe229674138"
+  },
+  "cves/2015/1xxx/CVE-2015-1787.json": {
+   "size": 9902,
+   "sha256": "79d97393933a95b8dc3308816045e648d3cbb027d1a12227c7d8b1ece8c598b5",
+   "git_blob": "5f7b05f36d803938e6bd61944f9546f29b48c352"
+  },
+  "cves/2015/5xxx/CVE-2015-5122.json": {
+   "size": 27954,
+   "sha256": "f89bc0ede6de78d17edee99777aa036119d4ff4eac1e6f1a4282c3032df43e55",
+   "git_blob": "799fe2966dfaf4bb87aab860e46c107475d7fdbc"
+  },
+  "cves/2015/5xxx/CVE-2015-5234.json": {
+   "size": 13339,
+   "sha256": "8e383f560a710151204171cad6c9adb2105646f5e922e7fd5ec5535ed9704172",
+   "git_blob": "c15510efced4d16ff29448734f7e5a1739e37d76"
+  },
+  "cves/2015/5xxx/CVE-2015-5338.json": {
+   "size": 6412,
+   "sha256": "80d88e2a47b1b73a928736712b0794d0898b5e16c7240a3b55161478a5152673",
+   "git_blob": "3d92cb3e0d006481211da53fc65051b29b0fef7f"
+  },
+  "cves/2015/5xxx/CVE-2015-5567.json": {
+   "size": 16176,
+   "sha256": "3ce87591d72865117512647684914d2d02cb5e08bf2b3a508d7db51deebfb040",
+   "git_blob": "bd1ef8cf9a411c06c4bf8a4f60c71cef2e6efd29"
+  },
+  "cves/2015/7xxx/CVE-2015-7655.json": {
+   "size": 12402,
+   "sha256": "f9698ca25f35ca815d0d1e9fc429cb7e05ab933830f0ffeae32f435c38eb4735",
+   "git_blob": "679fc93544213952e754f19629288fd5f094ba06"
+  },
+  "cves/2015/7xxx/CVE-2015-7781.json": {
+   "size": 6158,
+   "sha256": "63a756db5c457e571e56c2b994c4fbc2d9598ff9f4bacce89321a785622c75e5",
+   "git_blob": "45495b40708b3ef8de90601c5ba1075d4cd753a7"
+  },
+  "cves/2016/0xxx/CVE-2016-0109.json": {
+   "size": 10189,
+   "sha256": "8464ce180ac60a218db6d55286381224eb2892dcdfa86c49827a272d027d5bff",
+   "git_blob": "d78d432f2a61677603dad09973824ce4f72284cf"
+  },
+  "cves/2016/0xxx/CVE-2016-0217.json": {
+   "size": 10419,
+   "sha256": "aad3631e676231092e3db7f8f652ee9af5fe34c239146c59c0c88028a87b8366",
+   "git_blob": "65a2505b8586adfa88122a39c18f081cfe950e57"
+  },
+  "cves/2016/10xxx/CVE-2016-10228.json": {
+   "size": 10310,
+   "sha256": "15dcdcd6f56db6c326c36f157cb24920577262297b8397dca3d2fe3b6c172438",
+   "git_blob": "ea7e8b6f389b456baac2c8c56796d032fdbd847f"
+  },
+  "cves/2016/10xxx/CVE-2016-10458.json": {
+   "size": 7697,
+   "sha256": "d7eb2a4e6d35e17603ee46319a4c92fecd1023268bd70dc5b8667a6ec6bb57dd",
+   "git_blob": "8f8c655c4ec7eae2b261f6f2305b02c770af89b0"
+  },
+  "cves/2016/10xxx/CVE-2016-10566.json": {
+   "size": 5922,
+   "sha256": "e9b5e283d9214fbadfecdb7c76ff7ef81d32282b5a355f77ea2ded4e83ef011b",
+   "git_blob": "f8512e94d0998cebf106aa9259d2edaa955e32b5"
+  },
+  "cves/2016/10xxx/CVE-2016-10674.json": {
+   "size": 5898,
+   "sha256": "af0f1ab484998f4b70cd8b6f8a37270d1190612219486b7727c6a0bf42f0503b",
+   "git_blob": "50dddbbfae9eeab947e73e47f371905f3daf0714"
+  },
+  "cves/2016/10xxx/CVE-2016-10784.json": {
+   "size": 5030,
+   "sha256": "2f5a96ea07d8686406b882f44a16fcb3b53a8de71cfb8f7fae4dc204aff25fc9",
+   "git_blob": "d6060a1b6d888f2f8d1daaa4320f6020b7556dbe"
+  },
+  "cves/2016/1xxx/CVE-2016-1000.json": {
+   "size": 15429,
+   "sha256": "8839272acb51487aca7d59822ed4227f0faaca0548a54192545a1272f798b3d3",
+   "git_blob": "7c9e9fce61b2c1df744b9b8dffe42858d5cfc9c6"
+  },
+  "cves/2016/1xxx/CVE-2016-1105.json": {
+   "size": 11125,
+   "sha256": "95c113f7cd0cb84d86cb9e6df547cca056ff10050e5af20eee97ab031445a281",
+   "git_blob": "173417b35f4dd189c75631c54f425a5b73c09415"
+  },
+  "cves/2016/1xxx/CVE-2016-1429.json": {
+   "size": 7550,
+   "sha256": "9e7c4bfd06a61a284776324f06a8ded1746bb7e92b7a43bb05775e1ddfd8e3ab",
+   "git_blob": "15b47a6be122e6a538e11b979dbff84ef7ad833f"
+  },
+  "cves/2016/1xxx/CVE-2016-1559.json": {
+   "size": 7562,
+   "sha256": "411d0583affa716c317cd43545b09172951bb396f1d4ffc1c97be10324a56599",
+   "git_blob": "82931072b946b093ea084ee7b13163869ce844f8"
+  },
+  "cves/2016/1xxx/CVE-2016-1886.json": {
+   "size": 9289,
+   "sha256": "098750dae4f090702c24b6abb92f92b90f5b8e0396a91e1f948f0bd2623e293f",
+   "git_blob": "52a6908eb6229c7a0b04aeac841c33f8be446e64"
+  },
+  "cves/2016/3xxx/CVE-2016-3113.json": {
+   "size": 2605,
+   "sha256": "18aeccc5d6375475e43229b5401f88fbb8923dc10df655737c4ffd10ba087de1",
+   "git_blob": "f403788df624bdce1b7f332aad3e0e0c9fb05669"
+  },
+  "cves/2016/3xxx/CVE-2016-3673.json": {
+   "size": 1053,
+   "sha256": "585335c91811436b737a3bacd12bc4243eb32baecb2cbbbbe367a8ee9f2c99d1",
+   "git_blob": "4d475eea7351624ecc47cd22d14613a6a408f046"
+  },
+  "cves/2016/3xxx/CVE-2016-3886.json": {
+   "size": 8207,
+   "sha256": "9236f3115ca1caafe695b9d5d9f0ed7fadb9b90b4da8e11fed63cab3430494c1",
+   "git_blob": "8565505df3638e99d9f7f771da068e80ee0af3e4"
+  },
+  "cves/2016/7xxx/CVE-2016-7568.json": {
+   "size": 10665,
+   "sha256": "cfa6b0168394395deca2025bd44605a864961fde61534a5ce2f65c4ee51dde92",
+   "git_blob": "cc1f75fb60405a2b446be35833e3447b3d86c6c4"
+  },
+  "cves/2017/0xxx/CVE-2017-0001.json": {
+   "size": 11667,
+   "sha256": "9df634c9415987cda7de97520d670afae80324e74e3ab9e8cd6e993546bf9a3a",
+   "git_blob": "66df8468ee330ccfacb5f65b1eb8514497d14946"
+  },
+  "cves/2017/0xxx/CVE-2017-0534.json": {
+   "size": 8439,
+   "sha256": "12033b046368fdabb58a9fe8e54b969a0e293c6470c5ff0c7488a220c72abe32",
+   "git_blob": "c7dfcfd81ab6927aee7f8f6f8aed4598f166798b"
+  },
+  "cves/2017/1002xxx/CVE-2017-1002008.json": {
+   "size": 8383,
+   "sha256": "e7bf956b2dc931aba9214ab25264f3b0f824c0fd2c29942fa1f6461dd8a14c3b",
+   "git_blob": "85e3408218129077f2371b353dd542d688516972"
+  },
+  "cves/2017/1002xxx/CVE-2017-1002012.json": {
+   "size": 6600,
+   "sha256": "dea51366ed6616c65b618c96676076b4a7f0ce4c6cfd5a21631d09bcd612cc1a",
+   "git_blob": "f5f93a663839afc3bdaefcf7abb7322a8fbcfb2f"
+  },
+  "cves/2017/1002xxx/CVE-2017-1002016.json": {
+   "size": 6480,
+   "sha256": "7cf483620bd728b66cf6c9d5249f94bd7a86c363fb4d81781455d53a78bcdb66",
+   "git_blob": "f68b0016cb05bbd88314d66d0d2c23f54aa76ef1"
+  },
+  "cves/2017/1002xxx/CVE-2017-1002025.json": {
+   "size": 6586,
+   "sha256": "ca0a6bf9ca7faadb8b746d4e26c8fff3e3d1c73b10d563e97c715685a2443f5d",
+   "git_blob": "a33f78a984fc680655d64d1b8a54e7d6473c7a77"
+  },
+  "cves/2017/1002xxx/CVE-2017-1002100.json": {
+   "size": 7383,
+   "sha256": "d0dd277f5698813073a275705190d58bd302840364ed0287acd0d0f2fb4994c9",
+   "git_blob": "83f99d295090d70cfb2b823ba5e2bd70a3a3b7ea"
+  },
+  "cves/2017/1002xxx/CVE-2017-1002151.json": {
+   "size": 6373,
+   "sha256": "3b6f1d660effa4068ed5d9205161ef35c93e9ba9176e1a5a274e1c71f3e4419a",
+   "git_blob": "f1640224519ca7d633522c22ad572c42a3c62c84"
+  },
+  "cves/2017/13xxx/CVE-2017-13072.json": {
+   "size": 5720,
+   "sha256": "d625ef4588b384287c9471ca8f280bfe3157de24ffb15764d4ef7bfc1b29e16f",
+   "git_blob": "99d04acb775feb181a73afd247b8687bebaa2a85"
+  },
+  "cves/2017/13xxx/CVE-2017-13149.json": {
+   "size": 6409,
+   "sha256": "0085ef92f1b50f6d1f60f6f69abc1dc43a806221bf58b37a6e97912a5ef34da8",
+   "git_blob": "9774166ff0671326382124b67bf952bebdf11b74"
+  },
+  "cves/2017/13xxx/CVE-2017-13852.json": {
+   "size": 7677,
+   "sha256": "46833f2d09e3a9421ac11d7c17df47554f1a443a9e5b14804b69fc3a1cec68f7",
+   "git_blob": "98d0d05d3020590aba5236b76023bf99cc180aaa"
+  },
+  "cves/2017/17xxx/CVE-2017-17000.json": {
+   "size": 1031,
+   "sha256": "f31d7a970031f9162fb79895439faffcaa3672ad47d1987633beed001fed050e",
+   "git_blob": "936181f29e35ce51afea05551da377afa25b016b"
+  },
+  "cves/2017/17xxx/CVE-2017-17226.json": {
+   "size": 5931,
+   "sha256": "7875a6e761f9cfb8e4c067e086ffb746fa2d67ee6075f8f8b86b2ba124643615",
+   "git_blob": "f74020ae91bc75bb5d2b732c49e32e7c4b2f9799"
+  },
+  "cves/2017/17xxx/CVE-2017-17323.json": {
+   "size": 6493,
+   "sha256": "aa165cfd3386043f6627db98eb3350e31c570bc511e39952ed2e2a1bae437e0e",
+   "git_blob": "b237c071f877616342e1db3e9966154783952daa"
+  },
+  "cves/2017/17xxx/CVE-2017-17442.json": {
+   "size": 6752,
+   "sha256": "5b503361076a17ecb62748264d464c460eee0eddef5ad579831f93ea1ed97715",
+   "git_blob": "46edd55f36f1f4aba0a6ec2046fc1f3a4e916a8f"
+  },
+  "cves/2017/2xxx/CVE-2017-2336.json": {
+   "size": 11650,
+   "sha256": "b2274fa4beb0ca0e1d7848ac4dd74594bdab7c10af308821f5a0ffa45d8049dc",
+   "git_blob": "13b932e884864ed7a2aec73323d06360df56c94f"
+  },
+  "cves/2017/6xxx/CVE-2017-6230.json": {
+   "size": 6219,
+   "sha256": "17b8446a4f5cd969a51326035de3e04b750e7ef096054adae59de5b20a9ea40a",
+   "git_blob": "27dd9112998c2aa0f1519c2c49aa64f54f23b394"
+  },
+  "cves/2017/6xxx/CVE-2017-6885.json": {
+   "size": 6065,
+   "sha256": "176a165e29f228f1dcd9bfdd8da33d8d937d738188aa5a04ace58016916469c0",
+   "git_blob": "0dd3e8ae7264e200a484a0981cff1683166415a6"
+  },
+  "cves/2018/0xxx/CVE-2018-0001.json": {
+   "size": 18700,
+   "sha256": "a74da697dc72868e3a2eed32d49ffd8d2ca3285ce955f4a988e20306a4f2ef80",
+   "git_blob": "93b05b3e448c1e2328bd2f2509ce28910324916c"
+  },
+  "cves/2018/0xxx/CVE-2018-0131.json": {
+   "size": 9869,
+   "sha256": "91f0abb8f17f508a27925c181e7e05ca30aab98a0aa1f5b4d72b58ae5649bf10",
+   "git_blob": "880ceeb8883dbbfd101d638d48091ca42e9c77a4"
+  },
+  "cves/2018/0xxx/CVE-2018-0242.json": {
+   "size": 9744,
+   "sha256": "63be62586c5acf03a219cbcb8b4abda0a1097530bb641fa0a407d636871c8f97",
+   "git_blob": "b3becf9369ba13fafe22e936166cdbaaf061ae33"
+  },
+  "cves/2018/0xxx/CVE-2018-0663.json": {
+   "size": 6872,
+   "sha256": "a12b15b3aaa778aeca4223a22c620fc50d2980eeb820606288cb250bd7dd4ff1",
+   "git_blob": "8337e67a43f61f2f955f0816b16e4c439b298318"
+  },
+  "cves/2018/11xxx/CVE-2018-11450.json": {
+   "size": 6335,
+   "sha256": "43ed86a967fff02ade970afa6ccae346289003e4b704d1454f5e45909b167c8f",
+   "git_blob": "615f7a29585f98d6940979f17579987f9b0d89d3"
+  },
+  "cves/2018/11xxx/CVE-2018-11561.json": {
+   "size": 5589,
+   "sha256": "825b88053e380fef51f9881fd1eae349daca3a677a2cdc381b306c1408da4f21",
+   "git_blob": "f7f8ea38a49f53b7ba9a2f7d80ad9889e2505b83"
+  },
+  "cves/2018/11xxx/CVE-2018-11795.json": {
+   "size": 990,
+   "sha256": "364df2ff29ea780f75dec14e4287a95a5ee778ba5dbb4dcdc865f3c6723b8905",
+   "git_blob": "2690e061d57e5164d90b65656e29194011bd0128"
+  },
+  "cves/2018/16xxx/CVE-2018-16093.json": {
+   "size": 6328,
+   "sha256": "f25f24b24406724606634dcc41382227ba5e05f961f9580e2c5b8cd9d6b5273d",
+   "git_blob": "45055d452862943c71b4d326fe2b29e1eda9acba"
+  },
+  "cves/2018/16xxx/CVE-2018-16531.json": {
+   "size": 1062,
+   "sha256": "ab030c6db2e4aa8576455ce027ba5c9e0afdb9c41153bfb60b2c4d7772bbcc7b",
+   "git_blob": "7099c83b8690c35bbaecb62b330b2e410b8079c3"
+  },
+  "cves/2018/19xxx/CVE-2018-19000.json": {
+   "size": 6373,
+   "sha256": "9908ad78d43b47409aec260763855497467fe9127299fec039bf1fc1a2e31bbc",
+   "git_blob": "4a970baffc699f2458961f5c775eea8ccea1c353"
+  },
+  "cves/2018/2xxx/CVE-2018-2416.json": {
+   "size": 10020,
+   "sha256": "46eb9a84c4882bb766a0f2392ec255fd13d2d43d8cede12d466127cdd9eea7f6",
+   "git_blob": "5f2d68846142dd76a333b89d78232a22fd55d34b"
+  },
+  "cves/2018/2xxx/CVE-2018-2896.json": {
+   "size": 12858,
+   "sha256": "d226db604ea26a6c3936538d3e12ca748fbaaafc9c3e5e443c083252ecb28a75",
+   "git_blob": "215439ea12deab130fdb1fbade3c6659b0616012"
+  },
+  "cves/2018/5xxx/CVE-2018-5091.json": {
+   "size": 14793,
+   "sha256": "46a2f7db990dea07224fc86344665e94afc5392fc5271c8afc37e7c028e3437f",
+   "git_blob": "804e32cfa90aa208fe8e8aed660cf4f70cadac2f"
+  },
+  "cves/2018/5xxx/CVE-2018-5186.json": {
+   "size": 10302,
+   "sha256": "055f50bb67f0abf336f93e400d81c10fae9d9c6257d9b40b755d85216ae8eb9d",
+   "git_blob": "78b05b557e3d154f7bba25a8ce77896670d822ce"
+  },
+  "cves/2018/5xxx/CVE-2018-5498.json": {
+   "size": 5868,
+   "sha256": "250c806ff02afe063a79f6b956dbe34e8675dca83a9dbc9c8a1aad7827e1f742",
+   "git_blob": "d8138cc83ae83a10cbcd1e8fab5ff626de7aa901"
+  },
+  "cves/2018/5xxx/CVE-2018-5877.json": {
+   "size": 6979,
+   "sha256": "03bd444feea8e3c6ea3f3963a9b1a8a46d2e23f3ffbcc4399cbce14f423b24d1",
+   "git_blob": "e3ac4b9665a18ab4fce0f7ba1fdbd8595bb69aa5"
+  },
+  "cves/2019/0xxx/CVE-2019-0001.json": {
+   "size": 19750,
+   "sha256": "b5d91e835bc66eb8be8399e1b6f756a8ca7ca416191c863cdf202c89394a0d26",
+   "git_blob": "ae92cdd0f55a9a762b3fd0f138edfaa490467cb8"
+  },
+  "cves/2019/0xxx/CVE-2019-0101.json": {
+   "size": 6408,
+   "sha256": "b2c24e93bf768ea8199beca36d61199fcd7cfaffac7eddff9a20978891974219",
+   "git_blob": "d0c4e7fe6f759ed7a24627f0660b87fefc1cbc2f"
+  },
+  "cves/2019/0xxx/CVE-2019-0191.json": {
+   "size": 9263,
+   "sha256": "e1200b362e296d591cfd97b066c482561df4f26572036fc93dbdfc7c076e3bc0",
+   "git_blob": "4af28a160fc4e79e6ed6c4b2bdd36475b1e80686"
+  },
+  "cves/2019/0xxx/CVE-2019-0304.json": {
+   "size": 18848,
+   "sha256": "1d31c65cd3bd292bcdc85e6b16ca8a75613200c9e642a3d7b1916b9a636887b0",
+   "git_blob": "40477ab0679ed8d14e4c033140437839fbbef29b"
+  },
+  "cves/2019/1010xxx/CVE-2019-1010034.json": {
+   "size": 6789,
+   "sha256": "93b220aec76c8700843072ac25d994522ac10899308d0ae6784c0ebaa8de0aa0",
+   "git_blob": "478e5e97b433ec99efa60b56b5b7fc0e72290099"
+  },
+  "cves/2019/1010xxx/CVE-2019-1010148.json": {
+   "size": 5168,
+   "sha256": "063929136d603deb958818f8e8bf48b2187e38c5d56e3ba517f1fca625b37f6b",
+   "git_blob": "f487bb3a59902db127006094d5de765741d22bee"
+  },
+  "cves/2019/1010xxx/CVE-2019-1010174.json": {
+   "size": 8060,
+   "sha256": "2c891fc09acd4b0add64b1f72674906d9fd46c74b580e76d3a16a2a34d144758",
+   "git_blob": "bec2f4e27fbf0110f6e03c0d5a38fbf7d9c89738"
+  },
+  "cves/2019/1010xxx/CVE-2019-1010205.json": {
+   "size": 6686,
+   "sha256": "7d73276ca8cf9e8653694e26d07c2b0bec11fc303937991627d602cf0f0bfcdc",
+   "git_blob": "4b91b7ed7a4be91fc1f1c99ce82cb7892f8e3d26"
+  },
+  "cves/2019/17xxx/CVE-2019-17438.json": {
+   "size": 937,
+   "sha256": "cf66cb4ac91586205ce4efbf2cb4e77e0d995fc3a698e6d416d8e836d9b2cef9",
+   "git_blob": "eee1047d270f0b55ec97bf168c599a499618ec00"
+  },
+  "cves/2019/5xxx/CVE-2019-5000.json": {
+   "size": 1021,
+   "sha256": "f99f674708b0a79297b2948293ed997fb0339fc874f860f1c6b1e4d44cb1262f",
+   "git_blob": "0db7ea498841bdf8348f50ecd748c073bd2b3e83"
+  },
+  "cves/2019/5xxx/CVE-2019-5227.json": {
+   "size": 6439,
+   "sha256": "1fe22400c2d4bcd9e702a477a5a5f8268ee6be3761e9691875696d53d9d36804",
+   "git_blob": "57475c9f3feadd5d3f6add1f310ba0f84a458414"
+  },
+  "cves/2019/5xxx/CVE-2019-5336.json": {
+   "size": 1021,
+   "sha256": "6bbb8a377962738c621ca0cd6265109c0a27a7ae079f24d80878ee0ae0fe6a3d",
+   "git_blob": "c53b28d798234ea8f9cb208626aa4268b7823c27"
+  },
+  "cves/2019/5xxx/CVE-2019-5439.json": {
+   "size": 13241,
+   "sha256": "48f7ed1809c541fb8db581578c5d647000a78291340f0dcf473f1dba5b3060c0",
+   "git_blob": "25e6408a113be2d19ec1e8c0df4c0c8c8a95bfb9"
+  },
+  "cves/2019/5xxx/CVE-2019-5543.json": {
+   "size": 7812,
+   "sha256": "afbb06f21fd00533c8090a7fdb3fb0806c16ba1e8b7801be87ea014b205480d7",
+   "git_blob": "3ba30e98b38892448ffb0c6b6db310b588a9f65b"
+  },
+  "cves/2019/5xxx/CVE-2019-5651.json": {
+   "size": 1049,
+   "sha256": "f0e5ee20993d0636147959ce8f02b24130ca17d969f33a8032ce586913f42711",
+   "git_blob": "d68fd4f5645dfcf7cb02d3906f7f39cc4815c654"
+  },
+  "cves/2019/5xxx/CVE-2019-5876.json": {
+   "size": 6217,
+   "sha256": "427915360b226c6adf5c4024a834640c914a0fa27ef838277301a81003d6101b",
+   "git_blob": "2adfe078229b7862d23c8ef234f40332379855f6"
+  },
+  "cves/2020/0xxx/CVE-2020-0555.json": {
+   "size": 5464,
+   "sha256": "f439ff8c0cdf713143b87a137fcbf34b8301d47519e0b2e37ec6e14823e84e4a",
+   "git_blob": "7e271cef5d13bb1621f7fe32d3c9f9ad2fbd71ea"
+  },
+  "cves/2020/14xxx/CVE-2020-14000.json": {
+   "size": 6926,
+   "sha256": "dcf972c513f9c95d1505ea76e4cb6bd04930c509373bd482c06258bd2b685263",
+   "git_blob": "3b6c26484b1bc9d7bee4170586eb7799c2a312ff"
+  },
+  "cves/2020/14xxx/CVE-2020-14119.json": {
+   "size": 5479,
+   "sha256": "b0cadcd55cb1f1471ca40bb4d9932f8c3467e8145d061c2dd4d793109c15e4e5",
+   "git_blob": "5520ac5f9f2f98d675550e0b4269bce437fce180"
+  },
+  "cves/2020/14xxx/CVE-2020-14254.json": {
+   "size": 5401,
+   "sha256": "74f7fbe95d16bb15b7d9de868a08376824e93721478bd86be75daa76c8399d55",
+   "git_blob": "b5fe9338518a5c593577c2e4aa5ff274baf7abd3"
+  },
+  "cves/2020/14xxx/CVE-2020-14771.json": {
+   "size": 11237,
+   "sha256": "4bf03e4b82ad381f91796d891c8dbd8dd8742d204bd663ee95289694c4075f11",
+   "git_blob": "2487df00b925b219ae4dab1740327b7240508056"
+  },
+  "cves/2020/14xxx/CVE-2020-14864.json": {
+   "size": 12530,
+   "sha256": "d6e5ac8b4dce8574cc67e2b470bca4b112d372475528e8b9034b1adeaeac01f2",
+   "git_blob": "8da6fb37541a759ba5484dcd2a8883fd7481281a"
+  },
+  "cves/2020/1xxx/CVE-2020-1108.json": {
+   "size": 28668,
+   "sha256": "4c6fdd51429302dac03feb1c1aae73dc92ed15b40f63ff810c19e1023a1538c8",
+   "git_blob": "db90da8dec797539d7d0c687085614a0640e29ef"
+  },
+  "cves/2020/1xxx/CVE-2020-1767.json": {
+   "size": 6186,
+   "sha256": "9a4a44f32138642573fcb4097900d4ac4cf7df25fba1118d173c28536aca37c8",
+   "git_blob": "d182d1c7a7806900095ee70b2ceb2c9a412a38f9"
+  },
+  "cves/2020/1xxx/CVE-2020-1889.json": {
+   "size": 6240,
+   "sha256": "899104724909f66b433a3c67f272c6e7cc61c1900ce0dfae922e5f047032428a",
+   "git_blob": "733e9e9b761da1409b1cade5540c7750e6877e1a"
+  },
+  "cves/2020/24xxx/CVE-2020-24685.json": {
+   "size": 9335,
+   "sha256": "b8fad37bded9e3e97fee801884452f95a300589fb49c10dd2d8e19a517866b8d",
+   "git_blob": "179adf6ca62e7deec80ed574126336fc41348c8b"
+  },
+  "cves/2020/2xxx/CVE-2020-2093.json": {
+   "size": 5310,
+   "sha256": "a63ddf493a01b6acdbec0c890407e1ecde8ccd9436ac43410ad9e04ec34cf1c7",
+   "git_blob": "31534a87632b12bab3686000a66beab7ee90f07e"
+  },
+  "cves/2020/2xxx/CVE-2020-2181.json": {
+   "size": 6331,
+   "sha256": "3a8d927fb21e1c1c8a9366ef1d74d7dd1548608391cea052fc1061b2804eb374",
+   "git_blob": "4dc8a76340d1d6a0fba9422d083db3b1f70e3654"
+  },
+  "cves/2020/2xxx/CVE-2020-2797.json": {
+   "size": 11295,
+   "sha256": "22071005fd0b6f7fb8bf924b2a4d8ecdb4d450a266352d817cd0f38aa3b4be41",
+   "git_blob": "d9fba5976761c1e38fd1ef7e7bc0f9488dc25141"
+  },
+  "cves/2020/4xxx/CVE-2020-4000.json": {
+   "size": 5697,
+   "sha256": "d0ddd40fbcba3c522f52b903f7409e51553a21f225f10afad82435f6985be43a",
+   "git_blob": "74b3c8c6d9b440ac853e3d974f822a99d6bc8dd2"
+  },
+  "cves/2020/4xxx/CVE-2020-4107.json": {
+   "size": 8734,
+   "sha256": "b7cc8ecd7d219d389ef39aa1f2196179d470aee0aeae962d1d5addeec8ea8a56",
+   "git_blob": "59030b7c3317cef759017eda1eebd8a1972e37ac"
+  },
+  "cves/2020/4xxx/CVE-2020-4771.json": {
+   "size": 9707,
+   "sha256": "986d4b7bc2aefe72c87bcf0b99d56bd5311ea19c986efbb72e9948499070c4d4",
+   "git_blob": "5546bbb1b6fbdbbc157d009a409e473648d4a459"
+  },
+  "cves/2021/0xxx/CVE-2021-0177.json": {
+   "size": 8205,
+   "sha256": "9e8e86d0e82d651d950a13de274edf4fcfaaf46e4754ede83025b04a3ea46228",
+   "git_blob": "e378387552ad74f206554b8ed951fc7066561996"
+  },
+  "cves/2021/0xxx/CVE-2021-0268.json": {
+   "size": 21107,
+   "sha256": "f40433a0541f41939bd7be33cdf4fb0bb1abe832120a6eb18709533719da6d39",
+   "git_blob": "820a121f06518bd29a0d683c8fe1cfa811d3dfc6"
+  },
+  "cves/2021/0xxx/CVE-2021-0639.json": {
+   "size": 5658,
+   "sha256": "b390a9adde8241abb18b6e0d5187c6d11c2e5ce25a730bd1f013ae148d90e85f",
+   "git_blob": "4c3803ff8b07fe111fb80978ae8e796ed924e742"
+  },
+  "cves/2021/23xxx/CVE-2021-23000.json": {
+   "size": 5689,
+   "sha256": "f64d92b2c6bbd551ac58bacc537574e5a6894c6656f1b46a755578075c041743",
+   "git_blob": "43986c1dde34c3af239ef0fa8c095a39719f371c"
+  },
+  "cves/2021/23xxx/CVE-2021-23061.json": {
+   "size": 923,
+   "sha256": "6773963fcc1e1bc5784752e5e83323bc87954fac007044fb515c2f39acfdeda8",
+   "git_blob": "2d3636d7cc027e897dc30c454a9846b272949d77"
+  },
+  "cves/2021/23xxx/CVE-2021-23123.json": {
+   "size": 5952,
+   "sha256": "b1ab81b39f157a31655ef13dc42174692fe042d4d2cf06265d3da90a81954c0d",
+   "git_blob": "c6de9073aeabbde15fff0e789a9cf8049781f57f"
+  },
+  "cves/2021/23xxx/CVE-2021-23328.json": {
+   "size": 8637,
+   "sha256": "841d5a8107c81cef79cfd7f6c4a7adb324fdb9d7d84f6969a0fa99579e7f828b",
+   "git_blob": "f47d5a97cf1fe371c39ba3641c768d442b4c1805"
+  },
+  "cves/2021/23xxx/CVE-2021-23396.json": {
+   "size": 7579,
+   "sha256": "e10e7964c8d581ea59f22470b0a04fd04db78065e7106013aa5dc7103d3eb9a7",
+   "git_blob": "a61d890902b61a92f2b5ac2a3fb22efec81564c3"
+  },
+  "cves/2021/23xxx/CVE-2021-23490.json": {
+   "size": 9236,
+   "sha256": "dc3de69238eec216b1fcc2ecf926b53dad2b4ae2d35a183e4416261e8b34db0b",
+   "git_blob": "5c14af5ff314322966de4b7b5e38c4eb828f5f58"
+  },
+  "cves/2021/23xxx/CVE-2021-23848.json": {
+   "size": 7890,
+   "sha256": "988b47be71ec163d590db14d04646bc5e65fd26511790334d6f6825260e8f348",
+   "git_blob": "6862f07bf8e2424800ce6d934171467cf9916568"
+  },
+  "cves/2021/29xxx/CVE-2021-29099.json": {
+   "size": 9982,
+   "sha256": "b17d7e7d7536d40a7db7c38e9c10b4064e8ec3ff13a5ca649758063e9d60a94b",
+   "git_blob": "9ab6f985252e7c6568433562ac3fd65b13c8c611"
+  },
+  "cves/2021/29xxx/CVE-2021-29904.json": {
+   "size": 8272,
+   "sha256": "d6026a61cbef8c6e3c70b3d655dbe0f16f2afe0317fd1b45d235c76aa4f4bafb",
+   "git_blob": "928df6f0ceacb30f43ff73bc8777976a2e1232c5"
+  },
+  "cves/2021/34xxx/CVE-2021-34461.json": {
+   "size": 8448,
+   "sha256": "55c998fbfab43e97395a1d21962effb0d73f9007e6da377f86930fb2d400e8d1",
+   "git_blob": "4aa74f3a9905ddc716bfa7a8cdf1284ddefa44d1"
+  },
+  "cves/2021/34xxx/CVE-2021-34641.json": {
+   "size": 12661,
+   "sha256": "0df459ae510a3da46c606f91bce28eb7cafb1f4c0e89750a3c99a86f52b983c8",
+   "git_blob": "72cf56433c6414722ba7d1efa140b582cb560e3e"
+  },
+  "cves/2021/34xxx/CVE-2021-34830.json": {
+   "size": 7398,
+   "sha256": "51aa3e0d34ef0b549ad72faa80a4ffd0aa7f1ee2883834666056bf1c04d8a4e0",
+   "git_blob": "fa41c3acf0d54ee9ba220653ae1a8efd23b19291"
+  },
+  "cves/2021/34xxx/CVE-2021-34913.json": {
+   "size": 8128,
+   "sha256": "3bf8ff2cabf91ae0891761937197f423abf4e1cc91744cf27e51975729c59680",
+   "git_blob": "8c78878a5608542d155c4ae21dcb6016c39cc239"
+  },
+  "cves/2021/39xxx/CVE-2021-39894.json": {
+   "size": 8918,
+   "sha256": "feebf31bba5adc6ce0e91220043d8b47ab0342d51b37bbf8b6120503a932cb55",
+   "git_blob": "2b6c79761f668bc3be206f83c7a833546bb91c36"
+  },
+  "cves/2021/44xxx/CVE-2021-44000.json": {
+   "size": 11840,
+   "sha256": "5f0e7e35910216e80aac64d1bbdf17f2f31a06bf50745c555d2db0f67b3a040a",
+   "git_blob": "43bd9566ec05f72bc3c8993fb48f5ae565939aab"
+  },
+  "cves/2021/44xxx/CVE-2021-44196.json": {
+   "size": 7150,
+   "sha256": "87794d334fff369a44e7edd1c4da6c3ab902fbd201931504726e5c22c1e9056d",
+   "git_blob": "53679b52983c8d58d9d9f83a6d7d079c7b6ef216"
+  },
+  "cves/2021/44xxx/CVE-2021-44228.json": {
+   "size": 36667,
+   "sha256": "3339a1f92543f173c820b6037b6cbc4e008723d5ef545be9f073029e871e8d28",
+   "git_blob": "d824fb3c8a2f0db266040b0b0fbd9f6a979347d1"
+  },
+  "cves/2021/44xxx/CVE-2021-44418.json": {
+   "size": 8006,
+   "sha256": "9397c1d1b8fcecf5144e702c861cea880d7d14d5aa0143b06400e137cb334abf",
+   "git_blob": "4d5a29b6011319035c4fde31e814e6cb8e7636e0"
+  },
+  "cves/2022/0xxx/CVE-2022-0001.json": {
+   "size": 7581,
+   "sha256": "d8f539d78af07421f1c7013497076642cfb6126df9fc87ce2ba221e71dd5ffb9",
+   "git_blob": "4a0a1d38e8b40625e2013aca33941087f68fea2e"
+  },
+  "cves/2022/0xxx/CVE-2022-0263.json": {
+   "size": 8369,
+   "sha256": "2b537d32e1e25945542961b4433d4018e67ed800839f263e4285784c2e279420",
+   "git_blob": "bb62c4dae6f16529adb8c6550f2d4374b50b694c"
+  },
+  "cves/2022/0xxx/CVE-2022-0372.json": {
+   "size": 8460,
+   "sha256": "00d04c4eb4af54cfdcd1d85f5bb9234794b6cf90206f49b33bf686570cc84d5f",
+   "git_blob": "8ff5c9a61828b85d855243d11daf5f5e6656e564"
+  },
+  "cves/2022/0xxx/CVE-2022-0475.json": {
+   "size": 9651,
+   "sha256": "b4ea282ed2b0d8d34c57c51c30ee7755653bc2321a5348c5295996d516ca05fa",
+   "git_blob": "9646dd396f17fec07f0566f79cec65805527fdd4"
+  },
+  "cves/2022/0xxx/CVE-2022-0581.json": {
+   "size": 7362,
+   "sha256": "22ee02081b0f424a215ad1562a0ed1d7df37c854504b03624050fa1e82a5213a",
+   "git_blob": "bafce22cac1b254d0df5bf5e761b42101bc71fb6"
+  },
+  "cves/2022/0xxx/CVE-2022-0895.json": {
+   "size": 8360,
+   "sha256": "4aad802451ab4706c737a1424808bbacc4d1bd2fd9989ea80e6cecd26db27ab9",
+   "git_blob": "bdc26e7be55a67f84e475da41e640c8c0548ce7c"
+  },
+  "cves/2022/24xxx/CVE-2022-24000.json": {
+   "size": 7540,
+   "sha256": "e483dd542fc2df9b3390f88159b22bd92d66a6d7e7d88d7e8d446377fd60414c",
+   "git_blob": "987f61a9d12d9f63a6c7c524f7aad4b96a4e95e8"
+  },
+  "cves/2022/24xxx/CVE-2022-24697.json": {
+   "size": 7920,
+   "sha256": "996a1f9498f9e3c4f6cbace41cd8f6026d02407007085172200f8d6a94e837a2",
+   "git_blob": "ac55379a29da12775f1ca1081352714056e58297"
+  },
+  "cves/2022/2xxx/CVE-2022-2000.json": {
+   "size": 10559,
+   "sha256": "ce128adfb5a9df3b06d6a6b6f8e55f278abd1a98cb12fc3fc22418ae080f24e2",
+   "git_blob": "73fa7bc1eed32a0fd008d496004889ab55c252b5"
+  },
+  "cves/2022/2xxx/CVE-2022-2115.json": {
+   "size": 6614,
+   "sha256": "74b5dd28ab1e4e7446a41aa300f0553c17d04fc9d2201d7c0b69a96c6aebc1ad",
+   "git_blob": "06cdd020e11a227da0e114b8b20fc0da89ef6e5e"
+  },
+  "cves/2022/2xxx/CVE-2022-2226.json": {
+   "size": 6353,
+   "sha256": "a65d35867eddb75ab3292266933996b9127cb1f661b3e48bed770fd37f3d55b4",
+   "git_blob": "18d2f9bf7d9ba1cf8ea60c1f2fb884c9ad461376"
+  },
+  "cves/2022/2xxx/CVE-2022-2552.json": {
+   "size": 4407,
+   "sha256": "0e9e1f2d481bbf5ab9da7560363df0c922b0fa6bd774c9366af76b69e63241c3",
+   "git_blob": "2c72fc397bc737a119a2cee2f5de4e005b41221a"
+  },
+  "cves/2022/2xxx/CVE-2022-2660.json": {
+   "size": 7446,
+   "sha256": "de40e240f83f8cb8eb752ea0573d745ffd10a816fb6be2b05d578afc4dedc89a",
+   "git_blob": "3bf4cc4682ce9e7702c758502f99e7b5c7ddff49"
+  },
+  "cves/2022/35xxx/CVE-2022-35243.json": {
+   "size": 10743,
+   "sha256": "1cd803d8bc5f87e9d224e6f87cb6f5cc902f72902e84baa1929286af36c272b9",
+   "git_blob": "164713d7ce27e941dd0665ec8fa15283e4a98084"
+  },
+  "cves/2022/35xxx/CVE-2022-35330.json": {
+   "size": 1022,
+   "sha256": "78b1f9ed6b13f6ec5dc50fbcc7b2b1fac4869532a4b376d49fee420fed49e2b3",
+   "git_blob": "1dc8ace350feae76860233b9acd951f8f378780d"
+  },
+  "cves/2022/40xxx/CVE-2022-40503.json": {
+   "size": 35057,
+   "sha256": "3cf30a95c5ecbf74b5aaabe930002e35206a08231656a4797dd21ac3ebbd0237",
+   "git_blob": "e90e1e4fbba5cd300c3d8158c21f26c08566716d"
+  },
+  "cves/2022/46xxx/CVE-2022-46695.json": {
+   "size": 11605,
+   "sha256": "07a53767c88f28b2563a4fe83fcfc8a6d80e6e310b198861a864b946ae66bd63",
+   "git_blob": "3646059d61fe5ab6e2f060f448343a258927d2da"
+  },
+  "cves/2023/0xxx/CVE-2023-0109.json": {
+   "size": 5572,
+   "sha256": "f6703cbdffc5b9ef00e126b6c8461fec8310b5ef40affc74149cc74213547265",
+   "git_blob": "f2714449fbf7e36e8d1811ce64a8227177cdb394"
+  },
+  "cves/2023/0xxx/CVE-2023-0217.json": {
+   "size": 8923,
+   "sha256": "73b4b9e7137ef5e334e64346190c4ed87db81543c8f1c7f94f0bc6edb8d9a1ac",
+   "git_blob": "f0de0a775b41d47aeebcf0526c86f1b57eaa6b63"
+  },
+  "cves/2023/0xxx/CVE-2023-0442.json": {
+   "size": 5869,
+   "sha256": "7e7639b5da57a01efc9d1596d4030a923aee442a97aaf47e4a0f2f8c2a341ad2",
+   "git_blob": "b965d9f55644632273e56f7b9bbcb7479797d161"
+  },
+  "cves/2023/0xxx/CVE-2023-0554.json": {
+   "size": 6570,
+   "sha256": "d7b5a2aceec278a06e02c64e7a012c300089e295ad5399e19fa2828adea06d57",
+   "git_blob": "73aef7e8160077f604244c42c00764a9c644c416"
+  },
+  "cves/2023/0xxx/CVE-2023-0665.json": {
+   "size": 8661,
+   "sha256": "4ba2719d93df3fbe9782d9e73a8b25e8dce798b1f23124ca1733901321d83096",
+   "git_blob": "263f8c89f92651dda31a7bc24614aa6a840d6fc7"
+  },
+  "cves/2023/0xxx/CVE-2023-0776.json": {
+   "size": 12411,
+   "sha256": "f272cfdbb085cfee2d03be54c21de90338b9cb4833af6f08f49d21b9024fe79c",
+   "git_blob": "922a8febbfdd6e6522d207ef444335134ecd3db2"
+  },
+  "cves/2023/0xxx/CVE-2023-0888.json": {
+   "size": 8953,
+   "sha256": "16d7d19a746ec866a4a1ee0e758bb439e3ee3d7580d4d0cd1d282d3c165bb21b",
+   "git_blob": "756b1ed98ab743bb59daaa103485c4e4459ded9a"
+  },
+  "cves/2023/25xxx/CVE-2023-25000.json": {
+   "size": 9898,
+   "sha256": "e3e672e34c932bb648c44a9c6cdfc51c8c3433ab04e43fd819d37fc7aa253f69",
+   "git_blob": "53ea0eb1bdd94fe8a9bcc4b722f66644340ebc6c"
+  },
+  "cves/2023/25xxx/CVE-2023-25088.json": {
+   "size": 6051,
+   "sha256": "6dc6b2abd5bf382790f1ff06491def67818faec1822d6db559e4399d24f625cd",
+   "git_blob": "5ce908cbbbf25532059ee8fa61f09847887837fd"
+  },
+  "cves/2023/25xxx/CVE-2023-25178.json": {
+   "size": 8417,
+   "sha256": "1a5baceb43cfc71e625f716e69229161879a3b4086ff7c44cf85f3cdbc07bd6e",
+   "git_blob": "7a59dc43c991c46ed7481142d51d5d8220d8b124"
+  },
+  "cves/2023/25xxx/CVE-2023-25508.json": {
+   "size": 6216,
+   "sha256": "f6604bb1b8f68eceaf80d0875daa91d28a66ec893df6ba2a7a0934af827332fc",
+   "git_blob": "9a85f1f301c601af917ad277171d024c284c4227"
+  },
+  "cves/2023/31xxx/CVE-2023-31076.json": {
+   "size": 7765,
+   "sha256": "92ea87d79fb813983201d553051a33c59f2f628c48bd3e03a523f0e298356b13",
+   "git_blob": "ca1a0ddf84214c67f84f4bee1eda152b0011ea3b"
+  },
+  "cves/2023/31xxx/CVE-2023-31156.json": {
+   "size": 21240,
+   "sha256": "b52c862d62f0850475461b738e3ee9464a9c28b4f604eaa0e1e46ed050640ef9",
+   "git_blob": "0a2b051bcb407361fb27cfa48a2eef50cb6cc18e"
+  },
+  "cves/2023/31xxx/CVE-2023-31315.json": {
+   "size": 48434,
+   "sha256": "a26b2a1dba4330c635f2df4742f695a2c4155940bedff5fe67d364d7fbd1675c",
+   "git_blob": "e2c237ec77c2f67a7c5ed74c7cf479a683fc913d"
+  },
+  "cves/2023/38xxx/CVE-2023-38200.json": {
+   "size": 8374,
+   "sha256": "f11875f66882f3d58b0ee80b8d63c6f78fbd06498b9adc99a91e2e493a4128ed",
+   "git_blob": "1dfdee507680082ce11e6f662b4a0cbdd4e2fb17"
+  },
+  "cves/2023/44xxx/CVE-2023-44162.json": {
+   "size": 1379,
+   "sha256": "72f2b865256a9327da0355b7ee2f378b77962a901f52650695f667b4836b372d",
+   "git_blob": "428fd02f536829399c29f9a4422fdccd39526a2c"
+  },
+  "cves/2023/44xxx/CVE-2023-44220.json": {
+   "size": 5847,
+   "sha256": "47dc3fbb36a39623702d5aec777465aaf04e8415c0a8bfcae3bc0b8ab1d78928",
+   "git_blob": "883163f4d13ec21eb29d8e2f3355ccdc30c0180a"
+  },
+  "cves/2023/44xxx/CVE-2023-44281.json": {
+   "size": 6076,
+   "sha256": "ee847757bac3c599227fbfac35457a719a0652bc8833f085d7745c77ffaeccee",
+   "git_blob": "4ebd6de168dc03350afef90951c589c06fdec58b"
+  },
+  "cves/2023/44xxx/CVE-2023-44452.json": {
+   "size": 6681,
+   "sha256": "84021d91b16ee9e498a05e484892a3f8b291ef6f22535df41d22e4e835b4e0bd",
+   "git_blob": "91a908f1ad0c861090eaf1ce8cbff112ac34fce1"
+  },
+  "cves/2023/50xxx/CVE-2023-50170.json": {
+   "size": 829,
+   "sha256": "91dfd800fd5bd0b3855a226bfe923f950ba448e1aafa2d363d06de9d7a0102ff",
+   "git_blob": "ac1d28adc227cb0a6dd3ba4f9bbd960f5871c934"
+  },
+  "cves/2023/50xxx/CVE-2023-50769.json": {
+   "size": 3116,
+   "sha256": "07a15c58c635503ac848161627f0836c021fa391ebd8a405e64e1e15b99fdc6a",
+   "git_blob": "b03a952b041cba08e1e116406eccd546f9702cfd"
+  },
+  "cves/2023/50xxx/CVE-2023-50923.json": {
+   "size": 6176,
+   "sha256": "6ae3114b33a0a932eba23dbf8b73394c4d5fff8d8bf39fc719e2c5b5c27c68d7",
+   "git_blob": "6e80549a4e181b847a9472e468d80d21a4ab5a79"
+  },
+  "cves/2024/0xxx/CVE-2024-0001.json": {
+   "size": 8749,
+   "sha256": "97cff1bc877398bd096fa8419765c9cebe6e81ebd85072035cd0b9508c0f95d9",
+   "git_blob": "4f78438f513cdf2eaf03d544e8c06de2f57f5ef7"
+  },
+  "cves/2024/0xxx/CVE-2024-0229.json": {
+   "size": 34944,
+   "sha256": "7c462ec87fb4208efac9ae0c09774312a53e846a1730e4011151fe90b487343f",
+   "git_blob": "202c0ce2857c93b1cf3d6f7a42ad498f5d59a38c"
+  },
+  "cves/2024/0xxx/CVE-2024-0341.json": {
+   "size": 8055,
+   "sha256": "d8ede1e45c2e96a3d37e0eb6522f11f14431274d5d0a5dc9f9130fb9a38aec9c",
+   "git_blob": "676a48626ab56c1a388e2ff699bd0567c5d88123"
+  },
+  "cves/2024/0xxx/CVE-2024-0449.json": {
+   "size": 5846,
+   "sha256": "018c03ac5ff6b670ecc4e763808de0acc286e524d51b0e2c11f59a573f596c3f",
+   "git_blob": "5e0aead7547a3dd27e7c422caba71de70fc514a6"
+  },
+  "cves/2024/0xxx/CVE-2024-0556.json": {
+   "size": 6260,
+   "sha256": "f87c8c219a7d467c492fe01e8f705ed9afcb50faad5674ddb4cda048b6deb1e7",
+   "git_blob": "1d66b52a40b822c0ef9f783f1bbceb142da56f44"
+  },
+  "cves/2024/0xxx/CVE-2024-0669.json": {
+   "size": 6927,
+   "sha256": "7e0a37f0790298c8bc845e100e90998710083a3e9d6d01bdda41d70d15c152bf",
+   "git_blob": "734c45b476c687d7f274da8ac5af2716829fcc12"
+  },
+  "cves/2024/0xxx/CVE-2024-0775.json": {
+   "size": 12700,
+   "sha256": "66fa2c7c9cc07bbb44b81562e1a85f4ab696294b2031178c0cc34194f1b599a1",
+   "git_blob": "c26bec468b8ea6227e95f8cc725d456a37b735ae"
+  },
+  "cves/2024/22xxx/CVE-2024-22225.json": {
+   "size": 6325,
+   "sha256": "710c235ea59b8bde63d1c2d6ebb969b8a9aaa51d58f73d195441905ab4d87def",
+   "git_blob": "9fa119cd8d476d3d95ab873869cef00e6d485c4d"
+  },
+  "cves/2024/22xxx/CVE-2024-22437.json": {
+   "size": 6760,
+   "sha256": "0dce77d6ce6efb02004549bf97fd9ed0c44afb91b2d6cbe985e490ba2d93db08",
+   "git_blob": "f358ada827713463488ea14d38bb31a74c5f6346"
+  },
+  "cves/2024/30xxx/CVE-2024-30081.json": {
+   "size": 28300,
+   "sha256": "c35223a8a8450e504bdfccb1d8aff89e3edc46ec6f92e9d765905de3410569a6",
+   "git_blob": "018eb8e909f96d8e76acc71e679060cd38fd18ba"
+  },
+  "cves/2024/30xxx/CVE-2024-30259.json": {
+   "size": 10438,
+   "sha256": "8b7f8a21a22dc733e37df42161e863920f6384c4f9de66ea619dd82ba7ef2039",
+   "git_blob": "1d6044374e94f31e4caaa6ad98936cb1a79d5bf7"
+  },
+  "cves/2024/30xxx/CVE-2024-30348.json": {
+   "size": 10685,
+   "sha256": "ac2151aae60f82f2e97911eb830ebe760a0a9643fe4c01c92d727b68841df5aa",
+   "git_blob": "f26b5f6b52ab50bf3e9ab55b68abbf7569d3bff7"
+  },
+  "cves/2024/30xxx/CVE-2024-30440.json": {
+   "size": 7691,
+   "sha256": "5f574765eeb3183f897a7c9d2206b306d9f9963a8de51434be0cae21eb170117",
+   "git_blob": "6f4605cf71f3177eaba66f5afac663ca6ec27de6"
+  },
+  "cves/2024/39xxx/CVE-2024-39598.json": {
+   "size": 8183,
+   "sha256": "b196ad6e14c1e5c1576914852918e9845b9df656927a45f0c486e170320b7138",
+   "git_blob": "8953c19f56f3cca467cc5909ef329c15df6d8b97"
+  },
+  "cves/2024/39xxx/CVE-2024-39767.json": {
+   "size": 7045,
+   "sha256": "e17d2cfeb8037e0c64ea005b5802e59717905a49ec6e849b3cce5ac61078b24a",
+   "git_blob": "f3f7d5d44cc176c22fa3a1d5f3107a5e886a9288"
+  },
+  "cves/2024/39xxx/CVE-2024-39865.json": {
+   "size": 5774,
+   "sha256": "761e0168b58c0559a4828e5447b0eb243c06a7e587555537079c17259536489c",
+   "git_blob": "a67cab15987651e6c9c1962f42ebb979e7ff97e0"
+  },
+  "cves/2024/47xxx/CVE-2024-47660.json": {
+   "size": 15181,
+   "sha256": "b628ba36aa6f21d3c3dcdcf859d9f43550d80f8057151baee01d017cf38ed40f",
+   "git_blob": "a67a7be175fe49732603f094722b83834b1c2711"
+  },
+  "cves/2024/47xxx/CVE-2024-47752.json": {
+   "size": 9780,
+   "sha256": "dcf36612a3298b3937c3016f0a9eee6b86424d4983ff764ed31edcf2ff9b5694",
+   "git_blob": "672c4711cee3a2fdac72d85a3998874c7a41d45d"
+  },
+  "cves/2024/47xxx/CVE-2024-47865.json": {
+   "size": 4849,
+   "sha256": "c90b96ef7b6fb7393acedc83322c55f0699c506ba996bcc488a06ab38a163370",
+   "git_blob": "4842bd20d6832293f53480d8518574f55c7f3aa1"
+  },
+  "cves/2024/55xxx/CVE-2024-55542.json": {
+   "size": 5083,
+   "sha256": "1b2503d6ab5daea25929dcc17aadd79f31eba7861e884abb9243f6957aea33b7",
+   "git_blob": "6ed3b539313e252cead83ae7c0e3b8f3c6a92512"
+  },
+  "cves/2025/0xxx/CVE-2025-0001.json": {
+   "size": 6290,
+   "sha256": "ef1612e126c8f3e51e05cbb6709f7b57354348152ecb72f6dbc9dc8570502407",
+   "git_blob": "fd64b505cf4046c7c8da411b4cbb4ac1ffd4d591"
+  },
+  "cves/2025/0xxx/CVE-2025-0130.json": {
+   "size": 18297,
+   "sha256": "91963bb74e6a1e51ea04bcfc0b1f72db3f0722afb2dc632b265b2b96e0f24e54",
+   "git_blob": "4595b4d95cf78d8a2908ec7e7ff5a6710b3d45ad"
+  },
+  "cves/2025/0xxx/CVE-2025-0668.json": {
+   "size": 6563,
+   "sha256": "f341f847a8b37ed84c94a6828c029467a7416652d3ca328ba21652e9862ee863",
+   "git_blob": "2c56545200c8a03a8e99d9b016770c64f336cfe7"
+  },
+  "cves/2025/0xxx/CVE-2025-0783.json": {
+   "size": 7716,
+   "sha256": "b17994eb7a778fd4c6b11f126fc917e4f076fa1f59da2c4bbf6ae04836ef7bfe",
+   "git_blob": "d2640ca0120b117dd8be9019398ef868b7612ee3"
+  },
+  "cves/2025/0xxx/CVE-2025-0883.json": {
+   "size": 7356,
+   "sha256": "f1c8f1dd9a3bc603f3f9b59792cec84e92d63f4a28293416407286a997031b5c",
+   "git_blob": "1e3fb148fd139c596c5983c42aa0c3581fdceaa1"
+  },
+  "cves/2025/23xxx/CVE-2025-23001.json": {
+   "size": 5010,
+   "sha256": "3ec9eb1c096e88205adae1ce48fe4d8d6ef35028f183ffcb9d670368ff77f3b7",
+   "git_blob": "508d67568face38a11d173de8b5d77fff83896e5"
+  },
+  "cves/2025/23xxx/CVE-2025-23244.json": {
+   "size": 5731,
+   "sha256": "7693f1b43b6eed6bd0fa8d058611a9c76fe7baf5c588175e1ca6ccab8ea085f0",
+   "git_blob": "96c3fe66928914cdc81371e1bff4868fbe22ee3f"
+  },
+  "cves/2025/23xxx/CVE-2025-23572.json": {
+   "size": 5945,
+   "sha256": "7d644ca224496de2dc8562d77d772f86aa312c0db6f9bac56c336704a539b275",
+   "git_blob": "dde931089f27f021e3eb9abb8b11663fa5d52ca9"
+  },
+  "cves/2025/23xxx/CVE-2025-23679.json": {
+   "size": 6210,
+   "sha256": "ff6990ee090d145f6cfa013745b49a3fca393a7fdd5f57c5b8850c6f4c3f85fd",
+   "git_blob": "af7a7cfef68594e244c93f122dae8c99d9287289"
+  },
+  "cves/2025/33xxx/CVE-2025-33032.json": {
+   "size": 7866,
+   "sha256": "f191c5d4feb254d1a4047ef9aa5ebb53fd048dfc0e09853f02e216eb83339462",
+   "git_blob": "2633eaa6b1a383ed3dbb4b2e250ba633b004c11b"
+  },
+  "cves/2025/33xxx/CVE-2025-33110.json": {
+   "size": 7625,
+   "sha256": "d67e7df385f73901bbd722b8b20c45dd40218a0e11df289362a4e15ac9323d36",
+   "git_blob": "f2d2dc8ab22a55c5b698b706dfaf33a2970dd6f0"
+  },
+  "cves/2025/33xxx/CVE-2025-33191.json": {
+   "size": 5635,
+   "sha256": "28c0e87ae3bed6f1cca80dcbe326aefa22360d4fb937472d3535f0452f2c72cb",
+   "git_blob": "b2f67f26ef61ef859e2bd864520ecc3483f0d528"
+  },
+  "cves/2025/33xxx/CVE-2025-33235.json": {
+   "size": 5917,
+   "sha256": "4cd14ad16651c5365f1aeed601130f5ba8788697f6e40169c5cf408e69fa55db",
+   "git_blob": "0d992293e59a9ed86c36d49abe7e41ece69bee25"
+  },
+  "cves/2025/44xxx/CVE-2025-44000.json": {
+   "size": 5050,
+   "sha256": "bdf0fc0f4dfe90a5dfdaa568a9f3f3412f56545548946dacd7f091c61d131fe1",
+   "git_blob": "748c492271e36383a4810f89688b33e7f8a73c83"
+  },
+  "cves/2025/44xxx/CVE-2025-44018.json": {
+   "size": 4934,
+   "sha256": "fc824255e1f3aa5de500658ccef47abe9cad64c2d44aae31fe40035b0cd019f8",
+   "git_blob": "05276ca05cf75aa904dd316c12144b6176e94aa8"
+  },
+  "cves/2025/54xxx/CVE-2025-54664.json": {
+   "size": 834,
+   "sha256": "61aae535ab794c01ae51201c93b6f35122e4dfe27a27e5709bb4a141da21d124",
+   "git_blob": "625979bad085909a0ebc19ce9e33624d4d3581ec"
+  },
+  "cves/2025/54xxx/CVE-2025-54766.json": {
+   "size": 6274,
+   "sha256": "1330c547d67ae363803e7815c57ab7d193bd1c18047e2c43b56f62a00897195c",
+   "git_blob": "e91a1cca634e7956502e358dedeebe7320c6a21e"
+  },
+  "cves/2025/54xxx/CVE-2025-54876.json": {
+   "size": 5750,
+   "sha256": "a179c5b3245539f80c379bdc1f1b4fba7ccc4e0a28b1afa37c657c37d32b1c3a",
+   "git_blob": "57b77e43e193e75832ce036ccfcd786d74b411ab"
+  },
+  "cves/2025/64xxx/CVE-2025-64136.json": {
+   "size": 4957,
+   "sha256": "26cd9eac39de8414159c342535df4f11ad6fe1d392b89f90b96292f2e2775bd8",
+   "git_blob": "caa3df844454bfffc03cdc46d2dc415b49f12b06"
+  },
+  "cves/2025/64xxx/CVE-2025-64387.json": {
+   "size": 8474,
+   "sha256": "05676cc9b556b7476f9d6842dc3c8e6eaa32a90710868fe6d8cd486370d96c8e",
+   "git_blob": "ba2df57e74198110a64238fe6321f518ec502637"
+  },
+  "cves/2025/64xxx/CVE-2025-64486.json": {
+   "size": 5284,
+   "sha256": "54e0d969b7d0a6b540ed0b5cf749eacb09d01c9a3cadb63d6bf1d18eec6dd255",
+   "git_blob": "9d43dd71fa090cd8ddedb9c38aed53ab1a6203d2"
+  },
+  "cves/2025/64xxx/CVE-2025-64682.json": {
+   "size": 4813,
+   "sha256": "d4e04333ef331907b012e4ad925313fb0ef9a2d83841015e1d3f59a16a08b0b5",
+   "git_blob": "d0604a90fd137dba8301e5c2c9ec7d1694df15a8"
+  },
+  "cves/2026/0xxx/CVE-2026-0001.json": {
+   "size": 9757,
+   "sha256": "93b0c5bd239bfc35e3545b3e86e46ca9c9bbd95d87a0f144359e5e2c7d4d935a",
+   "git_blob": "126955760034544f36860159592fc12bd5739d14"
+  },
+  "cves/2026/0xxx/CVE-2026-0228.json": {
+   "size": 35155,
+   "sha256": "635c23f4cc037347dea959c88bf5da6f510fb95b5fc9b08aab61c6c9db18be88",
+   "git_blob": "39983271adb2311f31e6ed6ce123b1cde4c755f6"
+  },
+  "cves/2026/0xxx/CVE-2026-0320.json": {
+   "size": 77012,
+   "sha256": "0c87c69569ed748b376ac3b3755143243e42b4eb2ba9393f00c17966806b3d8e",
+   "git_blob": "2323eb7e640ffadbe9130d051e43613f53efcf79"
+  },
+  "cves/2026/0xxx/CVE-2026-0529.json": {
+   "size": 6823,
+   "sha256": "7d93a97d30ecd9899f367f3f8fa7fc25684e6c8c08ba12208ea6c19a76a7450b",
+   "git_blob": "54d035ad80bd9790c71e07e0671a18362ebc8e98"
+  },
+  "cves/2026/0xxx/CVE-2026-0618.json": {
+   "size": 5094,
+   "sha256": "180de42d7566efc8679981c3f56cb54c6bf3cd3576049a323ce1b42f2763a33e",
+   "git_blob": "fe1825d7b8e3962423179165860611b22f8c32c1"
+  },
+  "cves/2026/0xxx/CVE-2026-0713.json": {
+   "size": 1366,
+   "sha256": "78f23a0252f5a350a6b3fe77b83f72dca4b43d8775ff9f44478d44d8c6de410a",
+   "git_blob": "e00ccc9dde33db9ad6e98674f55f0d9ddf1f39da"
+  },
+  "cves/2026/0xxx/CVE-2026-0804.json": {
+   "size": 5539,
+   "sha256": "47e13dd67724c309b96fe66699754f6becffb99ee049bf92b57f45aee2203ed4",
+   "git_blob": "00b15606a72350ee640f469f28b4dcf91c64be83"
+  },
+  "cves/2026/118xxx/CVE-2026-118180.json": {
+   "size": 3613,
+   "sha256": "fc38fb533b4c9a8d1546a04c4aeef77bdf234eb991a40c3be9143a43b1a952e8",
+   "git_blob": "a019c31c6c7a057f7ab2be62d62ecbe8c9eece6e"
+  },
+  "cves/2026/118xxx/CVE-2026-118309.json": {
+   "size": 4363,
+   "sha256": "a8dae4ce2d9011abfdad9c6f61a2196171d29d33fec0789880cf5fd425068626",
+   "git_blob": "068efe69509d1f99f863a18bb803adda403479c6"
+  },
+  "cves/2026/118xxx/CVE-2026-118542.json": {
+   "size": 4173,
+   "sha256": "32fb7ffd325c0e5eccfdf6932159882de63b9fe9b933e8dc32be70ef8e06600c",
+   "git_blob": "7a506690699e801d4f1a40b96327c16c653a99c9"
+  },
+  "cves/2026/118xxx/CVE-2026-118593.json": {
+   "size": 10465,
+   "sha256": "323e9ef929dfd6ec33801b655c287da201ad8e82a25534c7376007e79c647889",
+   "git_blob": "865199d358aa09dc8fb53f4cf2525fa3ffd35987"
+  },
+  "cves/2026/26xxx/CVE-2026-26116.json": {
+   "size": 6226,
+   "sha256": "6596485da61cf9db0253b27e0f6f0aab0eca3b13711767409799e7295d1f842c",
+   "git_blob": "46ebcd6ec3ec12eee7cbbaa5e9a470206179a48a"
+  },
+  "cves/2026/26xxx/CVE-2026-26233.json": {
+   "size": 7162,
+   "sha256": "bb78da899f4df9e8f2f23428bdc6ece0455e23988e98335b47120ff5f3feeef3",
+   "git_blob": "4c6106f717bad336bf7886e77057460414b77698"
+  },
+  "cves/2026/26xxx/CVE-2026-26301.json": {
+   "size": 834,
+   "sha256": "cd87c45b1c9cf225c9273f1b33f37f6c6317bdfa8a3a100522340f1acbe45ebb",
+   "git_blob": "e2ab3ffde53a05b501152d9d83083c199fafbcae"
+  },
+  "cves/2026/26xxx/CVE-2026-26936.json": {
+   "size": 5852,
+   "sha256": "273990dbabb0f9d5085ef53ce3a426d16ced8a4e5dc7d80ba6e622971c617e17",
+   "git_blob": "50ad23c269903ed32adfe656b45837af7ba16ace"
+  },
+  "cves/2026/45xxx/CVE-2026-45000.json": {
+   "size": 8718,
+   "sha256": "78a71b6e7780e4808586b01bdadf917dce37552c8ba74b6e4d044ddbdefe00f8",
+   "git_blob": "e71b72688f6e1896b71907a82a3b350ed32aa0ea"
+  },
+  "cves/2026/45xxx/CVE-2026-45123.json": {
+   "size": 5781,
+   "sha256": "0713b9a48fa0759804600346d238cc212db2fa3cb0be9a87de99021fb39a757f",
+   "git_blob": "aafa8211a94298533af75fcdd17568f0b85294f7"
+  },
+  "cves/2026/45xxx/CVE-2026-45232.json": {
+   "size": 8286,
+   "sha256": "34394fad286e0386ba6f6efb6262efa5e868bbb83b2a19281b7c0937d327bb49",
+   "git_blob": "2e67c7aebeb8b2b82797c06d6c1915ec9abd7374"
+  },
+  "cves/2026/63xxx/CVE-2026-63242.json": {
+   "size": 5268,
+   "sha256": "d2c0fa094ebb52cf5e8fd4ffe0bdca6e40a2e328a65db4975b5e6a6616074166",
+   "git_blob": "6172d83f6ba9114517dd489928e0aa824c55b033"
+  },
+  "cves/2026/63xxx/CVE-2026-63356.json": {
+   "size": 81805,
+   "sha256": "762d8432af3df384453c648b0c97cb1987ce6597b8bc02c5bbd7afda7eb1ad07",
+   "git_blob": "1aeef45b35139838f3e5f3c5c062cbf3b9229771"
+  },
+  "cves/2026/63xxx/CVE-2026-63752.json": {
+   "size": 7125,
+   "sha256": "b6ab87f2642d9c8decd37c69ab930118d20074487cf8e34e1c19a820edd51d9b",
+   "git_blob": "19064014db57cfcffd289ee88d72af1941560459"
+  },
+  "cves/2026/63xxx/CVE-2026-63847.json": {
+   "size": 13464,
+   "sha256": "59ebe7943673bf733247a613e29d2cff7cfb0cedea644fb28b884b3c09736942",
+   "git_blob": "b10aca5185bf9e78dc23f6af2cc38c6e91775cd4"
+  },
+  "cves/2026/63xxx/CVE-2026-63923.json": {
+   "size": 12216,
+   "sha256": "8625d5d8a348d4b976aa698abf216370301ebaa50c524899d5cb67a91550007a",
+   "git_blob": "43b26186de52b827110911f043fdc91dc24b9659"
+  },
+  "cves/2026/81xxx/CVE-2026-81168.json": {
+   "size": 6483,
+   "sha256": "b9d1d45f301ef90a90208982afbbde7587c2a82e2fbb7beac0c83646a86e3e01",
+   "git_blob": "0ad6d26708baf0b7423396b7bd7febe0efd04b81"
+  },
+  "cves/2026/81xxx/CVE-2026-81302.json": {
+   "size": 5441,
+   "sha256": "13d45183968a2d9adc3c05d442dd141b831c6444752ea86ba7f9bcf6d40bf43a",
+   "git_blob": "d67b5d9d41046f3acb2c5c2aab30870820995b75"
+  },
+  "cves/2026/81xxx/CVE-2026-81432.json": {
+   "size": 5657,
+   "sha256": "b3c42ece8f4a074a4e242ffc95dee7c3450cb834ee6967259fbcfacd7265af47",
+   "git_blob": "216efd6e9cd6ebc9f937a9254d8f84cfb3b32243"
+  },
+  "cves/2026/81xxx/CVE-2026-81839.json": {
+   "size": 6377,
+   "sha256": "41661bdcbc09f7d6fa10405a943ab8adeed1c246c11d3548a27523b1c437e4f5",
+   "git_blob": "1d30be92216641e49c221bd8f7936545a3bb9411"
+  },
+  "cves/2026/81xxx/CVE-2026-81920.json": {
+   "size": 8143,
+   "sha256": "780bb0a2223c0f5149aa0e53fe9b2dd867827b3f5f6856d9a734915a23c339d5",
+   "git_blob": "86d783e45fd77dbb9c55387d22e6c6f2ece7df13"
+  }
+ }
+}

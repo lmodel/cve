@@ -1,0 +1,23 @@
+The records in extract/ are copied unchanged from
+https://github.com/CVEProject/cvelistV5, at the commit that manifest.json names.
+That repository says its content is used under the CVE Program's Terms of Use,
+https://www.cve.org/Legal/TermsOfUse, which authorise such copies provided that
+each reproduces MITRE's copyright designation and this licence:
+
+Copyright (c) 1999-2026, The MITRE Corporation. CVE is a trademark and the CVE logo
+is a registered trademark of The MITRE Corporation.
+
+CVE Usage: MITRE hereby grants you a perpetual, worldwide, non-exclusive,
+no-charge, royalty-free, irrevocable copyright license to reproduce, prepare
+derivative works of, publicly display, publicly perform, sublicense, and
+distribute Common Vulnerabilities and Exposures (CVE™). Any copy you make for such
+purposes is authorized provided that you reproduce MITRE's copyright designation
+and this license in any such copy.
+
+ALL DOCUMENTS AND THE INFORMATION CONTAINED THEREIN PROVIDED BY MITRE ARE PROVIDED
+ON AN "AS IS" BASIS AND THE CONTRIBUTOR, THE ORGANIZATION HE/SHE REPRESENTS OR IS
+SPONSORED BY (IF ANY), THE MITRE CORPORATION, ITS BOARD OF TRUSTEES, OFFICERS,
+AGENTS, AND EMPLOYEES, DISCLAIM ALL WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT
+NOT LIMITED TO ANY WARRANTY THAT THE USE OF THE INFORMATION THEREIN WILL NOT
+INFRINGE ANY RIGHTS OR ANY IMPLIED WARRANTIES OF MERCHANTABILITY OR FITNESS FOR A
+PARTICULAR PURPOSE.

@@ -1,0 +1,149 @@
+Common Vulnerabilities and Exposures (CVE) Record Format LinkML Schema (cve)
+Copyright 2026 Noel McLoughlin
+
+The code in this repository is licensed under the Apache License,
+Version 2.0 (see LICENSE). Some of the content it carries is third-party
+work under its own terms, listed below. None of the parties named here has
+endorsed this project, and its use does not imply endorsement by any of them.
+
+The CVE Record Format
+---------------------
+
+src/cve/schema/, src/cve/datamodel/ and project/ model the CVE Record
+Format, version 5.2.0, which the CVE Program publishes at
+https://github.com/CVEProject/cve-schema (tag v5.2.0, commit
+5533f6038cc0434e544e69240c704906d591de46). They are this project's rendering,
+written in its own words. They are not the CVE Program's or MITRE's. CVE is a
+trademark and the CVE logo is a registered trademark of The MITRE Corporation.
+
+upstream/ holds files of that repository at that tag, each identical to its
+counterpart there: the record format's JSON schema, its tag lists, its CVSS
+schemas and the documentation's example records.
+scripts/check_upstream_release.py pins each by its git object hash. The
+repository is under Creative Commons CC0 1.0 Universal, which
+upstream/LICENSE.txt holds in full.
+
+The CVSS schemas
+----------------
+
+upstream/schema/imports/cvss/ holds the JSON schemas of the Common
+Vulnerability Scoring System (CVSS), versions 2.0, 3.0, 3.1 and 4.0. The
+Forum of Incident Response and Security Teams (FIRST) maintains the originals
+at https://www.first.org/cvss/data-representations, and the CVE Program
+keeps these local modified copies, as the README in that folder says. So they
+are the work of both. Each file carries FIRST's licence as its first key, and
+is copied here unchanged, so that licence stays with it:
+
+  Copyright (c) 2017, FIRST.ORG, INC. (cvss-v2.0.json and cvss-v3.0.json)
+  Copyright (c) 2021, FIRST.ORG, INC. (cvss-v3.1.json)
+  Copyright (c) 2023, FIRST.ORG, INC. (cvss-v4.0.json)
+  All rights reserved.
+
+  Redistribution and use in source and binary forms, with or without
+  modification, are permitted provided that the following conditions are met:
+  1. Redistributions of source code must retain the above copyright notice,
+     this list of conditions and the following disclaimer.
+  2. Redistributions in binary form must reproduce the above copyright notice,
+     this list of conditions and the following disclaimer in the documentation
+     and/or other materials provided with the distribution.
+  3. Neither the name of the copyright holder nor the names of its
+     contributors may be used to endorse or promote products derived from this
+     software without specific prior written permission.
+
+  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS 'AS IS'
+  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+  ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+  LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+  CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+  SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+  INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+  CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  POSSIBILITY OF SUCH DAMAGE.
+
+src/cve/schema/cve_cvss.yaml keeps FIRST's property names and value lists, in
+this project's own descriptions, under the same licence.
+
+CVE records
+-----------
+
+tests/data/cvelist/extract/ holds a few CVE records copied unchanged from
+https://github.com/CVEProject/cvelistV5, and tests/data/cvelist/manifest.json
+pins a larger sample by git object hash, which scripts/fetch_cve_records.py
+downloads into tmp/. That repository states no licence of its own and says its
+content is used under the CVE Program's Terms of Use,
+https://www.cve.org/Legal/TermsOfUse, which authorise such copies provided
+that each reproduces MITRE's copyright designation and this licence:
+
+  Copyright (c) 1999-2026, The MITRE Corporation. CVE is a trademark and the
+  CVE logo is a registered trademark of The MITRE Corporation.
+
+  CVE Usage: MITRE hereby grants you a perpetual, worldwide, non-exclusive,
+  no-charge, royalty-free, irrevocable copyright license to reproduce, prepare
+  derivative works of, publicly display, publicly perform, sublicense, and
+  distribute Common Vulnerabilities and Exposures (CVE™). Any copy you make for
+  such purposes is authorized provided that you reproduce MITRE's copyright
+  designation and this license in any such copy.
+
+  ALL DOCUMENTS AND THE INFORMATION CONTAINED THEREIN PROVIDED BY MITRE ARE
+  PROVIDED ON AN "AS IS" BASIS AND THE CONTRIBUTOR, THE ORGANIZATION HE/SHE
+  REPRESENTS OR IS SPONSORED BY (IF ANY), THE MITRE CORPORATION, ITS BOARD OF
+  TRUSTEES, OFFICERS, AGENTS, AND EMPLOYEES, DISCLAIM ALL WARRANTIES, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO ANY WARRANTY THAT THE USE OF THE
+  INFORMATION THEREIN WILL NOT INFRINGE ANY RIGHTS OR ANY IMPLIED WARRANTIES OF
+  MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE.
+
+tests/data/cvelist/TERMS.txt holds the same text beside the copies. The
+website's page is written by script, so the watch reads its source,
+src/views/Legal/TermsOfUse.vue in https://github.com/CVEProject/cve-website. The
+designation is the one the website's footer gives.
+
+linkml-project-copier
+---------------------
+
+This project was generated from linkml-project-copier
+(https://github.com/linkml/linkml-project-copier), and its justfile,
+configuration and documentation scaffolding derive from that template:
+
+  The MIT License (MIT)
+  Copyright (c) 2025 David Linke
+
+  Permission is hereby granted, free of charge, to any person obtaining a
+  copy of this software and associated documentation files (the
+  "Software"), to deal in the Software without restriction, including
+  without limitation the rights to use, copy, modify, merge, publish,
+  distribute, sublicense, and/or sell copies of the Software, and to permit
+  persons to whom the Software is furnished to do so, subject to the
+  following conditions:
+
+  The above copyright notice and this permission notice shall be included
+  in all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+  OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+  NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+  DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+  OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+  USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+Knowledge bundle
+----------------
+
+This product maintains its documentation as a Linked Open Knowledge Format
+(LOKF) bundle under .lokf/: https://lokf.nolan-nichols.com/specification/
+
+LOKF is a semantic profile of the Open Knowledge Format (OKF) specification
+by Google Cloud Platform:
+https://github.com/GoogleCloudPlatform/open-knowledge-format/blob/main/SPEC.md
+
+The scripts under .lokf/scripts/ and .lokf/m365/ and the
+knowledge-librarian, knowledge-registrar, knowledge-release and
+knowledge-sync workflows under .github/workflows/ are copies of the
+ktl-sidecar templates in knowledge-trust-ladder
+(https://github.com/noelmcloughlin/knowledge-trust-ladder). The site under
+website/ and the knowledge-website workflow derive from the ktl-website
+templates in the same repository, and website/NOTICE lists the part
+adapted from the LOKF toolkit's site. All of them are licensed under the
+Apache License, Version 2.0.

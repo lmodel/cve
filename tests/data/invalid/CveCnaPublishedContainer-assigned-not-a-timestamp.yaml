@@ -1,0 +1,16 @@
+# Fails at: /dateAssigned
+providerMetadata:
+  orgId: 00000000-0000-4000-8000-000000000001
+  shortName: example
+descriptions:
+  - lang: en
+    value: A buffer overflow in the parser of Example Widget lets a remote attacker run code.
+affected:
+  - vendor: Example Corp
+    product: Example Widget
+    versions:
+      - version: '1.0'
+        status: affected
+references:
+  - url: https://example.org/advisories/1234
+dateAssigned: yesterday

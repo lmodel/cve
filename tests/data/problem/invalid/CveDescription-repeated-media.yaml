@@ -1,0 +1,8 @@
+# Fails at: /supportingMedia/1
+lang: en
+value: A buffer overflow in the parser of Example Widget lets a remote attacker run code.
+supportingMedia:
+  - type: text/plain
+    value: Text.
+  - type: text/plain
+    value: Text.

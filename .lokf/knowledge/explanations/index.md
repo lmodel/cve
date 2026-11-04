@@ -1,0 +1,8 @@
+# Explanations
+
+* [The upstream's keys and values](keys-and-values.md) - Why slots and permissible values keep the upstream's spelling, such as `cveMetadata`, `vectorString` and `NETWORK`, while classes take a `Cve` or `Cvss` prefix: a real record must validate unchanged, and `.linkmllint.yaml` says so.
+* [Published or rejected](published-or-rejected.md) - Why a record has two classes under a base and a root that takes exactly one of them, so that a rejected state with a published container fails, and why a record has no identifier slot although `cveId` identifies it.
+* [Rules the generators lose](rules-in-python.md) - Which of the upstream's rules `tests/cve_rules.py` checks in Python, because LinkML 1.12.1 cannot state them or its generators lose them: unique lists, extension keys, empty objects, the 0.1 score grid, lengths beside a pattern, and null.
+* [Extension keys](extension-keys.md) - Why the three containers use `extra_slots` for keys beginning `x_`, what that opens, and what it costs: the JSON Schema passes a misspelled key, so a Python rule checks it, and the generated Python models refuse every such key.
+* [Mappings](mappings.md) - Why the schema is the one home for mappings, each read at its source and held by a test, why the hand-kept SSSOM files went, and why the schema maps to no member of its family.
+* [What the schema leaves out](scope.md) - What the schema does not claim: it says nothing about whether a record is true, it no longer imports lmodel/vulnerability-core, and the CVSS 4.0 threat and environmental score keys are absent because the upstream refuses them.

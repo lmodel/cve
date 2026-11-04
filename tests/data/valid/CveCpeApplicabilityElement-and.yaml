@@ -1,0 +1,11 @@
+operator: AND
+negate: false
+nodes:
+  - operator: OR
+    negate: false
+    cpeMatch:
+      - vulnerable: true
+        criteria: cpe:2.3:a:example:widget:*:*:*:*:*:*:*:*
+        matchCriteriaId: 00000000-0000-4000-8000-000000000003
+        versionStartIncluding: '1.0'
+        versionEndExcluding: '1.4'

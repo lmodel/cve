@@ -1,0 +1,5 @@
+# Fails at: /requesterUserId
+cveId: CVE-1900-1234
+assignerOrgId: 00000000-0000-4000-8000-000000000001
+state: PUBLISHED
+requesterUserId: someone

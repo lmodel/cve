@@ -1,0 +1,4 @@
+vulnerable: true
+criteria: cpe:2.3:o:example:os:1.0:*:*:*:*:*:*:*
+versionStartExcluding: '1.0'
+versionEndIncluding: '1.9'

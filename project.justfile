@@ -4,9 +4,42 @@
 # name in this file is not possible until a known issue in just is fixed,
 # https://github.com/casey/just/issues/2540
 
-# Validate upstream CVE schema JSON examples against the bundled JSON Schema
-test-third-party:
-    uv run python -m pytest tests/test_third_party.py -v
+# ============ Knowledge bundle: the adapted domain schema ============
 
-# Run Python unit tests and upstream JSON validation
-test-all: test test-third-party
+# `.lokf/cve.yaml` is the copy `lokf adapt` writes from the schema so that it can
+# sit beside `.lokf/lokf.yaml` (`lokf adapt --help` lists the moves). The root is
+# CveRecord, the abstract base of the two kinds of record, since a record is what
+# a host's concept most naturally is. A concept names CvePublishedRecord or
+# CveRejectedRecord as its `type`. The containers, products and CVSS scores stay
+# values inside a record. The schema has no identifier slot, because cveId sits
+# inside cveMetadata, so the concept's own `id` from LOKF stands beside it. The
+# prefix names what the copy renames to keep apart from LOKF (cve_version,
+# cve_type), each keeping its IRI. The recipes run the `lokf` the sidecar's floor
+# pins (0.9.0 or later); LOKF_CMD runs another, such as a checkout:
+# LOKF_CMD="uv run --project ../lokf lokf" just lokf-adapt
+lokf_cmd := env_var_or_default("LOKF_CMD", "uv run --project .lokf lokf")
+lokf_adapt_roots := "--root CveRecord --prefix cve"
+
+# Rewrite .lokf/cve.yaml from the schema (run after every schema change)
+[group('knowledge bundle')]
+lokf-adapt:
+  {{lokf_cmd}} adapt {{source_schema_path}} {{lokf_adapt_roots}} --lokf .lokf/lokf.yaml -o .lokf/cve.yaml
+
+# Fail when .lokf/cve.yaml is stale against the schema or .lokf/lokf.yaml
+[group('knowledge bundle')]
+lokf-adapt-check:
+  {{lokf_cmd}} adapt {{source_schema_path}} {{lokf_adapt_roots}} --lokf .lokf/lokf.yaml -o .lokf/cve.yaml --check
+
+# ============ Real CVE records ============
+
+# Download the pinned sample of real records into tmp/cvelist/, checking each
+# against the size and hashes in tests/data/cvelist/manifest.json
+[group('model development')]
+fetch-cve-records:
+  uv run scripts/fetch_cve_records.py
+
+# Validate every record of the pinned sample unchanged, after fetching any that
+# tmp/cvelist/ lacks
+[group('model development')]
+test-cve-records: fetch-cve-records
+  CVE_RECORDS=1 uv run python -m pytest tests/test_cve_records.py

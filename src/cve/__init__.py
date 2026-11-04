@@ -1,3 +1,8 @@
+"""cve.
+
+Common Vulnerabilities and Exposures (CVE) Record Format 5.2.0 (LinkML)
+"""
+
 try:
     from cve._version import __version__, __version_tuple__
 except ImportError:  # pragma: no cover

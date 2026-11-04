@@ -1,0 +1,23 @@
+# Fails at: /
+version: '3.0'
+vectorString: CVSS:3.0/AV:L/AC:H/PR:L/UI:R/S:C/C:L/I:N/A:N
+baseScore: 3.1
+attackVector: LOCAL
+attackComplexity: HIGH
+privilegesRequired: LOW
+userInteraction: REQUIRED
+scope: CHANGED
+confidentialityImpact: LOW
+integrityImpact: NONE
+availabilityImpact: NONE
+exploitCodeMaturity: FUNCTIONAL
+remediationLevel: OFFICIAL_FIX
+reportConfidence: REASONABLE
+temporalScore: 2.8
+temporalSeverity: LOW
+confidentialityRequirement: HIGH
+modifiedAttackVector: ADJACENT_NETWORK
+modifiedScope: UNCHANGED
+modifiedConfidentialityImpact: HIGH
+environmentalScore: 5.0
+environmentalSeverity: MEDIUM

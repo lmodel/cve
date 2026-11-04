@@ -1,0 +1,23 @@
+package example;
+
+/* metamodel_version: 1.12.0 */
+/* version: 5.2.0 */
+import java.net.URI;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.ZonedDateTime;
+import java.util.List;
+import lombok.*;
+
+/**
+  A situation a scoring applies to, in one language.
+**/
+@Data
+@EqualsAndHashCode(callSuper=false)
+public class CveMetricScenario  {
+
+  private String lang;
+  private String value;
+
+
+}

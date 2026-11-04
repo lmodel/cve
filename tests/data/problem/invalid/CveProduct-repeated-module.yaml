@@ -1,0 +1,9 @@
+# Fails at: /modules/1
+vendor: Example Corp
+product: Example Widget
+versions:
+  - version: '1.0'
+    status: affected
+modules:
+  - parser
+  - parser

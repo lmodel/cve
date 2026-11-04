@@ -1,0 +1,15 @@
+# Fails at: /
+dataType: CVE_RECORD
+dataVersion: '5.2'
+cveMetadata:
+  cveId: CVE-1900-1234
+  assignerOrgId: 00000000-0000-4000-8000-000000000001
+  state: PUBLISHED
+containers:
+  cna:
+    providerMetadata:
+      orgId: 00000000-0000-4000-8000-000000000001
+      shortName: example
+    rejectedReasons:
+      - lang: en
+        value: This record duplicates another and should not be used.

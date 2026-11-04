@@ -1,0 +1,25 @@
+# Fails at: /
+version: '4.0'
+vectorString: CVSS:4.0/AV:A/AC:L/AT:P/PR:N/UI:P/VC:H/VI:L/VA:N/SC:N/SI:N/SA:N/E:P/S:P/AU:Y/R:U/V:C/RE:M/U:Amber
+baseScore: 6.4
+baseSeverity: MEDIUM
+attackVector: ADJACENT
+attackComplexity: LOW
+attackRequirements: PRESENT
+privilegesRequired: NONE
+userInteraction: PASSIVE
+vulnConfidentialityImpact: HIGH
+vulnIntegrityImpact: LOW
+vulnAvailabilityImpact: NONE
+subConfidentialityImpact: NONE
+subIntegrityImpact: NONE
+subAvailabilityImpact: NONE
+exploitMaturity: PROOF_OF_CONCEPT
+Safety: PRESENT
+Automatable: 'YES'
+Recovery: USER
+valueDensity: CONCENTRATED
+vulnerabilityResponseEffort: MODERATE
+providerUrgency: AMBER
+modifiedSubIntegrityImpact: SAFETY
+environmentalScore: 6.0

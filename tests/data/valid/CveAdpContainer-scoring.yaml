@@ -1,0 +1,9 @@
+providerMetadata:
+  orgId: 00000000-0000-4000-8000-000000000002
+title: Added scoring
+metrics:
+  - cvssV3_1:
+      version: '3.1'
+      vectorString: CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H
+      baseScore: 9.8
+      baseSeverity: CRITICAL

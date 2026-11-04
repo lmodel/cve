@@ -1,976 +1,1016 @@
--- # Class: Any Description: A linkml placeholder class accepting any JSON-compatible value (string, number, boolean, object, or array). Use for slots that hold arbitrary or schema-less data.
+-- # Class: CveRecordRoot Description: Any one CVE record, published or rejected, as a file or an API answer holds it.
 --     * Slot: id
--- # Class: CVERecord Description: Official CVE Record corresponding to a CVE ID. Represents either a Published or Rejected record in the CVE™ Program. The dataType field is always CVE_RECORD. Use cveMetadata.state to distinguish Published from Rejected records.This class deliberately does NOT inherit from ``vulnerability_core.Vulnerability``: the upstream CVE Record Format places the CVE ID inside ``cveMetadata.cveId`` rather than at the record root. Semantic equivalence with the broader ``Vulnerability`` concept is preserved via ``exact_mappings``.
+-- # Class: CvssSeverityBandsMixin Description: The base score and base severity of a CVSS version with severity bands, and the bands that tie one to the other.
 --     * Slot: id
---     * Slot: data_type Description: Indicates the type of information represented in the JSON instance.
---     * Slot: data_version Description: The version of the CVE schema used for validating this record. Supports multiple versions of the format (e.g., '5.2.0').
---     * Slot: cve_metadata_id Description: Metadata about the CVE ID. A Published record uses CveMetadataPublished; a Rejected record uses CveMetadataRejected.
---     * Slot: containers_id Description: A set of containers (CNA and optionally ADP) holding vulnerability information related to the CVE ID.
--- # Abstract Class: CveMetadata Description: Abstract base for CVE Record metadata. Represents either a Published or Rejected record's metadata. All fields are controlled by CVE Services. Polymorphism is provided via ``is_a`` on the two concrete subclasses (``CveMetadataPublished``, ``CveMetadataRejected``); slot-level ``any_of`` on the ``cve_metadata`` slot preserves the choice for generators (e.g. JSON Schema ``anyOf``).
+--     * Slot: baseScore Description: The score from 0 to 10 for what is inherent in the flaw.
+--     * Slot: baseSeverity Description: The rating in words that the base score falls under.
+-- # Class: CvssV20 Description: A score under CVSS version 2.0, which has no severity bands.
 --     * Slot: id
--- # Class: CveMetadataPublished Description: Metadata for a CVE Record in the PUBLISHED state.
+--     * Slot: version Description: A version string. On a score it is the CVSS version; on a product entry, the product's.
+--     * Slot: vectorString Description: The scores' metric values written as one compact string.
+--     * Slot: baseScore Description: The score from 0 to 10 for what is inherent in the flaw.
+--     * Slot: confidentialityImpact Description: How much information an attack could expose.
+--     * Slot: integrityImpact Description: How much an attack could change that should not change.
+--     * Slot: availabilityImpact Description: How much an attack could disrupt the service.
+--     * Slot: remediationLevel Description: What kind of fix is available.
+--     * Slot: reportConfidence Description: How far the flaw's existence and details have been confirmed.
+--     * Slot: temporalScore Description: The base score adjusted for what changes over time, such as a fix appearing.
+--     * Slot: confidentialityRequirement Description: How much confidentiality matters to the scorer for the affected system.
+--     * Slot: integrityRequirement Description: How much integrity matters to the scorer for the affected system.
+--     * Slot: availabilityRequirement Description: How much availability matters to the scorer for the affected system.
+--     * Slot: environmentalScore Description: The score adjusted for the scorer's own environment.
+--     * Slot: accessVector Description: How far away an attacker can be when using the flaw, in CVSS 2.0's terms.
+--     * Slot: accessComplexity Description: How hard the flaw is to use once the attacker can reach it.
+--     * Slot: authentication Description: How many times an attacker must log in before using the flaw.
+--     * Slot: exploitability Description: How far working attack code has come, in CVSS 2.0's terms.
+--     * Slot: collateralDamagePotential Description: How much loss a successful attack could cause beyond the system itself.
+--     * Slot: targetDistribution Description: How much of the scorer's environment is exposed to the flaw.
+-- # Class: CvssV30 Description: A score under CVSS version 3.0.
 --     * Slot: id
---     * Slot: record_cve_id Description: The CVE identifier that this record pertains to.
---     * Slot: assigner_org_id Description: The UUID for the organization to which the CVE ID was originally assigned. This UUID can be used to lookup the organization record in the user registry service.
---     * Slot: assigner_short_name Description: The short name for the organization to which the CVE ID was originally assigned.
---     * Slot: serial Description: Monotonically increasing integer, starting at 1, incremented each time a submission from a data provider changes this CVE Record.
---     * Slot: date_updated Description: The date/time the record was last updated.
---     * Slot: date_reserved Description: The date/time this CVE ID was reserved in the CVE automation workgroup services system. This date does not necessarily indicate when the vulnerability was discovered, shared with the vendor, or publicly disclosed.
---     * Slot: requester_user_id Description: The user that requested the CVE identifier.
---     * Slot: date_published Description: The date/time the CVE Record was first published in the CVE List.
---     * Slot: published_state Description: State of the CVE Record. For published records, this is always PUBLISHED.
--- # Class: CveMetadataRejected Description: Metadata for a CVE Record in the REJECTED state.
+--     * Slot: version Description: A version string. On a score it is the CVSS version; on a product entry, the product's.
+--     * Slot: vectorString Description: The scores' metric values written as one compact string.
+--     * Slot: attackVector Description: How far away an attacker can be when using the flaw.
+--     * Slot: attackComplexity Description: How much is outside the attacker's control when using the flaw.
+--     * Slot: privilegesRequired Description: What level of access an attacker needs before using the flaw.
+--     * Slot: userInteraction Description: Whether someone other than the attacker has to take part.
+--     * Slot: scope Description: Whether an attack can reach beyond the component that holds the flaw.
+--     * Slot: confidentialityImpact Description: How much information an attack could expose.
+--     * Slot: integrityImpact Description: How much an attack could change that should not change.
+--     * Slot: availabilityImpact Description: How much an attack could disrupt the service.
+--     * Slot: exploitCodeMaturity Description: How far working attack code has come.
+--     * Slot: remediationLevel Description: What kind of fix is available.
+--     * Slot: reportConfidence Description: How far the flaw's existence and details have been confirmed.
+--     * Slot: temporalScore Description: The base score adjusted for what changes over time, such as a fix appearing.
+--     * Slot: temporalSeverity Description: The rating in words for the temporal score.
+--     * Slot: confidentialityRequirement Description: How much confidentiality matters to the scorer for the affected system.
+--     * Slot: integrityRequirement Description: How much integrity matters to the scorer for the affected system.
+--     * Slot: availabilityRequirement Description: How much availability matters to the scorer for the affected system.
+--     * Slot: modifiedAttackVector Description: The attack vector as the scorer's own environment changes it.
+--     * Slot: modifiedAttackComplexity Description: The attack complexity as the scorer's own environment changes it.
+--     * Slot: modifiedPrivilegesRequired Description: The privileges needed as the scorer's own environment changes them.
+--     * Slot: modifiedUserInteraction Description: The user interaction as the scorer's own environment changes it.
+--     * Slot: modifiedScope Description: The scope as the scorer's own environment changes it.
+--     * Slot: modifiedConfidentialityImpact Description: The confidentiality impact as the scorer's own environment changes it.
+--     * Slot: modifiedIntegrityImpact Description: The integrity impact as the scorer's own environment changes it.
+--     * Slot: modifiedAvailabilityImpact Description: The availability impact as the scorer's own environment changes it.
+--     * Slot: environmentalScore Description: The score adjusted for the scorer's own environment.
+--     * Slot: environmentalSeverity Description: The rating in words for the environmental score.
+--     * Slot: baseScore Description: The score from 0 to 10 for what is inherent in the flaw.
+--     * Slot: baseSeverity Description: The rating in words that the base score falls under.
+-- # Class: CvssV31 Description: A score under CVSS version 3.1.
 --     * Slot: id
---     * Slot: record_cve_id Description: The CVE identifier that this record pertains to.
---     * Slot: assigner_org_id Description: The UUID for the organization to which the CVE ID was originally assigned. This UUID can be used to lookup the organization record in the user registry service.
---     * Slot: assigner_short_name Description: The short name for the organization to which the CVE ID was originally assigned.
---     * Slot: serial Description: Monotonically increasing integer, starting at 1, incremented each time a submission from a data provider changes this CVE Record.
---     * Slot: date_updated Description: The date/time the record was last updated.
---     * Slot: date_reserved Description: The date/time this CVE ID was reserved in the CVE automation workgroup services system. This date does not necessarily indicate when the vulnerability was discovered, shared with the vendor, or publicly disclosed.
---     * Slot: date_published Description: The date/time the CVE Record was first published in the CVE List.
---     * Slot: date_rejected Description: The date/time the CVE ID was rejected.
---     * Slot: rejected_state Description: State of the CVE Record. For rejected records, this is always REJECTED.
--- # Class: Containers Description: A set of structures (called containers) used to store vulnerability information related to a specific CVE ID. At minimum a 'cna' container is required.
+--     * Slot: version Description: A version string. On a score it is the CVSS version; on a product entry, the product's.
+--     * Slot: vectorString Description: The scores' metric values written as one compact string.
+--     * Slot: attackVector Description: How far away an attacker can be when using the flaw.
+--     * Slot: attackComplexity Description: How much is outside the attacker's control when using the flaw.
+--     * Slot: privilegesRequired Description: What level of access an attacker needs before using the flaw.
+--     * Slot: userInteraction Description: Whether someone other than the attacker has to take part.
+--     * Slot: scope Description: Whether an attack can reach beyond the component that holds the flaw.
+--     * Slot: confidentialityImpact Description: How much information an attack could expose.
+--     * Slot: integrityImpact Description: How much an attack could change that should not change.
+--     * Slot: availabilityImpact Description: How much an attack could disrupt the service.
+--     * Slot: exploitCodeMaturity Description: How far working attack code has come.
+--     * Slot: remediationLevel Description: What kind of fix is available.
+--     * Slot: reportConfidence Description: How far the flaw's existence and details have been confirmed.
+--     * Slot: temporalScore Description: The base score adjusted for what changes over time, such as a fix appearing.
+--     * Slot: temporalSeverity Description: The rating in words for the temporal score.
+--     * Slot: confidentialityRequirement Description: How much confidentiality matters to the scorer for the affected system.
+--     * Slot: integrityRequirement Description: How much integrity matters to the scorer for the affected system.
+--     * Slot: availabilityRequirement Description: How much availability matters to the scorer for the affected system.
+--     * Slot: modifiedAttackVector Description: The attack vector as the scorer's own environment changes it.
+--     * Slot: modifiedAttackComplexity Description: The attack complexity as the scorer's own environment changes it.
+--     * Slot: modifiedPrivilegesRequired Description: The privileges needed as the scorer's own environment changes them.
+--     * Slot: modifiedUserInteraction Description: The user interaction as the scorer's own environment changes it.
+--     * Slot: modifiedScope Description: The scope as the scorer's own environment changes it.
+--     * Slot: modifiedConfidentialityImpact Description: The confidentiality impact as the scorer's own environment changes it.
+--     * Slot: modifiedIntegrityImpact Description: The integrity impact as the scorer's own environment changes it.
+--     * Slot: modifiedAvailabilityImpact Description: The availability impact as the scorer's own environment changes it.
+--     * Slot: environmentalScore Description: The score adjusted for the scorer's own environment.
+--     * Slot: environmentalSeverity Description: The rating in words for the environmental score.
+--     * Slot: baseScore Description: The score from 0 to 10 for what is inherent in the flaw.
+--     * Slot: baseSeverity Description: The rating in words that the base score falls under.
+-- # Class: CvssV40 Description: A score under CVSS version 4.0.
 --     * Slot: id
---     * Slot: cna_id Description: The CNA container holding vulnerability information for this CVE ID. For published records, this is a CnaPublishedContainer. For rejected records, this is a CnaRejectedContainer.
--- # Class: ProviderMetadata Description: Details related to the information container provider (CNA or ADP).
+--     * Slot: version Description: A version string. On a score it is the CVSS version; on a product entry, the product's.
+--     * Slot: vectorString Description: The scores' metric values written as one compact string.
+--     * Slot: attackVector Description: How far away an attacker can be when using the flaw.
+--     * Slot: attackComplexity Description: How much is outside the attacker's control when using the flaw.
+--     * Slot: privilegesRequired Description: What level of access an attacker needs before using the flaw.
+--     * Slot: userInteraction Description: Whether someone other than the attacker has to take part.
+--     * Slot: confidentialityRequirement Description: How much confidentiality matters to the scorer for the affected system.
+--     * Slot: integrityRequirement Description: How much integrity matters to the scorer for the affected system.
+--     * Slot: availabilityRequirement Description: How much availability matters to the scorer for the affected system.
+--     * Slot: modifiedAttackVector Description: The attack vector as the scorer's own environment changes it.
+--     * Slot: modifiedAttackComplexity Description: The attack complexity as the scorer's own environment changes it.
+--     * Slot: modifiedPrivilegesRequired Description: The privileges needed as the scorer's own environment changes them.
+--     * Slot: modifiedUserInteraction Description: The user interaction as the scorer's own environment changes it.
+--     * Slot: attackRequirements Description: Whether the attack needs conditions in the target that the attacker does not control.
+--     * Slot: vulnConfidentialityImpact Description: How much information in the vulnerable system an attack could expose.
+--     * Slot: vulnIntegrityImpact Description: How much an attack could change in the vulnerable system.
+--     * Slot: vulnAvailabilityImpact Description: How much an attack could disrupt the vulnerable system.
+--     * Slot: subConfidentialityImpact Description: How much information in other, connected systems an attack could expose.
+--     * Slot: subIntegrityImpact Description: How much an attack could change in other, connected systems.
+--     * Slot: subAvailabilityImpact Description: How much an attack could disrupt other, connected systems.
+--     * Slot: exploitMaturity Description: How much is known about attacks on this flaw, in CVSS 4.0's terms.
+--     * Slot: modifiedAttackRequirements Description: The attack requirements as the scorer's own environment changes them.
+--     * Slot: modifiedVulnConfidentialityImpact Description: The confidentiality impact on the vulnerable system, in the scorer's environment.
+--     * Slot: modifiedVulnIntegrityImpact Description: The integrity impact on the vulnerable system, in the scorer's environment.
+--     * Slot: modifiedVulnAvailabilityImpact Description: The availability impact on the vulnerable system, in the scorer's environment.
+--     * Slot: modifiedSubConfidentialityImpact Description: The confidentiality impact on connected systems, in the scorer's environment.
+--     * Slot: modifiedSubIntegrityImpact Description: The integrity impact on connected systems, in the scorer's environment.
+--     * Slot: modifiedSubAvailabilityImpact Description: The availability impact on connected systems, in the scorer's environment.
+--     * Slot: Safety Description: Whether an attack could put people's safety at risk.
+--     * Slot: Automatable Description: Whether an attacker could automate every step of an attack across many targets.
+--     * Slot: Recovery Description: How the affected system comes back after an attack.
+--     * Slot: valueDensity Description: Whether one successful attack gains the attacker a little or a lot of a resource.
+--     * Slot: vulnerabilityResponseEffort Description: How much work it takes a consumer to respond to the flaw.
+--     * Slot: providerUrgency Description: How urgent the product's supplier says the flaw is, as a colour.
+--     * Slot: baseScore Description: The score from 0 to 10 for what is inherent in the flaw.
+--     * Slot: baseSeverity Description: The rating in words that the base score falls under.
+-- # Abstract Class: CveRecord Description: A record of one vulnerability under one CVE identifier, in the CVE Program's format.
 --     * Slot: id
---     * Slot: org_id Description: The container provider's organizational UUID.
---     * Slot: short_name Description: The container provider's organizational short name (2-32 characters).
---     * Slot: date_updated Description: The date/time the record was last updated.
--- # Abstract Class: CnaContainer Description: Abstract base for CNA containers (published and rejected). Polymorphism is provided via ``is_a`` on the two concrete subclasses (``CnaPublishedContainer``, ``CnaRejectedContainer``); slot-level ``any_of`` on the ``cna`` slot preserves the choice for generators.
+--     * Slot: dataType Description: The kind of document this is, which is always a CVE record.
+--     * Slot: dataVersion Description: The version of the record format that this record follows.
+--     * Slot: cveMetadata_id Description: The facts about the record itself.
+--     * Slot: containers_id Description: The vulnerability information, grouped by who provided it.
+-- # Class: CvePublishedRecord Description: A record whose assigning organisation has filled it in and made it public.
 --     * Slot: id
--- # Class: CnaPublishedContainer Description: An object containing vulnerability information provided by a CVE Numbering Authority (CNA) for a published CVE ID. There can only be one CNA container per CVE record since there can only be one assigning CNA.
+--     * Slot: dataType Description: The kind of document this is, which is always a CVE record.
+--     * Slot: dataVersion Description: The version of the record format that this record follows.
+--     * Slot: cveMetadata_id Description: The facts about the record itself.
+--     * Slot: containers_id Description: The vulnerability information, grouped by who provided it.
+-- # Class: CveRejectedRecord Description: A record that should no longer be used, kept so that people can see it is invalid.
 --     * Slot: id
---     * Slot: date_assigned Description: The date/time this CVE ID was associated with a vulnerability by a CNA.
---     * Slot: date_public Description: If known, the date/time the vulnerability was disclosed publicly.
---     * Slot: title Description: Short human-readable title or name for this entity.
---     * Slot: provider_metadata_id Description: Details related to the information container provider (CNA or ADP).
---     * Slot: cna_source_id Description: Source information (who discovered it, who researched it, etc.) and optionally a chain of CNA information.
--- # Class: CnaRejectedContainer Description: An object containing vulnerability information provided by a CVE Numbering Authority (CNA) for a rejected CVE ID. There can only be one CNA container per CVE record.
+--     * Slot: dataType Description: The kind of document this is, which is always a CVE record.
+--     * Slot: dataVersion Description: The version of the record format that this record follows.
+--     * Slot: cveMetadata_id Description: The facts about the record itself.
+--     * Slot: containers_id Description: The vulnerability information, grouped by who provided it.
+-- # Abstract Class: CveRecordMetadata Description: The facts about a record itself, as distinct from the vulnerability it describes.
 --     * Slot: id
---     * Slot: provider_metadata_id Description: Details related to the information container provider (CNA or ADP).
--- # Class: AdpContainer Description: An object containing vulnerability information provided by an Authorized Data Publisher (ADP). Multiple ADPs can provide containers for a single CVE ID.
+--     * Slot: dateUpdated Description: When the record or container was last updated.
+--     * Slot: state Description: Whether the record is published or rejected.
+--     * Slot: cveId Description: The CVE identifier that the record belongs to.
+--     * Slot: assignerOrgId Description: The UUID of the organisation that was given the CVE identifier.
+--     * Slot: assignerShortName Description: The short name of the organisation that was given the CVE identifier.
+--     * Slot: serial Description: A counter that the system of record raises each time a provider changes the record.
+--     * Slot: dateReserved Description: When the CVE identifier was reserved.
+--     * Slot: datePublished Description: When the record first appeared in the CVE List.
+-- # Class: CveMetadataPublished Description: The metadata of a published record.
 --     * Slot: id
---     * Slot: date_public Description: If known, the date/time the vulnerability was disclosed publicly.
---     * Slot: title Description: Short human-readable title or name for this entity.
---     * Slot: Containers_id Description: Autocreated FK slot
---     * Slot: provider_metadata_id Description: Details related to the information container provider (CNA or ADP).
---     * Slot: cna_source_id Description: Source information (who discovered it, who researched it, etc.) and optionally a chain of CNA information.
--- # Class: AffectedProduct Description: Information about the set of products and services affected by a vulnerability. At least one of (vendor + product) or (collectionURL + packageName) is required, and at least one of versions or defaultStatus is required.Note: this class deliberately does NOT inherit from ``vulnerability_core.Product``. The upstream CVE ``product`` definition uses a multivalued ``versions`` slot (range ``VersionEntry``), which conflicts with ``Product.version`` (singular string). The ``vendor``, ``name`` (= upstream ``product``), and ``platforms`` slots are reused from the core schema directly. Semantic equivalence is preserved via ``exact_mappings``.
+--     * Slot: requesterUserId Description: The UUID of the user who asked for the CVE identifier.
+--     * Slot: dateUpdated Description: When the record or container was last updated.
+--     * Slot: state Description: Whether the record is published or rejected.
+--     * Slot: cveId Description: The CVE identifier that the record belongs to.
+--     * Slot: assignerOrgId Description: The UUID of the organisation that was given the CVE identifier.
+--     * Slot: assignerShortName Description: The short name of the organisation that was given the CVE identifier.
+--     * Slot: serial Description: A counter that the system of record raises each time a provider changes the record.
+--     * Slot: dateReserved Description: When the CVE identifier was reserved.
+--     * Slot: datePublished Description: When the record first appeared in the CVE List.
+-- # Class: CveMetadataRejected Description: The metadata of a rejected record.
 --     * Slot: id
---     * Slot: vendor Description: Name of the vendor or organization responsible for the product.
---     * Slot: name Description: Name of the affected product (upstream field ``product``).
---     * Slot: collection_url Description: URL identifying a package collection (determines the meaning of packageName).
---     * Slot: package_name Description: Name or identifier of the affected software package as used in the package collection.
---     * Slot: repo Description: The URL of the source code repository, for informational purposes and/or to resolve git hash version ranges.
---     * Slot: default_status Description: The default status for versions not otherwise listed in the versions list. Defaults to 'unknown' if not specified. Versions or defaultStatus may be omitted, but not both.
---     * Slot: package_url Description: A Package URL (PURL), a unified URL specification for identifying packages hosted by known package hosts. The Package URL MUST NOT include a version.
---     * Slot: CnaPublishedContainer_id Description: Autocreated FK slot
---     * Slot: AdpContainer_id Description: Autocreated FK slot
--- # Class: ProgramRoutine Description: An affected source code function, method, subroutine, or procedure.
+--     * Slot: dateRejected Description: When the CVE identifier was rejected.
+--     * Slot: dateUpdated Description: When the record or container was last updated.
+--     * Slot: state Description: Whether the record is published or rejected.
+--     * Slot: cveId Description: The CVE identifier that the record belongs to.
+--     * Slot: assignerOrgId Description: The UUID of the organisation that was given the CVE identifier.
+--     * Slot: assignerShortName Description: The short name of the organisation that was given the CVE identifier.
+--     * Slot: serial Description: A counter that the system of record raises each time a provider changes the record.
+--     * Slot: dateReserved Description: When the CVE identifier was reserved.
+--     * Slot: datePublished Description: When the record first appeared in the CVE List.
+-- # Abstract Class: CveContainers Description: The sets of vulnerability information in a record, one per providing organisation.
 --     * Slot: id
---     * Slot: routine_name Description: Name of the affected source code function, method, subroutine, or procedure.
---     * Slot: AffectedProduct_id Description: Autocreated FK slot
--- # Class: VersionEntry Description: A single version or a range of versions of a product with associated vulnerability status. An entry with only version and status is a point version; an entry with versionType and a less-than limit describes a range.
+--     * Slot: cna_id Description: The container from the authority that assigned the identifier.
+-- # Class: CvePublishedContainers Description: The containers of a published record, the assigning organisation's and any others'.
 --     * Slot: id
---     * Slot: version_value Description: The single version being described, or the version at the start of the range. By convention, '0' denotes the earliest possible version.
---     * Slot: version_status Description: The vulnerability status for the version or range of versions. For a range, the status may be refined by the 'changes' list.
---     * Slot: version_type Description: The version numbering system used for specifying the range (e.g., semver, git, maven, rpm, python, custom). Defines the semantics of comparison.
---     * Slot: less_than Description: The non-inclusive upper limit of the range. This is the least version NOT in the range. Supports wildcard '*' suffix.
---     * Slot: less_than_or_equal Description: The inclusive upper limit of the range. This is the greatest version contained in the range. Only one of lessThan and lessThanOrEqual should be specified.
---     * Slot: AffectedProduct_id Description: Autocreated FK slot
--- # Class: VersionChange Description: A status change that takes place at a specific point within a version range.
+--     * Slot: cna_id Description: The container from the authority that assigned the identifier.
+-- # Class: CveRejectedContainers Description: The container of a rejected record, which only the assigning organisation provides.
 --     * Slot: id
---     * Slot: change_at Description: The version at which a status change occurs within a range.
---     * Slot: change_status Description: The new status in the range starting at the given version.
---     * Slot: VersionEntry_id Description: Autocreated FK slot
--- # Class: MultiLangDescription Description: Text in a particular language with optional alternate markup or formatted representation (e.g., Markdown) or embedded media. Used for vulnerability descriptions, rejected reasons, configurations, workarounds, solutions, and exploits.
+--     * Slot: cna_id Description: The container from the authority that assigned the identifier.
+-- # Class: CveProviderMetadata Description: Who provided a container, and when it was last updated.
 --     * Slot: id
---     * Slot: lang Description: BCP 47 language code indicating the language of accompanying text.
---     * Slot: description_value Description: Plain text description (up to 4096 characters).
---     * Slot: CnaPublishedContainer_id Description: Autocreated FK slot
---     * Slot: CnaRejectedContainer_id Description: Autocreated FK slot
---     * Slot: AdpContainer_id Description: Autocreated FK slot
---     * Slot: ImpactEntry_id Description: Autocreated FK slot
--- # Class: SupportingMedia Description: Supporting media data for a description such as markdown, diagrams, etc. Similar to RFC 2397, each media object has a media type, data value, and an optional base64 flag.
+--     * Slot: dateUpdated Description: When the record or container was last updated.
+--     * Slot: orgId Description: The UUID of the organisation that provided the container.
+--     * Slot: shortName Description: The short name of the organisation that provided the container.
+-- # Abstract Class: CveCnaContainer Description: The container from the CVE Numbering Authority that assigned the identifier.
 --     * Slot: id
---     * Slot: media_type Description: RFC2046 compliant IANA Media type (e.g., text/markdown, text/html, image/png, image/svg, audio/mp3).
---     * Slot: base64_encoded Description: If true, the media_value field contains the media data encoded in base64. If false, the media_value field contains UTF-8 media content.
---     * Slot: media_value Description: Supporting media content, up to 16K characters. If base64_encoded is true, this stores base64 encoded data.
---     * Slot: MultiLangDescription_id Description: Autocreated FK slot
--- # Class: ProblemType Description: Problem type information (e.g., CWE identifier). Wraps one or more problem type descriptions. The CNA requirement is [PROBLEMTYPE].
+--     * Slot: providerMetadata_id Description: Who provided the container.
+-- # Class: CveCnaPublishedContainer Description: The assigning authority's account of a published vulnerability.
 --     * Slot: id
---     * Slot: CnaPublishedContainer_id Description: Autocreated FK slot
---     * Slot: AdpContainer_id Description: Autocreated FK slot
--- # Class: ProblemTypeDescription Description: Individual problem type description entry.
+--     * Slot: datePublic Description: When the vulnerability was made public, if known.
+--     * Slot: title Description: A short headline for the record or for what the container adds.
+--     * Slot: dateAssigned Description: When the authority tied the CVE identifier to a vulnerability.
+--     * Slot: source_id Description: How the vulnerability came to light, in the provider's own shape.
+--     * Slot: providerMetadata_id Description: Who provided the container.
+-- # Class: CveCnaRejectedContainer Description: The assigning authority's account of why a record was rejected.
 --     * Slot: id
---     * Slot: lang Description: BCP 47 language code indicating the language of accompanying text.
---     * Slot: problem_description Description: Text description of the problem type, or title from CWE or OWASP.
---     * Slot: cwe_id Description: CWE identifier for the weakness classification (e.g. CWE-79).
---     * Slot: problem_source_type Description: Problem type source format (e.g., text, OWASP, CWE).
---     * Slot: ProblemType_id Description: Autocreated FK slot
--- # Class: CveReference Description: An external reference associated with a CVE Record. Extends the core Reference with optional descriptive tags characterizing the resource.
+--     * Slot: providerMetadata_id Description: Who provided the container.
+-- # Class: CveAdpContainer Description: What an Authorized Data Publisher adds to a record beside the assigning authority's account.
 --     * Slot: id
---     * Slot: url Description: URL pointing to the reference resource.
---     * Slot: name Description: Name of the entity (product, weakness, reference, etc.).
---     * Slot: source Description: Source or origin of the reference or data.
---     * Slot: CnaPublishedContainer_id Description: Autocreated FK slot
---     * Slot: AdpContainer_id Description: Autocreated FK slot
---     * Slot: ProblemTypeDescription_id Description: Autocreated FK slot
--- # Class: ImpactEntry Description: An impact entry linking an optional CAPEC attack pattern ID to one or more prose descriptions of the impact scenario.
+--     * Slot: datePublic Description: When the vulnerability was made public, if known.
+--     * Slot: title Description: A short headline for the record or for what the container adds.
+--     * Slot: CvePublishedContainers_id Description: Autocreated FK slot
+--     * Slot: providerMetadata_id Description: Who provided the container.
+--     * Slot: source_id Description: How the vulnerability came to light, in the provider's own shape.
+-- # Class: CveProduct Description: One affected product or package, and which of its versions are affected.
 --     * Slot: id
---     * Slot: capec_id Description: CAPEC ID that best relates to this impact (e.g., CAPEC-123).
---     * Slot: CnaPublishedContainer_id Description: Autocreated FK slot
---     * Slot: AdpContainer_id Description: Autocreated FK slot
--- # Class: MetricEntry Description: A metric entry containing scoring data in one of the CVSS formats (v4.0, v3.x, v2.0) or a custom format, with optional applicability scenarios. At least one of cvss_v4_0, cvss_v3, cvss_v2_0, or other_metric is required. CVSS 3.0 and 3.1 are both represented by CvssV3 (distinguished by the cvss3_version slot).
+--     * Slot: vendor Description: Who makes or maintains the product. It can be N/A.
+--     * Slot: product Description: The name of the affected product.
+--     * Slot: collectionURL Description: The address of the package collection that gives packageName its meaning.
+--     * Slot: packageName Description: The package's name or identifier within its collection.
+--     * Slot: packageURL Description: A Package URL for the package, with no version in it.
+--     * Slot: repo Description: The address of the product's source code repository.
+--     * Slot: defaultStatus Description: The status of every version the versions list does not cover.
+--     * Slot: CveCnaPublishedContainer_id Description: Autocreated FK slot
+--     * Slot: CveAdpContainer_id Description: Autocreated FK slot
+-- # Class: CveProgramRoutine Description: One affected function, method or similar routine in the source.
 --     * Slot: id
---     * Slot: metric_format Description: Name of the scoring format (e.g., cvssV4_0, cvssV3_1). Provides future-proofing and supports proprietary format inclusion.
---     * Slot: CnaPublishedContainer_id Description: Autocreated FK slot
---     * Slot: AdpContainer_id Description: Autocreated FK slot
---     * Slot: cvss_v4_0_id Description: CVSS version 4.0 scoring data.
---     * Slot: cvss_v3_id Description: CVSS version 3.x scoring data (covers both 3.0 and 3.1). The version is distinguished by the cvss3_version field within the CvssV3 object.
---     * Slot: cvss_v2_0_id Description: CVSS version 2.0 scoring data.
---     * Slot: other_metric_id Description: A non-standard impact description or score.
--- # Class: MetricScenario Description: A scenario description indicating the context in which a metric applies. If no specific scenario is given, GENERAL is used as the default.
+--     * Slot: name Description: A name, of a reference or of a routine.
+--     * Slot: CveProduct_id Description: Autocreated FK slot
+-- # Class: CveProductVersion Description: A single version or a stretch of versions, and whether it is affected.
 --     * Slot: id
---     * Slot: lang Description: BCP 47 language code indicating the language of accompanying text.
---     * Slot: scenario_value Description: Description of the scenario this metrics object applies to.
---     * Slot: MetricEntry_id Description: Autocreated FK slot
--- # Class: CvssV4_0 Description: CVSS version 4.0 scoring object. Requires version, vectorString, baseScore, and baseSeverity. All other fields are optional.
+--     * Slot: version Description: A version string. On a score it is the CVSS version; on a product entry, the product's.
+--     * Slot: status Description: Whether a version is affected.
+--     * Slot: versionType Description: The numbering system that says how these versions compare, such as semver or git.
+--     * Slot: lessThan Description: The first version above the range, which is not itself in it.
+--     * Slot: lessThanOrEqual Description: The last version in the range.
+--     * Slot: CveProduct_id Description: Autocreated FK slot
+-- # Class: CveVersionChange Description: A point in a range of versions from which the status changes.
 --     * Slot: id
---     * Slot: cvss4_version Description: CVSS version identifier. Must be '4.0' for CVSS v4.0 objects.
---     * Slot: cvss4_vector_string Description: CVSS 4.0 vector string encoding all base, threat, and environmental metrics.
---     * Slot: cvss4_base_score Description: CVSS 4.0 base score (0.0 – 10.0 in 0.1 increments).
---     * Slot: cvss4_base_severity Description: CVSS 4.0 qualitative base severity rating.
---     * Slot: cvss4_attack_vector
---     * Slot: cvss4_attack_complexity
---     * Slot: cvss4_attack_requirements
---     * Slot: cvss4_privileges_required
---     * Slot: cvss4_user_interaction
---     * Slot: cvss4_vuln_confidentiality_impact
---     * Slot: cvss4_vuln_integrity_impact
---     * Slot: cvss4_vuln_availability_impact
---     * Slot: cvss4_sub_confidentiality_impact
---     * Slot: cvss4_sub_integrity_impact
---     * Slot: cvss4_sub_availability_impact
---     * Slot: cvss4_exploit_maturity
---     * Slot: cvss4_confidentiality_requirement
---     * Slot: cvss4_integrity_requirement
---     * Slot: cvss4_availability_requirement
---     * Slot: cvss4_modified_attack_vector
---     * Slot: cvss4_modified_attack_complexity
---     * Slot: cvss4_modified_attack_requirements
---     * Slot: cvss4_modified_privileges_required
---     * Slot: cvss4_modified_user_interaction
---     * Slot: cvss4_modified_vuln_confidentiality_impact
---     * Slot: cvss4_modified_vuln_integrity_impact
---     * Slot: cvss4_modified_vuln_availability_impact
---     * Slot: cvss4_modified_sub_confidentiality_impact
---     * Slot: cvss4_modified_sub_integrity_impact
---     * Slot: cvss4_modified_sub_availability_impact
---     * Slot: cvss4_safety
---     * Slot: cvss4_automatable
---     * Slot: cvss4_recovery
---     * Slot: cvss4_value_density
---     * Slot: cvss4_vulnerability_response_effort
---     * Slot: cvss4_provider_urgency
--- # Class: CvssV3 Description: CVSS version 3.x scoring object covering both CVSS 3.0 and CVSS 3.1. The two versions share an identical metric model; the 3.1 spec was a clarification, not a structural change. The cvss3_version slot distinguishes between them. Requires version ('3.0' or '3.1'), vectorString, baseScore, and baseSeverity.
+--     * Slot: at Description: The version from which a new status starts.
+--     * Slot: status Description: Whether a version is affected.
+--     * Slot: CveProductVersion_id Description: Autocreated FK slot
+-- # Class: CveCpeApplicabilityElement Description: A statement in the CPE Applicability Language of which platforms are affected.
 --     * Slot: id
---     * Slot: cvss3_version Description: CVSS version identifier ('3.0' or '3.1') within a CvssV3 object.
---     * Slot: cvss3_vector_string Description: CVSS 3.x vector string encoding all metric values. CVSS 3.1 strings begin with 'CVSS:3.1/'; CVSS 3.0 strings begin with 'CVSS:3.0/'.
---     * Slot: cvss3_attack_vector
---     * Slot: cvss3_attack_complexity
---     * Slot: cvss3_privileges_required
---     * Slot: cvss3_user_interaction
---     * Slot: cvss3_scope
---     * Slot: cvss3_confidentiality_impact
---     * Slot: cvss3_integrity_impact
---     * Slot: cvss3_availability_impact
---     * Slot: cvss3_base_score Description: CVSS 3.x base score (0.0 – 10.0 in 0.1 increments).
---     * Slot: cvss3_base_severity
---     * Slot: cvss3_exploit_code_maturity
---     * Slot: cvss3_remediation_level
---     * Slot: cvss3_report_confidence
---     * Slot: cvss3_temporal_score Description: CVSS 3.x temporal score.
---     * Slot: cvss3_temporal_severity
---     * Slot: cvss3_confidentiality_requirement
---     * Slot: cvss3_integrity_requirement
---     * Slot: cvss3_availability_requirement
---     * Slot: cvss3_modified_attack_vector
---     * Slot: cvss3_modified_attack_complexity
---     * Slot: cvss3_modified_privileges_required
---     * Slot: cvss3_modified_user_interaction
---     * Slot: cvss3_modified_scope
---     * Slot: cvss3_modified_confidentiality_impact
---     * Slot: cvss3_modified_integrity_impact
---     * Slot: cvss3_modified_availability_impact
---     * Slot: cvss3_environmental_score Description: CVSS 3.x environmental score.
---     * Slot: cvss3_environmental_severity
--- # Class: CvssV2_0 Description: CVSS version 2.0 scoring object. Requires version ('2.0'), vectorString, and baseScore.
+--     * Slot: operator Description: How the parts combine, all of them or any of them.
+--     * Slot: negate Description: Whether the combined result is reversed.
+--     * Slot: CveCnaPublishedContainer_id Description: Autocreated FK slot
+--     * Slot: CveAdpContainer_id Description: Autocreated FK slot
+-- # Class: CveCpeNode Description: A group of CPE matches, combined by an operator.
 --     * Slot: id
---     * Slot: cvss2_version Description: CVSS version identifier. Must be '2.0' for CVSS v2.0 objects.
---     * Slot: cvss2_vector_string Description: CVSS 2.0 vector string encoding all base, temporal, and environmental metrics.
---     * Slot: cvss2_access_vector
---     * Slot: cvss2_access_complexity
---     * Slot: cvss2_authentication
---     * Slot: cvss2_confidentiality_impact
---     * Slot: cvss2_integrity_impact
---     * Slot: cvss2_availability_impact
---     * Slot: cvss2_base_score Description: CVSS 2.0 base score (0.0 – 10.0).
---     * Slot: cvss2_exploitability
---     * Slot: cvss2_remediation_level
---     * Slot: cvss2_report_confidence
---     * Slot: cvss2_temporal_score Description: CVSS 2.0 temporal score.
---     * Slot: cvss2_collateral_damage_potential
---     * Slot: cvss2_target_distribution
---     * Slot: cvss2_confidentiality_requirement
---     * Slot: cvss2_integrity_requirement
---     * Slot: cvss2_availability_requirement
---     * Slot: cvss2_environmental_score Description: CVSS 2.0 environmental score.
--- # Class: OtherMetric Description: A non-standard impact description in a custom format. May be a prose description or an arbitrary JSON-compatible object.
+--     * Slot: operator Description: How the parts combine, all of them or any of them.
+--     * Slot: negate Description: Whether the combined result is reversed.
+--     * Slot: CveCpeApplicabilityElement_id Description: Autocreated FK slot
+-- # Class: CveCpeMatch Description: One CPE name, optionally bounded by versions, and whether it is vulnerable.
 --     * Slot: id
---     * Slot: other_metric_type Description: Name of the non-standard impact metrics format used.
---     * Slot: other_metric_content_id Description: Arbitrary JSON-compatible object (or prose string) containing non-standard metric data not covered by the CVSS formats. Upstream JSON Schema defines this as 'type: object, minProperties: 1'; range: Any allows any value.
--- # Class: TimelineEntry Description: A timeline event recording a significant event about the vulnerability or changes to the CVE Record. Requires time, lang, and value.
+--     * Slot: vulnerable Description: Whether what this match covers is vulnerable.
+--     * Slot: criteria Description: The CPE name to match.
+--     * Slot: matchCriteriaId Description: A UUID for this match.
+--     * Slot: versionStartExcluding Description: The version the match starts just above.
+--     * Slot: versionStartIncluding Description: The version the match starts at.
+--     * Slot: versionEndExcluding Description: The version the match ends just below.
+--     * Slot: versionEndIncluding Description: The version the match ends at.
+--     * Slot: CveCpeNode_id Description: Autocreated FK slot
+-- # Class: CveDescription Description: A piece of text in one language, with any media that support it.
 --     * Slot: id
---     * Slot: event_time Description: Timestamp representing when the event in the timeline occurred. Format is RFC3339 / ISO8601 with optional timezone.
---     * Slot: lang Description: BCP 47 language code indicating the language of accompanying text.
---     * Slot: event_value Description: A summary of the timeline event (up to 4096 characters).
---     * Slot: CnaPublishedContainer_id Description: Autocreated FK slot
---     * Slot: AdpContainer_id Description: Autocreated FK slot
--- # Class: CreditEntry Description: A credit acknowledging a specific person, organization, or tool for work related to the research, discovery, remediation, or coordination of the vulnerability.
+--     * Slot: lang Description: The language of the text beside it.
+--     * Slot: value Description: The text or content itself.
+--     * Slot: CveCnaPublishedContainer_id Description: Autocreated FK slot
+--     * Slot: CveCnaRejectedContainer_id Description: Autocreated FK slot
+--     * Slot: CveAdpContainer_id Description: Autocreated FK slot
+--     * Slot: CveImpact_id Description: Autocreated FK slot
+-- # Class: CveSupportingMedia Description: A richer form of a description, as a media type and its content.
 --     * Slot: id
---     * Slot: lang Description: BCP 47 language code indicating the language of accompanying text.
---     * Slot: credit_value Description: The name or description of the credited party (up to 4096 characters).
---     * Slot: credit_user Description: UUID of the user being credited, if present in the CVE User Registry. This UUID can be used to lookup the user record in the user registry service.
---     * Slot: credit_type Description: Type or role of the entity being credited.
---     * Slot: CnaPublishedContainer_id Description: Autocreated FK slot
---     * Slot: AdpContainer_id Description: Autocreated FK slot
--- # Class: SourceInformation Description: Source information (who discovered it, who researched it, etc.) and optionally a chain of CNA information. This is an open object — at least one property must be present.
+--     * Slot: type Description: What kind of thing this is. Each class that uses it says what the choices are.
+--     * Slot: value Description: The text or content itself.
+--     * Slot: base64 Description: Whether value is base64 encoded rather than plain UTF-8.
+--     * Slot: CveDescription_id Description: Autocreated FK slot
+-- # Class: CveProblemType Description: One kind of problem the vulnerability is, in one or more languages.
 --     * Slot: id
---     * Slot: source_advisory Description: Advisory identifier associated with the vulnerability discovery.
---     * Slot: source_discovery Description: How the vulnerability was discovered (e.g., INTERNAL, EXTERNAL, USER).
--- # Class: TaxonomyMapping Description: A taxonomy mapping identifying the taxonomy by name and version, along with a list of relations relevant to the CVE (e.g., ATT&CK, D3FEND, CWE).
+--     * Slot: CveCnaPublishedContainer_id Description: Autocreated FK slot
+--     * Slot: CveAdpContainer_id Description: Autocreated FK slot
+-- # Class: CveProblemTypeDescription Description: A problem type described in one language, often by a weakness identifier and its title.
 --     * Slot: id
---     * Slot: taxonomy_name Description: The name of the taxonomy (e.g., ATT&CK, D3FEND, CWE, CVSS).
---     * Slot: taxonomy_version Description: The version of the taxonomy the identifiers come from.
---     * Slot: CnaPublishedContainer_id Description: Autocreated FK slot
---     * Slot: AdpContainer_id Description: Autocreated FK slot
--- # Class: TaxonomyRelation Description: A relationship between a taxonomy item and a CVE or another taxonomy item. Provides subject (taxonomyId), predicate (relationshipName), and object (relationshipValue).
+--     * Slot: lang Description: The language of the text beside it.
+--     * Slot: description Description: The text of a problem type, or the title of a weakness.
+--     * Slot: type Description: What kind of thing this is. Each class that uses it says what the choices are.
+--     * Slot: cweId Description: The Common Weakness Enumeration identifier that best fits, such as CWE-79.
+--     * Slot: CveProblemType_id Description: Autocreated FK slot
+-- # Class: CveReference Description: A link to something about the vulnerability, such as an advisory or a patch.
 --     * Slot: id
---     * Slot: taxonomy_id Description: Identifier of the item in the taxonomy. Used as the subject of the relationship.
---     * Slot: relationship_name Description: A description of the relationship between the taxonomy item and the CVE.
---     * Slot: relationship_value Description: The target of the relationship. Can be the CVE ID or another taxonomy identifier.
---     * Slot: TaxonomyMapping_id Description: Autocreated FK slot
--- # Class: CpeApplicabilityElement Description: Affected products defined using an implementation of the CPE Applicability Language. An operator property allows AND or OR logic between CPEs or combinations of CPEs.
+--     * Slot: url Description: The address the reference points to.
+--     * Slot: name Description: A name, of a reference or of a routine.
+--     * Slot: CveCnaPublishedContainer_id Description: Autocreated FK slot
+--     * Slot: CveAdpContainer_id Description: Autocreated FK slot
+--     * Slot: CveProblemTypeDescription_id Description: Autocreated FK slot
+-- # Class: CveImpact Description: A consequence of the vulnerability, in words.
 --     * Slot: id
---     * Slot: cpe_operator Description: Logical operator (AND/OR) used between CPE criteria in this node.
---     * Slot: cpe_negate Description: If true, negates the applicability of this element.
---     * Slot: CnaPublishedContainer_id Description: Autocreated FK slot
---     * Slot: AdpContainer_id Description: Autocreated FK slot
--- # Class: CpeNode Description: Defines a CPE configuration node in an applicability statement.
+--     * Slot: capecId Description: The Common Attack Pattern Enumeration identifier that best fits, such as CAPEC-63.
+--     * Slot: CveCnaPublishedContainer_id Description: Autocreated FK slot
+--     * Slot: CveAdpContainer_id Description: Autocreated FK slot
+-- # Class: CveMetric Description: One scoring of the vulnerability, in a CVSS version or another format, and where it applies.
 --     * Slot: id
---     * Slot: cpe_operator Description: Logical operator (AND/OR) used between CPE criteria in this node.
---     * Slot: cpe_negate Description: If true, negates the applicability of this element.
---     * Slot: CpeApplicabilityElement_id Description: Autocreated FK slot
--- # Class: CpeMatch Description: CPE match string or range within a CPE applicability node.
+--     * Slot: format Description: The name of the scoring format.
+--     * Slot: CveCnaPublishedContainer_id Description: Autocreated FK slot
+--     * Slot: CveAdpContainer_id Description: Autocreated FK slot
+--     * Slot: cvssV4_0_id Description: A score under CVSS version 4.0.
+--     * Slot: cvssV3_1_id Description: A score under CVSS version 3.1.
+--     * Slot: cvssV3_0_id Description: A score under CVSS version 3.0.
+--     * Slot: cvssV2_0_id Description: A score under CVSS version 2.0.
+--     * Slot: other_id Description: A score or impact statement in some other format.
+-- # Class: CveMetricScenario Description: A situation a scoring applies to, in one language.
 --     * Slot: id
---     * Slot: cpe_vulnerable Description: Whether this CPE match describes a vulnerable configuration.
---     * Slot: cpe_criteria Description: CPE 2.3 formatted name match string or match criteria.
---     * Slot: match_criteria_id Description: UUID identifying the CPE match criteria set.
---     * Slot: version_start_excluding Description: The start of a version range, exclusive (versions strictly greater than this).
---     * Slot: version_start_including Description: The start of a version range, inclusive (versions greater than or equal to this).
---     * Slot: version_end_excluding Description: The end of a version range, exclusive (versions strictly less than this).
---     * Slot: version_end_including Description: The end of a version range, inclusive (versions less than or equal to this).
---     * Slot: CpeNode_id Description: Autocreated FK slot
--- # Abstract Class: Vulnerability Description: Abstract base representation of a security vulnerability. Extended by source-specific schemas (KEV, CVE, NVD).
---     * Slot: cve_id Description: The CVE identifier assigned by a CVE Numbering Authority (CNA). Format: CVE-YYYY-NNNNN.
---     * Slot: title Description: Short human-readable title or name for this entity.
---     * Slot: description Description: Narrative description of the vulnerability.
---     * Slot: published_date Description: Date and time the vulnerability was first published.
---     * Slot: last_modified_date Description: Date and time the vulnerability record was last modified.
---     * Slot: status Description: Current lifecycle state of the vulnerability record.
---     * Slot: impact_id Description: Impact and severity assessment for this vulnerability.
--- # Class: Product Description: Software or hardware entity affected by the vulnerability.
+--     * Slot: lang Description: The language of the text beside it.
+--     * Slot: value Description: The text or content itself.
+--     * Slot: CveMetric_id Description: Autocreated FK slot
+-- # Class: CveOtherMetric Description: A score or impact statement in a format the record format does not name.
 --     * Slot: id
---     * Slot: vendor Description: Name of the vendor or organization responsible for the product.
---     * Slot: name Description: Name of the entity (product, weakness, reference, etc.).
---     * Slot: version Description: Version string of the affected product.
---     * Slot: Vulnerability_cve_id Description: Autocreated FK slot
--- # Class: Reference Description: External reference such as an advisory or article.
+--     * Slot: type Description: What kind of thing this is. Each class that uses it says what the choices are.
+--     * Slot: content_id Description: The statement itself, as an object in whatever shape its format has.
+-- # Class: CveOtherMetricContent Description: The free-form object inside a metric of another format.
 --     * Slot: id
---     * Slot: url Description: URL pointing to the reference resource.
---     * Slot: name Description: Name of the entity (product, weakness, reference, etc.).
---     * Slot: source Description: Source or origin of the reference or data.
---     * Slot: Vulnerability_cve_id Description: Autocreated FK slot
--- # Class: Weakness Description: Weakness classification from CWE or a similar taxonomy.
+-- # Class: CveTimelineEvent Description: One dated event in the vulnerability's history.
 --     * Slot: id
---     * Slot: cwe_id Description: CWE identifier for the weakness classification (e.g. CWE-79).
---     * Slot: name Description: Name of the entity (product, weakness, reference, etc.).
---     * Slot: description Description: Narrative description of the vulnerability.
---     * Slot: Vulnerability_cve_id Description: Autocreated FK slot
--- # Class: Impact Description: Assessment of the vulnerability's impact and severity.
+--     * Slot: lang Description: The language of the text beside it.
+--     * Slot: value Description: The text or content itself.
+--     * Slot: time Description: When the event happened.
+--     * Slot: CveCnaPublishedContainer_id Description: Autocreated FK slot
+--     * Slot: CveAdpContainer_id Description: Autocreated FK slot
+-- # Class: CveCredit Description: Thanks to someone who helped, in one language.
 --     * Slot: id
---     * Slot: severity Description: Qualitative severity rating.
---     * Slot: vector Description: CVSS vector string or equivalent scoring vector expression.
---     * Slot: score Description: Numeric vulnerability score (e.g. CVSS base score).
--- # Class: Configuration Description: Logical grouping of CPE match expressions.
+--     * Slot: lang Description: The language of the text beside it.
+--     * Slot: value Description: The text or content itself.
+--     * Slot: type Description: What kind of thing this is. Each class that uses it says what the choices are.
+--     * Slot: user Description: The UUID of the credited person, when the CVE user registry holds them.
+--     * Slot: CveCnaPublishedContainer_id Description: Autocreated FK slot
+--     * Slot: CveAdpContainer_id Description: Autocreated FK slot
+-- # Class: CveSource Description: How the vulnerability came to light, as an object the provider shapes as it likes.
 --     * Slot: id
---     * Slot: cpe_uri Description: CPE 2.2 URI identifying an affected product configuration.
---     * Slot: operator Description: Logical operator (AND/OR) used in configuration node groupings.
--- # Class: CnaPublishedContainer_cna_tags
---     * Slot: CnaPublishedContainer_id Description: Autocreated FK slot
---     * Slot: cna_tags Description: Tags provided by a CNA describing the CVE Record.
--- # Class: CnaRejectedContainer_replaced_by
---     * Slot: CnaRejectedContainer_id Description: Autocreated FK slot
---     * Slot: replaced_by Description: CVE IDs that this CVE ID was rejected in favor of because this CVE ID was incorrectly assigned to the same vulnerabilities.
--- # Class: AdpContainer_adp_tags
---     * Slot: AdpContainer_id Description: Autocreated FK slot
---     * Slot: adp_tags Description: Tags provided by an ADP describing the CVE Record.
--- # Class: AffectedProduct_platforms
---     * Slot: AffectedProduct_id Description: Autocreated FK slot
---     * Slot: platforms Description: Platforms or operating environments affected.
--- # Class: AffectedProduct_cpes
---     * Slot: AffectedProduct_id Description: Autocreated FK slot
---     * Slot: cpes Description: Affected products defined by CPE (Common Platform Enumeration) names in either 2.2 or 2.3 format.
--- # Class: AffectedProduct_modules
---     * Slot: AffectedProduct_id Description: Autocreated FK slot
---     * Slot: modules Description: A list of the affected components, features, modules, sub-components, sub-products, APIs, commands, utilities, programs, or functionalities.
--- # Class: AffectedProduct_program_files
---     * Slot: AffectedProduct_id Description: Autocreated FK slot
---     * Slot: program_files Description: A list of the affected source code files.
--- # Class: CveReference_reference_tags
+-- # Class: CveTaxonomyMapping Description: How the vulnerability relates to one version of an outside taxonomy.
+--     * Slot: id
+--     * Slot: taxonomyName Description: The name of the taxonomy, such as ATT&CK or CWE.
+--     * Slot: taxonomyVersion Description: The version of the taxonomy.
+--     * Slot: CveCnaPublishedContainer_id Description: Autocreated FK slot
+--     * Slot: CveAdpContainer_id Description: Autocreated FK slot
+-- # Class: CveTaxonomyRelation Description: One relationship from an item in a taxonomy to this CVE or to another item.
+--     * Slot: id
+--     * Slot: taxonomyId Description: The item in the taxonomy, which is the relationship's subject.
+--     * Slot: relationshipName Description: What the relationship is.
+--     * Slot: relationshipValue Description: The relationship's target, which is this CVE identifier or another taxonomy item.
+--     * Slot: CveTaxonomyMapping_id Description: Autocreated FK slot
+-- # Class: CveCnaPublishedContainer_tags
+--     * Slot: CveCnaPublishedContainer_id Description: Autocreated FK slot
+--     * Slot: tags Description: Short labels from the upstream's list, or the publisher's own beginning x_.
+-- # Class: CveCnaRejectedContainer_replacedBy
+--     * Slot: CveCnaRejectedContainer_id Description: Autocreated FK slot
+--     * Slot: replacedBy Description: The CVE identifiers to use instead of this one.
+-- # Class: CveAdpContainer_tags
+--     * Slot: CveAdpContainer_id Description: Autocreated FK slot
+--     * Slot: tags Description: Short labels from the upstream's list, or the publisher's own beginning x_.
+-- # Class: CveProduct_cpes
+--     * Slot: CveProduct_id Description: Autocreated FK slot
+--     * Slot: cpes Description: Common Platform Enumeration names for the product.
+-- # Class: CveProduct_modules
+--     * Slot: CveProduct_id Description: Autocreated FK slot
+--     * Slot: modules Description: The affected parts of the product, such as components, commands or APIs.
+-- # Class: CveProduct_programFiles
+--     * Slot: CveProduct_id Description: Autocreated FK slot
+--     * Slot: programFiles Description: The affected source files.
+-- # Class: CveProduct_platforms
+--     * Slot: CveProduct_id Description: Autocreated FK slot
+--     * Slot: platforms Description: The platforms the flaw is limited to. Without this, it applies to all of them.
+-- # Class: CveReference_tags
 --     * Slot: CveReference_id Description: Autocreated FK slot
---     * Slot: reference_tags Description: An array of tags describing the resource referenced by the URL.
--- # Class: SourceInformation_source_defects
---     * Slot: SourceInformation_id Description: Autocreated FK slot
---     * Slot: source_defects Description: Bug tracking system IDs (e.g., JIRA ticket IDs) related to the vulnerability.
--- # Class: Product_platforms
---     * Slot: Product_id Description: Autocreated FK slot
---     * Slot: platforms Description: Platforms or operating environments affected.
+--     * Slot: tags Description: Short labels from the upstream's list, or the publisher's own beginning x_.
 
-CREATE TABLE "Any" (
+CREATE TABLE "CveRecordRoot" (
 	id INTEGER NOT NULL,
 	PRIMARY KEY (id)
 );
-CREATE INDEX "ix_Any_id" ON "Any" (id);
+CREATE INDEX "ix_CveRecordRoot_id" ON "CveRecordRoot" (id);
 
-CREATE TABLE "CveMetadata" (
+CREATE TABLE "CvssSeverityBandsMixin" (
 	id INTEGER NOT NULL,
+	"baseScore" FLOAT NOT NULL,
+	"baseSeverity" VARCHAR(8) NOT NULL,
 	PRIMARY KEY (id)
 );
-CREATE INDEX "ix_CveMetadata_id" ON "CveMetadata" (id);
+CREATE INDEX "ix_CvssSeverityBandsMixin_id" ON "CvssSeverityBandsMixin" (id);
+
+CREATE TABLE "CvssV20" (
+	id INTEGER NOT NULL,
+	version TEXT NOT NULL,
+	"vectorString" TEXT NOT NULL,
+	"baseScore" FLOAT NOT NULL,
+	"confidentialityImpact" VARCHAR(8),
+	"integrityImpact" VARCHAR(8),
+	"availabilityImpact" VARCHAR(8),
+	"remediationLevel" VARCHAR(13),
+	"reportConfidence" VARCHAR(14),
+	"temporalScore" FLOAT,
+	"confidentialityRequirement" VARCHAR(11),
+	"integrityRequirement" VARCHAR(11),
+	"availabilityRequirement" VARCHAR(11),
+	"environmentalScore" FLOAT,
+	"accessVector" VARCHAR(16),
+	"accessComplexity" VARCHAR(6),
+	authentication VARCHAR(8),
+	exploitability VARCHAR(16),
+	"collateralDamagePotential" VARCHAR(11),
+	"targetDistribution" VARCHAR(11),
+	PRIMARY KEY (id)
+);
+CREATE INDEX "ix_CvssV20_id" ON "CvssV20" (id);
+
+CREATE TABLE "CvssV30" (
+	id INTEGER NOT NULL,
+	version TEXT NOT NULL,
+	"vectorString" TEXT NOT NULL,
+	"attackVector" VARCHAR(16),
+	"attackComplexity" VARCHAR(4),
+	"privilegesRequired" VARCHAR(4),
+	"userInteraction" VARCHAR(8),
+	scope VARCHAR(9),
+	"confidentialityImpact" VARCHAR(4),
+	"integrityImpact" VARCHAR(4),
+	"availabilityImpact" VARCHAR(4),
+	"exploitCodeMaturity" VARCHAR(16),
+	"remediationLevel" VARCHAR(13),
+	"reportConfidence" VARCHAR(11),
+	"temporalScore" FLOAT,
+	"temporalSeverity" VARCHAR(8),
+	"confidentialityRequirement" VARCHAR(11),
+	"integrityRequirement" VARCHAR(11),
+	"availabilityRequirement" VARCHAR(11),
+	"modifiedAttackVector" VARCHAR(16),
+	"modifiedAttackComplexity" VARCHAR(11),
+	"modifiedPrivilegesRequired" VARCHAR(11),
+	"modifiedUserInteraction" VARCHAR(11),
+	"modifiedScope" VARCHAR(11),
+	"modifiedConfidentialityImpact" VARCHAR(11),
+	"modifiedIntegrityImpact" VARCHAR(11),
+	"modifiedAvailabilityImpact" VARCHAR(11),
+	"environmentalScore" FLOAT,
+	"environmentalSeverity" VARCHAR(8),
+	"baseScore" FLOAT NOT NULL,
+	"baseSeverity" VARCHAR(8) NOT NULL,
+	PRIMARY KEY (id)
+);
+CREATE INDEX "ix_CvssV30_id" ON "CvssV30" (id);
+
+CREATE TABLE "CvssV31" (
+	id INTEGER NOT NULL,
+	version TEXT NOT NULL,
+	"vectorString" TEXT NOT NULL,
+	"attackVector" VARCHAR(16),
+	"attackComplexity" VARCHAR(4),
+	"privilegesRequired" VARCHAR(4),
+	"userInteraction" VARCHAR(8),
+	scope VARCHAR(9),
+	"confidentialityImpact" VARCHAR(4),
+	"integrityImpact" VARCHAR(4),
+	"availabilityImpact" VARCHAR(4),
+	"exploitCodeMaturity" VARCHAR(16),
+	"remediationLevel" VARCHAR(13),
+	"reportConfidence" VARCHAR(11),
+	"temporalScore" FLOAT,
+	"temporalSeverity" VARCHAR(8),
+	"confidentialityRequirement" VARCHAR(11),
+	"integrityRequirement" VARCHAR(11),
+	"availabilityRequirement" VARCHAR(11),
+	"modifiedAttackVector" VARCHAR(16),
+	"modifiedAttackComplexity" VARCHAR(11),
+	"modifiedPrivilegesRequired" VARCHAR(11),
+	"modifiedUserInteraction" VARCHAR(11),
+	"modifiedScope" VARCHAR(11),
+	"modifiedConfidentialityImpact" VARCHAR(11),
+	"modifiedIntegrityImpact" VARCHAR(11),
+	"modifiedAvailabilityImpact" VARCHAR(11),
+	"environmentalScore" FLOAT,
+	"environmentalSeverity" VARCHAR(8),
+	"baseScore" FLOAT NOT NULL,
+	"baseSeverity" VARCHAR(8) NOT NULL,
+	PRIMARY KEY (id)
+);
+CREATE INDEX "ix_CvssV31_id" ON "CvssV31" (id);
+
+CREATE TABLE "CvssV40" (
+	id INTEGER NOT NULL,
+	version TEXT NOT NULL,
+	"vectorString" TEXT NOT NULL,
+	"attackVector" VARCHAR(8),
+	"attackComplexity" VARCHAR(4),
+	"privilegesRequired" VARCHAR(4),
+	"userInteraction" VARCHAR(7),
+	"confidentialityRequirement" VARCHAR(11),
+	"integrityRequirement" VARCHAR(11),
+	"availabilityRequirement" VARCHAR(11),
+	"modifiedAttackVector" VARCHAR(11),
+	"modifiedAttackComplexity" VARCHAR(11),
+	"modifiedPrivilegesRequired" VARCHAR(11),
+	"modifiedUserInteraction" VARCHAR(11),
+	"attackRequirements" VARCHAR(7),
+	"vulnConfidentialityImpact" VARCHAR(4),
+	"vulnIntegrityImpact" VARCHAR(4),
+	"vulnAvailabilityImpact" VARCHAR(4),
+	"subConfidentialityImpact" VARCHAR(4),
+	"subIntegrityImpact" VARCHAR(4),
+	"subAvailabilityImpact" VARCHAR(4),
+	"exploitMaturity" VARCHAR(16),
+	"modifiedAttackRequirements" VARCHAR(11),
+	"modifiedVulnConfidentialityImpact" VARCHAR(11),
+	"modifiedVulnIntegrityImpact" VARCHAR(11),
+	"modifiedVulnAvailabilityImpact" VARCHAR(11),
+	"modifiedSubConfidentialityImpact" VARCHAR(11),
+	"modifiedSubIntegrityImpact" VARCHAR(11),
+	"modifiedSubAvailabilityImpact" VARCHAR(11),
+	"Safety" VARCHAR(11),
+	"Automatable" VARCHAR(11),
+	"Recovery" VARCHAR(13),
+	"valueDensity" VARCHAR(12),
+	"vulnerabilityResponseEffort" VARCHAR(11),
+	"providerUrgency" VARCHAR(11),
+	"baseScore" FLOAT NOT NULL,
+	"baseSeverity" VARCHAR(8) NOT NULL,
+	PRIMARY KEY (id)
+);
+CREATE INDEX "ix_CvssV40_id" ON "CvssV40" (id);
+
+CREATE TABLE "CveRecordMetadata" (
+	id INTEGER NOT NULL,
+	"dateUpdated" TEXT,
+	state VARCHAR(9) NOT NULL,
+	"cveId" TEXT NOT NULL,
+	"assignerOrgId" TEXT NOT NULL,
+	"assignerShortName" TEXT,
+	serial INTEGER,
+	"dateReserved" TEXT,
+	"datePublished" TEXT,
+	PRIMARY KEY (id)
+);
+CREATE INDEX "ix_CveRecordMetadata_id" ON "CveRecordMetadata" (id);
 
 CREATE TABLE "CveMetadataPublished" (
 	id INTEGER NOT NULL,
-	record_cve_id TEXT NOT NULL,
-	assigner_org_id TEXT NOT NULL,
-	assigner_short_name TEXT,
+	"requesterUserId" TEXT,
+	"dateUpdated" TEXT,
+	state VARCHAR(9) NOT NULL,
+	"cveId" TEXT NOT NULL,
+	"assignerOrgId" TEXT NOT NULL,
+	"assignerShortName" TEXT,
 	serial INTEGER,
-	date_updated TEXT,
-	date_reserved TEXT,
-	requester_user_id TEXT,
-	date_published TEXT,
-	published_state VARCHAR(9) NOT NULL,
+	"dateReserved" TEXT,
+	"datePublished" TEXT,
 	PRIMARY KEY (id)
 );
 CREATE INDEX "ix_CveMetadataPublished_id" ON "CveMetadataPublished" (id);
 
 CREATE TABLE "CveMetadataRejected" (
 	id INTEGER NOT NULL,
-	record_cve_id TEXT NOT NULL,
-	assigner_org_id TEXT NOT NULL,
-	assigner_short_name TEXT,
+	"dateRejected" TEXT,
+	"dateUpdated" TEXT,
+	state VARCHAR(8) NOT NULL,
+	"cveId" TEXT NOT NULL,
+	"assignerOrgId" TEXT NOT NULL,
+	"assignerShortName" TEXT,
 	serial INTEGER,
-	date_updated TEXT,
-	date_reserved TEXT,
-	date_published TEXT,
-	date_rejected TEXT,
-	rejected_state VARCHAR(9) NOT NULL,
+	"dateReserved" TEXT,
+	"datePublished" TEXT,
 	PRIMARY KEY (id)
 );
 CREATE INDEX "ix_CveMetadataRejected_id" ON "CveMetadataRejected" (id);
 
-CREATE TABLE "ProviderMetadata" (
+CREATE TABLE "CveProviderMetadata" (
 	id INTEGER NOT NULL,
-	org_id TEXT NOT NULL,
-	short_name TEXT,
-	date_updated TEXT,
+	"dateUpdated" TEXT,
+	"orgId" TEXT NOT NULL,
+	"shortName" TEXT,
 	PRIMARY KEY (id)
 );
-CREATE INDEX "ix_ProviderMetadata_id" ON "ProviderMetadata" (id);
+CREATE INDEX "ix_CveProviderMetadata_id" ON "CveProviderMetadata" (id);
 
-CREATE TABLE "CnaContainer" (
+CREATE TABLE "CveOtherMetricContent" (
 	id INTEGER NOT NULL,
 	PRIMARY KEY (id)
 );
-CREATE INDEX "ix_CnaContainer_id" ON "CnaContainer" (id);
+CREATE INDEX "ix_CveOtherMetricContent_id" ON "CveOtherMetricContent" (id);
 
-CREATE TABLE "CvssV4_0" (
+CREATE TABLE "CveSource" (
 	id INTEGER NOT NULL,
-	cvss4_version TEXT NOT NULL,
-	cvss4_vector_string TEXT NOT NULL,
-	cvss4_base_score FLOAT NOT NULL,
-	cvss4_base_severity VARCHAR(8) NOT NULL,
-	cvss4_attack_vector VARCHAR(8),
-	cvss4_attack_complexity VARCHAR(4),
-	cvss4_attack_requirements VARCHAR(7),
-	cvss4_privileges_required VARCHAR(4),
-	cvss4_user_interaction VARCHAR(7),
-	cvss4_vuln_confidentiality_impact VARCHAR(4),
-	cvss4_vuln_integrity_impact VARCHAR(4),
-	cvss4_vuln_availability_impact VARCHAR(4),
-	cvss4_sub_confidentiality_impact VARCHAR(4),
-	cvss4_sub_integrity_impact VARCHAR(4),
-	cvss4_sub_availability_impact VARCHAR(4),
-	cvss4_exploit_maturity VARCHAR(16),
-	cvss4_confidentiality_requirement VARCHAR(11),
-	cvss4_integrity_requirement VARCHAR(11),
-	cvss4_availability_requirement VARCHAR(11),
-	cvss4_modified_attack_vector VARCHAR(11),
-	cvss4_modified_attack_complexity VARCHAR(11),
-	cvss4_modified_attack_requirements VARCHAR(11),
-	cvss4_modified_privileges_required VARCHAR(11),
-	cvss4_modified_user_interaction VARCHAR(11),
-	cvss4_modified_vuln_confidentiality_impact VARCHAR(11),
-	cvss4_modified_vuln_integrity_impact VARCHAR(11),
-	cvss4_modified_vuln_availability_impact VARCHAR(11),
-	cvss4_modified_sub_confidentiality_impact VARCHAR(11),
-	cvss4_modified_sub_integrity_impact VARCHAR(11),
-	cvss4_modified_sub_availability_impact VARCHAR(11),
-	cvss4_safety VARCHAR(11),
-	cvss4_automatable VARCHAR(11),
-	cvss4_recovery VARCHAR(13),
-	cvss4_value_density VARCHAR(12),
-	cvss4_vulnerability_response_effort VARCHAR(11),
-	cvss4_provider_urgency VARCHAR(11),
 	PRIMARY KEY (id)
 );
-CREATE INDEX "ix_CvssV4_0_id" ON "CvssV4_0" (id);
+CREATE INDEX "ix_CveSource_id" ON "CveSource" (id);
 
-CREATE TABLE "CvssV3" (
+CREATE TABLE "CveCnaContainer" (
 	id INTEGER NOT NULL,
-	cvss3_version VARCHAR(3) NOT NULL,
-	cvss3_vector_string TEXT NOT NULL,
-	cvss3_attack_vector VARCHAR(16),
-	cvss3_attack_complexity VARCHAR(4),
-	cvss3_privileges_required VARCHAR(4),
-	cvss3_user_interaction VARCHAR(8),
-	cvss3_scope VARCHAR(9),
-	cvss3_confidentiality_impact VARCHAR(4),
-	cvss3_integrity_impact VARCHAR(4),
-	cvss3_availability_impact VARCHAR(4),
-	cvss3_base_score FLOAT NOT NULL,
-	cvss3_base_severity VARCHAR(8) NOT NULL,
-	cvss3_exploit_code_maturity VARCHAR(16),
-	cvss3_remediation_level VARCHAR(13),
-	cvss3_report_confidence VARCHAR(11),
-	cvss3_temporal_score FLOAT,
-	cvss3_temporal_severity VARCHAR(8),
-	cvss3_confidentiality_requirement VARCHAR(11),
-	cvss3_integrity_requirement VARCHAR(11),
-	cvss3_availability_requirement VARCHAR(11),
-	cvss3_modified_attack_vector VARCHAR(16),
-	cvss3_modified_attack_complexity VARCHAR(11),
-	cvss3_modified_privileges_required VARCHAR(11),
-	cvss3_modified_user_interaction VARCHAR(11),
-	cvss3_modified_scope VARCHAR(11),
-	cvss3_modified_confidentiality_impact VARCHAR(11),
-	cvss3_modified_integrity_impact VARCHAR(11),
-	cvss3_modified_availability_impact VARCHAR(11),
-	cvss3_environmental_score FLOAT,
-	cvss3_environmental_severity VARCHAR(8),
-	PRIMARY KEY (id)
+	"providerMetadata_id" INTEGER NOT NULL,
+	PRIMARY KEY (id),
+	FOREIGN KEY("providerMetadata_id") REFERENCES "CveProviderMetadata" (id)
 );
-CREATE INDEX "ix_CvssV3_id" ON "CvssV3" (id);
+CREATE INDEX "ix_CveCnaContainer_id" ON "CveCnaContainer" (id);
 
-CREATE TABLE "CvssV2_0" (
+CREATE TABLE "CveCnaPublishedContainer" (
 	id INTEGER NOT NULL,
-	cvss2_version TEXT NOT NULL,
-	cvss2_vector_string TEXT NOT NULL,
-	cvss2_access_vector VARCHAR(16),
-	cvss2_access_complexity VARCHAR(6),
-	cvss2_authentication VARCHAR(8),
-	cvss2_confidentiality_impact VARCHAR(8),
-	cvss2_integrity_impact VARCHAR(8),
-	cvss2_availability_impact VARCHAR(8),
-	cvss2_base_score FLOAT NOT NULL,
-	cvss2_exploitability VARCHAR(16),
-	cvss2_remediation_level VARCHAR(13),
-	cvss2_report_confidence VARCHAR(14),
-	cvss2_temporal_score FLOAT,
-	cvss2_collateral_damage_potential VARCHAR(11),
-	cvss2_target_distribution VARCHAR(11),
-	cvss2_confidentiality_requirement VARCHAR(11),
-	cvss2_integrity_requirement VARCHAR(11),
-	cvss2_availability_requirement VARCHAR(11),
-	cvss2_environmental_score FLOAT,
-	PRIMARY KEY (id)
+	"datePublic" TEXT,
+	title TEXT,
+	"dateAssigned" TEXT,
+	source_id INTEGER,
+	"providerMetadata_id" INTEGER NOT NULL,
+	PRIMARY KEY (id),
+	FOREIGN KEY(source_id) REFERENCES "CveSource" (id),
+	FOREIGN KEY("providerMetadata_id") REFERENCES "CveProviderMetadata" (id)
 );
-CREATE INDEX "ix_CvssV2_0_id" ON "CvssV2_0" (id);
+CREATE INDEX "ix_CveCnaPublishedContainer_id" ON "CveCnaPublishedContainer" (id);
 
-CREATE TABLE "SourceInformation" (
+CREATE TABLE "CveCnaRejectedContainer" (
 	id INTEGER NOT NULL,
-	source_advisory TEXT,
-	source_discovery TEXT,
-	PRIMARY KEY (id)
+	"providerMetadata_id" INTEGER NOT NULL,
+	PRIMARY KEY (id),
+	FOREIGN KEY("providerMetadata_id") REFERENCES "CveProviderMetadata" (id)
 );
-CREATE INDEX "ix_SourceInformation_id" ON "SourceInformation" (id);
+CREATE INDEX "ix_CveCnaRejectedContainer_id" ON "CveCnaRejectedContainer" (id);
 
-CREATE TABLE "Impact" (
+CREATE TABLE "CveOtherMetric" (
 	id INTEGER NOT NULL,
-	severity VARCHAR(8),
-	vector TEXT,
-	score FLOAT,
-	PRIMARY KEY (id)
+	type TEXT NOT NULL,
+	content_id INTEGER NOT NULL,
+	PRIMARY KEY (id),
+	FOREIGN KEY(content_id) REFERENCES "CveOtherMetricContent" (id)
 );
-CREATE INDEX "ix_Impact_id" ON "Impact" (id);
+CREATE INDEX "ix_CveOtherMetric_id" ON "CveOtherMetric" (id);
 
-CREATE TABLE "Configuration" (
-	id INTEGER NOT NULL,
-	cpe_uri TEXT,
-	operator TEXT,
-	PRIMARY KEY (id)
-);
-CREATE INDEX "ix_Configuration_id" ON "Configuration" (id);
-
-CREATE TABLE "Containers" (
+CREATE TABLE "CveContainers" (
 	id INTEGER NOT NULL,
 	cna_id INTEGER NOT NULL,
 	PRIMARY KEY (id),
-	FOREIGN KEY(cna_id) REFERENCES "CnaContainer" (id)
+	FOREIGN KEY(cna_id) REFERENCES "CveCnaContainer" (id)
 );
-CREATE INDEX "ix_Containers_id" ON "Containers" (id);
+CREATE INDEX "ix_CveContainers_id" ON "CveContainers" (id);
 
-CREATE TABLE "CnaPublishedContainer" (
+CREATE TABLE "CvePublishedContainers" (
 	id INTEGER NOT NULL,
-	date_assigned TEXT,
-	date_public TEXT,
-	title TEXT,
-	provider_metadata_id INTEGER NOT NULL,
-	cna_source_id INTEGER,
+	cna_id INTEGER NOT NULL,
 	PRIMARY KEY (id),
-	FOREIGN KEY(provider_metadata_id) REFERENCES "ProviderMetadata" (id),
-	FOREIGN KEY(cna_source_id) REFERENCES "SourceInformation" (id)
+	FOREIGN KEY(cna_id) REFERENCES "CveCnaPublishedContainer" (id)
 );
-CREATE INDEX "ix_CnaPublishedContainer_id" ON "CnaPublishedContainer" (id);
+CREATE INDEX "ix_CvePublishedContainers_id" ON "CvePublishedContainers" (id);
 
-CREATE TABLE "CnaRejectedContainer" (
+CREATE TABLE "CveRejectedContainers" (
 	id INTEGER NOT NULL,
-	provider_metadata_id INTEGER NOT NULL,
+	cna_id INTEGER NOT NULL,
 	PRIMARY KEY (id),
-	FOREIGN KEY(provider_metadata_id) REFERENCES "ProviderMetadata" (id)
+	FOREIGN KEY(cna_id) REFERENCES "CveCnaRejectedContainer" (id)
 );
-CREATE INDEX "ix_CnaRejectedContainer_id" ON "CnaRejectedContainer" (id);
+CREATE INDEX "ix_CveRejectedContainers_id" ON "CveRejectedContainers" (id);
 
-CREATE TABLE "OtherMetric" (
+CREATE TABLE "CveCnaPublishedContainer_tags" (
+	"CveCnaPublishedContainer_id" INTEGER,
+	tags TEXT,
+	PRIMARY KEY ("CveCnaPublishedContainer_id", tags),
+	FOREIGN KEY("CveCnaPublishedContainer_id") REFERENCES "CveCnaPublishedContainer" (id)
+);
+CREATE INDEX "ix_CveCnaPublishedContainer_tags_CveCnaPublishedContainer_id" ON "CveCnaPublishedContainer_tags" ("CveCnaPublishedContainer_id");
+CREATE INDEX "ix_CveCnaPublishedContainer_tags_tags" ON "CveCnaPublishedContainer_tags" (tags);
+
+CREATE TABLE "CveCnaRejectedContainer_replacedBy" (
+	"CveCnaRejectedContainer_id" INTEGER,
+	"replacedBy" TEXT,
+	PRIMARY KEY ("CveCnaRejectedContainer_id", "replacedBy"),
+	FOREIGN KEY("CveCnaRejectedContainer_id") REFERENCES "CveCnaRejectedContainer" (id)
+);
+CREATE INDEX "ix_CveCnaRejectedContainer_replacedBy_CveCnaRejectedContainer_id" ON "CveCnaRejectedContainer_replacedBy" ("CveCnaRejectedContainer_id");
+CREATE INDEX "ix_CveCnaRejectedContainer_replacedBy_replacedBy" ON "CveCnaRejectedContainer_replacedBy" ("replacedBy");
+
+CREATE TABLE "CveRecord" (
 	id INTEGER NOT NULL,
-	other_metric_type TEXT NOT NULL,
-	other_metric_content_id INTEGER NOT NULL,
-	PRIMARY KEY (id),
-	FOREIGN KEY(other_metric_content_id) REFERENCES "Any" (id)
-);
-CREATE INDEX "ix_OtherMetric_id" ON "OtherMetric" (id);
-
-CREATE TABLE "Vulnerability" (
-	cve_id TEXT NOT NULL,
-	title TEXT,
-	description TEXT,
-	published_date DATETIME,
-	last_modified_date DATETIME,
-	status VARCHAR(10),
-	impact_id INTEGER,
-	PRIMARY KEY (cve_id),
-	FOREIGN KEY(impact_id) REFERENCES "Impact" (id)
-);
-CREATE INDEX "ix_Vulnerability_cve_id" ON "Vulnerability" (cve_id);
-
-CREATE TABLE "SourceInformation_source_defects" (
-	"SourceInformation_id" INTEGER,
-	source_defects TEXT,
-	PRIMARY KEY ("SourceInformation_id", source_defects),
-	FOREIGN KEY("SourceInformation_id") REFERENCES "SourceInformation" (id)
-);
-CREATE INDEX "ix_SourceInformation_source_defects_source_defects" ON "SourceInformation_source_defects" (source_defects);
-CREATE INDEX "ix_SourceInformation_source_defects_SourceInformation_id" ON "SourceInformation_source_defects" ("SourceInformation_id");
-
-CREATE TABLE "CVERecord" (
-	id INTEGER NOT NULL,
-	data_type VARCHAR(10),
-	data_version TEXT,
-	cve_metadata_id INTEGER NOT NULL,
+	"dataType" VARCHAR(10) NOT NULL,
+	"dataVersion" TEXT NOT NULL,
+	"cveMetadata_id" INTEGER NOT NULL,
 	containers_id INTEGER NOT NULL,
 	PRIMARY KEY (id),
-	FOREIGN KEY(cve_metadata_id) REFERENCES "CveMetadata" (id),
-	FOREIGN KEY(containers_id) REFERENCES "Containers" (id)
+	FOREIGN KEY("cveMetadata_id") REFERENCES "CveRecordMetadata" (id),
+	FOREIGN KEY(containers_id) REFERENCES "CveContainers" (id)
 );
-CREATE INDEX "ix_CVERecord_id" ON "CVERecord" (id);
+CREATE INDEX "ix_CveRecord_id" ON "CveRecord" (id);
 
-CREATE TABLE "AdpContainer" (
+CREATE TABLE "CvePublishedRecord" (
 	id INTEGER NOT NULL,
-	date_public TEXT,
+	"dataType" VARCHAR(10) NOT NULL,
+	"dataVersion" TEXT NOT NULL,
+	"cveMetadata_id" INTEGER NOT NULL,
+	containers_id INTEGER NOT NULL,
+	PRIMARY KEY (id),
+	FOREIGN KEY("cveMetadata_id") REFERENCES "CveMetadataPublished" (id),
+	FOREIGN KEY(containers_id) REFERENCES "CvePublishedContainers" (id)
+);
+CREATE INDEX "ix_CvePublishedRecord_id" ON "CvePublishedRecord" (id);
+
+CREATE TABLE "CveRejectedRecord" (
+	id INTEGER NOT NULL,
+	"dataType" VARCHAR(10) NOT NULL,
+	"dataVersion" TEXT NOT NULL,
+	"cveMetadata_id" INTEGER NOT NULL,
+	containers_id INTEGER NOT NULL,
+	PRIMARY KEY (id),
+	FOREIGN KEY("cveMetadata_id") REFERENCES "CveMetadataRejected" (id),
+	FOREIGN KEY(containers_id) REFERENCES "CveRejectedContainers" (id)
+);
+CREATE INDEX "ix_CveRejectedRecord_id" ON "CveRejectedRecord" (id);
+
+CREATE TABLE "CveAdpContainer" (
+	id INTEGER NOT NULL,
+	"datePublic" TEXT,
 	title TEXT,
-	"Containers_id" INTEGER,
-	provider_metadata_id INTEGER NOT NULL,
-	cna_source_id INTEGER,
+	"CvePublishedContainers_id" INTEGER,
+	"providerMetadata_id" INTEGER NOT NULL,
+	source_id INTEGER,
 	PRIMARY KEY (id),
-	FOREIGN KEY("Containers_id") REFERENCES "Containers" (id),
-	FOREIGN KEY(provider_metadata_id) REFERENCES "ProviderMetadata" (id),
-	FOREIGN KEY(cna_source_id) REFERENCES "SourceInformation" (id)
+	FOREIGN KEY("CvePublishedContainers_id") REFERENCES "CvePublishedContainers" (id),
+	FOREIGN KEY("providerMetadata_id") REFERENCES "CveProviderMetadata" (id),
+	FOREIGN KEY(source_id) REFERENCES "CveSource" (id)
 );
-CREATE INDEX "ix_AdpContainer_id" ON "AdpContainer" (id);
+CREATE INDEX "ix_CveAdpContainer_id" ON "CveAdpContainer" (id);
 
-CREATE TABLE "Product" (
+CREATE TABLE "CveProduct" (
 	id INTEGER NOT NULL,
 	vendor TEXT,
-	name TEXT,
-	version TEXT,
-	"Vulnerability_cve_id" TEXT,
-	PRIMARY KEY (id),
-	FOREIGN KEY("Vulnerability_cve_id") REFERENCES "Vulnerability" (cve_id)
-);
-CREATE INDEX "ix_Product_id" ON "Product" (id);
-
-CREATE TABLE "Reference" (
-	id INTEGER NOT NULL,
-	url TEXT,
-	name TEXT,
-	source TEXT,
-	"Vulnerability_cve_id" TEXT,
-	PRIMARY KEY (id),
-	FOREIGN KEY("Vulnerability_cve_id") REFERENCES "Vulnerability" (cve_id)
-);
-CREATE INDEX "ix_Reference_id" ON "Reference" (id);
-
-CREATE TABLE "Weakness" (
-	id INTEGER NOT NULL,
-	cwe_id TEXT,
-	name TEXT,
-	description TEXT,
-	"Vulnerability_cve_id" TEXT,
-	PRIMARY KEY (id),
-	FOREIGN KEY("Vulnerability_cve_id") REFERENCES "Vulnerability" (cve_id)
-);
-CREATE INDEX "ix_Weakness_id" ON "Weakness" (id);
-
-CREATE TABLE "CnaPublishedContainer_cna_tags" (
-	"CnaPublishedContainer_id" INTEGER,
-	cna_tags TEXT,
-	PRIMARY KEY ("CnaPublishedContainer_id", cna_tags),
-	FOREIGN KEY("CnaPublishedContainer_id") REFERENCES "CnaPublishedContainer" (id)
-);
-CREATE INDEX "ix_CnaPublishedContainer_cna_tags_cna_tags" ON "CnaPublishedContainer_cna_tags" (cna_tags);
-CREATE INDEX "ix_CnaPublishedContainer_cna_tags_CnaPublishedContainer_id" ON "CnaPublishedContainer_cna_tags" ("CnaPublishedContainer_id");
-
-CREATE TABLE "CnaRejectedContainer_replaced_by" (
-	"CnaRejectedContainer_id" INTEGER,
-	replaced_by TEXT,
-	PRIMARY KEY ("CnaRejectedContainer_id", replaced_by),
-	FOREIGN KEY("CnaRejectedContainer_id") REFERENCES "CnaRejectedContainer" (id)
-);
-CREATE INDEX "ix_CnaRejectedContainer_replaced_by_CnaRejectedContainer_id" ON "CnaRejectedContainer_replaced_by" ("CnaRejectedContainer_id");
-CREATE INDEX "ix_CnaRejectedContainer_replaced_by_replaced_by" ON "CnaRejectedContainer_replaced_by" (replaced_by);
-
-CREATE TABLE "AffectedProduct" (
-	id INTEGER NOT NULL,
-	vendor TEXT,
-	name TEXT,
-	collection_url TEXT,
-	package_name TEXT,
+	product TEXT,
+	"collectionURL" TEXT,
+	"packageName" TEXT,
+	"packageURL" TEXT,
 	repo TEXT,
-	default_status VARCHAR(10),
-	package_url TEXT,
-	"CnaPublishedContainer_id" INTEGER,
-	"AdpContainer_id" INTEGER,
+	"defaultStatus" VARCHAR(10),
+	"CveCnaPublishedContainer_id" INTEGER,
+	"CveAdpContainer_id" INTEGER,
 	PRIMARY KEY (id),
-	FOREIGN KEY("CnaPublishedContainer_id") REFERENCES "CnaPublishedContainer" (id),
-	FOREIGN KEY("AdpContainer_id") REFERENCES "AdpContainer" (id)
+	FOREIGN KEY("CveCnaPublishedContainer_id") REFERENCES "CveCnaPublishedContainer" (id),
+	FOREIGN KEY("CveAdpContainer_id") REFERENCES "CveAdpContainer" (id)
 );
-CREATE INDEX "ix_AffectedProduct_id" ON "AffectedProduct" (id);
+CREATE INDEX "ix_CveProduct_id" ON "CveProduct" (id);
 
-CREATE TABLE "ProblemType" (
+CREATE TABLE "CveCpeApplicabilityElement" (
 	id INTEGER NOT NULL,
-	"CnaPublishedContainer_id" INTEGER,
-	"AdpContainer_id" INTEGER,
+	operator VARCHAR(3),
+	negate BOOLEAN,
+	"CveCnaPublishedContainer_id" INTEGER,
+	"CveAdpContainer_id" INTEGER,
 	PRIMARY KEY (id),
-	FOREIGN KEY("CnaPublishedContainer_id") REFERENCES "CnaPublishedContainer" (id),
-	FOREIGN KEY("AdpContainer_id") REFERENCES "AdpContainer" (id)
+	FOREIGN KEY("CveCnaPublishedContainer_id") REFERENCES "CveCnaPublishedContainer" (id),
+	FOREIGN KEY("CveAdpContainer_id") REFERENCES "CveAdpContainer" (id)
 );
-CREATE INDEX "ix_ProblemType_id" ON "ProblemType" (id);
+CREATE INDEX "ix_CveCpeApplicabilityElement_id" ON "CveCpeApplicabilityElement" (id);
 
-CREATE TABLE "ImpactEntry" (
+CREATE TABLE "CveProblemType" (
 	id INTEGER NOT NULL,
-	capec_id TEXT,
-	"CnaPublishedContainer_id" INTEGER,
-	"AdpContainer_id" INTEGER,
+	"CveCnaPublishedContainer_id" INTEGER,
+	"CveAdpContainer_id" INTEGER,
 	PRIMARY KEY (id),
-	FOREIGN KEY("CnaPublishedContainer_id") REFERENCES "CnaPublishedContainer" (id),
-	FOREIGN KEY("AdpContainer_id") REFERENCES "AdpContainer" (id)
+	FOREIGN KEY("CveCnaPublishedContainer_id") REFERENCES "CveCnaPublishedContainer" (id),
+	FOREIGN KEY("CveAdpContainer_id") REFERENCES "CveAdpContainer" (id)
 );
-CREATE INDEX "ix_ImpactEntry_id" ON "ImpactEntry" (id);
+CREATE INDEX "ix_CveProblemType_id" ON "CveProblemType" (id);
 
-CREATE TABLE "MetricEntry" (
+CREATE TABLE "CveImpact" (
 	id INTEGER NOT NULL,
-	metric_format TEXT,
-	"CnaPublishedContainer_id" INTEGER,
-	"AdpContainer_id" INTEGER,
-	cvss_v4_0_id INTEGER,
-	cvss_v3_id INTEGER,
-	cvss_v2_0_id INTEGER,
-	other_metric_id INTEGER,
+	"capecId" TEXT,
+	"CveCnaPublishedContainer_id" INTEGER,
+	"CveAdpContainer_id" INTEGER,
 	PRIMARY KEY (id),
-	FOREIGN KEY("CnaPublishedContainer_id") REFERENCES "CnaPublishedContainer" (id),
-	FOREIGN KEY("AdpContainer_id") REFERENCES "AdpContainer" (id),
-	FOREIGN KEY(cvss_v4_0_id) REFERENCES "CvssV4_0" (id),
-	FOREIGN KEY(cvss_v3_id) REFERENCES "CvssV3" (id),
-	FOREIGN KEY(cvss_v2_0_id) REFERENCES "CvssV2_0" (id),
-	FOREIGN KEY(other_metric_id) REFERENCES "OtherMetric" (id)
+	FOREIGN KEY("CveCnaPublishedContainer_id") REFERENCES "CveCnaPublishedContainer" (id),
+	FOREIGN KEY("CveAdpContainer_id") REFERENCES "CveAdpContainer" (id)
 );
-CREATE INDEX "ix_MetricEntry_id" ON "MetricEntry" (id);
+CREATE INDEX "ix_CveImpact_id" ON "CveImpact" (id);
 
-CREATE TABLE "TimelineEntry" (
+CREATE TABLE "CveMetric" (
 	id INTEGER NOT NULL,
-	event_time TEXT NOT NULL,
-	lang TEXT NOT NULL,
-	event_value TEXT NOT NULL,
-	"CnaPublishedContainer_id" INTEGER,
-	"AdpContainer_id" INTEGER,
+	format TEXT,
+	"CveCnaPublishedContainer_id" INTEGER,
+	"CveAdpContainer_id" INTEGER,
+	"cvssV4_0_id" INTEGER,
+	"cvssV3_1_id" INTEGER,
+	"cvssV3_0_id" INTEGER,
+	"cvssV2_0_id" INTEGER,
+	other_id INTEGER,
 	PRIMARY KEY (id),
-	FOREIGN KEY("CnaPublishedContainer_id") REFERENCES "CnaPublishedContainer" (id),
-	FOREIGN KEY("AdpContainer_id") REFERENCES "AdpContainer" (id)
+	FOREIGN KEY("CveCnaPublishedContainer_id") REFERENCES "CveCnaPublishedContainer" (id),
+	FOREIGN KEY("CveAdpContainer_id") REFERENCES "CveAdpContainer" (id),
+	FOREIGN KEY("cvssV4_0_id") REFERENCES "CvssV40" (id),
+	FOREIGN KEY("cvssV3_1_id") REFERENCES "CvssV31" (id),
+	FOREIGN KEY("cvssV3_0_id") REFERENCES "CvssV30" (id),
+	FOREIGN KEY("cvssV2_0_id") REFERENCES "CvssV20" (id),
+	FOREIGN KEY(other_id) REFERENCES "CveOtherMetric" (id)
 );
-CREATE INDEX "ix_TimelineEntry_id" ON "TimelineEntry" (id);
+CREATE INDEX "ix_CveMetric_id" ON "CveMetric" (id);
 
-CREATE TABLE "CreditEntry" (
-	id INTEGER NOT NULL,
-	lang TEXT NOT NULL,
-	credit_value TEXT NOT NULL,
-	credit_user TEXT,
-	credit_type VARCHAR(21),
-	"CnaPublishedContainer_id" INTEGER,
-	"AdpContainer_id" INTEGER,
-	PRIMARY KEY (id),
-	FOREIGN KEY("CnaPublishedContainer_id") REFERENCES "CnaPublishedContainer" (id),
-	FOREIGN KEY("AdpContainer_id") REFERENCES "AdpContainer" (id)
-);
-CREATE INDEX "ix_CreditEntry_id" ON "CreditEntry" (id);
-
-CREATE TABLE "TaxonomyMapping" (
-	id INTEGER NOT NULL,
-	taxonomy_name TEXT NOT NULL,
-	taxonomy_version TEXT,
-	"CnaPublishedContainer_id" INTEGER,
-	"AdpContainer_id" INTEGER,
-	PRIMARY KEY (id),
-	FOREIGN KEY("CnaPublishedContainer_id") REFERENCES "CnaPublishedContainer" (id),
-	FOREIGN KEY("AdpContainer_id") REFERENCES "AdpContainer" (id)
-);
-CREATE INDEX "ix_TaxonomyMapping_id" ON "TaxonomyMapping" (id);
-
-CREATE TABLE "CpeApplicabilityElement" (
-	id INTEGER NOT NULL,
-	cpe_operator VARCHAR(3),
-	cpe_negate BOOLEAN,
-	"CnaPublishedContainer_id" INTEGER,
-	"AdpContainer_id" INTEGER,
-	PRIMARY KEY (id),
-	FOREIGN KEY("CnaPublishedContainer_id") REFERENCES "CnaPublishedContainer" (id),
-	FOREIGN KEY("AdpContainer_id") REFERENCES "AdpContainer" (id)
-);
-CREATE INDEX "ix_CpeApplicabilityElement_id" ON "CpeApplicabilityElement" (id);
-
-CREATE TABLE "AdpContainer_adp_tags" (
-	"AdpContainer_id" INTEGER,
-	adp_tags TEXT,
-	PRIMARY KEY ("AdpContainer_id", adp_tags),
-	FOREIGN KEY("AdpContainer_id") REFERENCES "AdpContainer" (id)
-);
-CREATE INDEX "ix_AdpContainer_adp_tags_adp_tags" ON "AdpContainer_adp_tags" (adp_tags);
-CREATE INDEX "ix_AdpContainer_adp_tags_AdpContainer_id" ON "AdpContainer_adp_tags" ("AdpContainer_id");
-
-CREATE TABLE "Product_platforms" (
-	"Product_id" INTEGER,
-	platforms TEXT,
-	PRIMARY KEY ("Product_id", platforms),
-	FOREIGN KEY("Product_id") REFERENCES "Product" (id)
-);
-CREATE INDEX "ix_Product_platforms_Product_id" ON "Product_platforms" ("Product_id");
-CREATE INDEX "ix_Product_platforms_platforms" ON "Product_platforms" (platforms);
-
-CREATE TABLE "ProgramRoutine" (
-	id INTEGER NOT NULL,
-	routine_name TEXT NOT NULL,
-	"AffectedProduct_id" INTEGER,
-	PRIMARY KEY (id),
-	FOREIGN KEY("AffectedProduct_id") REFERENCES "AffectedProduct" (id)
-);
-CREATE INDEX "ix_ProgramRoutine_id" ON "ProgramRoutine" (id);
-
-CREATE TABLE "VersionEntry" (
-	id INTEGER NOT NULL,
-	version_value TEXT NOT NULL,
-	version_status VARCHAR(10) NOT NULL,
-	version_type TEXT,
-	less_than TEXT,
-	less_than_or_equal TEXT,
-	"AffectedProduct_id" INTEGER,
-	PRIMARY KEY (id),
-	FOREIGN KEY("AffectedProduct_id") REFERENCES "AffectedProduct" (id)
-);
-CREATE INDEX "ix_VersionEntry_id" ON "VersionEntry" (id);
-
-CREATE TABLE "MultiLangDescription" (
+CREATE TABLE "CveTimelineEvent" (
 	id INTEGER NOT NULL,
 	lang TEXT NOT NULL,
-	description_value TEXT NOT NULL,
-	"CnaPublishedContainer_id" INTEGER,
-	"CnaRejectedContainer_id" INTEGER,
-	"AdpContainer_id" INTEGER,
-	"ImpactEntry_id" INTEGER,
+	value TEXT NOT NULL,
+	time TEXT NOT NULL,
+	"CveCnaPublishedContainer_id" INTEGER,
+	"CveAdpContainer_id" INTEGER,
 	PRIMARY KEY (id),
-	FOREIGN KEY("CnaPublishedContainer_id") REFERENCES "CnaPublishedContainer" (id),
-	FOREIGN KEY("CnaRejectedContainer_id") REFERENCES "CnaRejectedContainer" (id),
-	FOREIGN KEY("AdpContainer_id") REFERENCES "AdpContainer" (id),
-	FOREIGN KEY("ImpactEntry_id") REFERENCES "ImpactEntry" (id)
+	FOREIGN KEY("CveCnaPublishedContainer_id") REFERENCES "CveCnaPublishedContainer" (id),
+	FOREIGN KEY("CveAdpContainer_id") REFERENCES "CveAdpContainer" (id)
 );
-CREATE INDEX "ix_MultiLangDescription_id" ON "MultiLangDescription" (id);
+CREATE INDEX "ix_CveTimelineEvent_id" ON "CveTimelineEvent" (id);
 
-CREATE TABLE "ProblemTypeDescription" (
+CREATE TABLE "CveCredit" (
 	id INTEGER NOT NULL,
 	lang TEXT NOT NULL,
-	problem_description TEXT NOT NULL,
-	cwe_id TEXT,
-	problem_source_type TEXT,
-	"ProblemType_id" INTEGER,
+	value TEXT NOT NULL,
+	type VARCHAR(21),
+	user TEXT,
+	"CveCnaPublishedContainer_id" INTEGER,
+	"CveAdpContainer_id" INTEGER,
 	PRIMARY KEY (id),
-	FOREIGN KEY("ProblemType_id") REFERENCES "ProblemType" (id)
+	FOREIGN KEY("CveCnaPublishedContainer_id") REFERENCES "CveCnaPublishedContainer" (id),
+	FOREIGN KEY("CveAdpContainer_id") REFERENCES "CveAdpContainer" (id)
 );
-CREATE INDEX "ix_ProblemTypeDescription_id" ON "ProblemTypeDescription" (id);
+CREATE INDEX "ix_CveCredit_id" ON "CveCredit" (id);
 
-CREATE TABLE "MetricScenario" (
+CREATE TABLE "CveTaxonomyMapping" (
+	id INTEGER NOT NULL,
+	"taxonomyName" TEXT NOT NULL,
+	"taxonomyVersion" TEXT,
+	"CveCnaPublishedContainer_id" INTEGER,
+	"CveAdpContainer_id" INTEGER,
+	PRIMARY KEY (id),
+	FOREIGN KEY("CveCnaPublishedContainer_id") REFERENCES "CveCnaPublishedContainer" (id),
+	FOREIGN KEY("CveAdpContainer_id") REFERENCES "CveAdpContainer" (id)
+);
+CREATE INDEX "ix_CveTaxonomyMapping_id" ON "CveTaxonomyMapping" (id);
+
+CREATE TABLE "CveAdpContainer_tags" (
+	"CveAdpContainer_id" INTEGER,
+	tags TEXT,
+	PRIMARY KEY ("CveAdpContainer_id", tags),
+	FOREIGN KEY("CveAdpContainer_id") REFERENCES "CveAdpContainer" (id)
+);
+CREATE INDEX "ix_CveAdpContainer_tags_tags" ON "CveAdpContainer_tags" (tags);
+CREATE INDEX "ix_CveAdpContainer_tags_CveAdpContainer_id" ON "CveAdpContainer_tags" ("CveAdpContainer_id");
+
+CREATE TABLE "CveProgramRoutine" (
+	id INTEGER NOT NULL,
+	name TEXT NOT NULL,
+	"CveProduct_id" INTEGER,
+	PRIMARY KEY (id),
+	FOREIGN KEY("CveProduct_id") REFERENCES "CveProduct" (id)
+);
+CREATE INDEX "ix_CveProgramRoutine_id" ON "CveProgramRoutine" (id);
+
+CREATE TABLE "CveProductVersion" (
+	id INTEGER NOT NULL,
+	version TEXT NOT NULL,
+	status VARCHAR(10) NOT NULL,
+	"versionType" TEXT,
+	"lessThan" TEXT,
+	"lessThanOrEqual" TEXT,
+	"CveProduct_id" INTEGER,
+	PRIMARY KEY (id),
+	FOREIGN KEY("CveProduct_id") REFERENCES "CveProduct" (id)
+);
+CREATE INDEX "ix_CveProductVersion_id" ON "CveProductVersion" (id);
+
+CREATE TABLE "CveCpeNode" (
+	id INTEGER NOT NULL,
+	operator VARCHAR(3) NOT NULL,
+	negate BOOLEAN,
+	"CveCpeApplicabilityElement_id" INTEGER,
+	PRIMARY KEY (id),
+	FOREIGN KEY("CveCpeApplicabilityElement_id") REFERENCES "CveCpeApplicabilityElement" (id)
+);
+CREATE INDEX "ix_CveCpeNode_id" ON "CveCpeNode" (id);
+
+CREATE TABLE "CveDescription" (
 	id INTEGER NOT NULL,
 	lang TEXT NOT NULL,
-	scenario_value TEXT NOT NULL,
-	"MetricEntry_id" INTEGER,
+	value TEXT NOT NULL,
+	"CveCnaPublishedContainer_id" INTEGER,
+	"CveCnaRejectedContainer_id" INTEGER,
+	"CveAdpContainer_id" INTEGER,
+	"CveImpact_id" INTEGER,
 	PRIMARY KEY (id),
-	FOREIGN KEY("MetricEntry_id") REFERENCES "MetricEntry" (id)
+	FOREIGN KEY("CveCnaPublishedContainer_id") REFERENCES "CveCnaPublishedContainer" (id),
+	FOREIGN KEY("CveCnaRejectedContainer_id") REFERENCES "CveCnaRejectedContainer" (id),
+	FOREIGN KEY("CveAdpContainer_id") REFERENCES "CveAdpContainer" (id),
+	FOREIGN KEY("CveImpact_id") REFERENCES "CveImpact" (id)
 );
-CREATE INDEX "ix_MetricScenario_id" ON "MetricScenario" (id);
+CREATE INDEX "ix_CveDescription_id" ON "CveDescription" (id);
 
-CREATE TABLE "TaxonomyRelation" (
+CREATE TABLE "CveProblemTypeDescription" (
 	id INTEGER NOT NULL,
-	taxonomy_id TEXT NOT NULL,
-	relationship_name TEXT NOT NULL,
-	relationship_value TEXT NOT NULL,
-	"TaxonomyMapping_id" INTEGER,
+	lang TEXT NOT NULL,
+	description TEXT NOT NULL,
+	type TEXT,
+	"cweId" TEXT,
+	"CveProblemType_id" INTEGER,
 	PRIMARY KEY (id),
-	FOREIGN KEY("TaxonomyMapping_id") REFERENCES "TaxonomyMapping" (id)
+	FOREIGN KEY("CveProblemType_id") REFERENCES "CveProblemType" (id)
 );
-CREATE INDEX "ix_TaxonomyRelation_id" ON "TaxonomyRelation" (id);
+CREATE INDEX "ix_CveProblemTypeDescription_id" ON "CveProblemTypeDescription" (id);
 
-CREATE TABLE "CpeNode" (
+CREATE TABLE "CveMetricScenario" (
 	id INTEGER NOT NULL,
-	cpe_operator VARCHAR(3) NOT NULL,
-	cpe_negate BOOLEAN,
-	"CpeApplicabilityElement_id" INTEGER,
+	lang TEXT NOT NULL,
+	value TEXT NOT NULL,
+	"CveMetric_id" INTEGER,
 	PRIMARY KEY (id),
-	FOREIGN KEY("CpeApplicabilityElement_id") REFERENCES "CpeApplicabilityElement" (id)
+	FOREIGN KEY("CveMetric_id") REFERENCES "CveMetric" (id)
 );
-CREATE INDEX "ix_CpeNode_id" ON "CpeNode" (id);
+CREATE INDEX "ix_CveMetricScenario_id" ON "CveMetricScenario" (id);
 
-CREATE TABLE "AffectedProduct_platforms" (
-	"AffectedProduct_id" INTEGER,
-	platforms TEXT,
-	PRIMARY KEY ("AffectedProduct_id", platforms),
-	FOREIGN KEY("AffectedProduct_id") REFERENCES "AffectedProduct" (id)
+CREATE TABLE "CveTaxonomyRelation" (
+	id INTEGER NOT NULL,
+	"taxonomyId" TEXT NOT NULL,
+	"relationshipName" TEXT NOT NULL,
+	"relationshipValue" TEXT NOT NULL,
+	"CveTaxonomyMapping_id" INTEGER,
+	PRIMARY KEY (id),
+	FOREIGN KEY("CveTaxonomyMapping_id") REFERENCES "CveTaxonomyMapping" (id)
 );
-CREATE INDEX "ix_AffectedProduct_platforms_AffectedProduct_id" ON "AffectedProduct_platforms" ("AffectedProduct_id");
-CREATE INDEX "ix_AffectedProduct_platforms_platforms" ON "AffectedProduct_platforms" (platforms);
+CREATE INDEX "ix_CveTaxonomyRelation_id" ON "CveTaxonomyRelation" (id);
 
-CREATE TABLE "AffectedProduct_cpes" (
-	"AffectedProduct_id" INTEGER,
+CREATE TABLE "CveProduct_cpes" (
+	"CveProduct_id" INTEGER,
 	cpes TEXT,
-	PRIMARY KEY ("AffectedProduct_id", cpes),
-	FOREIGN KEY("AffectedProduct_id") REFERENCES "AffectedProduct" (id)
+	PRIMARY KEY ("CveProduct_id", cpes),
+	FOREIGN KEY("CveProduct_id") REFERENCES "CveProduct" (id)
 );
-CREATE INDEX "ix_AffectedProduct_cpes_AffectedProduct_id" ON "AffectedProduct_cpes" ("AffectedProduct_id");
-CREATE INDEX "ix_AffectedProduct_cpes_cpes" ON "AffectedProduct_cpes" (cpes);
+CREATE INDEX "ix_CveProduct_cpes_CveProduct_id" ON "CveProduct_cpes" ("CveProduct_id");
+CREATE INDEX "ix_CveProduct_cpes_cpes" ON "CveProduct_cpes" (cpes);
 
-CREATE TABLE "AffectedProduct_modules" (
-	"AffectedProduct_id" INTEGER,
+CREATE TABLE "CveProduct_modules" (
+	"CveProduct_id" INTEGER,
 	modules TEXT,
-	PRIMARY KEY ("AffectedProduct_id", modules),
-	FOREIGN KEY("AffectedProduct_id") REFERENCES "AffectedProduct" (id)
+	PRIMARY KEY ("CveProduct_id", modules),
+	FOREIGN KEY("CveProduct_id") REFERENCES "CveProduct" (id)
 );
-CREATE INDEX "ix_AffectedProduct_modules_AffectedProduct_id" ON "AffectedProduct_modules" ("AffectedProduct_id");
-CREATE INDEX "ix_AffectedProduct_modules_modules" ON "AffectedProduct_modules" (modules);
+CREATE INDEX "ix_CveProduct_modules_modules" ON "CveProduct_modules" (modules);
+CREATE INDEX "ix_CveProduct_modules_CveProduct_id" ON "CveProduct_modules" ("CveProduct_id");
 
-CREATE TABLE "AffectedProduct_program_files" (
-	"AffectedProduct_id" INTEGER,
-	program_files TEXT,
-	PRIMARY KEY ("AffectedProduct_id", program_files),
-	FOREIGN KEY("AffectedProduct_id") REFERENCES "AffectedProduct" (id)
+CREATE TABLE "CveProduct_programFiles" (
+	"CveProduct_id" INTEGER,
+	"programFiles" TEXT,
+	PRIMARY KEY ("CveProduct_id", "programFiles"),
+	FOREIGN KEY("CveProduct_id") REFERENCES "CveProduct" (id)
 );
-CREATE INDEX "ix_AffectedProduct_program_files_AffectedProduct_id" ON "AffectedProduct_program_files" ("AffectedProduct_id");
-CREATE INDEX "ix_AffectedProduct_program_files_program_files" ON "AffectedProduct_program_files" (program_files);
+CREATE INDEX "ix_CveProduct_programFiles_CveProduct_id" ON "CveProduct_programFiles" ("CveProduct_id");
+CREATE INDEX "ix_CveProduct_programFiles_programFiles" ON "CveProduct_programFiles" ("programFiles");
 
-CREATE TABLE "VersionChange" (
+CREATE TABLE "CveProduct_platforms" (
+	"CveProduct_id" INTEGER,
+	platforms TEXT,
+	PRIMARY KEY ("CveProduct_id", platforms),
+	FOREIGN KEY("CveProduct_id") REFERENCES "CveProduct" (id)
+);
+CREATE INDEX "ix_CveProduct_platforms_platforms" ON "CveProduct_platforms" (platforms);
+CREATE INDEX "ix_CveProduct_platforms_CveProduct_id" ON "CveProduct_platforms" ("CveProduct_id");
+
+CREATE TABLE "CveVersionChange" (
 	id INTEGER NOT NULL,
-	change_at TEXT NOT NULL,
-	change_status VARCHAR(10) NOT NULL,
-	"VersionEntry_id" INTEGER,
+	at TEXT NOT NULL,
+	status VARCHAR(10) NOT NULL,
+	"CveProductVersion_id" INTEGER,
 	PRIMARY KEY (id),
-	FOREIGN KEY("VersionEntry_id") REFERENCES "VersionEntry" (id)
+	FOREIGN KEY("CveProductVersion_id") REFERENCES "CveProductVersion" (id)
 );
-CREATE INDEX "ix_VersionChange_id" ON "VersionChange" (id);
+CREATE INDEX "ix_CveVersionChange_id" ON "CveVersionChange" (id);
 
-CREATE TABLE "SupportingMedia" (
+CREATE TABLE "CveCpeMatch" (
 	id INTEGER NOT NULL,
-	media_type TEXT NOT NULL,
-	base64_encoded BOOLEAN,
-	media_value TEXT NOT NULL,
-	"MultiLangDescription_id" INTEGER,
+	vulnerable BOOLEAN NOT NULL,
+	criteria TEXT NOT NULL,
+	"matchCriteriaId" TEXT,
+	"versionStartExcluding" TEXT,
+	"versionStartIncluding" TEXT,
+	"versionEndExcluding" TEXT,
+	"versionEndIncluding" TEXT,
+	"CveCpeNode_id" INTEGER,
 	PRIMARY KEY (id),
-	FOREIGN KEY("MultiLangDescription_id") REFERENCES "MultiLangDescription" (id)
+	FOREIGN KEY("CveCpeNode_id") REFERENCES "CveCpeNode" (id)
 );
-CREATE INDEX "ix_SupportingMedia_id" ON "SupportingMedia" (id);
+CREATE INDEX "ix_CveCpeMatch_id" ON "CveCpeMatch" (id);
+
+CREATE TABLE "CveSupportingMedia" (
+	id INTEGER NOT NULL,
+	type TEXT NOT NULL,
+	value TEXT NOT NULL,
+	base64 BOOLEAN,
+	"CveDescription_id" INTEGER,
+	PRIMARY KEY (id),
+	FOREIGN KEY("CveDescription_id") REFERENCES "CveDescription" (id)
+);
+CREATE INDEX "ix_CveSupportingMedia_id" ON "CveSupportingMedia" (id);
 
 CREATE TABLE "CveReference" (
 	id INTEGER NOT NULL,
 	url TEXT NOT NULL,
 	name TEXT,
-	source TEXT,
-	"CnaPublishedContainer_id" INTEGER,
-	"AdpContainer_id" INTEGER,
-	"ProblemTypeDescription_id" INTEGER,
+	"CveCnaPublishedContainer_id" INTEGER,
+	"CveAdpContainer_id" INTEGER,
+	"CveProblemTypeDescription_id" INTEGER,
 	PRIMARY KEY (id),
-	FOREIGN KEY("CnaPublishedContainer_id") REFERENCES "CnaPublishedContainer" (id),
-	FOREIGN KEY("AdpContainer_id") REFERENCES "AdpContainer" (id),
-	FOREIGN KEY("ProblemTypeDescription_id") REFERENCES "ProblemTypeDescription" (id)
+	FOREIGN KEY("CveCnaPublishedContainer_id") REFERENCES "CveCnaPublishedContainer" (id),
+	FOREIGN KEY("CveAdpContainer_id") REFERENCES "CveAdpContainer" (id),
+	FOREIGN KEY("CveProblemTypeDescription_id") REFERENCES "CveProblemTypeDescription" (id)
 );
 CREATE INDEX "ix_CveReference_id" ON "CveReference" (id);
 
-CREATE TABLE "CpeMatch" (
-	id INTEGER NOT NULL,
-	cpe_vulnerable BOOLEAN NOT NULL,
-	cpe_criteria TEXT NOT NULL,
-	match_criteria_id TEXT,
-	version_start_excluding TEXT,
-	version_start_including TEXT,
-	version_end_excluding TEXT,
-	version_end_including TEXT,
-	"CpeNode_id" INTEGER,
-	PRIMARY KEY (id),
-	FOREIGN KEY("CpeNode_id") REFERENCES "CpeNode" (id)
-);
-CREATE INDEX "ix_CpeMatch_id" ON "CpeMatch" (id);
-
-CREATE TABLE "CveReference_reference_tags" (
+CREATE TABLE "CveReference_tags" (
 	"CveReference_id" INTEGER,
-	reference_tags VARCHAR(21),
-	PRIMARY KEY ("CveReference_id", reference_tags),
+	tags TEXT,
+	PRIMARY KEY ("CveReference_id", tags),
 	FOREIGN KEY("CveReference_id") REFERENCES "CveReference" (id)
 );
-CREATE INDEX "ix_CveReference_reference_tags_CveReference_id" ON "CveReference_reference_tags" ("CveReference_id");
-CREATE INDEX "ix_CveReference_reference_tags_reference_tags" ON "CveReference_reference_tags" (reference_tags);
+CREATE INDEX "ix_CveReference_tags_CveReference_id" ON "CveReference_tags" ("CveReference_id");
+CREATE INDEX "ix_CveReference_tags_tags" ON "CveReference_tags" (tags);
