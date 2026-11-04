@@ -6,6 +6,8 @@ The `v0.0.0` tag is a baseline, not a release: it marks where versioning starts 
 
 ## [Unreleased]
 
+## [0.1.0] - 2026-11-04
+
 ### Added
 
 - **A LinkML rendering of the CVE Record Format 5.2.0, with the CVSS 2.0, 3.0, 3.1 and 4.0 score objects in a module of their own, `cve_cvss`.** Keys and values are the upstream's own, so a real record validates unchanged, and every description is this project's.
