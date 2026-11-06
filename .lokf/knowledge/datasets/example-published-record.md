@@ -45,13 +45,13 @@ sources:
     resource: upstream/schema/docs/full-record-basic-example.json
 generated:
   by: process:ktl-librarian
-  at: "2026-11-03T22:18:39Z"
+  at: "2026-11-06T21:17:36Z"
 status: draft
 ---
 
 # The upstream's basic example, as a concept
 
-This concept shows how a host writes a record in its bundle. Its type is `CvePublishedRecord`, and `lokf validate` checks it against `.lokf/cve.yaml`.[^readme.md]
+This concept shows how a host writes a record in its bundle. Its type is `CvePublishedRecord`, and `lokf validate` checks it against `.lokf/schema/cve.yaml`.[^readme.md]
 
 It holds the upstream's example unchanged, apart from the keys the copy renames, such as `references`, which this concept writes as `cve_references`.[^full-record-basic-example.json]
 
