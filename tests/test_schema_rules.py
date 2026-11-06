@@ -14,8 +14,8 @@ ROOT = Path(__file__).parent.parent
 # the release's .sha256 and its build-provenance attestation, and pinned here
 # by that checksum.
 SOURCE_DIR = ROOT / "src" / "cve" / "schema"
-COPY = ROOT / ".lokf" / "cve.yaml"
-LOKF = ROOT / ".lokf" / "lokf.yaml"
+COPY = ROOT / ".lokf" / "schema" / "cve.yaml"
+LOKF = ROOT / ".lokf" / "schema" / "lokf.yaml"
 NEIGHBOURS = {
     # lmodel/slsa v0.10.0, schema-v0.10.0-slsa.yaml
     "slsa.yaml": "9eeb68decc918565886794fe4eb6e32e1fee0620688cc699961c227242a2f4c2",
