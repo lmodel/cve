@@ -37,7 +37,7 @@ npx skills add noelmcloughlin/knowledge-trust-ladder --skill ktl-curator --yes  
 
 ## Before opening a pull request
 
-- **Edit the schema, then regenerate.** Edit `src/cve/schema/`, run `just gen-project`, `just gen-doc` and `just lokf-adapt`, and commit the output. `project/`, `src/cve/datamodel/`, `docs/schema/` and `.lokf/cve.yaml` are generated.
+- **Edit the schema, then regenerate.** Edit `src/cve/schema/`, run `just gen-project`, `just gen-doc` and `just lokf-adapt`, and commit the output. `project/`, `src/cve/datamodel/`, `docs/schema/` and `.lokf/schema/cve.yaml` are generated.
 - **Keep the upstream's keys and values.** A real record must validate unchanged, so a slot or permissible value is spelled as the upstream spells it. `tests/test_coverage.py` walks the files in `upstream/` and fails on anything missing, added or of another cardinality; a departure is listed there with its reason.
 - **State only what the upstream states.** No bound or rule of your own. What LinkML 1.12.1's generators lose is checked in `tests/cve_rules.py`.
 - **A mapping is read at its source.** `tests/test_mappings.py` holds each one to a pinned term list or a neighbour copy. A term with no sure match stays unmapped.

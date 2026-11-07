@@ -6,8 +6,8 @@
 
 # ============ Knowledge bundle: the adapted domain schema ============
 
-# `.lokf/cve.yaml` is the copy `lokf adapt` writes from the schema so that it can
-# sit beside `.lokf/lokf.yaml` (`lokf adapt --help` lists the moves). The root is
+# `.lokf/schema/cve.yaml` is the copy `lokf adapt` writes from the schema so that it can
+# sit beside `.lokf/schema/lokf.yaml` (`lokf adapt --help` lists the moves). The root is
 # CveRecord, the abstract base of the two kinds of record, since a record is what
 # a host's concept most naturally is. A concept names CvePublishedRecord or
 # CveRejectedRecord as its `type`. The containers, products and CVSS scores stay
@@ -20,15 +20,15 @@
 lokf_cmd := env_var_or_default("LOKF_CMD", "uv run --project .lokf lokf")
 lokf_adapt_roots := "--root CveRecord --prefix cve"
 
-# Rewrite .lokf/cve.yaml from the schema (run after every schema change)
+# Rewrite .lokf/schema/cve.yaml from the schema (run after every schema change)
 [group('knowledge bundle')]
 lokf-adapt:
-  {{lokf_cmd}} adapt {{source_schema_path}} {{lokf_adapt_roots}} --lokf .lokf/lokf.yaml -o .lokf/cve.yaml
+  {{lokf_cmd}} adapt {{source_schema_path}} {{lokf_adapt_roots}} --lokf .lokf/schema/lokf.yaml -o .lokf/schema/cve.yaml
 
-# Fail when .lokf/cve.yaml is stale against the schema or .lokf/lokf.yaml
+# Fail when .lokf/schema/cve.yaml is stale against the schema or .lokf/schema/lokf.yaml
 [group('knowledge bundle')]
 lokf-adapt-check:
-  {{lokf_cmd}} adapt {{source_schema_path}} {{lokf_adapt_roots}} --lokf .lokf/lokf.yaml -o .lokf/cve.yaml --check
+  {{lokf_cmd}} adapt {{source_schema_path}} {{lokf_adapt_roots}} --lokf .lokf/schema/lokf.yaml -o .lokf/schema/cve.yaml --check
 
 # ============ Real CVE records ============
 
