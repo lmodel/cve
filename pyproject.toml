@@ -76,7 +76,7 @@ skip = [
 # Reminder: words have to be lowercased for the ignore-words-list. CNA is the
 # CVE Numbering Authority, ND is CVSS 2.0's "not defined" in a vector, and one
 # counter-example carries a misspelled key on purpose.
-ignore-words-list = "linke,cna,nd,titel"
+ignore-words-list = "linke,cna,nd,titel,intoto"
 quiet-level = 3
 
 # Ref.: https://github.com/crate-ci/typos (spell checker)
