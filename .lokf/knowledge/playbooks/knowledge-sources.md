@@ -105,7 +105,7 @@ sources:
   - resource: AI_COVENANT.md
 generated:
   by: process:ktl-librarian
-  at: "2026-11-06T21:17:36Z"
+  at: "2026-11-15T03:01:41Z"
 status: draft
 ---
 
@@ -121,5 +121,5 @@ The bundle derives its concepts from the paths under `sources`, each re-read whe
 | `scripts/` | the watch, the fetch and the extractor, as named in those concepts | their tests |
 | `.github/workflows/` | one service concept per workflow, apart from the sidecar's own templates' wording | read the header comment |
 | `README.md`, `docs/`, `NOTICE`, `SECURITY.md`, `CONTRIBUTING.md`, `AI_COVENANT.md`, `CHANGELOG.md` | the policies, the playbooks and the explanations | read the section each concept cites |
-| `website/` | the documentation site | `npm run build` in `website/` |
+| `website/` | the documentation site | `scripts/build.sh` in `website/` |
 | `https://github.com/CVEProject/cve-schema`, `https://github.com/CVEProject/cvelistV5`, `https://www.cve.org/Legal/TermsOfUse` | the references | `python3 scripts/check_upstream_release.py` |

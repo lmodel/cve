@@ -10,15 +10,17 @@ references:
 sources:
   - id: knowledge-website.yaml
     resource: .github/workflows/knowledge-website.yaml
-    title: the header comment
+    title: the header comment and the build job's steps
 generated:
   by: process:ktl-librarian
-  at: "2026-11-03T22:18:39Z"
+  at: "2026-11-15T03:01:41Z"
 status: draft
 ---
 
 # Knowledge website (knowledge-website.yaml)
 
-The `build` job runs third-party packages under a read-only token. The `deploy` job holds the Pages scopes, runs for the default branch only, and waits for `KNOWLEDGE_WEBSITE_ENABLED`.[^knowledge-website.yaml]
+The `build` job runs the third-party tools, Hugo, Pagefind and the lokf toolkit, and the repository's own site code, under a read-only token. The `deploy` job holds the Pages scopes, runs for the default branch only, and waits for `KNOWLEDGE_WEBSITE_ENABLED`.[^knowledge-website.yaml]
 
-[^knowledge-website.yaml]: .github/workflows/knowledge-website.yaml, the header comment
+The `build` job runs `website/scripts/build.sh`, which builds the site and checks its links, and uploads `website/dist` as the Pages artifact.[^knowledge-website.yaml]
+
+[^knowledge-website.yaml]: .github/workflows/knowledge-website.yaml, the header comment and the build job's steps
