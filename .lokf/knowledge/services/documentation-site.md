@@ -3,7 +3,7 @@ type: Service
 id: https://w3id.org/lmodel/cve/knowledge/services/documentation-site
 genre: reference
 title: Documentation site
-description: The knowledge website in `website/`, an Astro Starlight site that the Knowledge website workflow publishes to GitHub Pages at `https://lmodel.github.io/cve`, built from the README, `docs/`, the schema's pages and the bundle. It replaces the mkdocs site.
+description: The knowledge website in `website/`, a Hugo site that the Knowledge website workflow publishes to GitHub Pages at `https://lmodel.github.io/cve`, built from the README, `docs/`, the schema's pages and the bundle. It replaces the mkdocs site.
 resource: website
 dependsOn:
   - https://w3id.org/lmodel/cve/knowledge/datasets/generated-artefacts
@@ -13,19 +13,19 @@ sources:
   - id: website-readme
     resource: website/README.md
   - id: site-config
-    resource: website/site.config.mjs
-    title: REPO, SITE, BASE and REDIRECTS
+    resource: website/site.toml
+    title: the site's address, title and redirects
 generated:
   by: process:ktl-librarian
-  at: "2026-11-03T22:18:39Z"
+  at: "2026-11-15T03:01:41Z"
 status: draft
 ---
 
 # Documentation site
 
-`website/` holds an Astro Starlight site with a page per concept, a health page, a graph, the schema's pages and the docs.[^website-readme]
+`website/` holds a Hugo site with a page per concept, a health page, a graph, the schema's pages and the docs.[^website-readme]
 
-`REDIRECTS` keeps the retired mkdocs site's addresses: each old element page goes to its successor where it has one, and otherwise to the schema's index.[^site-config]
+The `params.redirects` entries in `site.toml` keep the retired mkdocs site's addresses: each old element page goes to its successor where it has one, and otherwise to the schema's index.[^site-config]
 
 [^website-readme]: website/README.md
-[^site-config]: website/site.config.mjs, REPO, SITE, BASE and REDIRECTS
+[^site-config]: website/site.toml, the site's address, title and redirects

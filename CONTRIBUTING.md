@@ -17,7 +17,7 @@ A LinkML schema of the CVE Record Format, version 5.2.0, and of the Common Vulne
 
 ## Development setup
 
-You need Python 3.10+, [uv](https://docs.astral.sh/uv/) and [just](https://github.com/casey/just).
+You need Python 3.11+, [uv](https://docs.astral.sh/uv/) and [just](https://github.com/casey/just).
 
 ```bash
 git clone https://github.com/lmodel/cve.git
