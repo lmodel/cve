@@ -38,7 +38,7 @@ The schema is the one home for mappings. The hand-kept SSSOM files that sat unde
 * [src/cve/datamodel/](src/cve/datamodel): the generated Python datamodel
 * [tests/](tests/): Python tests, with example data in [data/](tests/data), the term list in [upstream/](tests/upstream) and the neighbours' adapt copies in [neighbours/](tests/neighbours)
 * [upstream/](upstream/): the upstream's files at the pinned tag, unchanged
-* [website/](website/): the Astro Starlight site built from the README, `docs/`, the schema's pages and the knowledge bundle
+* [website/](website/): the Hugo site built from the README, `docs/`, the schema's pages and the knowledge bundle
 
 ## Developer Tools
 
