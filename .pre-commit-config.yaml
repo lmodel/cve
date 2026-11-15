@@ -13,7 +13,7 @@ exclude: >-
     docs/schema/|
     \.lokf/(scripts|m365)/|
     \.lokf/schema/(lokf|cve)\.yaml$|
-    \.github/release/package-lock\.json$|
+    \.release/package-lock\.json$|
     tests/neighbours/|
     tests/data/cvelist/extract/|
     tests/data/cvelist/manifest\.json$|
