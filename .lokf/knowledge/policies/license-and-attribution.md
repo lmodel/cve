@@ -18,11 +18,9 @@ sources:
     title: every section
   - resource: LICENSE
     title: the Apache License 2.0
-  - resource: website/NOTICE
-    title: the adapted graph explorer
 generated:
   by: process:ktl-librarian
-  at: "2026-11-03T22:18:39Z"
+  at: "2026-11-15T02:33:31Z"
 status: draft
 ---
 
